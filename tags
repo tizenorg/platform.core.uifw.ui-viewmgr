@@ -1,0 +1,104 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+SIG_VIEW_APPEAR_FINISH	src/include/ui_viewmgr_private.h	/^static const char SIG_VIEW_APPEAR_FINISH[] = "view,appear,finish";$/;"	v
+SIG_VIEW_APPEAR_START	src/include/ui_viewmgr_private.h	/^static const char SIG_VIEW_APPEAR_START[] = "view,appear,start";$/;"	v
+SIG_VIEW_DISAPPEAR_FINISH	src/include/ui_viewmgr_private.h	/^static const char SIG_VIEW_DISAPPEAR_FINISH[] = "view,disappear,finish";$/;"	v
+SIG_VIEW_DISAPPEAR_START	src/include/ui_viewmgr_private.h	/^static const char SIG_VIEW_DISAPPEAR_START[] = "view,disappear,start";$/;"	v
+SIG_VIEW_KEY_BACK	src/include/ui_viewmgr_private.h	/^static const char SIG_VIEW_KEY_BACK[] = "key,back";$/;"	v
+SIG_VIEW_KEY_OPTION	src/include/ui_viewmgr_private.h	/^static const char SIG_VIEW_KEY_OPTION[] = "key,option";$/;"	v
+SIG_VIEW_LOAD	src/include/ui_viewmgr_private.h	/^static const char SIG_VIEW_LOAD[] = "view,load";$/;"	v
+SIG_VIEW_UNLOAD	src/include/ui_viewmgr_private.h	/^static const char SIG_VIEW_UNLOAD[] = "view,unload";$/;"	v
+VIEW_ABOUT_TO_DESTROY	src/include/ui_viewmgr_private.h	/^   VIEW_ABOUT_TO_DESTROY,$/;"	e	enum:_ui_view_state_type
+VIEW_ABOUT_TO_HIDE	src/include/ui_viewmgr_private.h	/^   VIEW_ABOUT_TO_HIDE$/;"	e	enum:_ui_view_state_type
+VIEW_ABOUT_TO_SHOW	src/include/ui_viewmgr_private.h	/^   VIEW_ABOUT_TO_SHOW,$/;"	e	enum:_ui_view_state_type
+VIEW_CHECK	src/include/ui_viewmgr_private.h	74;"	d
+VIEW_HIDDEN	src/include/ui_viewmgr_private.h	/^   VIEW_HIDDEN,$/;"	e	enum:_ui_view_state_type
+VIEW_MGR_CHECK	src/include/ui_viewmgr_private.h	32;"	d
+VIEW_SHOWN	src/include/ui_viewmgr_private.h	/^   VIEW_SHOWN = 0,$/;"	e	enum:_ui_view_state_type
+_UI_VIEWMGR_H	src/include/ui_viewmgr.h	14;"	d
+_UI_VIEWMGR_PRIVATE_H	src/include/ui_viewmgr_private.h	2;"	d
+_UI_VIEW_H	src/include/ui_view.h	33;"	d
+_animation_cb	src/lib/ui_viewmgr.c	/^_animation_cb(void *data)$/;"	f	file:
+_appear_effect	src/lib/ui_viewmgr.c	/^_appear_effect(ui_viewmgr* view_mgr)$/;"	f	file:
+_appear_finished_cb	src/lib/ui_viewmgr.c	/^_appear_finished_cb(void *data, Evas_Object *obj , const char *emission EINA_UNUSED, const char *source EINA_UNUSED)$/;"	f	file:
+_create_conformant	src/lib/ui_viewmgr.c	/^_create_conformant(Evas_Object *parent)$/;"	f	file:
+_create_layout	src/lib/ui_viewmgr.c	/^_create_layout(Evas_Object *parent, const char *style)$/;"	f	file:
+_delete_layout	src/lib/ui_viewmgr.c	/^_delete_layout(Evas_Object* layout)$/;"	f	file:
+_disappear_effect	src/lib/ui_viewmgr.c	/^_disappear_effect(ui_viewmgr* view_mgr)$/;"	f	file:
+_disappear_finished_cb	src/lib/ui_viewmgr.c	/^_disappear_finished_cb(void *data, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)$/;"	f	file:
+_init_key_grabber	src/lib/ui_viewmgr.c	/^_init_key_grabber(ui_viewmgr *view_mgr)$/;"	f	file:
+_key_back_cb	src/examples/viewmgr_demo.c	/^Eina_Bool _key_back_cb(void *data EINA_UNUSED, ui_view *obj EINA_UNUSED, void *event_info EINA_UNUSED)$/;"	f
+_key_grabber_key_up_cb	src/lib/ui_viewmgr.c	/^_key_grabber_key_up_cb(void *data, Evas *e, Evas_Object *obj,$/;"	f	file:
+_load_view2_cb	src/examples/viewmgr_demo.c	/^Eina_Bool _load_view2_cb(void *data EINA_UNUSED, ui_view *view , void *event_info EINA_UNUSED)$/;"	f
+_pop_view	src/examples/viewmgr_demo.c	/^_pop_view(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)$/;"	f
+_popup_cb	src/examples/viewmgr_demo.c	/^_popup_cb(void *data, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)$/;"	f
+_promote_view2	src/examples/viewmgr_demo.c	/^_promote_view2(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)$/;"	f
+_ui_view	src/include/ui_viewmgr_private.h	/^struct _ui_view$/;"	s
+_ui_view_event_callback	src/include/ui_viewmgr_private.h	/^struct _ui_view_event_callback$/;"	s
+_ui_view_event_callback_call	src/include/ui_viewmgr_private.h	/^_ui_view_event_callback_call(ui_view *view, const char *event, void *event_info)$/;"	f
+_ui_view_prev_state_get	src/include/ui_viewmgr_private.h	/^_ui_view_prev_state_get(ui_view *view)$/;"	f
+_ui_view_state_get	src/include/ui_viewmgr_private.h	/^_ui_view_state_get(ui_view *view)$/;"	f
+_ui_view_state_set	src/include/ui_viewmgr_private.h	/^_ui_view_state_set(ui_view *view, ui_view_state_type state)$/;"	f
+_ui_view_state_type	src/include/ui_viewmgr_private.h	/^typedef enum _ui_view_state_type$/;"	g
+_ui_viewmgr	src/include/ui_viewmgr_private.h	/^struct _ui_viewmgr$/;"	s
+_view1	src/examples/viewmgr_demo.c	/^_view1(void *data, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)$/;"	f
+_view2	src/examples/viewmgr_demo.c	/^_view2(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)$/;"	f
+_view3	src/examples/viewmgr_demo.c	/^_view3(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)$/;"	f
+_view4	src/examples/viewmgr_demo.c	/^_view4(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)$/;"	f
+_view5	src/examples/viewmgr_demo.c	/^_view5(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)$/;"	f
+_view6	src/examples/viewmgr_demo.c	/^_view6(void *data EINA_UNUSED, ui_view *viewobj EINA_UNUSED, void *event_info EINA_UNUSED)$/;"	f
+_window_delete_cb	src/lib/ui_viewmgr.c	/^_window_delete_cb(void *data, Evas* e EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)$/;"	f
+anim	src/include/ui_viewmgr_private.h	/^   }anim;$/;"	m	struct:_ui_viewmgr	typeref:struct:_ui_viewmgr::__anon1
+animation_job	src/include/ui_viewmgr_private.h	/^   Ecore_Job         *animation_job;$/;"	m	struct:_ui_viewmgr
+animation_ongoing	src/include/ui_viewmgr_private.h	/^   Eina_Bool         animation_ongoing : 1;$/;"	m	struct:_ui_viewmgr
+base_layout	src/include/ui_viewmgr_private.h	/^   Evas_Object       *base_layout;$/;"	m	struct:_ui_viewmgr
+callbacks	src/include/ui_viewmgr_private.h	/^   Eina_List           *callbacks;$/;"	m	struct:_ui_view
+conformant	src/include/ui_viewmgr_private.h	/^   Evas_Object       *conformant;$/;"	m	struct:_ui_viewmgr
+content	src/include/ui_viewmgr_private.h	/^   Evas_Object         *content;$/;"	m	struct:_ui_view
+create_btn	src/examples/viewmgr_demo.c	/^create_btn(const char *title)$/;"	f
+create_content	src/examples/viewmgr_demo.c	/^create_content(const char *text)$/;"	f
+create_view	src/examples/viewmgr_demo.c	/^create_view(const char *title_label,Evas_Object *prev_btn,Evas_Object *next_btn,Evas_Object *content)$/;"	f
+current_state	src/include/ui_viewmgr_private.h	/^   ui_view_state_type  current_state;$/;"	m	struct:_ui_view
+delete_me	src/include/ui_viewmgr_private.h	/^   char  delete_me : 1;$/;"	m	struct:_ui_view_event_callback
+elm_main	src/examples/viewmgr_demo.c	/^elm_main(int argc, char **argv)$/;"	f
+event	src/include/ui_viewmgr_private.h	/^   const char *event;$/;"	m	struct:_ui_view_event_callback
+func	src/include/ui_viewmgr_private.h	/^   ui_view_event_cb func;$/;"	m	struct:_ui_view_event_callback
+func_data	src/include/ui_viewmgr_private.h	/^   void *func_data;$/;"	m	struct:_ui_view_event_callback
+key_grabber	src/include/ui_viewmgr_private.h	/^   Evas_Object       *key_grabber;$/;"	m	struct:_ui_viewmgr
+previous_state	src/include/ui_viewmgr_private.h	/^   ui_view_state_type  previous_state;$/;"	m	struct:_ui_view
+promote_view	src/examples/viewmgr_demo.c	/^static ui_view *promote_view;$/;"	v	file:
+style	src/include/ui_viewmgr_private.h	/^   const char          *style;$/;"	m	struct:_ui_view
+ui_view	src/include/ui_view.h	/^typedef struct _ui_view     ui_view;$/;"	t	typeref:struct:_ui_view
+ui_view_add	src/lib/ui_view.c	/^ui_view_add(Evas_Object *content)$/;"	f
+ui_view_content_get	src/lib/ui_view.c	/^ui_view_content_get(ui_view *view)$/;"	f
+ui_view_content_set	src/lib/ui_view.c	/^ui_view_content_set(ui_view *view, Evas_Object *content)$/;"	f
+ui_view_content_unset	src/lib/ui_view.c	/^ui_view_content_unset(ui_view *view)$/;"	f
+ui_view_del	src/lib/ui_view.c	/^ui_view_del(ui_view *view)$/;"	f
+ui_view_event_callback	src/include/ui_viewmgr_private.h	/^typedef struct _ui_view_event_callback    ui_view_event_callback;$/;"	t	typeref:struct:_ui_view_event_callback
+ui_view_event_callback_add	src/lib/ui_view.c	/^ui_view_event_callback_add(ui_view *view, const char *event, ui_view_event_cb func, const void *data)$/;"	f
+ui_view_event_callback_del	src/lib/ui_view.c	/^ui_view_event_callback_del(ui_view *view, const char *event, ui_view_event_cb func)$/;"	f
+ui_view_event_cb	src/include/ui_view.h	/^typedef Eina_Bool (*ui_view_event_cb)(void *data, ui_view *obj, void *event_info);$/;"	t
+ui_view_state_type	src/include/ui_viewmgr_private.h	/^} ui_view_state_type;$/;"	t	typeref:enum:_ui_view_state_type
+ui_view_style_get	src/lib/ui_view.c	/^ui_view_style_get(ui_view* view)$/;"	f
+ui_view_style_set	src/lib/ui_view.c	/^ui_view_style_set(ui_view* view, const char *style)$/;"	f
+ui_viewmgr	src/include/ui_viewmgr.h	/^typedef struct _ui_viewmgr ui_viewmgr;$/;"	t	typeref:struct:_ui_viewmgr
+ui_viewmgr_add	src/lib/ui_viewmgr.c	/^ui_viewmgr_add(Evas_Object *window)$/;"	f
+ui_viewmgr_conformant_get	src/lib/ui_viewmgr.c	/^ui_viewmgr_conformant_get(const ui_viewmgr *view_mgr)$/;"	f
+ui_viewmgr_del	src/lib/ui_viewmgr.c	/^ui_viewmgr_del(ui_viewmgr *view_mgr)$/;"	f
+ui_viewmgr_top_view_get	src/lib/ui_viewmgr.c	/^ui_viewmgr_top_view_get(const ui_viewmgr *view_mgr)$/;"	f
+ui_viewmgr_view_insert_after	src/lib/ui_viewmgr.c	/^ui_viewmgr_view_insert_after(ui_viewmgr *view_mgr, ui_view *after, ui_view *view)$/;"	f
+ui_viewmgr_view_insert_before	src/lib/ui_viewmgr.c	/^ui_viewmgr_view_insert_before(ui_viewmgr *view_mgr, ui_view *before, ui_view *view)$/;"	f
+ui_viewmgr_view_pop	src/lib/ui_viewmgr.c	/^ui_viewmgr_view_pop(ui_viewmgr *view_mgr)$/;"	f
+ui_viewmgr_view_pop_to	src/lib/ui_viewmgr.c	/^ui_viewmgr_view_pop_to(ui_viewmgr *view_mgr, ui_view *to_view)$/;"	f
+ui_viewmgr_view_promote	src/lib/ui_viewmgr.c	/^ui_viewmgr_view_promote(ui_viewmgr *view_mgr, ui_view *view)$/;"	f
+ui_viewmgr_view_push	src/lib/ui_viewmgr.c	/^ui_viewmgr_view_push(ui_viewmgr *view_mgr, ui_view *view)$/;"	f
+view_mgr	src/examples/viewmgr_demo.c	/^static ui_viewmgr *view_mgr;$/;"	v	file:
+view_other	src/include/ui_viewmgr_private.h	/^    ui_view* view_other;$/;"	m	struct:_ui_viewmgr::__anon1
+view_stack	src/include/ui_viewmgr_private.h	/^   Eina_List         *view_stack;$/;"	m	struct:_ui_viewmgr
+view_this	src/include/ui_viewmgr_private.h	/^    ui_view* view_this;$/;"	m	struct:_ui_viewmgr::__anon1
+window	src/examples/viewmgr_demo.c	/^static Evas_Object *window;$/;"	v	file:
+window	src/include/ui_viewmgr_private.h	/^   Evas_Object       *window;$/;"	m	struct:_ui_viewmgr
