@@ -26,10 +26,20 @@ static ui_viewmgr *view_mgr;
 static ui_view *promote_view;
 
 Evas_Object*
-create_btn(const char *title)
+create_btn(const char *title, Eina_Bool left, Eina_Bool popup_btn)
 {
    Evas_Object *button = elm_button_add(window);
-   elm_object_style_set(button, "title_button");
+
+   if (popup_btn)
+     elm_object_style_set(button, "bottom");
+   else
+     {
+        if (left)
+          elm_object_style_set(button, "naviframe/title_left");
+        else
+          elm_object_style_set(button, "naviframe/title_right");
+     }
+
    elm_object_text_set(button, title);
    return button;
 }
@@ -37,9 +47,17 @@ create_btn(const char *title)
 Evas_Object*
 create_content(const char *text)
 {
-   Evas_Object *button = elm_button_add(window);
-   elm_object_text_set(button, text);
-   return button;
+   Evas_Object  *nocontents;
+
+   /* Create elm_layout and set its style as nocontents/text */
+   nocontents = elm_layout_add(window);
+   elm_layout_theme_set(nocontents, "layout", "nocontents", "default");
+   evas_object_size_hint_weight_set(nocontents, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+   evas_object_size_hint_align_set(nocontents, EVAS_HINT_FILL, EVAS_HINT_FILL);
+   elm_object_part_text_set(nocontents, "elm.text", text);
+   elm_layout_signal_emit(nocontents, "align.center", "elm");
+
+   return nocontents;
 }
 
 // Create Content using layout and elm_widgets
@@ -86,8 +104,8 @@ Eina_Bool
 _view6(void *data EINA_UNUSED, ui_view *viewobj EINA_UNUSED, void *event_info EINA_UNUSED)
 {
    Evas_Object *prev, *content, *next;
-   prev = create_btn("view 5");
-   next = create_btn("Promote View 2");
+   prev = create_btn("view 5", EINA_TRUE, EINA_FALSE);
+   next = create_btn("Promote View 2", EINA_FALSE, EINA_FALSE);
    content = create_view("View 6",prev,next,create_content("View 6 Content"));
    ui_view *view = ui_view_add(content);
    ui_view_style_set(view, "slidein");
@@ -109,13 +127,26 @@ _popup_cb(void *data, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED
 void
 _view5(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)
 {
-   Evas_Object *prev, *next, *content;
-   prev = create_btn("Cancel");
-   next = create_btn("Next");
-   content = create_view("View 5",prev,next,create_content("View 5 Content"));
-   ui_view *view = ui_view_add(content);
+   Evas_Object *content, *next, *cancel, *popup;
+
+   popup = elm_popup_add(window);
+   elm_popup_align_set(popup, ELM_NOTIFY_ALIGN_FILL, 1.0);
+   evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+   elm_object_text_set(popup, "This popup has content area and action area, action area has two buttons Next and Cancel.");
+
+   ui_view *view = ui_view_add(popup);
+
+   next = create_btn("Next", EINA_FALSE, EINA_TRUE);
+   cancel = create_btn("Cancel", EINA_FALSE, EINA_TRUE);
+
+   elm_object_part_content_set(popup, "button1", next);
+   evas_object_smart_callback_add(next, "clicked", _popup_cb, view);
+   elm_object_part_content_set(popup, "button2", cancel);
+   evas_object_smart_callback_add(cancel, "clicked", _pop_view, view_mgr);
+
    ui_view_style_set(view, "popup");
    ui_viewmgr_view_push(view_mgr, view);
+
    evas_object_smart_callback_add(prev, "clicked", _pop_view, view_mgr);
    evas_object_smart_callback_add(next, "clicked", _popup_cb, view);
 }
@@ -124,8 +155,8 @@ void
 _view4(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)
 {
    Evas_Object *prev, *next, *content;
-   prev = create_btn("view3");
-   next = create_btn("Next");
+   prev = create_btn("view3", EINA_TRUE, EINA_FALSE);
+   next = create_btn("Next", EINA_FALSE, EINA_FALSE);
    content = create_view("View 4",prev,next,create_content("View 4 Content"));
    ui_view *view = ui_view_add(content);
 
@@ -142,8 +173,8 @@ void
 _view3(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)
 {
    Evas_Object *prev, *next, *content;
-   prev = create_btn("view2");
-   next = create_btn("Next");
+   prev = create_btn("view2", EINA_TRUE, EINA_FALSE);
+   next = create_btn("Next", EINA_FALSE, EINA_FALSE);
    content = create_view("View 3",prev,next,create_content("View 3 Content"));
    ui_view *view = ui_view_add(content);
    ui_view_style_set(view, "default");
@@ -157,8 +188,8 @@ _view3(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event_info EI
 Eina_Bool _load_view2_cb(void *data EINA_UNUSED, ui_view *view , void *event_info EINA_UNUSED)
 {
    Evas_Object *prev, *next, *content;
-   prev = create_btn("view1");
-   next = create_btn("Next");
+   prev = create_btn("view1", EINA_TRUE, EINA_FALSE);
+   next = create_btn("Next", EINA_FALSE, EINA_FALSE);
    content = create_view("View 2",prev,next,create_content("View 2 Content"));
    evas_object_smart_callback_add(prev, "clicked", _pop_view, view_mgr);
    evas_object_smart_callback_add(next, "clicked", _view3, view_mgr);
@@ -193,7 +224,7 @@ void
 _view1(void *data, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)
 {
    Evas_Object  *next, *content;
-   next = create_btn("Next");
+   next = create_btn("Next", EINA_FALSE, EINA_FALSE);
    content = create_view("View 1",NULL, next, create_content("View 1 Content"));
    ui_view *view = ui_view_add(content);
    ui_viewmgr_view_push(view_mgr, view);
