@@ -20,7 +20,7 @@
 #define APPEAR_EFFECT 1
 #define DISAPPEAR_EFFECT 2
 
-collections {
+//collections {
    group { name: "layout/viewmgr/baselayout";
       parts {
          part { name: "swallow.back";
@@ -350,4 +350,4 @@ collections {
          }
       }
    }
-}
+//}
