@@ -1,6 +1,4 @@
-#include <dlog.h>
-#include "ui_basic_view.h"
-#include "ui_viewmgr.h"
+#include "efl_viewmgr.h"
 
 using namespace efl;
 
@@ -133,8 +131,7 @@ bool ui_basic_view::set_title_left_btn(Evas_Object *title_left_btn)
 	return false;
 }
 
-bool
-ui_basic_view::set_title_right_btn(Evas_Object *title_right_btn)
+bool ui_basic_view::set_title_right_btn(Evas_Object *title_right_btn)
 {
 	if (this->layout)
 	{
@@ -166,8 +163,7 @@ bool ui_basic_view::set_title_badge(const char *text)
 	return false;
 }
 
-bool
-ui_basic_view::set_title(const char *text)
+bool ui_basic_view::set_title(const char *text)
 {
 	if (this->layout)
 	{
@@ -180,8 +176,7 @@ ui_basic_view::set_title(const char *text)
 	return false;
 }
 
-Evas_Object *
-ui_basic_view::set_content(Evas_Object *content, const char *title, const char *subtitle, Evas_Object *icon, Evas_Object *title_left_btn,
+Evas_Object *ui_basic_view::set_content(Evas_Object *content, const char *title, const char *subtitle, Evas_Object *icon, Evas_Object *title_left_btn,
         Evas_Object *title_right_btn)
 {
 	Evas_Object *pcontent = this->set_content(content);

@@ -10,11 +10,6 @@
 
 #include <list>
 
-#ifdef  LOG_TAG
-#undef  LOG_TAG
-#endif
-#define LOG_TAG "VIEWMGR"
-
 using namespace std;
 
 class ui_view_base;

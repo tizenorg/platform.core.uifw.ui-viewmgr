@@ -16,34 +16,60 @@
  */
 
 #include "main.h"
-#include "app_controller.h"
+#include "page4_controller.h"
+#include "page3_controller.h"
+#include "page2_controller.h"
+#include "page1_controller.h"
+
+Evas_Object*
+create_content(Evas_Object *parent, const char *text, Evas_Smart_Cb prev_btn_clicked_cb, Evas_Smart_Cb next_btn_clicked_cb, appdata_s *ad)
+{
+	Evas_Object *grid, *box, *layout, *scroller, *btn, *button_layout;
+
+	/* Scroller */
+	scroller = elm_scroller_add(parent);
+	elm_scroller_bounce_set(scroller, EINA_FALSE, EINA_TRUE);
+	elm_scroller_policy_set(scroller, ELM_SCROLLER_POLICY_OFF, ELM_SCROLLER_POLICY_AUTO);
+
+	/* Grid */
+	grid = elm_grid_add(scroller);
+	evas_object_size_hint_weight_set(grid, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(grid, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	evas_object_show(grid);
+
+	/* NoContent Layout */
+	layout = elm_layout_add(grid);
+	elm_layout_theme_set(layout, "layout", "nocontents", "default");
+	elm_object_part_text_set(layout, "elm.text", text);
+	evas_object_show(layout);
+	elm_grid_pack(grid, layout, 0, 0, 100, 100);
+
+	/* Previous Page Button */
+	btn = elm_button_add(grid);
+	elm_object_text_set(btn, "Prev");
+	evas_object_smart_callback_add(btn, "clicked", prev_btn_clicked_cb, ad);
+	evas_object_show(btn);
+	elm_grid_pack(grid, btn, 10, 90, 30, 8);
+
+	/* Next Page Button */
+	btn = elm_button_add(grid);
+	elm_object_text_set(btn, "Next");
+	evas_object_smart_callback_add(btn, "clicked", next_btn_clicked_cb, ad);
+	evas_object_show(btn);
+	elm_grid_pack(grid, btn, 60, 90, 30, 8);
+
+	elm_object_content_set(scroller, grid);
+
+	return scroller;
+}
 
 static void create_base_gui(appdata_s *ad)
 {
+	//FIXME: Hide this creation.
 	ad->viewmgr = new ui_viewmgr(PACKAGE);
 
-	//View 1
-	{
-		app_controller1 *controller = new app_controller1(ad);
-		ad->viewmgr->push_view(new ui_basic_view(controller, "page1"));
-	}
-/*
-	//View 2
-	{
-		app_controller2 *controller = new app_controller2(ad);
-		ad->viewmgr->push_view(new ui_basic_view(controller, "page2"));
-	}
-	//View 3
-	{
-		app_controller3 *controller = new app_controller3(ad);
-		ad->viewmgr->push_view(new ui_view(controller));
-	}
-	//View 4
-	{
-		app_controller4 *controller = new app_controller4();
-		ui_basic_view *view = ad->viewmgr->push_view(new ui_basic_view(controller));
-	}
-*/
+	page1_controller *page1 = new page1_controller(ad);
+
 	ad->viewmgr->activate();
 }
 
@@ -77,6 +103,8 @@ static void app_pause(void *data)
 
 static void app_resume(void *data)
 {
+	appdata_s *ad = (appdata_s *) data;
+	ad->viewmgr->activate();
 }
 
 static void app_terminate(void *data)

@@ -18,7 +18,7 @@
 #include <system_settings.h>
 #include <dlog.h>
 #include <efl_extension.h>
-#include "../src/efl_viewmgr.h"
+#include "../src/efl/mobile/efl_viewmgr.h"
 
 //uncomment if you want debug
 #ifndef TIZEN_ENGINEER_MODE
@@ -30,17 +30,14 @@
 #endif
 #define LOG_TAG "VIEWMGR"
 
-
 #if !defined(PACKAGE)
 #define PACKAGE "org.tizen.ui-viewmgr"
 #endif
 
-
-#define ELM_DEMO_EDJ "/opt/usr/apps/org.tizen.ui-viewmgr/res/ui-viewmgr.edj"
-
+using namespace efl;
 
 typedef struct appdata {
 	ui_viewmgr *viewmgr;
 } appdata_s;
 
-void view_cb(void *data, Evas_Object *obj, void *event_info);
+Evas_Object *create_content(Evas_Object *parent, const char *text, Evas_Smart_Cb prev_btn_clicked_cb, Evas_Smart_Cb next_btn_clicked_cb, appdata_s *ad);

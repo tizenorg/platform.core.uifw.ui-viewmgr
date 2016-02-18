@@ -8,11 +8,6 @@
 #ifndef UI_CONTROLLER_BASE_H_
 #define UI_CONTROLLER_BASE_H_
 
-#ifdef  LOG_TAG
-#undef  LOG_TAG
-#endif
-#define LOG_TAG "VIEWMGR"
-
 class ui_view_base;
 
 /**

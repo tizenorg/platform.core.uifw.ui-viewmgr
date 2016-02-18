@@ -1,7 +1,4 @@
-#include <dlog.h>
-#include <app.h>
-#include "ui_view_base.h"
-#include "ui_viewmgr_base.h"
+#include "ui_viewmgr.h"
 
 bool ui_viewmgr_base::_connect_view(ui_view_base *view)
 {
@@ -85,7 +82,7 @@ ui_viewmgr_base::~ui_viewmgr_base()
 		delete (view);
 	}
 
-	//Terminate applicationn when viewmgr is destroyed.
+	//FIXME: Window is destroyed. Terminate Application!
 	ui_app_exit();
 }
 

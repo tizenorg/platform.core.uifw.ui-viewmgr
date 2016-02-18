@@ -1,9 +1,4 @@
-#include <dlog.h>
-#include "ui_controller.h"
 #include "ui_viewmgr.h"
-#include "ui_view_base.h"
-
-using namespace efl;
 
 void ui_view_base::set_event_block(bool block)
 {

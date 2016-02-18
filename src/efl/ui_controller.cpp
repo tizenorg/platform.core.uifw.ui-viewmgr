@@ -1,6 +1,4 @@
-#include <dlog.h>
-#include "ui_view.h"
-#include "ui_controller.h"
+#include "efl_viewmgr.h"
 
 using namespace efl;
 

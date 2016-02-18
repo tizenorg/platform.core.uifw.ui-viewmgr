@@ -1,6 +1,4 @@
-#include <dlog.h>
-#include "ui_view.h"
-#include "ui_viewmgr.h"
+#include "efl_viewmgr.h"
 
 using namespace efl;
 
@@ -9,9 +7,6 @@ win_delete_request_cb(void *data, Evas_Object *obj EINA_UNUSED, void *event_info
 {
 	ui_viewmgr *viewmgr = static_cast<ui_viewmgr*>(data);
 	delete(viewmgr);
-
-	//FIXME: Window is destroyed. Terminate Application!
-	//ui_app_exit();
 }
 
 Evas_Object *

@@ -1,7 +1,7 @@
 #ifndef UI_BASIC_VIEW
 #define UI_BASIC_VIEW
 
-#include "ui_view.h"
+#include "../efl_viewmgr.h"
 
 namespace efl
 {

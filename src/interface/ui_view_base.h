@@ -10,11 +10,6 @@
 
 #include <string>
 
-#ifdef  LOG_TAG
-#undef  LOG_TAG
-#endif
-#define LOG_TAG "VIEWMGR"
-
 typedef void* T;
 
 class ui_viewmgr_base;

@@ -2,7 +2,7 @@
 #define UI_VIEW
 
 #include <Elementary.h>
-#include "ui_view_base.h"
+#include "../interface/ui_viewmgr.h"
 
 #define CONVERT_TO_EO(T) static_cast<Evas_Object *>((T))
 #define CONVERT_TO_T(EO) static_cast<T>((EO))

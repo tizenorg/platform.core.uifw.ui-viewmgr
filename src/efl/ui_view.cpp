@@ -1,6 +1,4 @@
-#include "ui_view.h"
-#include "ui_controller.h"
-#include "ui_viewmgr.h"
+#include "efl_viewmgr.h"
 
 using namespace efl;
 
