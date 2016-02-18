@@ -14,6 +14,9 @@
  *  limitations under the License.
  *
  */
+#ifndef UI_VIEWMGR_H_
+#define UI_VIEWMGR_H_
+
 #include <app.h>
 #include <dlog.h>
 
@@ -22,6 +25,18 @@
 #endif
 #define LOG_TAG "VIEWMGR"
 
+enum ui_view_indicator
+{
+	UI_VIEW_INDICATOR_DEFAULT = 0,
+	UI_VIEW_INDICATOR_OPTIMAL,
+	UI_VIEW_INDICATOR_OVERLAP,
+	UI_VIEW_INDICATOR_HIDE,
+	UI_VIEW_INDICATOR_LAST
+};
+
 #include "ui_viewmgr_base.h"
 #include "ui_view_base.h"
 #include "ui_controller_base.h"
+
+
+#endif /* UI_VIEWMGR_H */
