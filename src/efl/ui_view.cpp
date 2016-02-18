@@ -64,3 +64,18 @@ Evas_Object *ui_view ::get_parent()
 	ui_viewmgr *viewmgr = dynamic_cast<ui_viewmgr *>(this->get_viewmgr());
 	return viewmgr->get_base();
 }
+
+void ui_view::set_indicator(ui_view_indicator indicator)
+{
+	if (this->get_indicator() == indicator) return;
+
+	ui_view_base::set_indicator(indicator);
+
+	ui_viewmgr *viewmgr = dynamic_cast<ui_viewmgr *>(this->get_viewmgr());
+
+	if (!viewmgr->is_activated()) return;
+
+	if (dynamic_cast<ui_view *>(viewmgr->get_last_view()) != this) return;
+
+	viewmgr->set_indicator(indicator);
+}

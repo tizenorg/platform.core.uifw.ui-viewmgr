@@ -33,9 +33,11 @@ private:
 	Evas_Object *win;
 	Evas_Object *conform;
 	Evas_Object *layout;
+	ui_view_indicator indicator;
 
 	bool create_conformant(Evas_Object *win);
 	bool create_base_layout(Evas_Object *conform);
+	bool set_indicator(ui_view_indicator indicator);
 
 protected:
 	Evas_Object *get_base()

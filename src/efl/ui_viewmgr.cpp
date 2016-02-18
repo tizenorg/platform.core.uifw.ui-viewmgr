@@ -18,15 +18,39 @@
 
 using namespace efl;
 
-void
-win_delete_request_cb(void *data, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)
+bool ui_viewmgr::set_indicator(ui_view_indicator indicator)
 {
-	ui_viewmgr *viewmgr = static_cast<ui_viewmgr*>(data);
-	delete(viewmgr);
+	if (this->indicator == indicator) return false;
+	this->indicator = indicator;
+
+	Evas_Object *window = this->get_window();
+	Evas_Object *conform = this->get_conformant();
+
+	switch (indicator)
+	{
+	case UI_VIEW_INDICATOR_DEFAULT:
+		elm_win_indicator_opacity_set(window, ELM_WIN_INDICATOR_OPAQUE);
+		elm_win_indicator_mode_set(window, ELM_WIN_INDICATOR_SHOW);
+		/* Unset if you set the Indicator BG */
+		evas_object_del(elm_object_part_content_get(conform, "elm.swallow.indicator_bg"));
+		elm_object_signal_emit(conform, "elm,state,indicator,nooverlap", "elm");
+		break;
+	case UI_VIEW_INDICATOR_OPTIMAL:
+		elm_win_indicator_mode_set(window, ELM_WIN_INDICATOR_SHOW);
+		elm_win_indicator_opacity_set(window, ELM_WIN_INDICATOR_TRANSPARENT);
+		break;
+	case UI_VIEW_INDICATOR_OVERLAP:
+		elm_win_indicator_mode_set(window, ELM_WIN_INDICATOR_SHOW);
+		elm_object_signal_emit(conform, "elm,state,indicator,overlap", "elm");
+		break;
+	default:
+		elm_win_indicator_mode_set(window, ELM_WIN_INDICATOR_HIDE);
+		break;
+	}
+	return true;
 }
 
-bool
-ui_viewmgr::create_conformant(Evas_Object *win)
+bool ui_viewmgr::create_conformant(Evas_Object *win)
 {
 	Evas_Object *conform = elm_conformant_add(win);
 	if (!conform) return false;
@@ -41,8 +65,7 @@ ui_viewmgr::create_conformant(Evas_Object *win)
 	return true;
 }
 
-bool
-ui_viewmgr::create_base_layout(Evas_Object *conform)
+bool ui_viewmgr::create_base_layout(Evas_Object *conform)
 {
 	Evas_Object *layout = elm_layout_add(conform);
 	if (!layout) return false;
@@ -86,7 +109,6 @@ ui_viewmgr::ui_viewmgr(const char *pkg)
 			{
 				ui_viewmgr *viewmgr = static_cast<ui_viewmgr*>(data);
 				delete(viewmgr);
-
 				//FIXME: Window is destroyed. Terminate Application!
 				//ui_app_exit();
 			},
@@ -108,6 +130,7 @@ ui_viewmgr::ui_viewmgr(const char *pkg)
 	//Set Indicator properties
 	elm_win_indicator_mode_set(this->win, ELM_WIN_INDICATOR_SHOW);
 	elm_win_indicator_opacity_set(this->win, ELM_WIN_INDICATOR_OPAQUE);
+
 	elm_win_autodel_set(this->win, EINA_TRUE);
 }
 
@@ -117,7 +140,7 @@ ui_viewmgr::~ui_viewmgr()
 
 bool ui_viewmgr::activate()
 {
-	ui_viewmgr_base :: activate();
+	ui_viewmgr_base::activate();
 
 	elm_object_part_content_unset(this->get_base(), "elm.swallow.content");
 
@@ -134,6 +157,8 @@ bool ui_viewmgr::activate()
 		elm_object_part_content_set(this->get_base(), "elm.swallow.content", CONVERT_TO_EO(view->get_base()));
 	}
 
+	this->set_indicator(view->get_indicator());
+
 	evas_object_show(this->win);
 
 	return true;
@@ -141,7 +166,7 @@ bool ui_viewmgr::activate()
 
 bool ui_viewmgr::deactivate()
 {
-	ui_viewmgr_base ::deactivate();
+	ui_viewmgr_base::deactivate();
 
 	//FIXME: based on the profile, we should app to go behind or terminate.
 	if (true)
@@ -177,6 +202,8 @@ bool ui_viewmgr::pop_view()
 		elm_object_part_content_set(this->get_base(), "elm.swallow.content", CONVERT_TO_EO(view->get_base()));
 	}
 
+	this->set_indicator(view->get_indicator());
+
 	return true;
 }
 
@@ -198,9 +225,10 @@ ui_viewmgr::push_view(ui_view *view)
 	}
 	else
 	{
-		LOGE("view->base = %p", view->get_base());
 		elm_object_part_content_set(this->get_base(), "elm.swallow.content", CONVERT_TO_EO(view->get_base()));
 	}
+
+	this->set_indicator(view->get_indicator());
 
 	return view;
 }

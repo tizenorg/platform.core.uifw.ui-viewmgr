@@ -108,6 +108,9 @@ public:
 	 *  @note When this view is on destroying by popping or deleting.
 	 */
 	virtual void destroy() = 0;
+
+	virtual bool back() = 0;
+	virtual bool menu() = 0;
 };
 
 #endif /* UI_CONTROLLER_BASE_H_ */
