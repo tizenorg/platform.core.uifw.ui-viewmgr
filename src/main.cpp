@@ -15,6 +15,7 @@
  *
  */
 #include "main.h"
+#include "page5_controller.h"
 #include "page4_controller.h"
 #include "page3_controller.h"
 #include "page2_controller.h"

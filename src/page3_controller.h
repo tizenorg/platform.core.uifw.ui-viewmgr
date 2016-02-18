@@ -52,8 +52,8 @@ public:
 		        },
 		        this->ad);
 
-		//Arguments: content, title, subtitle, icon, title left button, title right button
-		view->set_content(content, "Title", "Subtitle", NULL, NULL, NULL);
+		//Arguments: content, title, subtitle, title left button, title right button
+		view->set_content(content, "Title", "Subtitle", NULL, NULL);
 	}
 };
 

@@ -111,19 +111,6 @@ bool ui_basic_view::set_subtitle(const char *text)
 	return false;
 }
 
-bool ui_basic_view::set_icon(Evas_Object *icon)
-{
-	if (this->layout)
-	{
-		elm_object_part_content_set(this->layout, "elm.swallow.icon", icon);
-		if (icon) elm_object_signal_emit(this->layout, "elm,state,icon,show", "elm");
-		else elm_object_signal_emit(this->layout, "elm,state,icon,hide", "elm");
-		return true;
-	}
-	LOGE("Layout is not exist!");
-	return false;
-}
-
 bool ui_basic_view::set_title_left_btn(Evas_Object *title_left_btn)
 {
 	if (this->layout)
@@ -188,7 +175,7 @@ bool ui_basic_view::set_title(const char *text)
 	return false;
 }
 
-Evas_Object *ui_basic_view::set_content(Evas_Object *content, const char *title, const char *subtitle, Evas_Object *icon, Evas_Object *title_left_btn,
+Evas_Object *ui_basic_view::set_content(Evas_Object *content, const char *title, const char *subtitle, Evas_Object *title_left_btn,
         Evas_Object *title_right_btn)
 {
 	Evas_Object *pcontent = this->set_content(content);
@@ -197,7 +184,6 @@ Evas_Object *ui_basic_view::set_content(Evas_Object *content, const char *title,
 	{
 		this->set_title(title);
 		this->set_subtitle(subtitle);
-		this->set_icon(icon);
 		this->set_title_left_btn(title_left_btn);
 		this->set_title_right_btn(title_right_btn);
 	}

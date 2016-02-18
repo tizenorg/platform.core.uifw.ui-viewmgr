@@ -107,7 +107,7 @@ ui_viewmgr::ui_viewmgr(const char *pkg)
 
 	//Set Indicator properties
 	elm_win_indicator_mode_set(this->win, ELM_WIN_INDICATOR_SHOW);
-	elm_win_indicator_opacity_set(this->win, ELM_WIN_INDICATOR_TRANSPARENT);
+	elm_win_indicator_opacity_set(this->win, ELM_WIN_INDICATOR_OPAQUE);
 	elm_win_autodel_set(this->win, EINA_TRUE);
 }
 

@@ -133,7 +133,6 @@ protected:
 	 */
 	virtual void destroy();
 
-
 	virtual void unload_content() = 0;
 
 	/// Return the state of event block.
