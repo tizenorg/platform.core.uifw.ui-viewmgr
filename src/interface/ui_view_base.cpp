@@ -82,7 +82,7 @@ void ui_view_base::destroy()
 
 ui_view_base::ui_view_base(T content, ui_controller_base *controller, const char *name)
 		: content(content), controller(controller), name(string(name ? name : "")), style(string("")), viewmgr(NULL), state(UI_VIEW_STATE_LOAD),
-		  event_block(false), removable_content(true)
+		  indicator(UI_VIEW_INDICATOR_DEFAULT), event_block(false), removable_content(true)
 {
 	if (!content) this->state = UI_VIEW_STATE_UNLOAD;
 	else this->state = UI_VIEW_STATE_LOAD;
@@ -134,4 +134,9 @@ void ui_view_base::set_removable_content(bool removable)
 	this->removable_content = removable;
 
 	//FIXME: If this api is called on unload state? should we remove content right now?
+}
+
+void ui_view_base::set_indicator(ui_view_indicator indicator)
+{
+	this->indicator = indicator;
 }

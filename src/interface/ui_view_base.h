@@ -62,6 +62,7 @@ private:
 	std::string style;                      ///< View style name.
 	ui_viewmgr_base *viewmgr;               ///< Viewmgr which this view belongs to.
 	ui_view_state state;                    ///< View state
+	ui_view_indicator indicator;            ///< View indicator mode
 	bool event_block;                       ///< State of event block.
 	bool removable_content;                 ///< When this value is true, view removes it's content internally on unload state.
 
@@ -215,27 +216,40 @@ public:
 	 */
 	void set_removable_content(bool removable);
 
+	void set_indicator(ui_view_indicator indicator);
+
 	/// Return a style name of this view.
 	const char *get_style()
 	{
 		return this->style.c_str();
 	}
 
-	/// Return a content instance of this view.
+	const char *get_name()
+	{
+		return this->name.c_str();
+	}
+
+	/// Return the content instance of this view.
 	T get_content()
 	{
 		return this->content;
 	}
 
-	/// Return a state of this view.
+	/// Return the state of this view.
 	ui_view_state get_state()
 	{
 		return this->state;
 	}
-	/// Return a state of removeable content.
+	/// Return the state of removeable content.
 	bool get_removable_content()
 	{
 		return this->removable_content;
+	}
+
+	/// Return the indicator mode of this view.
+	ui_view_indicator get_indicator()
+	{
+		return this->indicator;
 	}
 };
 

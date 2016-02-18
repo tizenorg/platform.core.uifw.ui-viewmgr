@@ -23,6 +23,8 @@ public:
 	page3_controller(appdata_s *ad)
 			: ad(ad)
 	{
+		/* ui_basic_view(controller, identity name).
+		   Later, you could get the identity name using view->get_name(); */
 		ad->viewmgr->push_view(new ui_basic_view(this, "page3"));
 	}
 
@@ -38,19 +40,19 @@ public:
 
 		//Create a main content.
 		Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 3",
-				//Prev Button
-		        [](void *data, Evas_Object *obj, void *event_info) -> void
-		        {
-			        appdata_s *ad = static_cast<appdata_s *>(data);
-			        ad->viewmgr->pop_view();
-		        },
-		        //Next Button
-		        [](void *data, Evas_Object *obj, void *event_info) -> void
-		        {
-			        appdata_s *ad = static_cast<appdata_s *>(data);
-			        page4(ad);
-		        },
-		        this->ad);
+				//Prev Button Callback
+				[](void *data, Evas_Object *obj, void *event_info) -> void
+				{
+					appdata_s *ad = static_cast<appdata_s *>(data);
+					ad->viewmgr->pop_view();
+				},
+				//Next Button Callback
+				[](void *data, Evas_Object *obj, void *event_info) -> void
+				{
+					appdata_s *ad = static_cast<appdata_s *>(data);
+					page4(ad);
+				},
+				this->ad);
 
 		//Arguments: content, title, subtitle, title left button, title right button
 		view->set_content(content, "Title", "Subtitle", NULL, NULL);
