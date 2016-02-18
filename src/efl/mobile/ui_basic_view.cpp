@@ -26,9 +26,9 @@ bool ui_basic_view::create_layout()
 		return false;
 	}
 
-	if (!elm_layout_theme_set(layout, "layout", "tizen_view", "default"))
+	if (!elm_layout_file_set(layout, EDJ_PATH, GROUP))
 	{
-		LOGE("Failed to set theme = ui_basic_view(%p)", this);
+		LOGE("Failed to set file = ui_basic_view(%p), path(%s), group(%s)", this, EDJ_PATH, GROUP);
 		evas_object_del(layout);
 		return false;
 	}
