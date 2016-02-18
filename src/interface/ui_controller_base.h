@@ -3,6 +3,7 @@
  *
  *  Created on: Jan 15, 2016
  *  Author: Hermet Park <chuneon.park@samsung.com>
+ *  Author: woochan lee <wc0917.lee@samsung.com>
  */
 
 #ifndef UI_CONTROLLER_BASE_H_

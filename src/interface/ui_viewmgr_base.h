@@ -2,7 +2,8 @@
  * ui_viewmgr_base.h
  *
  *  Created on: Jan 15, 2016
- *      Author: hermet
+ *  Author: Hermet Park <chuneon.park@samsung.com>
+ *  Author: woochan lee <wc0917.lee@samsung.com>
  */
 
 #ifndef UI_WINDOW_BASE_H_

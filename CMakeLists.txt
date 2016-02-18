@@ -10,7 +10,7 @@ SET(SRCS
 	src/interface/ui_view_base.cpp
 	src/interface/ui_viewmgr_base.cpp
 	src/efl/mobile/ui_basic_view.cpp
-  	src/main.cpp
+	src/main.cpp
    )
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/inc)
