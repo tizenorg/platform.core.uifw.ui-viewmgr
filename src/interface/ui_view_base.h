@@ -41,6 +41,9 @@ class ui_controller_base;
  */
 class ui_view_base
 {
+	friend class ui_viewmgr_base;
+	friend class ui_controller_base;
+
 private:
 	/// View state definition
 	enum ui_view_state
@@ -61,8 +64,6 @@ private:
 	ui_view_state state;                    ///< View state
 	bool event_block;                       ///< State of event block.
 	bool removable_content;                 ///< When this value is true, view removes it's content internally on unload state.
-
-	friend class ui_viewmgr_base;
 
 protected:
 
@@ -141,6 +142,28 @@ protected:
 		return this->event_block;
 	}
 
+	/// Return a controller of this view.
+	const ui_controller_base* get_controller()
+	{
+		return this->controller;
+	}
+
+	/// Return a viewmgr which this view is belonging to
+	ui_viewmgr_base *get_viewmgr()
+	{
+		return this->viewmgr;
+	}
+
+	/** @brief This is for replacing or setting a controller of the view.
+	 *
+	 *  @param controller a new controller. It allows @c NULL for canceling the previous controller.
+	 *  @return A previous controller. If it wasn't, the return value will be @c NULL
+	 *
+	 *  @warning Be aware deletion of controller passed here will be taken cover by ui_view_base.
+	 *           If you want to keep the controller for any reasons, please unset it using set_controller() before ui_view_base is deleted.
+	 */
+	ui_controller_base* set_controller(ui_controller_base *controller);
+
 public:
 	/** @brief This is a constructor for initializing this view resources.
 	 *
@@ -160,16 +183,6 @@ public:
 	///Destructor for terminating view.
 	virtual ~ui_view_base();
 
-	/** @brief This is for replacing or setting a controller of the view.
-	 *
-	 *  @param controller a new controller. It allows @c NULL for canceling the previous controller.
-	 *  @return A previous controller. If it wasn't, the return value will be @c NULL
-	 *
-	 *  @warning Be aware deletion of controller passed here will be taken cover by ui_view_base.
-	 *           If you want to keep the controller for any reasons, please unset it using set_controller() before ui_view_base is deleted.
-	 */
-	ui_controller_base* set_controller(ui_controller_base *controller);
-
 	/** @brief This is for replacing or setting a content of the view.
 	 *
 	 *  @note @p content is a logical object that represents a view in your framework. The actual type of the content could be translated to any certain types.
@@ -178,7 +191,7 @@ public:
 	 *  @param content a new content. It allows @c NULL for canceling the previous content.
 	 *  @return A previous content. If it wasn't, return value will be @c NULL
 	 */
-	virtual T set_content(T content);
+	T set_content(T content);
 
 	/** @brief set style of the view.
 	 *
@@ -192,7 +205,7 @@ public:
 	 *           If your framework doesn't support any styles then just allow a @c NULL argument and return true. Otherwise return false.
 	 *
 	 */
-	virtual bool set_style(const char *style);
+	bool set_style(const char *style);
 
 	/** @brief set content removable
 	 *
@@ -203,26 +216,18 @@ public:
 	 */
 	void set_removable_content(bool removable);
 
-	/// Return a controller of this view.
-	const ui_controller_base* get_controller()
-	{
-		return this->controller;
-	}
 	/// Return a style name of this view.
 	const char *get_style()
 	{
 		return this->style.c_str();
 	}
+
 	/// Return a content instance of this view.
 	T get_content()
 	{
 		return this->content;
 	}
-	/// Return a viewmgr which this view is belonging to
-	ui_viewmgr_base *get_viewmgr()
-	{
-		return this->viewmgr;
-	}
+
 	/// Return a state of this view.
 	ui_view_state get_state()
 	{

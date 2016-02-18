@@ -24,3 +24,8 @@ ui_view * ui_controller::get_view()
 	if (!view) return NULL;
 	return dynamic_cast<ui_view *>(view);
 }
+
+ui_controller::~ui_controller()
+{
+
+}

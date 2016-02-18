@@ -25,11 +25,9 @@ namespace efl
 class ui_controller: public ui_controller_base
 {
 public:
-	virtual ~ui_controller()
-	{
-	}
-	ui_view *get_view();
+	virtual ~ui_controller();
 
+	ui_view *get_view();
 	virtual void load() {}
 	virtual void unload() {}
 	virtual void active() {}

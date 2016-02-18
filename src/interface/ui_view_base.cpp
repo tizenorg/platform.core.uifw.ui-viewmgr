@@ -111,8 +111,8 @@ ui_controller_base* ui_view_base::set_controller(ui_controller_base *controller)
 {
 	ui_controller_base *prev_controller = this->controller;
 	this->controller = controller;
-	controller->set_view(this);
-	prev_controller->set_view(NULL);
+	if (controller) controller->set_view(this);
+	if (prev_controller) prev_controller->set_view(NULL);
 	return prev_controller;
 }
 

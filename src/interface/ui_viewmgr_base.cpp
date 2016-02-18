@@ -16,7 +16,7 @@
  */
 #include "ui_viewmgr.h"
 
-bool ui_viewmgr_base::_connect_view(ui_view_base *view)
+bool ui_viewmgr_base::connect_view(ui_view_base *view)
 {
 	if (view->viewmgr)
 	{
@@ -28,21 +28,21 @@ bool ui_viewmgr_base::_connect_view(ui_view_base *view)
 	return true;
 }
 
-bool ui_viewmgr_base::_disconnect_view(ui_view_base *view)
+bool ui_viewmgr_base::disconnect_view(ui_view_base *view)
 {
 	if (!view->viewmgr) return false;
 	view->viewmgr = NULL;
 	return true;
 }
 
-void ui_viewmgr_base::_set_event_block(ui_view_base *view, bool block)
+void ui_viewmgr_base::set_event_block(ui_view_base *view, bool block)
 {
 
 	if (!this->event_block) return;
 	view->set_event_block(block);
 }
 
-bool ui_viewmgr_base::_push_view_finished(ui_view_base *view)
+bool ui_viewmgr_base::push_view_finished(ui_view_base *view)
 {
 	ui_view_base *last = this->view_list.back();
 
@@ -55,12 +55,12 @@ bool ui_viewmgr_base::_push_view_finished(ui_view_base *view)
 
 	//A new view has been pushed. This should be active.
 	view->active();
-	this->_set_event_block(view, true);
+	this->set_event_block(view, true);
 
 	return true;
 }
 
-bool ui_viewmgr_base::_pop_view_finished(ui_view_base *view)
+bool ui_viewmgr_base::pop_view_finished(ui_view_base *view)
 {
 	ui_view_base *last = this->view_list.back();
 
@@ -75,7 +75,7 @@ bool ui_viewmgr_base::_pop_view_finished(ui_view_base *view)
 
 	//The previous view has been popped. It should become active.
 	view->active();
-	this->_set_event_block(view, true);
+	this->set_event_block(view, true);
 
 	return true;
 }
@@ -111,7 +111,7 @@ ui_viewmgr_base::push_view(ui_view_base *view)
 		return NULL;
 	}
 
-	if (!this->_connect_view(view))
+	if (!this->connect_view(view))
 	{
 		LOGE("connect view failed");
 		return NULL;
@@ -124,7 +124,7 @@ ui_viewmgr_base::push_view(ui_view_base *view)
 	{
 		pview = this->view_list.back();
 		pview->inactive();
-		this->_set_event_block(pview, true);
+		this->set_event_block(pview, true);
 
 		//FIXME: Since we have no transition
 		pview->unload();
@@ -138,7 +138,7 @@ ui_viewmgr_base::push_view(ui_view_base *view)
 	}
 
 	view->inactive();
-	this->_set_event_block(view, true);
+	this->set_event_block(view, true);
 
 	return view;
 }
@@ -165,7 +165,7 @@ bool ui_viewmgr_base::pop_view()
 	//last page to be popped.
 	ui_view_base *view = this->view_list.back();
 	view->inactive();
-	this->_set_event_block(view, true);
+	this->set_event_block(view, true);
 
 	//Below object has to be used in child class...
 	//Make this getter method? or define instance?
@@ -174,7 +174,7 @@ bool ui_viewmgr_base::pop_view()
 	ui_view_base *pview = *nx;
 	pview->load();
 	pview->inactive();
-	this->_set_event_block(pview, true);
+	this->set_event_block(pview, true);
 
 	//FIXME: since we have no transition effect
 	pview->active();
@@ -201,7 +201,7 @@ bool ui_viewmgr_base::insert_view_after(ui_view_base *view, ui_view_base *after)
 bool ui_viewmgr_base::remove_view(ui_view_base *view)
 {
 	this->view_list.remove(view);
-	this->_disconnect_view(view);
+	this->disconnect_view(view);
 
 	//TODO: If this view is the top on the stack ?
 	return true;

@@ -40,6 +40,7 @@ protected:
 	virtual void load();
 	virtual void unload();
 	virtual void unload_content();
+	Evas_Object *get_parent();
 };
 
 }

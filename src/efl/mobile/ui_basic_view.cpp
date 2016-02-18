@@ -31,9 +31,7 @@ bool ui_basic_view::create_layout()
 {
 	if (this->layout) return false;
 
-	ui_viewmgr *viewmgr = dynamic_cast<ui_viewmgr *>(ui_view_base::get_viewmgr());
-
-	Evas_Object *layout = elm_layout_add(viewmgr->get_base());
+	Evas_Object *layout = elm_layout_add(this->get_parent());
 
 	if (!layout)
 	{

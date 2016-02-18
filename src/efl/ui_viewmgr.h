@@ -27,6 +27,8 @@ class ui_view;
 
 class ui_viewmgr: public ui_viewmgr_base
 {
+	friend class ui_view;
+
 private:
 	Evas_Object *win;
 	Evas_Object *conform;
@@ -35,24 +37,29 @@ private:
 	bool create_conformant(Evas_Object *win);
 	bool create_base_layout(Evas_Object *conform);
 
-public:
-	ui_viewmgr(const char *pkg);
-	~ui_viewmgr();
-
-	bool activate();
-	bool deactivate();
-	ui_view *push_view(ui_view *view);
-	bool pop_view();
-
-	//FIXME: Make this private
+protected:
 	Evas_Object *get_base()
 	{
 		return this->layout;
 	}
 
+public:
+	ui_viewmgr(const char *pkg);
+	virtual ~ui_viewmgr();
+
+	virtual bool activate();
+	virtual bool deactivate();
+	virtual ui_view *push_view(ui_view *view);
+	virtual bool pop_view();
+
 	Evas_Object *get_window()
 	{
 		return this->win;
+	}
+
+	Evas_Object *get_conformant()
+	{
+		return this->conform;
 	}
 };
 }

@@ -37,9 +37,10 @@ class ui_view_base;
  */
 class ui_viewmgr_base
 {
+	friend class ui_view_base;
+
 private:
-	//TODO: change name to view_stack
-	std::list<ui_view_base*> view_list;     //view list.
+	list<ui_view_base*> view_list;     //view list.
 	bool event_block;   //event block on view transition. This value should be configurable by system.
 	bool activated;     //activated status of this viewmgr.
 
@@ -51,7 +52,7 @@ private:
 	 *
 	 *	@note This is s a friend function of ui_view_base
 	 */
-	bool _connect_view(ui_view_base *view);
+	bool connect_view(ui_view_base *view);
 
 	/**
 	 *	@brief unlink a given view from this viewmgr.
@@ -61,7 +62,7 @@ private:
 	 *
 	 *	@note This is s a friend function of ui_view_base
 	 */
-	bool _disconnect_view(ui_view_base *view);
+	bool disconnect_view(ui_view_base *view);
 
 	/**
 	 *	@brief toggle event blocking to the given view.
@@ -71,10 +72,9 @@ private:
 	 *
 	 *	@note This is s a friend function of ui_view_base
 	 */
-	void _set_event_block(ui_view_base *view, bool block);
+	void set_event_block(ui_view_base *view, bool block);
 
 protected:
-
 	/**
 	 *	@brief This function is designed for end of push transition.
 	 *
@@ -84,7 +84,7 @@ protected:
 	 *  @warning This function must be called definitely when push transition is finished.
 	 *	@note This is s a friend function of ui_view_base
 	 */
-	virtual bool _push_view_finished(ui_view_base *view);
+	bool push_view_finished(ui_view_base *view);
 
 	/**
 	 *	@brief This function is designed for end of pop transition.
@@ -95,20 +95,18 @@ protected:
 	 *  @warning This function must be called definitely when push transition is finished.
 	 *	@note This is s a friend function of ui_view_base
 	 */
-	virtual bool _pop_view_finished(ui_view_base *view);
+	bool pop_view_finished(ui_view_base *view);
 
-public:
-	///Constructor.
-	ui_viewmgr_base();
-
-	///Destructor. Delete all contained views.
-	virtual ~ui_viewmgr_base();
-
-	//Activate a viewmgr.
-	virtual bool activate();
-
-	//Deactivate a viewmgr.
-	virtual bool deactivate();
+	/**
+	 *	@brief Return a list of views which this viewmgr has.
+	 *
+	 *  @return a pointer of list of views.
+	 *
+	 */
+	const list<ui_view_base*>* const get_view_list()
+	{
+		return &this->view_list;
+	}
 
 	/**
 	 *	@brief Push a new view into the viewmgr stack.
@@ -117,7 +115,7 @@ public:
 	 *  @note Normally, the current view will be hidden by a new view.
 	 *  @return @c true on success, @c false otherwise.
 	 */
-	virtual ui_view_base *push_view(ui_view_base *view);
+	ui_view_base *push_view(ui_view_base *view);
 
 	/**
 	 *	@brief Pop the top view from the viewmgr stack.
@@ -139,7 +137,7 @@ public:
 	 *         If you pass @c NULL, @c view will be inserted at the front of the view stack.
 	 *  @return @c true success or @c false not.
 	 */
-	virtual bool insert_view_before(ui_view_base *view, ui_view_base *before);
+	bool insert_view_before(ui_view_base *view, ui_view_base *before);
 
 	/**
 	 *	@brief Insert a view into this viewmgr stack. Specially, right after of the given view, @after
@@ -149,7 +147,7 @@ public:
 	 *         If you pass @c NULL, @c view will be inserted at the end of the view stack.
 	 *  @return @c true success or @c false not.
 	 */
-	virtual bool insert_view_after(ui_view_base *view, ui_view_base *after);
+	bool insert_view_after(ui_view_base *view, ui_view_base *after);
 
 	/**
 	 *	@brief Remove the given view from this viewmgr stack.
@@ -157,7 +155,7 @@ public:
 	 *  @return @c true on success or @c false if not.
 	 *
 	 */
-	virtual bool remove_view(ui_view_base *view);
+	bool remove_view(ui_view_base *view);
 
 	/**
 	 *	@brief Return a stack index number of the given view.
@@ -199,6 +197,19 @@ public:
 	 */
 	int get_view_index(const ui_view_base *view);
 
+	//Activate a viewmgr.
+	bool activate();
+
+	//Deactivate a viewmgr.
+	bool deactivate();
+
+public:
+	///Constructor.
+	ui_viewmgr_base();
+
+	///Destructor. Delete all contained views.
+	virtual ~ui_viewmgr_base();
+
 	/**
 	 *	@brief Return the number of views which this viewmgr has.
 	 *
@@ -221,16 +232,6 @@ public:
 		return this->activated;
 	}
 
-	/**
-	 *	@brief Return a list of views which this viewmgr has.
-	 *
-	 *  @return a pointer of list of views.
-	 *
-	 */
-	const list<ui_view_base*>* const get_view_list()
-	{
-		return &this->view_list;
-	}
 };
 
 #endif /* UI_WINDOW_BASE_H_ */

@@ -20,7 +20,7 @@ void ui_controller_base::set_view(ui_view_base *view)
 {
 	if (this->view)
 	{
-		//TODO: ?
+		this->view->set_controller(NULL);
 	}
 	this->view = view;
 }

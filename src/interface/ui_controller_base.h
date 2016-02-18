@@ -32,8 +32,18 @@ class ui_view_base;
  */
 class ui_controller_base
 {
+	friend class ui_view_base;
+
 private:
 	ui_view_base *view;
+
+	void set_view(ui_view_base *view);
+
+protected:
+	ui_view_base *get_view()
+	{
+		return this->view;
+	}
 
 public:
 	ui_controller_base() :
@@ -98,13 +108,6 @@ public:
 	 *  @note When this view is on destroying by popping or deleting.
 	 */
 	virtual void destroy() = 0;
-
-	void set_view(ui_view_base *view);
-
-	ui_view_base *get_view()
-	{
-		return this->view;
-	}
 };
 
 #endif /* UI_CONTROLLER_BASE_H_ */
