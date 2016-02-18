@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Samsung Electronics Co., Ltd All Rights Reserved
+ * Copyright (c) 2016 Samsung Electronics Co., Ltd All Rights Reserved
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -14,7 +14,6 @@
  *  limitations under the License.
  *
  */
-
 #include "main.h"
 #include "page4_controller.h"
 #include "page3_controller.h"
@@ -68,7 +67,7 @@ static void create_base_gui(appdata_s *ad)
 	//FIXME: Hide this creation.
 	ad->viewmgr = new ui_viewmgr(PACKAGE);
 
-	page1_controller *page1 = new page1_controller(ad);
+	page1(ad);
 
 	ad->viewmgr->activate();
 }

@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2016 Samsung Electronics Co., Ltd All Rights Reserved
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *               http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
 class page3_controller: public ui_controller
 {
 private:
@@ -32,10 +48,16 @@ public:
 		        [](void *data, Evas_Object *obj, void *event_info) -> void
 		        {
 			        appdata_s *ad = static_cast<appdata_s *>(data);
-			        page4_controller *controller = new page4_controller(ad);
-		        }, this->ad);
+			        page4(ad);
+		        },
+		        this->ad);
 
 		//Arguments: content, title, subtitle, icon, title left button, title right button
 		view->set_content(content, "Title", "Subtitle", NULL, NULL, NULL);
 	}
 };
+
+void page3(appdata_s *ad)
+{
+	new page3_controller(ad);
+}
