@@ -67,7 +67,9 @@ bool ui_viewmgr_base::_pop_view_finished(ui_view_base *view)
 ui_viewmgr_base::ui_viewmgr_base()
 		: event_block(true), activated(false)
 {
-	//TODO: Initialize ?
+	//TODO: Read binary profile and decide whether support back key or not.
+	//soft_back_key is needed in latest UX(tizen_2.4)
+	this->soft_back_key = true;
 }
 
 ui_viewmgr_base::~ui_viewmgr_base()
