@@ -2,6 +2,13 @@
 
 using namespace efl;
 
+static void
+soft_back_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	ui_viewmgr *viewmgr = static_cast<ui_viewmgr *>(data);
+	viewmgr->pop_view();
+}
+
 bool ui_basic_view::destroy_layout()
 {
 	if (!this->layout) return false;
@@ -40,6 +47,23 @@ bool ui_basic_view::create_layout()
 	}
 
 	this->layout = layout;
+
+	//Set soft back key, if it's needed
+	if (viewmgr->get_soft_back_key())
+	{
+		Evas_Object *prev_btn = elm_button_add(layout);
+
+		if (!prev_btn)
+		{
+			LOGE("Failed to create a button = ui_basic_view(%p)", this);
+		}
+
+		evas_object_smart_callback_add(prev_btn, "clicked", soft_back_btn_clicked_cb, viewmgr);
+		//FIXME: Its not a naviframe :)
+		elm_object_style_set(prev_btn, "naviframe/back_btn/default");
+		elm_object_part_content_set(layout, "elm.swallow.prev_btn", prev_btn);
+		elm_object_signal_emit(layout, "elm,state,prev_btn,show", "elm");
+	}
 
 	return true;
 }
