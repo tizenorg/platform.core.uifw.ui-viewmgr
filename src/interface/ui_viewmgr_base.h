@@ -173,11 +173,11 @@ public:
 	 */
 	ui_view_base *get_view(const char *name)
 	{
-		//TODO: ...
+		//FIXME: ...
 		return NULL;
 	}
 
-	//TODO: Doc.
+	//FIXME: Doc.
 	ui_view_base *get_last_view();
 
 	/**

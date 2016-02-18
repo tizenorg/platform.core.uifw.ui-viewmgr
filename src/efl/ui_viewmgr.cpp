@@ -9,30 +9,34 @@ win_delete_request_cb(void *data, Evas_Object *obj EINA_UNUSED, void *event_info
 	delete(viewmgr);
 }
 
-Evas_Object *
+bool
 ui_viewmgr::create_conformant(Evas_Object *win)
 {
 	Evas_Object *conform = elm_conformant_add(win);
-	if (!conform) return NULL;
+	if (!conform) return false;
 
 	evas_object_size_hint_weight_set(conform, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	elm_win_resize_object_add(win, conform);
 	elm_win_conformant_set(win, EINA_TRUE);
 	evas_object_show(conform);
 
-	return conform;
+	this->conform = conform;
+
+	return true;
 }
 
-Evas_Object *
+bool
 ui_viewmgr::create_base_layout(Evas_Object *conform)
 {
 	Evas_Object *layout = elm_layout_add(conform);
-	if (!layout) return NULL;
+	if (!layout) return false;
 
 	elm_layout_theme_set(layout, "layout", "application", "default");
 	elm_object_content_set(conform, layout);
 
-	return layout;
+	this->layout = layout;
+
+	return true;
 }
 
 ui_viewmgr::ui_viewmgr(const char *pkg)
@@ -73,17 +77,13 @@ ui_viewmgr::ui_viewmgr(const char *pkg)
 			this);
 
 	//Conformant: Make this configurable.
-	this->conform = this->create_conformant(this->win);
-
-	if (!this->conform)
+	if (!this->create_conformant(this->win))
 	{
 		LOGE("Failed to create a conformant (%s)", pkg);
 		return;
 	}
 
-	this->base_layout = this->create_base_layout(this->conform);
-
-	if (!this->base_layout)
+	if (!this->create_base_layout(this->conform))
 	{
 		LOGE("Failed to create a base layout (%s)", pkg);
 		return;
@@ -103,19 +103,19 @@ bool ui_viewmgr::activate()
 {
 	ui_viewmgr_base :: activate();
 
-	elm_object_part_content_unset(this->base_layout, "elm.swallow.content");
+	elm_object_part_content_unset(this->get_base(), "elm.swallow.content");
 
 	ui_view *view = dynamic_cast<ui_view *>(this->get_last_view());
 
 	//TODO: get parent?
 	Evas_Object *content = view->get_base();
-	if (content == this->base_layout)
+	if (content == this->get_base())
 	{
-		elm_object_part_content_set(this->base_layout, "elm.swallow.content", CONVERT_TO_EO(view->get_content()));
+		elm_object_part_content_set(this->get_base(), "elm.swallow.content", CONVERT_TO_EO(view->get_content()));
 	}
 	else
 	{
-		elm_object_part_content_set(this->base_layout, "elm.swallow.content", CONVERT_TO_EO(view->get_base()));
+		elm_object_part_content_set(this->get_base(), "elm.swallow.content", CONVERT_TO_EO(view->get_base()));
 	}
 
 	evas_object_show(this->win);
@@ -152,13 +152,13 @@ bool ui_viewmgr::pop_view()
 
 	//TODO: get parent?
 	Evas_Object *content = view->get_base();
-	if (content == this->base_layout)
+	if (content == this->get_base())
 	{
-		elm_object_part_content_set(this->base_layout, "elm.swallow.content", CONVERT_TO_EO(view->get_content()));
+		elm_object_part_content_set(this->get_base(), "elm.swallow.content", CONVERT_TO_EO(view->get_content()));
 	}
 	else
 	{
-		elm_object_part_content_set(this->base_layout, "elm.swallow.content", CONVERT_TO_EO(view->get_base()));
+		elm_object_part_content_set(this->get_base(), "elm.swallow.content", CONVERT_TO_EO(view->get_base()));
 	}
 
 	return true;
@@ -172,18 +172,18 @@ ui_viewmgr::push_view(ui_view *view)
 	//Don't prepare yet if viewmgr is not activated.
 	if (!this->is_activated()) return view;
 
-	elm_object_part_content_unset(this->base_layout, "elm.swallow.content");
+	elm_object_part_content_unset(this->get_base(), "elm.swallow.content");
 
 	Evas_Object *content = view->get_base();
 
-	if (content == this->base_layout)
+	if (content == this->get_base())
 	{
-		elm_object_part_content_set(this->base_layout, "elm.swallow.content", CONVERT_TO_EO(view->get_content()));
+		elm_object_part_content_set(this->get_base(), "elm.swallow.content", CONVERT_TO_EO(view->get_content()));
 	}
 	else
 	{
 		LOGE("view->base = %p", view->get_base());
-		elm_object_part_content_set(this->base_layout, "elm.swallow.content", CONVERT_TO_EO(view->get_base()));
+		elm_object_part_content_set(this->get_base(), "elm.swallow.content", CONVERT_TO_EO(view->get_base()));
 	}
 
 	return view;

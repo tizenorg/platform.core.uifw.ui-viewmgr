@@ -14,10 +14,10 @@ class ui_viewmgr: public ui_viewmgr_base
 private:
 	Evas_Object *win;
 	Evas_Object *conform;
-	Evas_Object *base_layout;
+	Evas_Object *layout;
 
-	Evas_Object *create_conformant(Evas_Object *win);
-	Evas_Object *create_base_layout(Evas_Object *conform);
+	bool create_conformant(Evas_Object *win);
+	bool create_base_layout(Evas_Object *conform);
 
 public:
 	ui_viewmgr(const char *pkg);
@@ -29,9 +29,9 @@ public:
 	bool pop_view();
 
 	//FIXME: Make this private
-	Evas_Object *get_base_layout()
+	Evas_Object *get_base()
 	{
-		return this->base_layout;
+		return this->layout;
 	}
 
 	Evas_Object *get_window()

@@ -16,6 +16,11 @@ void ui_view_base::load()
 void ui_view_base::unload()
 {
 	this->state = UI_VIEW_STATE_UNLOAD;
+	if (this->get_removable_content())
+	{
+		this->unload_content();
+		return;
+	}
 	if (!this->content) return;
 	if (!this->controller) return;
 	this->controller->unload();
@@ -60,8 +65,8 @@ void ui_view_base::destroy()
 }
 
 ui_view_base::ui_view_base(T content, ui_controller_base *controller, const char *name)
-		: content(content), controller(controller), name(string(name ? name : "")), style(string()), viewmgr(NULL), state(UI_VIEW_STATE_LOAD), event_block(
-		        false)
+		: content(content), controller(controller), name(string(name ? name : "")), style(string("")), viewmgr(NULL), state(UI_VIEW_STATE_LOAD),
+		  event_block(false), removable_content(true)
 {
 	if (!content) this->state = UI_VIEW_STATE_UNLOAD;
 	else this->state = UI_VIEW_STATE_LOAD;
@@ -86,8 +91,7 @@ ui_view_base::~ui_view_base()
 	if (this->controller) delete (this->controller);
 }
 
-ui_controller_base*
-ui_view_base::set_controller(ui_controller_base *controller)
+ui_controller_base* ui_view_base::set_controller(ui_controller_base *controller)
 {
 	ui_controller_base *prev_controller = this->controller;
 	this->controller = controller;
@@ -107,4 +111,11 @@ bool ui_view_base::set_style(const char *style)
 {
 	this->style.assign(style);
 	return true;
+}
+
+void ui_view_base::set_removable_content(bool removable)
+{
+	this->removable_content = removable;
+
+	//FIXME: If this api is called on unload state? should we remove content right now?
 }

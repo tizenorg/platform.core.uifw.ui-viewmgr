@@ -38,12 +38,4 @@ public:
 		//Arguments: content, title, subtitle, icon, title left button, title right button
 		view->set_content(content, "Title", "Subtitle", NULL, NULL, NULL);
 	}
-
-	void unload()
-	{
-		//You could destroy the content here for save memory.
-		ui_view *view = this->get_view();
-		Evas_Object *content = view->set_content(NULL);
-		evas_object_del(content);
-	}
 };

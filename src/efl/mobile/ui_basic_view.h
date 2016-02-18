@@ -18,8 +18,9 @@ private:
 	bool destroy_layout();
 
 protected:
-	void load();
-	void unload();
+	virtual void load();
+	virtual void unload();
+	virtual void unload_content();
 
 public:
 	ui_basic_view(ui_controller *controller, const char *name = NULL);

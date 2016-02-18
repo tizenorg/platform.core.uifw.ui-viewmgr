@@ -5,21 +5,20 @@ using namespace efl;
 bool ui_basic_view::destroy_layout()
 {
 	if (!this->layout) return false;
-	if (this->get_content())
-	{
-		elm_object_part_content_unset(this->layout, "elm.swallow.content");
-	}
 	evas_object_del(this->layout);
+	this->layout = NULL;
 
 	return true;
 }
 
 bool ui_basic_view::create_layout()
 {
-	ui_viewmgr *viewmgr = dynamic_cast<ui_viewmgr *>(ui_view_base::get_viewmgr());
-	Evas_Object *parent = viewmgr->get_window();
+	if (this->layout) return false;
 
-	Evas_Object *layout = elm_layout_add(parent);
+	ui_viewmgr *viewmgr = dynamic_cast<ui_viewmgr *>(ui_view_base::get_viewmgr());
+
+	Evas_Object *layout = elm_layout_add(viewmgr->get_base());
+
 	if (!layout)
 	{
 		LOGE("Failed to create a layout = ui_basic_view(%p)", this);
@@ -63,7 +62,6 @@ void ui_basic_view::load()
 
 void ui_basic_view::unload()
 {
-	this->destroy_layout();
 	ui_view::unload();
 }
 
@@ -197,3 +195,8 @@ Evas_Object *ui_basic_view::set_content(Evas_Object *content, const char *title,
 	return pcontent;
 }
 
+void ui_basic_view::unload_content()
+{
+	ui_view::set_content(NULL);
+	this->destroy_layout();
+}

@@ -46,20 +46,15 @@ private:
 	};
 
 	T content;                              ///< A content instance for a screen as a view.
-	ui_controller_base *controller;         ///< view life-cycle controller interface.
-	std::string name;                       ///< view name
-	std::string style;                      ///< view style name.
-	ui_viewmgr_base *viewmgr;               ///< viewmgr which this view belongs to.
-	ui_view_state state;                    ///< view state
-	bool event_block;                       ///< state of event block.
+	ui_controller_base *controller;         ///< View life-cycle controller interface.
+	std::string name;                       ///< View name
+	std::string style;                      ///< View style name.
+	ui_viewmgr_base *viewmgr;               ///< Viewmgr which this view belongs to.
+	ui_view_state state;                    ///< View state
+	bool event_block;                       ///< State of event block.
+	bool removable_content;                 ///< When this value is true, view removes it's content internally on unload state.
 
-	//Need to check.
 	friend class ui_viewmgr_base;
-	//friend bool ui_viewmgr_base ::_connect_view(ui_view_base *view);
-	//friend bool ui_viewmgr_base ::_disconnect_view(ui_view_base<T> *view);
-	//friend void ui_viewmgr_base ::_set_event_block(ui_view_base<T> *view);
-	//friend bool ui_viewmgr_base ::_push_view_finished(ui_view_base<T> *view);
-	//friend bool ui_viewmgr_base ::_pop_view_finished(ui_view_base<T> *view);
 
 protected:
 
@@ -129,6 +124,9 @@ protected:
 	 */
 	virtual void destroy();
 
+
+	virtual void unload_content() = 0;
+
 	/// Return the state of event block.
 	bool get_event_block()
 	{
@@ -145,8 +143,6 @@ public:
 	 *  @warning Be aware the deletion of controller passed here will be covered by ui_view_base.
 	 *           If you want to keep it for any reasons, please unset it using set_controller() before ui_view_base is deleted.
 	 */
-
-	//Constructor
 	ui_view_base(T content, ui_controller_base *controller, const char *name);
 	///Constructor for initializing with controller.
 	ui_view_base(ui_controller_base *controller, const char *name = NULL);
@@ -168,7 +164,7 @@ public:
 
 	/** @brief This is for replacing or setting a content of the view.
 	 *
-	 *  @note @c content is a logical object that represents a view in your framework. The actual type of the content could be translated to any certain types.
+	 *  @note @p content is a logical object that represents a view in your framework. The actual type of the content could be translated to any certain types.
 	 *        For instance, the type could be Evas_Object * in EFL and Layer * in Dali.
 	 *
 	 *  @param content a new content. It allows @c NULL for canceling the previous content.
@@ -189,6 +185,15 @@ public:
 	 *
 	 */
 	virtual bool set_style(const char *style);
+
+	/** @brief set content removable
+	 *
+	 *  @param removable if @p removable is @c true, content of this view will be removed on unload state. @c false otherwise.
+ 	 *
+	 *  @warning You should not remove a view content manually on unload status if removable content is set.
+	 *
+	 */
+	void set_removable_content(bool removable);
 
 	/// Return a controller of this view.
 	const ui_controller_base* get_controller()
@@ -214,6 +219,11 @@ public:
 	ui_view_state get_state()
 	{
 		return this->state;
+	}
+	/// Return a state of removeable content.
+	bool get_removable_content()
+	{
+		return this->removable_content;
 	}
 };
 
