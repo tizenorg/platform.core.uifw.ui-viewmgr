@@ -14,27 +14,16 @@ class ui_controller;
 class ui_view: public ui_view_base
 {
 public:
-	ui_view(ui_controller *controller);
+	ui_view(ui_controller *controller, const char *name = NULL);
 	virtual ~ui_view();
 
 	virtual Evas_Object *set_content(Evas_Object *content);
-	//virtual Evas_Object *set_content(Evas_Object *content, const char *title);
 	virtual Evas_Object *get_base();
 
 protected:
 	virtual void load();
-
-	/*    protected:
-
-	 virtual void set_event_block(bool block)
-	 {
-	 //TO DO: Implement below to proper way.
-	 //if (block)
-	 //   evas_object_freeze_events_set(elm_object_part_content_get(this->content, "swallow.view.this"), EINA_FALSE);
-	 //else
-	 //	  evas_object_freeze_events_set(ui_view_content_get(view_mgr->anim.view_this), EINA_TRUE);
-	 } */
 };
+
 }
 
 #endif /* UI_VIEW */

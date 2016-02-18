@@ -13,92 +13,82 @@ void ui_view_base::set_event_block(bool block)
 void ui_view_base::load()
 {
 	this->state = UI_VIEW_STATE_LOAD;
-	if (this->content)
-		return;
-	if (!this->controller)
-		return;
+	if (this->content) return;
+	if (!this->controller) return;
 	this->controller->load();
 }
 
 void ui_view_base::unload()
 {
 	this->state = UI_VIEW_STATE_UNLOAD;
-	if (!this->content)
-		return;
-	if (!this->controller)
-		return;
+	if (!this->content) return;
+	if (!this->controller) return;
 	this->controller->unload();
 }
 
 void ui_view_base::active()
 {
 	this->state = UI_VIEW_STATE_ACTIVE;
-	if (!this->controller)
-		return;
+	if (!this->controller) return;
 	this->controller->active();
 }
 
 void ui_view_base::inactive()
 {
 	this->state = UI_VIEW_STATE_INACTIVE;
-	if (!this->controller)
-		return;
+	if (!this->controller) return;
 	this->controller->inactive();
 }
 
 void ui_view_base::pause()
 {
 	this->state = UI_VIEW_STATE_PAUSE;
-	if (!this->content)
-		return;
-	if (state != UI_VIEW_STATE_ACTIVE)
-		return;
-	if (!this->controller)
-		return;
+	if (!this->content) return;
+	if (state != UI_VIEW_STATE_ACTIVE) return;
+	if (!this->controller) return;
 	this->controller->pause();
 }
 
 void ui_view_base::resume()
 {
 	this->state = UI_VIEW_STATE_ACTIVE;
-	if (state != UI_VIEW_STATE_PAUSE)
-		return;
-	if (!this->content)
-		return;
-	if (!this->controller)
-		return;
+	if (state != UI_VIEW_STATE_PAUSE) return;
+	if (!this->content) return;
+	if (!this->controller) return;
 	this->controller->resume();
 }
 
 void ui_view_base::destroy()
 {
-	if (!this->controller)
-		return;
+	if (!this->controller) return;
 	this->controller->destroy();
 }
 
-ui_view_base::ui_view_base(T content, ui_controller_base *controller) :
-		content(content), controller(controller), name(string()), style(string()), viewmgr(NULL), state(UI_VIEW_STATE_LOAD), event_block(
-				false)
+ui_view_base::ui_view_base(T content, ui_controller_base *controller, const char *name)
+		: content(content), controller(controller), name(string(name ? name : "")), style(string()), viewmgr(NULL), state(UI_VIEW_STATE_LOAD), event_block(
+		        false)
 {
-	if (!content)
-		this->state = UI_VIEW_STATE_UNLOAD;
-	else
-		this->state = UI_VIEW_STATE_LOAD;
+	if (!content) this->state = UI_VIEW_STATE_UNLOAD;
+	else this->state = UI_VIEW_STATE_LOAD;
 	controller->set_view(this);
 }
 
-ui_view_base::ui_view_base(ui_controller_base *controller = NULL) :
-		ui_view_base(NULL, controller)
+ui_view_base::ui_view_base(ui_controller_base *controller, const char *name)
+		: ui_view_base(NULL, controller, name)
 {
 	this->state = UI_VIEW_STATE_UNLOAD;
+}
+
+ui_view_base::ui_view_base(const char *name)
+		: ui_view_base(NULL, name)
+{
+
 }
 
 ui_view_base::~ui_view_base()
 {
 	this->viewmgr->remove_view(this);
-	if (this->controller)
-		delete (this->controller);
+	if (this->controller) delete (this->controller);
 }
 
 ui_controller_base*

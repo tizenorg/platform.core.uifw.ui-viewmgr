@@ -18,7 +18,7 @@ protected:
 	void unload();
 
 public:
-	ui_basic_view(ui_controller *controller);
+	ui_basic_view(ui_controller *controller, const char *name = NULL);
 	virtual ~ui_basic_view();
 
 	Evas_Object *get_base()
@@ -26,8 +26,14 @@ public:
 		return this->layout;
 	}
 
-	Evas_Object *set_content(Evas_Object *content);
-	Evas_Object *set_content(Evas_Object *content, const char *title, const char *subtitle = NULL, Evas_Object *title_left_btn = NULL, Evas_Object *title_right_btn = NULL);
+	Evas_Object *set_content(Evas_Object *content, const char *title = NULL);
+	Evas_Object *set_content(Evas_Object *content, const char *title, const char *subtitle, Evas_Object *icon, Evas_Object *title_left_btn, Evas_Object *title_right_btn);
+	bool set_title_badge(const char *text);
+	bool set_subtitle(const char *text);
+	bool set_icon(Evas_Object *icon);
+	bool set_title_left_btn(Evas_Object *title_left_btn);
+	bool set_title_right_btn(Evas_Object *title_right_btn);
+	bool set_title(const char *text);
 };
 
 }

@@ -8,6 +8,5 @@ void ui_controller_base::set_view(ui_view_base *view)
 	{
 		//TODO: ?
 	}
-	LOGI("view =%p", view);
 	this->view = view;
 }

@@ -37,6 +37,7 @@ private:
 	//TODO: change name to view_stack
 	std::list<ui_view_base*> view_list;     //view list.
 	bool event_block;   //event block on view transition. This value should be configurable by system.
+	bool activated;     //activated status of this viewmgr.
 
 	/**
 	 *	@brief link a given view to this viewmgr.
@@ -99,11 +100,11 @@ public:
 	///Destructor. Delete all contained views.
 	virtual ~ui_viewmgr_base();
 
-	//Activate a viewmgr. Implement this body to activate a viewmgr.
-	virtual bool activate() = 0;
+	//Activate a viewmgr.
+	virtual bool activate();
 
-	//Deactivate a viewmgr. Implement this body to deactivate a viewmgr.
-	virtual bool deactivate() = 0;
+	//Deactivate a viewmgr.
+	virtual bool deactivate();
 
 	/**
 	 *	@brief Push a new view into the viewmgr stack.
@@ -203,6 +204,17 @@ public:
 	unsigned int get_view_count()
 	{
 		return this->view_list.size();
+	}
+
+	/**
+	 *	@brief Return the active status of viewmgr.
+	 *
+	 *  @return active status
+	 *
+	 */
+	bool is_activated()
+	{
+		return this->activated;
 	}
 
 	/**

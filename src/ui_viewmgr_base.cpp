@@ -5,7 +5,6 @@
 
 bool ui_viewmgr_base::_connect_view(ui_view_base *view)
 {
-	LOGE("Conneted view with viewmgr");
 	if (view->viewmgr)
 	{
 		LOGE("view(%p) has already connected to viewmgr(%p)", view, this);
@@ -18,8 +17,7 @@ bool ui_viewmgr_base::_connect_view(ui_view_base *view)
 
 bool ui_viewmgr_base::_disconnect_view(ui_view_base *view)
 {
-	if (!view->viewmgr)
-		return false;
+	if (!view->viewmgr) return false;
 	view->viewmgr = NULL;
 	return true;
 }
@@ -27,8 +25,7 @@ bool ui_viewmgr_base::_disconnect_view(ui_view_base *view)
 void ui_viewmgr_base::_set_event_block(ui_view_base *view, bool block)
 {
 
-	if (!this->event_block)
-		return;
+	if (!this->event_block) return;
 	view->set_event_block(block);
 }
 
@@ -70,8 +67,8 @@ bool ui_viewmgr_base::_pop_view_finished(ui_view_base *view)
 	return true;
 }
 
-ui_viewmgr_base::ui_viewmgr_base() :
-		event_block(true)
+ui_viewmgr_base::ui_viewmgr_base()
+		: event_block(true), activated(false)
 {
 	//TODO: Initialize ?
 }
@@ -162,7 +159,6 @@ bool ui_viewmgr_base::pop_view()
 	//previous page to be current active.
 	auto nx = std::prev(this->view_list.end(), 2);
 	ui_view_base *pview = *nx;
-	LOGE("pview = %p", pview);
 	pview->load();
 	pview->inactive();
 	this->_set_event_block(pview, true);
@@ -217,8 +213,7 @@ int ui_viewmgr_base::get_view_index(const ui_view_base *view)
 
 	for (typename std::list<ui_view_base*>::iterator it = this->view_list.begin(); it != this->view_list.end(); it++)
 	{
-		if (view == *it)
-			return idx;
+		if (view == *it) return idx;
 		++idx;
 	}
 
@@ -229,6 +224,19 @@ ui_view_base *
 ui_viewmgr_base::get_last_view()
 {
 	int cnt = this->get_view_count();
-	LOGE("cnt = %d", cnt);
 	return this->get_view(cnt - 1);
+}
+
+bool ui_viewmgr_base::activate()
+{
+	if (this->activated) return false;
+	this->activated = true;
+	return true;
+}
+
+bool ui_viewmgr_base::deactivate()
+{
+	if (!this->activated) return false;
+	this->activated = false;
+	return true;
 }

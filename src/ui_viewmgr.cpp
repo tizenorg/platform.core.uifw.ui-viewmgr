@@ -9,14 +9,16 @@ win_delete_request_cb(void *data, Evas_Object *obj EINA_UNUSED, void *event_info
 {
 	ui_viewmgr *viewmgr = static_cast<ui_viewmgr*>(data);
 	delete(viewmgr);
+
+	//FIXME: Window is destroyed. Terminate Application!
+	//ui_app_exit();
 }
 
 Evas_Object *
 ui_viewmgr::create_conformant(Evas_Object *win)
 {
 	Evas_Object *conform = elm_conformant_add(win);
-	if (!conform)
-		return NULL;
+	if (!conform) return NULL;
 
 	evas_object_size_hint_weight_set(conform, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	elm_win_resize_object_add(win, conform);
@@ -30,10 +32,7 @@ Evas_Object *
 ui_viewmgr::create_base_layout(Evas_Object *conform)
 {
 	Evas_Object *layout = elm_layout_add(conform);
-	if (!layout)
-	{
-		return NULL;
-	}
+	if (!layout) return NULL;
 
 	elm_layout_theme_set(layout, "layout", "application", "default");
 	elm_object_content_set(conform, layout);
@@ -41,8 +40,8 @@ ui_viewmgr::create_base_layout(Evas_Object *conform)
 	return layout;
 }
 
-ui_viewmgr::ui_viewmgr(const char *pkg) :
-		ui_viewmgr_base()
+ui_viewmgr::ui_viewmgr(const char *pkg)
+		: ui_viewmgr_base()
 {
 	if (!pkg)
 	{
@@ -61,11 +60,22 @@ ui_viewmgr::ui_viewmgr(const char *pkg) :
 	//Set window rotation
 	if (elm_win_wm_rotation_supported_get(this->win))
 	{
-		int rots[4] = { 0, 90, 180, 270 };
+		int rots[4] =
+		{ 0, 90, 180, 270 };
 		elm_win_wm_rotation_available_rotations_set(this->win, (const int *) (&rots), 4);
 	}
 
-	evas_object_smart_callback_add(this->win, "delete,request", win_delete_request_cb, this);
+	//Window is requested to delete.
+	evas_object_smart_callback_add(this->win, "delete,request",
+			[](void *data, Evas_Object *obj, void *event_info) -> void
+			{
+				ui_viewmgr *viewmgr = static_cast<ui_viewmgr*>(data);
+				delete(viewmgr);
+
+				//FIXME: Window is destroyed. Terminate Application!
+				//ui_app_exit();
+			},
+			this);
 
 	//Conformant: Make this configurable.
 	this->conform = this->create_conformant(this->win);
@@ -87,7 +97,6 @@ ui_viewmgr::ui_viewmgr(const char *pkg) :
 	//Set Indicator properties
 	elm_win_indicator_mode_set(this->win, ELM_WIN_INDICATOR_SHOW);
 	elm_win_indicator_opacity_set(this->win, ELM_WIN_INDICATOR_TRANSPARENT);
-
 	elm_win_autodel_set(this->win, EINA_TRUE);
 }
 
@@ -97,6 +106,8 @@ ui_viewmgr::~ui_viewmgr()
 
 bool ui_viewmgr::activate()
 {
+	ui_viewmgr_base :: activate();
+
 	elm_object_part_content_unset(this->base_layout, "elm.swallow.content");
 
 	ui_view *view = dynamic_cast<ui_view *>(this->get_last_view());
@@ -106,7 +117,8 @@ bool ui_viewmgr::activate()
 	if (content == this->base_layout)
 	{
 		elm_object_part_content_set(this->base_layout, "elm.swallow.content", CONVERT_TO_EO(view->get_content()));
-	} else
+	}
+	else
 	{
 		elm_object_part_content_set(this->base_layout, "elm.swallow.content", CONVERT_TO_EO(view->get_base()));
 	}
@@ -118,8 +130,19 @@ bool ui_viewmgr::activate()
 
 bool ui_viewmgr::deactivate()
 {
-	//TODO: based on the profile, we could hide window or destroy window.
-	evas_object_lower(this->win);
+	ui_viewmgr_base ::deactivate();
+
+	//FIXME: based on the profile, we should app to go behind or terminate.
+	if (true)
+	{
+		evas_object_lower(this->win);
+	}
+	else
+	{
+		//FIXME: exit app
+		//ui_app_exit();
+	}
+
 	return true;
 }
 
@@ -137,7 +160,8 @@ bool ui_viewmgr::pop_view()
 	if (content == this->base_layout)
 	{
 		elm_object_part_content_set(this->base_layout, "elm.swallow.content", CONVERT_TO_EO(view->get_content()));
-	} else
+	}
+	else
 	{
 		elm_object_part_content_set(this->base_layout, "elm.swallow.content", CONVERT_TO_EO(view->get_base()));
 	}
@@ -150,7 +174,8 @@ ui_viewmgr::push_view(ui_view *view)
 {
 	ui_viewmgr_base::push_view(view);
 
-	if (this->get_view_count() == 1) return view;
+	//Don't prepare yet if viewmgr is not activated.
+	if (!this->is_activated()) return view;
 
 	elm_object_part_content_unset(this->base_layout, "elm.swallow.content");
 
@@ -159,7 +184,8 @@ ui_viewmgr::push_view(ui_view *view)
 	if (content == this->base_layout)
 	{
 		elm_object_part_content_set(this->base_layout, "elm.swallow.content", CONVERT_TO_EO(view->get_content()));
-	} else
+	}
+	else
 	{
 		LOGE("view->base = %p", view->get_base());
 		elm_object_part_content_set(this->base_layout, "elm.swallow.content", CONVERT_TO_EO(view->get_base()));

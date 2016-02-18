@@ -47,8 +47,8 @@ bool ui_basic_view::create_layout()
 	return true;
 }
 
-ui_basic_view::ui_basic_view(ui_controller *controller) :
-		ui_view(controller), layout(NULL)
+ui_basic_view::ui_basic_view(ui_controller *controller, const char *name)
+		: ui_view(controller, name), layout(NULL)
 {
 }
 
@@ -63,14 +63,14 @@ void ui_basic_view::load()
 	ui_view::load();
 }
 
-void ui_basic_view ::unload()
+void ui_basic_view::unload()
 {
 	this->destroy_layout();
 	ui_view::unload();
 }
 
 Evas_Object *
-ui_basic_view::set_content(Evas_Object *content)
+ui_basic_view::set_content(Evas_Object *content, const char *title)
 {
 	Evas_Object *pcontent = ui_view::set_content(content);
 
@@ -78,6 +78,7 @@ ui_basic_view::set_content(Evas_Object *content)
 	{
 		elm_object_part_content_unset(this->layout, "elm.swallow.content");
 		elm_object_part_content_set(this->layout, "elm.swallow.content", content);
+		elm_object_part_text_set(this->layout, "elm.text.title", title);
 	}
 	else
 	{
@@ -87,32 +88,111 @@ ui_basic_view::set_content(Evas_Object *content)
 	return pcontent;
 }
 
+bool ui_basic_view::set_subtitle(const char *text)
+{
+	if (this->layout)
+	{
+		elm_object_part_text_set(this->layout, "elm.text.subtitle", text);
+		if (text) elm_object_signal_emit(this->layout, "elm,state,subtitle,show", "elm");
+		else elm_object_signal_emit(this->layout, "elm,state,subtitle,hide", "elm");
+		return true;
+	}
+	LOGE("Layout is not exist!");
+	return false;
+}
+
+bool ui_basic_view::set_icon(Evas_Object *icon)
+{
+	if (this->layout)
+	{
+		elm_object_part_content_set(this->layout, "elm.swallow.icon", icon);
+		if (icon) elm_object_signal_emit(this->layout, "elm,state,icon,show", "elm");
+		else elm_object_signal_emit(this->layout, "elm,state,icon,hide", "elm");
+		return true;
+	}
+	LOGE("Layout is not exist!");
+	return false;
+}
+
+bool ui_basic_view::set_title_left_btn(Evas_Object *title_left_btn)
+{
+	if (this->layout)
+	{
+		if (title_left_btn)
+		{
+			elm_object_style_set(title_left_btn, "naviframe/title_left");
+			//FIXME: naviframe/title_left -> tizen_view/title_left
+			//elm_object_style_set(title_left_btn, "tizen_view/title_left");
+		}
+		elm_object_part_content_set(this->layout, "title_left_btn", title_left_btn);
+		if (title_left_btn) elm_object_signal_emit(this->layout, "elm,state,title_left_btn,show", "elm");
+		else elm_object_signal_emit(this->layout, "elm,state,title_left_btn,hide", "elm");
+		return true;
+	}
+	LOGE("Layout is not exist!");
+	return false;
+}
+
+bool
+ui_basic_view::set_title_right_btn(Evas_Object *title_right_btn)
+{
+	if (this->layout)
+	{
+		if (title_right_btn)
+		{
+			elm_object_style_set(title_right_btn, "naviframe/title_right");
+			//FIXME: naviframe/title_right -> tizen_view/title_right
+			//elm_object_style_set(title_left_btn, "tizen_view/title_right");
+		}
+		elm_object_part_content_set(this->layout, "title_right_btn", title_right_btn);
+		if (title_right_btn) elm_object_signal_emit(this->layout, "elm,state,title_right_btn,show", "elm");
+		else elm_object_signal_emit(this->layout, "elm,state,title_right_btn,hide", "elm");
+		return true;
+	}
+	LOGE("Layout is not exist!");
+	return false;
+}
+
+bool ui_basic_view::set_title_badge(const char *text)
+{
+	if (this->layout)
+	{
+		elm_object_part_text_set(this->layout, "title_badge", text);
+		if (text) elm_object_signal_emit(this->layout, "elm,state,title_badge,show", "elm");
+		else elm_object_signal_emit(this->layout, "elm,state,title_badge,hide", "elm");
+		return true;
+	}
+	LOGE("Layout is not exist!");
+	return false;
+}
+
+bool
+ui_basic_view::set_title(const char *text)
+{
+	if (this->layout)
+	{
+		elm_object_part_text_set(this->layout, "elm.text.title", text);
+		if (text) elm_object_signal_emit(this->layout, "elm,state,title,show", "elm");
+		else elm_object_signal_emit(this->layout, "elm,state,title,hide", "elm");
+		return true;
+	}
+	LOGE("Layout is not exist!");
+	return false;
+}
 
 Evas_Object *
-ui_basic_view::set_content(Evas_Object *content, const char *title, const char *subtitle, Evas_Object *title_left_btn, Evas_Object *title_right_btn)
+ui_basic_view::set_content(Evas_Object *content, const char *title, const char *subtitle, Evas_Object *icon, Evas_Object *title_left_btn,
+        Evas_Object *title_right_btn)
 {
-
 	Evas_Object *pcontent = this->set_content(content);
 
 	if (this->layout)
 	{
-		if (title) elm_object_part_text_set(this->layout, "elm.text.title", title);
-		if (subtitle) elm_object_part_text_set(this->layout, "elm.text.subtitle", subtitle);
-		if (title_left_btn)
-		{
-			elm_object_style_set(title_left_btn, "naviframe/title_left");
-			//FIXME:
-			//elm_object_style_set(title_left_btn, "tizen_view/title_left");
-			elm_object_part_content_set(this->layout, "title_left_btn", title_left_btn);
-		}
-		if (title_right_btn)
-		{
-			LOGE("AHHHHHHHHHHHHH");
-			elm_object_style_set(title_right_btn, "naviframe/title_right");
-			//FIXME:
-			//elm_object_style_set(title_left_btn, "tizen_view/title_right");
-			elm_object_part_content_set(this->layout, "title_right_btn", title_right_btn);
-		}
+		this->set_title(title);
+		this->set_subtitle(subtitle);
+		this->set_icon(icon);
+		this->set_title_left_btn(title_left_btn);
+		this->set_title_right_btn(title_right_btn);
 	}
 	else
 	{
@@ -121,5 +201,4 @@ ui_basic_view::set_content(Evas_Object *content, const char *title, const char *
 
 	return pcontent;
 }
-
 

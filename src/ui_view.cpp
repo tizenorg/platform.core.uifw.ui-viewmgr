@@ -4,8 +4,8 @@
 
 using namespace efl;
 
-ui_view::ui_view(ui_controller *controller) :
-		ui_view_base(controller)
+ui_view::ui_view(ui_controller *controller, const char *name) :
+		ui_view_base(controller, name)
 {
 }
 

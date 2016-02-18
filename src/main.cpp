@@ -25,15 +25,14 @@ static void create_base_gui(appdata_s *ad)
 	//View 1
 	{
 		app_controller1 *controller = new app_controller1(ad);
-		ad->viewmgr->push_view(new ui_basic_view(controller));
+		ad->viewmgr->push_view(new ui_basic_view(controller, "page1"));
 	}
 /*
 	//View 2
 	{
 		app_controller2 *controller = new app_controller2(ad);
-		ad->viewmgr->push_view(new ui_basic_view(controller));
+		ad->viewmgr->push_view(new ui_basic_view(controller, "page2"));
 	}
-
 	//View 3
 	{
 		app_controller3 *controller = new app_controller3(ad);
@@ -91,6 +90,7 @@ static void ui_app_lang_changed(app_event_info_h event_info, void *user_data)
 	system_settings_get_value_string(SYSTEM_SETTINGS_KEY_LOCALE_LANGUAGE, &locale);
 	elm_language_set(locale);
 	free(locale);
+
 	return;
 }
 

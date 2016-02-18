@@ -151,9 +151,11 @@ public:
 	 */
 
 	//Constructor
-	ui_view_base(T content, ui_controller_base *controller);
+	ui_view_base(T content, ui_controller_base *controller, const char *name);
 	///Constructor for initializing with controller.
-	ui_view_base(ui_controller_base *controller);
+	ui_view_base(ui_controller_base *controller, const char *name = NULL);
+	///Constructor for initializing with name.
+	ui_view_base(const char *name = NULL);
 
 	///Destructor for terminating view.
 	virtual ~ui_view_base();
