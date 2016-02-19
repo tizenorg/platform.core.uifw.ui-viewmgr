@@ -29,6 +29,8 @@ class ui_controller;
 
 class ui_view: public ui_view_base
 {
+	friend class ui_viewmgr;
+
 public:
 	ui_view(ui_controller *controller, const char *name = NULL);
 	virtual ~ui_view();
