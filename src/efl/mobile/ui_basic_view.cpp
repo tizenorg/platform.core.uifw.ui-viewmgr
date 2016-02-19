@@ -53,6 +53,28 @@ bool ui_basic_view::create_layout()
 		elm_object_part_content_set(layout, "elm.swallow.content", CONVERT_TO_EO(this->get_content()));
 	}
 
+	//Set soft back key, if it's needed
+	ui_viewmgr *viewmgr = dynamic_cast<ui_viewmgr *>(ui_view_base::get_viewmgr());
+	if (viewmgr->get_soft_back_key())
+	{
+		Evas_Object *prev_btn = elm_button_add(layout);
+
+		if (!prev_btn)
+		{
+			LOGE("Failed to create a button = ui_basic_view(%p)", this);
+		}
+
+		evas_object_smart_callback_add(prev_btn, "clicked", [](void *data, Evas_Object *obj, void *event_info) -> void
+		{
+			ui_viewmgr *viewmgr = static_cast<ui_viewmgr *>(data);
+			viewmgr->pop_view();
+		}, viewmgr);
+		//FIXME: Its not a naviframe :)
+		elm_object_style_set(prev_btn, "naviframe/back_btn/default");
+		elm_object_part_content_set(layout, "elm.swallow.prev_btn", prev_btn);
+		elm_object_signal_emit(layout, "elm,state,prev_btn,show", "elm");
+	}
+
 	this->layout = layout;
 
 	return true;
