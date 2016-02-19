@@ -43,6 +43,7 @@ private:
 	list<ui_view_base*> view_list;     //view list.
 	bool event_block;   //event block on view transition. This value should be configurable by system.
 	bool activated;     //activated status of this viewmgr.
+	bool soft_back_key;  //If system doesn't support HW back key, then this value is true.
 
 	/**
 	 *	@brief link a given view to this viewmgr.
@@ -230,6 +231,17 @@ public:
 	bool is_activated()
 	{
 		return this->activated;
+	}
+
+	/**
+	 *	@brief Return the whether software back key need or not.
+	 *
+	 *  @return whether need software back key.
+	 *
+	 */
+	bool get_soft_back_key()
+	{
+		return this->soft_back_key;
 	}
 
 };

@@ -83,7 +83,9 @@ bool ui_viewmgr_base::pop_view_finished(ui_view_base *view)
 ui_viewmgr_base::ui_viewmgr_base()
 		: event_block(true), activated(false)
 {
-	//TODO: Initialize ?
+	//FIXME: Read binary profile to decide whether support software back key or not.
+	//       software back key is needed in latest UX(Tizen_2.4)
+	this->soft_back_key = true;
 }
 
 ui_viewmgr_base::~ui_viewmgr_base()
