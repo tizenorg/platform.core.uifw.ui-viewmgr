@@ -40,7 +40,7 @@ class ui_viewmgr_base
 	friend class ui_view_base;
 
 private:
-	list<ui_view_base*> view_list;     //view list.
+	list<ui_view_base*> view_list;      //view list.
 	bool event_block;   //event block on view transition. This value should be configurable by system.
 	bool activated;     //activated status of this viewmgr.
 	bool soft_back_key;  //If system doesn't support HW back key, then this value is true.
@@ -183,9 +183,6 @@ protected:
 		return NULL;
 	}
 
-	//FIXME: Doc.
-	ui_view_base *get_last_view();
-
 	/**
 	 *  @brief Return a stack index number of the given view.
 	 *         You could use this function to query the given view stack order.
@@ -209,6 +206,9 @@ public:
 
 	///Destructor. Delete all contained views.
 	virtual ~ui_viewmgr_base();
+
+	//FIXME: Doc.
+	ui_view_base *get_last_view();
 
 	/**
 	 *  @brief Return the number of views which this viewmgr has.
