@@ -14,22 +14,22 @@
  *  limitations under the License.
  *
  */
-class page5_controller: public ui_controller
+class page6_controller: public ui_controller
 {
 private:
 	appdata_s *ad;
 
 public:
-	page5_controller(appdata_s *ad)
+	page6_controller(appdata_s *ad)
 			: ad(ad)
 	{
-		//No basic form.
-		/* ui_view(controller, identity name).
-		   Later, you could get the identity name using view->get_name(); */
-		ad->viewmgr->push_view(new ui_view(this, "page5"));
+		/* ui_basic_view(controller, identity name, style name of view).
+		   Later, you could get the identity name using view->get_name();
+		   you could get the style name of view as well */
+		ad->viewmgr->push_view(new ui_basic_view(this, "page6", "tabbar"));
 	}
 
-	~page5_controller()
+	~page6_controller()
 	{
 	}
 
@@ -37,10 +37,10 @@ public:
 	{
 		//Initialize contents.
 
-		ui_view *view = dynamic_cast<ui_view *>(this->get_view());
+		ui_basic_view *view = dynamic_cast<ui_basic_view *>(this->get_view());
 
 		//Create a main content.
-		Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 5<br>(Full View)",
+		Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 6<br>With Tabar",
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
@@ -51,16 +51,18 @@ public:
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
 					appdata_s *ad = static_cast<appdata_s *>(data);
-					page6(ad);
+					ad->viewmgr->deactivate();
 				},
 				this->ad);
 
-		view->set_content(content);
-		view->set_indicator(UI_VIEW_INDICATOR_HIDE);
+		//Arguments: content, title
+		view->set_content(content, "Title with tabbar");
+		Evas_Object *toolbar = create_tabbar(view->get_base());
+		view->set_tabbar(toolbar);
 	}
 };
 
-void page5(appdata_s *ad)
+void page6(appdata_s *ad)
 {
-	new page5_controller(ad);
+	new page6_controller(ad);
 }

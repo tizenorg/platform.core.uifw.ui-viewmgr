@@ -15,12 +15,32 @@
  *
  */
 #include "main.h"
+#include "page6_controller.h"
 #include "page5_controller.h"
 #include "page4_controller.h"
 #include "page3_controller.h"
 #include "page2_controller.h"
 #include "page1_controller.h"
 
+
+Evas_Object*
+create_tabbar(Evas_Object *parent)
+{
+	Evas_Object *toolbar;
+
+	toolbar = elm_toolbar_add(parent);
+
+	elm_object_style_set(toolbar, "tabbar_with_title");
+	elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_EXPAND);
+	elm_toolbar_transverse_expanded_set(toolbar, EINA_TRUE);
+
+	elm_toolbar_item_append(toolbar, NULL, "Tab1", NULL, NULL);
+	elm_toolbar_item_append(toolbar, NULL, "Tab2", NULL, NULL);
+
+	elm_toolbar_select_mode_set(toolbar, ELM_OBJECT_SELECT_MODE_ALWAYS);
+
+	return toolbar;
+}
 Evas_Object*
 create_content(Evas_Object *parent, const char *text, Evas_Smart_Cb prev_btn_clicked_cb, Evas_Smart_Cb next_btn_clicked_cb, appdata_s *ad)
 {

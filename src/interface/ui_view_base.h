@@ -39,6 +39,7 @@ class ui_controller_base;
  *	@date 2016/01/15
  *	@author Hermet Park <chuneon.park@samsung.com>
  */
+
 class ui_view_base
 {
 	friend class ui_viewmgr_base;
@@ -174,9 +175,9 @@ public:
 	 *  @warning Be aware the deletion of controller passed here will be covered by ui_view_base.
 	 *           If you want to keep it for any reasons, please unset it using set_controller() before ui_view_base is deleted.
 	 */
-	ui_view_base(T content, ui_controller_base *controller, const char *name);
+	ui_view_base(T content, ui_controller_base *controller, const char *name, const char *style = NULL);
 	///Constructor for initializing with controller.
-	ui_view_base(ui_controller_base *controller, const char *name = NULL);
+	ui_view_base(ui_controller_base *controller, const char *name = NULL, const char *style = NULL);
 	///Constructor for initializing with name.
 	ui_view_base(const char *name = NULL);
 
