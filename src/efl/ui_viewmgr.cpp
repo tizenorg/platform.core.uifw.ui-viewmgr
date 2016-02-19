@@ -158,6 +158,7 @@ bool ui_viewmgr::activate()
 	}
 
 	this->set_indicator(view->get_indicator());
+	view->activate();
 
 	evas_object_show(this->win);
 
@@ -171,6 +172,8 @@ bool ui_viewmgr::deactivate()
 	//FIXME: based on the profile, we should app to go behind or terminate.
 	if (true)
 	{
+		ui_view *view = this->get_last_view();
+		if (view) view->inactive();
 		evas_object_lower(this->win);
 	}
 	else
@@ -184,10 +187,8 @@ bool ui_viewmgr::deactivate()
 
 bool ui_viewmgr::pop_view()
 {
-	if (!ui_viewmgr_base::pop_view())
-	{
-		return false;
-	}
+	if (this->get_view_count() == 1) this->deactivate();
+	else if(!ui_viewmgr_base::pop_view()) return false;
 
 	ui_view *view = dynamic_cast<ui_view *>(this->get_last_view());
 
