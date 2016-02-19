@@ -79,7 +79,7 @@ bool ui_viewmgr::create_base_layout(Evas_Object *conform)
 }
 
 ui_viewmgr::ui_viewmgr(const char *pkg)
-		: ui_viewmgr_base()
+		: ui_viewmgr_base(), key_handler(NULL)
 {
 	if (!pkg)
 	{
@@ -132,10 +132,19 @@ ui_viewmgr::ui_viewmgr(const char *pkg)
 	elm_win_indicator_opacity_set(this->win, ELM_WIN_INDICATOR_OPAQUE);
 
 	elm_win_autodel_set(this->win, EINA_TRUE);
+
+	this->set_key_handler();
 }
 
 ui_viewmgr::~ui_viewmgr()
 {
+	this->key_handler->term();
+}
+
+void ui_viewmgr::set_key_handler()
+{
+	this->key_handler = new ui_key_handler(this);
+	this->key_handler->init();
 }
 
 bool ui_viewmgr::activate()

@@ -19,6 +19,7 @@
 
 #include <Elementary.h>
 #include "../interface/ui_viewmgr.h"
+#include "ui_key_handler.h"
 
 namespace efl
 {
@@ -33,11 +34,13 @@ private:
 	Evas_Object *win;
 	Evas_Object *conform;
 	Evas_Object *layout;
+	ui_key_handler *key_handler;   //HW Key Handler such as "BACK" key...
 	ui_view_indicator indicator;
 
 	bool create_conformant(Evas_Object *win);
 	bool create_base_layout(Evas_Object *conform);
 	bool set_indicator(ui_view_indicator indicator);
+	virtual void set_key_handler();
 
 protected:
 	Evas_Object *get_base()
