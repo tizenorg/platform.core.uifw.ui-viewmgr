@@ -186,6 +186,8 @@ bool ui_viewmgr::pop_view()
 {
 	if (!ui_viewmgr_base::pop_view())
 	{
+		if (this->get_view_count() == 1) this->deactivate();
+
 		return false;
 	}
 

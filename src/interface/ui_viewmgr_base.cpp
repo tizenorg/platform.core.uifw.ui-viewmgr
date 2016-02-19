@@ -161,7 +161,8 @@ bool ui_viewmgr_base::pop_view()
 		view->inactive();
 		view->unload();
 		view->destroy();
-		return true;
+
+		return false;
 	}
 
 	//last page to be popped.
