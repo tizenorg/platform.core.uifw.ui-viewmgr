@@ -14,27 +14,15 @@
  *  limitations under the License.
  *
  */
-#ifndef MOBILE_KEY_HANDLER
-#define MOBILE_KEY_HANDLER
+#include <dlog.h>
 
-#include <Elementary.h>
-#include "../ui_key_handler.h"
+#ifdef  LOG_TAG
+#undef  LOG_TAG
+#endif
+#define LOG_TAG "UI_VIEWMGR"
 
-namespace efl
-{
-class ui_viewmgr;
+#include "ui_viewmgr.h"
+#include "ui_controller.h"
+#include "ui_view.h"
+#include "ui_key_listener.h"
 
-class mobile_key_handler : public ui_key_handler
-{
-public:
-	mobile_key_handler(ui_viewmgr *viewmgr);
-
-	bool init();
-	bool term();
-
-	ui_viewmgr *get_viewmgr() { return this->viewmgr; }
-};
-
-}
-
-#endif /* MOBILE_KEY_HANDLER */

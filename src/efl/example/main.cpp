@@ -15,11 +15,11 @@
  *
  */
 #include "main.h"
-#include "page5_controller.h"
-#include "page4_controller.h"
-#include "page3_controller.h"
-#include "page2_controller.h"
-#include "page1_controller.h"
+#include "page5.h"
+#include "page4.h"
+#include "page3.h"
+#include "page2.h"
+#include "page1.h"
 
 Evas_Object*
 create_content(Evas_Object *parent, const char *text, Evas_Smart_Cb prev_btn_clicked_cb, Evas_Smart_Cb next_btn_clicked_cb, appdata_s *ad)
@@ -68,7 +68,7 @@ static void create_base_gui(appdata_s *ad)
 	//FIXME: Hide this creation.
 	ad->viewmgr = new ui_viewmgr(PACKAGE);
 
-	page1(ad);
+	create_page1(ad);
 
 	ad->viewmgr->activate();
 }

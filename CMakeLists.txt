@@ -3,16 +3,16 @@ PROJECT(ui-viewmgr)
 SET(PACKAGE org.tizen.ui-viewmgr)
 
 SET(SRCS
-	src/interface/ui_controller_base.cpp
-	src/interface/ui_view_base.cpp
-	src/interface/ui_viewmgr_base.cpp
+	src/interface/ui_controller_interface.cpp
+	src/interface/ui_view_interface.cpp
+	src/interface/ui_viewmgr_interface.cpp
 	src/efl/ui_controller.cpp
 	src/efl/ui_view.cpp
 	src/efl/ui_viewmgr.cpp
-	src/efl/ui_key_handler.cpp
+	src/efl/ui_key_listener.cpp
 	src/efl/mobile/ui_basic_view.cpp
-	src/efl/mobile/mobile_key_handler.cpp
-	src/main.cpp
+	src/efl/mobile/ui_basic_key_listener.cpp
+	src/efl/example/main.cpp
    )
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/inc)

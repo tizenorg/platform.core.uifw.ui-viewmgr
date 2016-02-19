@@ -14,19 +14,19 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_VIEWMGR
-#define UI_VIEWMGR
+#ifndef UI_VIEWMGR_H
+#define UI_VIEWMGR_H
 
 #include <Elementary.h>
-#include "../interface/ui_viewmgr.h"
-#include "ui_key_handler.h"
+#include "../interface/ui_viewmanager_interface.h"
+#include "ui_key_listener.h"
 
 namespace efl
 {
 
 class ui_view;
 
-class ui_viewmgr: public ui_viewmgr_base
+class ui_viewmgr: public ui_viewmgr_interface
 {
 	friend class ui_view;
 
@@ -34,13 +34,13 @@ private:
 	Evas_Object *win;
 	Evas_Object *conform;
 	Evas_Object *layout;
-	ui_key_handler *key_handler;   //HW Key Handler such as "BACK" key...
+	ui_key_listener *key_listener;   //HW Key Handler such as "BACK" key...
 	ui_view_indicator indicator;
 
 	bool create_conformant(Evas_Object *win);
 	bool create_base_layout(Evas_Object *conform);
 	bool set_indicator(ui_view_indicator indicator);
-	virtual void set_key_handler();
+	virtual void set_key_listener();
 
 protected:
 	Evas_Object *get_base()
@@ -69,4 +69,4 @@ public:
 };
 }
 
-#endif /* UI_VIEWMGR */
+#endif /* UI_VIEWMGR_H */

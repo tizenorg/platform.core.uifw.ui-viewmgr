@@ -14,15 +14,14 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_CONTROLLER
-#define UI_CONTROLLER
+#ifndef UI_CONTROLLER_H
+#define UI_CONTROLLER_H
 
-#include <Elementary.h>
-#include "../interface/ui_viewmgr.h"
+#include "../interface/ui_viewmanager_interface.h"
 
 namespace efl
 {
-class ui_controller: public ui_controller_base
+class ui_controller: public ui_controller_interface
 {
 public:
 	virtual ~ui_controller();

@@ -14,7 +14,11 @@
  *  limitations under the License.
  *
  */
-#include "efl_viewmgr.h"
+#include "ui_viewmanager.h"
+
+//FIXME: is it correct to define here?
+#define EDJ_PATH "/opt/usr/apps/org.tizen.ui-viewmgr/res/ui-viewmgr.edj"
+#define GROUP "elm/layout/tizen_view/default"
 
 using namespace efl;
 
@@ -54,7 +58,7 @@ bool ui_basic_view::create_layout()
 	}
 
 	//Set soft back key, if it's needed
-	ui_viewmgr *viewmgr = dynamic_cast<ui_viewmgr *>(ui_view_base::get_viewmgr());
+	ui_viewmgr *viewmgr = dynamic_cast<ui_viewmgr *>(ui_view_interface::get_viewmgr());
 	if (viewmgr->get_soft_back_key())
 	{
 		Evas_Object *prev_btn = elm_button_add(layout);

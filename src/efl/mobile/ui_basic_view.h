@@ -17,11 +17,7 @@
 #ifndef UI_BASIC_VIEW
 #define UI_BASIC_VIEW
 
-#include "../efl_viewmgr.h"
-
-//FIXME: is it correct to define here?
-#define EDJ_PATH "/opt/usr/apps/org.tizen.ui-viewmgr/res/ui-viewmgr.edj"
-#define GROUP "elm/layout/tizen_view/default"
+#include "../ui_viewmanager.h"
 
 namespace efl
 {

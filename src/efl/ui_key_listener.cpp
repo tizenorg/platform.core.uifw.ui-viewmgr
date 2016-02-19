@@ -14,33 +14,29 @@
  *  limitations under the License.
  *
  */
-#include "../efl_viewmgr.h"
-#include "mobile_key_handler.h"
+#include "ui_viewmanager.h"
 
 using namespace efl;
 
 static const char *KEY_BACK = "XF86Back";
-static const char *KEY_MENU = "XF86Menu";
 
-enum mobile_key_event_type
+enum ui_key_event_type
 {
 	UI_KEY_EVENT_BACK = 0,
-	UI_KEY_EVENT_MENU
 };
 
-mobile_key_handler::mobile_key_handler(ui_viewmgr *viewmgr)
-		: ui_key_handler(viewmgr)
+ui_key_listener::ui_key_listener(ui_viewmgr *viewmgr)
+		: viewmgr(viewmgr), key_grabber(NULL)
 {
+
 }
 
-static void event_proc(mobile_key_handler *key_handler, Evas_Event_Key_Down *ev)
+static void event_proc(ui_key_listener *key_handler, Evas_Event_Key_Down *ev)
 {
-   mobile_key_event_type type;
+   ui_key_event_type type;
 
    if (!strcmp(ev->keyname, KEY_BACK))
      type = UI_KEY_EVENT_BACK;
-   else if (!strcmp(ev->keyname, KEY_MENU))
-     type = UI_KEY_EVENT_MENU;
    else return;
 
    ui_viewmgr *viewmgr = key_handler->get_viewmgr();
@@ -57,20 +53,16 @@ static void event_proc(mobile_key_handler *key_handler, Evas_Event_Key_Down *ev)
 	   //view->back();
 	   LOGE("BACK!");
 	   break;
-   case UI_KEY_EVENT_MENU:
-	   //view->menu();
-	   LOGE("MENU!");
-	   break;
    }
 }
 
-bool mobile_key_handler::term()
+bool ui_key_listener::term()
 {
 	evas_object_del(this->key_grabber);
 	return true;
 }
 
-bool mobile_key_handler::init()
+bool ui_key_listener::init()
 {
 	if (!this->viewmgr)
 	{
@@ -96,7 +88,7 @@ bool mobile_key_handler::init()
 			[](void *data, Evas *e, Evas_Object *obj, void *event_info) -> void
 			{
 				Evas_Event_Key_Down *ev = static_cast<Evas_Event_Key_Down *>(event_info);
-				mobile_key_handler *key_handler = static_cast<mobile_key_handler *>(data);
+				ui_key_listener *key_handler = static_cast<ui_key_listener *>(data);
 				event_proc(key_handler, ev);
 			},
 			this);
@@ -104,13 +96,6 @@ bool mobile_key_handler::init()
 	if (!evas_object_key_grab(key_grab_rect, KEY_BACK, 0, 0, EINA_FALSE))
 	{
 	     LOGE("Failed to grab BACK KEY(%s)\n", KEY_BACK);
-	     evas_object_del(key_grab_rect);
-	     return false;
-	}
-
-	if (!evas_object_key_grab(key_grab_rect, KEY_MENU, 0, 0, EINA_FALSE))
-	{
-	     LOGE("Failed to grab MENU KEY(%s)\n", KEY_MENU);
 	     evas_object_del(key_grab_rect);
 	     return false;
 	}

@@ -14,7 +14,7 @@
  *  limitations under the License.
  *
  */
-#include "efl_viewmgr.h"
+#include "ui_viewmanager.h"
 
 using namespace efl;
 
@@ -79,7 +79,7 @@ bool ui_viewmgr::create_base_layout(Evas_Object *conform)
 }
 
 ui_viewmgr::ui_viewmgr(const char *pkg)
-		: ui_viewmgr_base(), key_handler(NULL)
+		: ui_viewmgr_interface(), key_listener(NULL)
 {
 	if (!pkg)
 	{
@@ -133,23 +133,23 @@ ui_viewmgr::ui_viewmgr(const char *pkg)
 
 	elm_win_autodel_set(this->win, EINA_TRUE);
 
-	this->set_key_handler();
+	this->set_key_listener();
 }
 
 ui_viewmgr::~ui_viewmgr()
 {
-	this->key_handler->term();
+	this->key_listener->term();
 }
 
-void ui_viewmgr::set_key_handler()
+void ui_viewmgr::set_key_listener()
 {
-	this->key_handler = new ui_key_handler(this);
-	this->key_handler->init();
+	this->key_listener = new ui_key_listener(this);
+	this->key_listener->init();
 }
 
 bool ui_viewmgr::activate()
 {
-	ui_viewmgr_base::activate();
+	ui_viewmgr_interface::activate();
 
 	elm_object_part_content_unset(this->get_base(), "elm.swallow.content");
 
@@ -176,7 +176,7 @@ bool ui_viewmgr::activate()
 
 bool ui_viewmgr::deactivate()
 {
-	ui_viewmgr_base::deactivate();
+	ui_viewmgr_interface::deactivate();
 
 	//FIXME: based on the profile, we should app to go behind or terminate.
 	if (true)
@@ -197,7 +197,7 @@ bool ui_viewmgr::deactivate()
 bool ui_viewmgr::pop_view()
 {
 	if (this->get_view_count() == 1) this->deactivate();
-	else if(!ui_viewmgr_base::pop_view()) return false;
+	else if(!ui_viewmgr_interface::pop_view()) return false;
 
 	ui_view *view = dynamic_cast<ui_view *>(this->get_last_view());
 
@@ -220,7 +220,7 @@ bool ui_viewmgr::pop_view()
 ui_view *
 ui_viewmgr::push_view(ui_view *view)
 {
-	ui_viewmgr_base::push_view(view);
+	ui_viewmgr_interface::push_view(view);
 
 	//Don't prepare yet if viewmgr is not activated.
 	if (!this->is_activated()) return view;

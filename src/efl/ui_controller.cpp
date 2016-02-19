@@ -14,13 +14,13 @@
  *  limitations under the License.
  *
  */
-#include "efl_viewmgr.h"
+#include "ui_viewmanager.h"
 
 using namespace efl;
 
 ui_view * ui_controller::get_view()
 {
-	ui_view_base *view = ui_controller_base::get_view();
+	ui_view_interface *view = ui_controller_interface::get_view();
 	if (!view) return NULL;
 	return dynamic_cast<ui_view *>(view);
 }

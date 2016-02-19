@@ -14,10 +14,10 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_CONTROLLER_BASE_H_
-#define UI_CONTROLLER_BASE_H_
+#ifndef UI_CONTROLLER_INTERFACE_H_
+#define UI_CONTROLLER_INTERFACE_H_
 
-class ui_view_base;
+class ui_view_interface;
 
 /**
  *  @class ui_controller_base
@@ -30,27 +30,27 @@ class ui_view_base;
  *  @author Hermet Park <chuneon.park@samsung.com>
  *
  */
-class ui_controller_base
+class ui_controller_interface
 {
-	friend class ui_view_base;
+	friend class ui_view_interface;
 
 private:
-	ui_view_base *view;
+	ui_view_interface *view;
 
-	void set_view(ui_view_base *view);
+	void set_view(ui_view_interface *view);
 
 protected:
-	ui_view_base *get_view()
+	ui_view_interface *get_view()
 	{
 		return this->view;
 	}
 
 public:
-	ui_controller_base() :
+	ui_controller_interface() :
 			view(NULL)
 	{
 	}
-	virtual ~ui_controller_base()
+	virtual ~ui_controller_interface()
 	{
 	}
 
@@ -110,4 +110,4 @@ public:
 	virtual void destroy() = 0;
 };
 
-#endif /* UI_CONTROLLER_BASE_H_ */
+#endif /* UI_CONTROLLER_INTERFACE_H_ */

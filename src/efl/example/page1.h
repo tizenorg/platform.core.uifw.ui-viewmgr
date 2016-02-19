@@ -14,21 +14,20 @@
  *  limitations under the License.
  *
  */
-class page3_controller: public ui_controller
+class page1: public ui_controller
 {
 private:
 	appdata_s *ad;
 
 public:
-	page3_controller(appdata_s *ad)
+	page1(appdata_s *ad)
 			: ad(ad)
 	{
 		/* ui_basic_view(controller, identity name).
 		   Later, you could get the identity name using view->get_name(); */
-		ad->viewmgr->push_view(new ui_basic_view(this, "page3"));
+		ad->viewmgr->push_view(new ui_basic_view(this, "page1"));
 	}
-
-	~page3_controller()
+	~page1()
 	{
 	}
 
@@ -39,27 +38,26 @@ public:
 		ui_basic_view *view = dynamic_cast<ui_basic_view *>(this->get_view());
 
 		//Create a main content.
-		Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 3",
+		Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 1",
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
 					appdata_s *ad = static_cast<appdata_s *>(data);
-					ad->viewmgr->pop_view();
+					ad->viewmgr->deactivate();
 				},
 				//Next Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
 					appdata_s *ad = static_cast<appdata_s *>(data);
-					page4(ad);
+					create_page2(ad);
 				},
 				this->ad);
 
-		//Arguments: content, title, subtitle, title left button, title right button
-		view->set_content(content, "Title", "Subtitle", NULL, NULL);
+		view->set_content(content, "Title");
 	}
 };
 
-void page3(appdata_s *ad)
+void create_page1(appdata_s *ad)
 {
-	new page3_controller(ad);
+	new page1(ad);
 }

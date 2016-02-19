@@ -14,29 +14,13 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_VIEWMGR_H_
-#define UI_VIEWMGR_H_
+#include "ui_viewmanager_interface.h"
 
-#include <app.h>
-#include <dlog.h>
-
-#ifdef  LOG_TAG
-#undef  LOG_TAG
-#endif
-#define LOG_TAG "VIEWMGR"
-
-enum ui_view_indicator
+void ui_controller_interface::set_view(ui_view_interface *view)
 {
-	UI_VIEW_INDICATOR_DEFAULT = 0,
-	UI_VIEW_INDICATOR_OPTIMAL,
-	UI_VIEW_INDICATOR_OVERLAP,
-	UI_VIEW_INDICATOR_HIDE,
-	UI_VIEW_INDICATOR_LAST
-};
-
-#include "ui_viewmgr_base.h"
-#include "ui_view_base.h"
-#include "ui_controller_base.h"
-
-
-#endif /* UI_VIEWMGR_H */
+	if (this->view)
+	{
+		this->view->set_controller(NULL);
+	}
+	this->view = view;
+}

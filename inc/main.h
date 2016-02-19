@@ -17,8 +17,7 @@
 #include <app.h>
 #include <system_settings.h>
 #include <dlog.h>
-#include <efl_extension.h>
-#include "../src/efl/mobile/efl_viewmgr.h"
+#include "../src/efl/mobile/ui_viewmanager.h"
 
 //uncomment if you want debug
 #ifndef TIZEN_ENGINEER_MODE
@@ -28,7 +27,7 @@
 #ifdef  LOG_TAG
 #undef  LOG_TAG
 #endif
-#define LOG_TAG "VIEWMGR"
+#define LOG_TAG "UI_VIEWMGR"
 
 #if !defined(PACKAGE)
 #define PACKAGE "org.tizen.ui-viewmgr"

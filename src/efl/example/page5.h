@@ -14,13 +14,13 @@
  *  limitations under the License.
  *
  */
-class page5_controller: public ui_controller
+class page5: public ui_controller
 {
 private:
 	appdata_s *ad;
 
 public:
-	page5_controller(appdata_s *ad)
+	page5(appdata_s *ad)
 			: ad(ad)
 	{
 		//No basic form.
@@ -29,7 +29,7 @@ public:
 		ui_view *view = ad->viewmgr->push_view(new ui_view(this, "page5"));
 	}
 
-	~page5_controller()
+	~page5()
 	{
 	}
 
@@ -60,7 +60,7 @@ public:
 	}
 };
 
-void page5(appdata_s *ad)
+void create_page5(appdata_s *ad)
 {
-	new page5_controller(ad);
+	new page5(ad);
 }

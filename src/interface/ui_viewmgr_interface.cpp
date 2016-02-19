@@ -14,9 +14,9 @@
  *  limitations under the License.
  *
  */
-#include "ui_viewmgr.h"
+#include "ui_viewmanager_interface.h"
 
-bool ui_viewmgr_base::connect_view(ui_view_base *view)
+bool ui_viewmgr_interface::connect_view(ui_view_interface *view)
 {
 	if (view->viewmgr)
 	{
@@ -28,23 +28,23 @@ bool ui_viewmgr_base::connect_view(ui_view_base *view)
 	return true;
 }
 
-bool ui_viewmgr_base::disconnect_view(ui_view_base *view)
+bool ui_viewmgr_interface::disconnect_view(ui_view_interface *view)
 {
 	if (!view->viewmgr) return false;
 	view->viewmgr = NULL;
 	return true;
 }
 
-void ui_viewmgr_base::set_event_block(ui_view_base *view, bool block)
+void ui_viewmgr_interface::set_event_block(ui_view_interface *view, bool block)
 {
 
 	if (!this->event_block) return;
 	view->set_event_block(block);
 }
 
-bool ui_viewmgr_base::push_view_finished(ui_view_base *view)
+bool ui_viewmgr_interface::push_view_finished(ui_view_interface *view)
 {
-	ui_view_base *last = this->view_list.back();
+	ui_view_interface *last = this->view_list.back();
 
 	//The previous view has been pushed. This should be unload.
 	if (last != view)
@@ -60,9 +60,9 @@ bool ui_viewmgr_base::push_view_finished(ui_view_base *view)
 	return true;
 }
 
-bool ui_viewmgr_base::pop_view_finished(ui_view_base *view)
+bool ui_viewmgr_interface::pop_view_finished(ui_view_interface *view)
 {
-	ui_view_base *last = this->view_list.back();
+	ui_view_interface *last = this->view_list.back();
 
 	//This view has been popped. It should be destroyed.
 	if (last == view)
@@ -80,7 +80,7 @@ bool ui_viewmgr_base::pop_view_finished(ui_view_base *view)
 	return true;
 }
 
-ui_viewmgr_base::ui_viewmgr_base()
+ui_viewmgr_interface::ui_viewmgr_interface()
 		: event_block(true), activated(false)
 {
 	//FIXME: Read binary profile to decide whether support software back key or not.
@@ -88,12 +88,12 @@ ui_viewmgr_base::ui_viewmgr_base()
 	this->soft_back_key = true;
 }
 
-ui_viewmgr_base::~ui_viewmgr_base()
+ui_viewmgr_interface::~ui_viewmgr_interface()
 {
 	//Terminate views
-	for (typename std::list<ui_view_base*>::reverse_iterator it = this->view_list.rbegin(); it != this->view_list.rend(); it++)
+	for (typename std::list<ui_view_interface*>::reverse_iterator it = this->view_list.rbegin(); it != this->view_list.rend(); it++)
 	{
-		ui_view_base *view = *it;
+		ui_view_interface *view = *it;
 		view->inactive();
 		view->unload();
 		view->destroy();
@@ -104,8 +104,8 @@ ui_viewmgr_base::~ui_viewmgr_base()
 	ui_app_exit();
 }
 
-ui_view_base *
-ui_viewmgr_base::push_view(ui_view_base *view)
+ui_view_interface *
+ui_viewmgr_interface::push_view(ui_view_interface *view)
 {
 	if (!view)
 	{
@@ -119,7 +119,7 @@ ui_viewmgr_base::push_view(ui_view_base *view)
 		return NULL;
 	}
 
-	ui_view_base *pview;
+	ui_view_interface *pview;
 
 	//Previous view
 	if (this->view_list.size())
@@ -145,7 +145,7 @@ ui_viewmgr_base::push_view(ui_view_base *view)
 	return view;
 }
 
-bool ui_viewmgr_base::pop_view()
+bool ui_viewmgr_interface::pop_view()
 {
 	//No more view? destroy viewmgr?
 	if (this->get_view_count() == 0)
@@ -157,7 +157,7 @@ bool ui_viewmgr_base::pop_view()
 	if (this->get_view_count() == 1)
 	{
 		//destroy viewmgr?
-		ui_view_base *view = this->view_list.back();
+		ui_view_interface *view = this->view_list.back();
 		view->inactive();
 		view->unload();
 		view->destroy();
@@ -167,7 +167,7 @@ bool ui_viewmgr_base::pop_view()
 	}
 
 	//last page to be popped.
-	ui_view_base *view = this->view_list.back();
+	ui_view_interface *view = this->view_list.back();
 	view->inactive();
 	this->set_event_block(view, true);
 
@@ -175,7 +175,7 @@ bool ui_viewmgr_base::pop_view()
 	//Make this getter method? or define instance?
 	//previous page to be current active.
 	auto nx = std::prev(this->view_list.end(), 2);
-	ui_view_base *pview = *nx;
+	ui_view_interface *pview = *nx;
 	pview->load();
 	pview->inactive();
 	this->set_event_block(pview, true);
@@ -190,19 +190,19 @@ bool ui_viewmgr_base::pop_view()
 	return true;
 }
 
-bool ui_viewmgr_base::insert_view_before(ui_view_base *view, ui_view_base *before)
+bool ui_viewmgr_interface::insert_view_before(ui_view_interface *view, ui_view_interface *before)
 {
 	//TODO: ...
 	return true;
 }
 
-bool ui_viewmgr_base::insert_view_after(ui_view_base *view, ui_view_base *after)
+bool ui_viewmgr_interface::insert_view_after(ui_view_interface *view, ui_view_interface *after)
 {
 	//TODO: ...
 	return true;
 }
 
-bool ui_viewmgr_base::remove_view(ui_view_base *view)
+bool ui_viewmgr_interface::remove_view(ui_view_interface *view)
 {
 	this->view_list.remove(view);
 	this->disconnect_view(view);
@@ -211,24 +211,24 @@ bool ui_viewmgr_base::remove_view(ui_view_base *view)
 	return true;
 }
 
-ui_view_base*
-ui_viewmgr_base::get_view(unsigned int idx)
+ui_view_interface*
+ui_viewmgr_interface::get_view(unsigned int idx)
 {
 	if (idx < 0 || idx >= this->view_list.size())
 	{
 		LOGE("Invalid idx(%d)! =? (idx range: %d ~ %d)", idx, 0, this->view_list.size() - 1);
 		return NULL;
 	}
-	typename std::list<ui_view_base*>::iterator it = this->view_list.begin();
+	typename std::list<ui_view_interface*>::iterator it = this->view_list.begin();
 	std::advance(it, idx);
 	return *it;
 }
 
-int ui_viewmgr_base::get_view_index(const ui_view_base *view)
+int ui_viewmgr_interface::get_view_index(const ui_view_interface *view)
 {
 	int idx = 0;
 
-	for (typename std::list<ui_view_base*>::iterator it = this->view_list.begin(); it != this->view_list.end(); it++)
+	for (typename std::list<ui_view_interface*>::iterator it = this->view_list.begin(); it != this->view_list.end(); it++)
 	{
 		if (view == *it) return idx;
 		++idx;
@@ -237,21 +237,21 @@ int ui_viewmgr_base::get_view_index(const ui_view_base *view)
 	return -1;
 }
 
-ui_view_base *
-ui_viewmgr_base::get_last_view()
+ui_view_interface *
+ui_viewmgr_interface::get_last_view()
 {
 	int cnt = this->get_view_count();
 	return this->get_view(cnt - 1);
 }
 
-bool ui_viewmgr_base::activate()
+bool ui_viewmgr_interface::activate()
 {
 	if (this->activated) return false;
 	this->activated = true;
 	return true;
 }
 
-bool ui_viewmgr_base::deactivate()
+bool ui_viewmgr_interface::deactivate()
 {
 	if (!this->activated) return false;
 	this->activated = false;

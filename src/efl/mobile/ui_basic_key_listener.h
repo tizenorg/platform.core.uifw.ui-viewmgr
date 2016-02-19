@@ -14,32 +14,26 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_KEY_HANDLER
-#define UI_KEY_HANDLER
+#ifndef MOBILE_KEY_HANDLER_H
+#define MOBILE_KEY_HANDLER_H
 
-#include <Elementary.h>
-#include "../interface/ui_viewmgr.h"
+#include "../ui_viewmanager.h"
 
 namespace efl
 {
 class ui_viewmgr;
 
-class ui_key_handler
+class ui_basic_key_listener : public ui_key_listener
 {
-protected:
-	ui_viewmgr *viewmgr;
-	Evas_Object *key_grabber;
-
 public:
-	ui_key_handler(ui_viewmgr *viewmgr);
-	virtual ~ui_key_handler() {}
+	ui_basic_key_listener(ui_viewmgr *viewmgr);
 
-	virtual bool init();
-	virtual bool term();
+	bool init();
+	bool term();
 
 	ui_viewmgr *get_viewmgr() { return this->viewmgr; }
 };
 
 }
 
-#endif /* UI_KEY_HANDLER */
+#endif /* MOBILE_KEY_HANDLER_H */

@@ -14,13 +14,12 @@
  *  limitations under the License.
  *
  */
-#include "ui_viewmgr.h"
+#include <dlog.h>
 
-void ui_controller_base::set_view(ui_view_base *view)
-{
-	if (this->view)
-	{
-		this->view->set_controller(NULL);
-	}
-	this->view = view;
-}
+#ifdef  LOG_TAG
+#undef  LOG_TAG
+#endif
+#define LOG_TAG "UI_VIEWMGR"
+
+#include "ui_basic_key_listener.h"
+#include "ui_basic_view.h"

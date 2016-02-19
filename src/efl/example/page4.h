@@ -14,13 +14,13 @@
  *  limitations under the License.
  *
  */
-class page4_controller: public ui_controller
+class page4: public ui_controller
 {
 private:
 	appdata_s *ad;
 
 public:
-	page4_controller(appdata_s *ad)
+	page4(appdata_s *ad)
 			: ad(ad)
 	{
 		/* ui_basic_view(controller, identity name).
@@ -28,7 +28,7 @@ public:
 		ad->viewmgr->push_view(new ui_basic_view(this, "page4"));
 	}
 
-	~page4_controller()
+	~page4()
 	{
 	}
 
@@ -50,7 +50,7 @@ public:
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
 					appdata_s *ad = static_cast<appdata_s *>(data);
-					page5(ad);
+					create_page5(ad);
 				},
 				this->ad);
 
@@ -60,7 +60,7 @@ public:
 	}
 };
 
-void page4(appdata_s *ad)
+void create_page4(appdata_s *ad)
 {
-	new page4_controller(ad);
+	new page4(ad);
 }

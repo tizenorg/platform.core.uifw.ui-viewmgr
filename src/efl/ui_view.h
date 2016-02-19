@@ -14,11 +14,11 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_VIEW
-#define UI_VIEW
+#ifndef UI_VIEW_H
+#define UI_VIEW_H
 
 #include <Elementary.h>
-#include "../interface/ui_viewmgr.h"
+#include "../interface/ui_viewmanager_interface.h"
 
 #define CONVERT_TO_EO(T) static_cast<Evas_Object *>((T))
 #define CONVERT_TO_T(EO) static_cast<T>((EO))
@@ -27,7 +27,7 @@ namespace efl
 {
 class ui_controller;
 
-class ui_view: public ui_view_base
+class ui_view: public ui_view_interface
 {
 	friend class ui_viewmgr;
 
@@ -41,12 +41,10 @@ public:
 	void set_indicator(ui_view_indicator indicator);
 
 protected:
-	virtual void load();
-	virtual void unload();
 	virtual void unload_content();
 	Evas_Object *get_parent();
 };
 
 }
 
-#endif /* UI_VIEW */
+#endif /* UI_VIEW_H */

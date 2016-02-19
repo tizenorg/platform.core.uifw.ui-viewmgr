@@ -14,4 +14,28 @@
  *  limitations under the License.
  *
  */
-#include "ui_basic_view.h"
+#ifndef UI_VIEWMANAGER_INTERFACE_H_
+#define UI_VIEWMANAGER_INTERFACE_H_
+
+#include <app.h>
+#include <dlog.h>
+
+#ifdef  LOG_TAG
+#undef  LOG_TAG
+#endif
+#define LOG_TAG "UI_VIEWMGR"
+
+enum ui_view_indicator
+{
+	UI_VIEW_INDICATOR_DEFAULT = 0,
+	UI_VIEW_INDICATOR_OPTIMAL,
+	UI_VIEW_INDICATOR_OVERLAP,
+	UI_VIEW_INDICATOR_HIDE,
+	UI_VIEW_INDICATOR_LAST
+};
+
+#include "ui_viewmgr_interface.h"
+#include "ui_view_interface.h"
+#include "ui_controller_interface.h"
+
+#endif /* UI_VIEWMANAGER_INTERFACE_H */

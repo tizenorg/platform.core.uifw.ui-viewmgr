@@ -14,17 +14,17 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_WINDOW_BASE_H_
-#define UI_WINDOW_BASE_H_
+#ifndef UI_VIEWMGR_INTERFACE_H_
+#define UI_VIEWMGR_INTERFACE_H_
 
 #include <list>
 
 using namespace std;
 
-class ui_view_base;
+class ui_view_interface;
 
 /**
- *  @class ui_viewmgr_base
+ *  @class ui_viewmgr_interface
  *
  *  @ingroup ui_viewmgr
  *
@@ -35,12 +35,12 @@ class ui_view_base;
  *  @date 2016/01/29
  *  @author Hermet Park <chuneon.park@samsung.com>
  */
-class ui_viewmgr_base
+class ui_viewmgr_interface
 {
-	friend class ui_view_base;
+	friend class ui_view_interface;
 
 private:
-	list<ui_view_base*> view_list;      //view list.
+	list<ui_view_interface*> view_list;      //view list.
 	bool event_block;   //event block on view transition. This value should be configurable by system.
 	bool activated;     //activated status of this viewmgr.
 	bool soft_back_key;  //If system doesn't support HW back key, then this value is true.
@@ -51,9 +51,9 @@ private:
 	 *  @param view a view to connect to this viewmgr.
 	 *  @return success or not.
 	 *
-	 *  @note This is s a friend function of ui_view_base
+	 *  @note This is s a friend function of ui_view_interface
 	 */
-	bool connect_view(ui_view_base *view);
+	bool connect_view(ui_view_interface *view);
 
 	/**
 	 *  @brief unlink a given view from this viewmgr.
@@ -61,9 +61,9 @@ private:
 	 *  @param view a view to disconnect from this viewmgr.
 	 *  @return @c true success or @c false not.
 	 *
-	 *  @note This is s a friend function of ui_view_base
+	 *  @note This is s a friend function of ui_view_interface
 	 */
-	bool disconnect_view(ui_view_base *view);
+	bool disconnect_view(ui_view_interface *view);
 
 	/**
 	 *  @brief toggle event blocking to the given view.
@@ -71,9 +71,9 @@ private:
 	 *  @param view a view to toggle event blocking
 	 *  @param block @c true is block event, otherwise @c false.
 	 *
-	 *  @note This is s a friend function of ui_view_base
+	 *  @note This is s a friend function of ui_view_interface
 	 */
-	void set_event_block(ui_view_base *view, bool block);
+	void set_event_block(ui_view_interface *view, bool block);
 
 protected:
 	/**
@@ -83,9 +83,9 @@ protected:
 	 *  @return @c true success or @c false not.
 	 *
 	 *  @warning This function must be called definitely when push transition is finished.
-	 *  @note This is s a friend function of ui_view_base
+	 *  @note This is s a friend function of ui_view_interface
 	 */
-	bool push_view_finished(ui_view_base *view);
+	bool push_view_finished(ui_view_interface *view);
 
 	/**
 	 *  @brief This function is designed for end of pop transition.
@@ -94,16 +94,16 @@ protected:
 	 *  @return @c true success or @c false not.
 	 *
 	 *  @warning This function must be called definitely when push transition is finished.
-	 *  @note This is s a friend function of ui_view_base
+	 *  @note This is s a friend function of ui_view_interface
 	 */
-	bool pop_view_finished(ui_view_base *view);
+	bool pop_view_finished(ui_view_interface *view);
 
 	/**
 	 *  @brief Return a list of views which this viewmgr has.
 	 *
 	 *  @return a pointer of list of views.
 	 */
-	const list<ui_view_base*>* const get_view_list()
+	const list<ui_view_interface*>* const get_view_list()
 	{
 		return &this->view_list;
 	}
@@ -115,7 +115,7 @@ protected:
 	 *  @note Normally, the current view will be hidden by a new view.
 	 *  @return @c true on success, @c false otherwise.
 	 */
-	ui_view_base *push_view(ui_view_base *view);
+	ui_view_interface *push_view(ui_view_interface *view);
 
 	/**
 	 *  @brief Pop the top view from the viewmgr stack.
@@ -137,7 +137,7 @@ protected:
 	 *         If you pass @c NULL, @c view will be inserted at the front of the view stack.
 	 *  @return @c true success or @c false not.
 	 */
-	bool insert_view_before(ui_view_base *view, ui_view_base *before);
+	bool insert_view_before(ui_view_interface *view, ui_view_interface *before);
 
 	/**
 	 *  @brief Insert a view into this viewmgr stack. Specially, right after of the given view, @after
@@ -147,7 +147,7 @@ protected:
 	 *         If you pass @c NULL, @c view will be inserted at the end of the view stack.
 	 *  @return @c true success or @c false not.
 	 */
-	bool insert_view_after(ui_view_base *view, ui_view_base *after);
+	bool insert_view_after(ui_view_interface *view, ui_view_interface *after);
 
 	/**
 	 *  @brief Remove the given view from this viewmgr stack.
@@ -155,7 +155,7 @@ protected:
 	 *  @return @c true on success or @c false if not.
 	 *
 	 */
-	bool remove_view(ui_view_base *view);
+	bool remove_view(ui_view_interface *view);
 
 	/**
 	 *  @brief Return a stack index number of the given view.
@@ -167,7 +167,7 @@ protected:
 	 *
 	 *  @warning the index number is variable since the view stack size is also variable.
 	 */
-	ui_view_base* get_view(unsigned int idx);
+	ui_view_interface* get_view(unsigned int idx);
 
 	/**
 	 *  @brief Return a view which is matched with the @c name.
@@ -177,7 +177,7 @@ protected:
 	 *          If there were no views name matched, @c NULL will be returned.
 	 *
 	 */
-	ui_view_base *get_view(const char *name)
+	ui_view_interface *get_view(const char *name)
 	{
 		//FIXME: ...
 		return NULL;
@@ -192,7 +192,7 @@ protected:
 	 *
 	 *  @warning the index number is variable since the view stack size is also variable.
 	 */
-	int get_view_index(const ui_view_base *view);
+	int get_view_index(const ui_view_interface *view);
 
 	//Activate a viewmgr.
 	bool activate();
@@ -202,13 +202,13 @@ protected:
 
 public:
 	///Constructor.
-	ui_viewmgr_base();
+	ui_viewmgr_interface();
 
 	///Destructor. Delete all contained views.
-	virtual ~ui_viewmgr_base();
+	virtual ~ui_viewmgr_interface();
 
 	//FIXME: Doc.
-	ui_view_base *get_last_view();
+	ui_view_interface *get_last_view();
 
 	/**
 	 *  @brief Return the number of views which this viewmgr has.
@@ -245,4 +245,4 @@ public:
 
 };
 
-#endif /* UI_WINDOW_BASE_H_ */
+#endif /* UI_VIEWMGR_INTERFACE_H_ */
