@@ -80,8 +80,8 @@ void ui_view_base::destroy()
 	this->controller->destroy();
 }
 
-ui_view_base::ui_view_base(T content, ui_controller_base *controller, const char *name)
-		: content(content), controller(controller), name(string(name ? name : "")), style(string("")), viewmgr(NULL), state(UI_VIEW_STATE_LOAD),
+ui_view_base::ui_view_base(T content, ui_controller_base *controller, const char *name, const char *style)
+		: content(content), controller(controller), name(string(name ? name : "")), style(string(style ? style : "")), viewmgr(NULL), state(UI_VIEW_STATE_LOAD),
 		  indicator(UI_VIEW_INDICATOR_DEFAULT), event_block(false), removable_content(true)
 {
 	if (!content) this->state = UI_VIEW_STATE_UNLOAD;
@@ -89,8 +89,8 @@ ui_view_base::ui_view_base(T content, ui_controller_base *controller, const char
 	controller->set_view(this);
 }
 
-ui_view_base::ui_view_base(ui_controller_base *controller, const char *name)
-		: ui_view_base(NULL, controller, name)
+ui_view_base::ui_view_base(ui_controller_base *controller, const char *name, const char *style)
+		: ui_view_base(NULL, controller, name, style)
 {
 	this->state = UI_VIEW_STATE_UNLOAD;
 }
@@ -98,7 +98,6 @@ ui_view_base::ui_view_base(ui_controller_base *controller, const char *name)
 ui_view_base::ui_view_base(const char *name)
 		: ui_view_base(NULL, name)
 {
-
 }
 
 ui_view_base::~ui_view_base()

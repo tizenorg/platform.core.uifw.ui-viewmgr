@@ -22,6 +22,7 @@
 //FIXME: is it correct to define here?
 #define EDJ_PATH "/opt/usr/apps/org.tizen.ui-viewmgr/res/ui-viewmgr.edj"
 #define GROUP "elm/layout/tizen_view/default"
+#define TABBAR "elm/layout/tizen_view/tabbar"
 
 namespace efl
 {
@@ -40,7 +41,7 @@ protected:
 	virtual void unload_content();
 
 public:
-	ui_basic_view(ui_controller *controller, const char *name = NULL);
+	ui_basic_view(ui_controller *controller, const char *name = NULL, const char *style = NULL);
 	virtual ~ui_basic_view();
 
 	Evas_Object *set_content(Evas_Object *content, const char *title = NULL);
@@ -50,6 +51,7 @@ public:
 	bool set_title_left_btn(Evas_Object *title_left_btn);
 	bool set_title_right_btn(Evas_Object *title_right_btn);
 	bool set_title(const char *text);
+	bool set_tabbar(Evas_Object *toolbar);
 
 	virtual Evas_Object *get_base()
 	{

@@ -39,7 +39,16 @@ bool ui_basic_view::create_layout()
 		return false;
 	}
 
-	if (!elm_layout_file_set(layout, EDJ_PATH, GROUP))
+	if (!strcmp(this->get_style(), "tabbar"))
+	{
+		if (!elm_layout_file_set(layout, EDJ_PATH, TABBAR))
+		{
+			LOGE("Failed to set tabbar style = ui_basic_view(%p)", this);
+			evas_object_del(layout);
+			return false;
+		}
+	}
+	else if (!elm_layout_file_set(layout, EDJ_PATH, GROUP))
 	{
 		LOGE("Failed to set file = ui_basic_view(%p), path(%s), group(%s)", this, EDJ_PATH, GROUP);
 		evas_object_del(layout);
@@ -82,8 +91,8 @@ bool ui_basic_view::create_layout()
 	return true;
 }
 
-ui_basic_view::ui_basic_view(ui_controller *controller, const char *name)
-		: ui_view(controller, name), layout(NULL)
+ui_basic_view::ui_basic_view(ui_controller *controller, const char *name, const char *style)
+		: ui_view(controller, name, style), layout(NULL)
 {
 }
 
@@ -103,8 +112,7 @@ void ui_basic_view::unload()
 	ui_view::unload();
 }
 
-Evas_Object *
-ui_basic_view::set_content(Evas_Object *content, const char *title)
+Evas_Object *ui_basic_view::set_content(Evas_Object *content, const char *title)
 {
 	Evas_Object *pcontent = ui_view::set_content(content);
 
@@ -113,6 +121,26 @@ ui_basic_view::set_content(Evas_Object *content, const char *title)
 		elm_object_part_content_unset(this->layout, "elm.swallow.content");
 		elm_object_part_content_set(this->layout, "elm.swallow.content", content);
 		elm_object_part_text_set(this->layout, "elm.text.title", title);
+	}
+	else
+	{
+		LOGE("Layout is not exist!");
+	}
+
+	return pcontent;
+}
+
+Evas_Object *ui_basic_view::set_content(Evas_Object *content, const char *title, const char *subtitle, Evas_Object *title_left_btn,
+        Evas_Object *title_right_btn)
+{
+	Evas_Object *pcontent = this->set_content(content);
+
+	if (this->layout)
+	{
+		this->set_title(title);
+		this->set_subtitle(subtitle);
+		this->set_title_left_btn(title_left_btn);
+		this->set_title_right_btn(title_right_btn);
 	}
 	else
 	{
@@ -195,24 +223,16 @@ bool ui_basic_view::set_title(const char *text)
 	return false;
 }
 
-Evas_Object *ui_basic_view::set_content(Evas_Object *content, const char *title, const char *subtitle, Evas_Object *title_left_btn,
-        Evas_Object *title_right_btn)
+bool ui_basic_view::set_tabbar(Evas_Object *toolbar)
 {
-	Evas_Object *pcontent = this->set_content(content);
-
 	if (this->layout)
 	{
-		this->set_title(title);
-		this->set_subtitle(subtitle);
-		this->set_title_left_btn(title_left_btn);
-		this->set_title_right_btn(title_right_btn);
+		elm_object_part_content_set(this->layout, "tabbar", toolbar);
+		if (toolbar) elm_object_signal_emit(this->layout, "elm,state,tabbar,show", "elm");
+		return true;
 	}
-	else
-	{
-		LOGE("Layout is not exist!");
-	}
-
-	return pcontent;
+	LOGE("Layout is not exist!");
+	return false;
 }
 
 void ui_basic_view::unload_content()
