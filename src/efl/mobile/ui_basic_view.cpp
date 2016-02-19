@@ -70,8 +70,8 @@ bool ui_basic_view::create_layout()
 				ui_viewmgr *viewmgr = static_cast<ui_viewmgr *>(data);
 				viewmgr->pop_view();
 			}, viewmgr);
-			//FIXME: Its not a naviframe :)
-			elm_object_style_set(prev_btn, "naviframe/back_btn/default");
+
+			elm_object_style_set(prev_btn, "tizen_view/back_btn/default");
 			elm_object_part_content_set(layout, "elm.swallow.prev_btn", prev_btn);
 			elm_object_signal_emit(layout, "elm,state,prev_btn,show", "elm");
 		}
@@ -141,9 +141,7 @@ bool ui_basic_view::set_title_left_btn(Evas_Object *title_left_btn)
 	{
 		if (title_left_btn)
 		{
-			elm_object_style_set(title_left_btn, "naviframe/title_left");
-			//FIXME: naviframe/title_left -> tizen_view/title_left
-			//elm_object_style_set(title_left_btn, "tizen_view/title_left");
+			elm_object_style_set(title_left_btn, "tizen_view/title_left");
 		}
 		elm_object_part_content_set(this->layout, "title_left_btn", title_left_btn);
 		if (title_left_btn) elm_object_signal_emit(this->layout, "elm,state,title_left_btn,show", "elm");
@@ -160,9 +158,7 @@ bool ui_basic_view::set_title_right_btn(Evas_Object *title_right_btn)
 	{
 		if (title_right_btn)
 		{
-			elm_object_style_set(title_right_btn, "naviframe/title_right");
-			//FIXME: naviframe/title_right -> tizen_view/title_right
-			//elm_object_style_set(title_left_btn, "tizen_view/title_right");
+			elm_object_style_set(title_right_btn, "tizen_view/title_right");
 		}
 		elm_object_part_content_set(this->layout, "title_right_btn", title_right_btn);
 		if (title_right_btn) elm_object_signal_emit(this->layout, "elm,state,title_right_btn,show", "elm");
