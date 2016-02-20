@@ -18,6 +18,16 @@
 
 using namespace viewmgr;
 
+//FIXME: Read system profile to decide whether support software key or not.
+bool ui_viewmgr_interface::soft_key = true;
+//FIXME: Read system profile to decide whether support event block or not.
+bool ui_viewmgr_interface::event_block = true;
+
+bool ui_viewmgr_interface::need_soft_key()
+{
+	return ui_viewmgr_interface::soft_key;
+}
+
 bool ui_viewmgr_interface::connect_view(ui_view_interface *view)
 {
 	if (view->viewmgr)
@@ -40,7 +50,7 @@ bool ui_viewmgr_interface::disconnect_view(ui_view_interface *view)
 void ui_viewmgr_interface::set_event_block(ui_view_interface *view, bool block)
 {
 
-	if (!this->event_block) return;
+	if (!ui_viewmgr_interface::event_block) return;
 	view->set_event_block(block);
 }
 
@@ -83,11 +93,8 @@ bool ui_viewmgr_interface::pop_view_finished(ui_view_interface *view)
 }
 
 ui_viewmgr_interface::ui_viewmgr_interface()
-		: event_block(true), activated(false)
+		: activated(false)
 {
-	//FIXME: Read binary profile to decide whether support software back key or not.
-	//       software back key is needed in latest UX(Tizen_2.4)
-	this->soft_back_key = true;
 }
 
 ui_viewmgr_interface::~ui_viewmgr_interface()
@@ -258,4 +265,10 @@ bool ui_viewmgr_interface::deactivate()
 	if (!this->activated) return false;
 	this->activated = false;
 	return true;
+}
+
+ui_view_interface *ui_viewmgr_interface::get_view(const char *name)
+{
+	//FIXME: ...
+	return NULL;
 }

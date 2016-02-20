@@ -218,8 +218,7 @@ bool ui_viewmgr::pop_view()
 	return true;
 }
 
-ui_view *
-ui_viewmgr::push_view(ui_view *view)
+ui_view * ui_viewmgr::push_view(ui_view *view)
 {
 	ui_viewmgr_interface::push_view(view);
 
@@ -242,4 +241,9 @@ ui_viewmgr::push_view(ui_view *view)
 	this->set_indicator(view->get_indicator());
 
 	return view;
+}
+
+ui_view *ui_viewmgr::get_last_view()
+{
+   return dynamic_cast<ui_view *>(ui_viewmgr_interface::get_last_view());
 }

@@ -31,7 +31,7 @@ class ui_controller_interface;
 /**
  *  @class ui_view_interface
  *
- *  @ingroup ui_viewmgr
+ *  @ingroup viewmgr
  *
  *	@brief UI View Base Class. This is the base class of view. A view must have one content instance which represents a view for a current screen.
  *	       UI View may have it's own show/hide transition styles. That means, it's available that views have different show/hide effects on demands.
@@ -210,6 +210,8 @@ public:
 	 *
 	 */
 	bool set_style(const char *style);
+
+	bool set_name(const char *name);
 
 	/** @brief set content removable
 	 *

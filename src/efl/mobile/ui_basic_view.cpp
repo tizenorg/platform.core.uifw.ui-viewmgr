@@ -58,9 +58,9 @@ bool ui_basic_view::create_layout()
 		elm_object_part_content_set(layout, "elm.swallow.content", CONVERT_TO_EO(this->get_content()));
 	}
 
-	//Set soft back key, if it's needed
+	//Set software back key, if it's needed
 	ui_viewmgr *viewmgr = dynamic_cast<ui_viewmgr *>(ui_view_interface::get_viewmgr());
-	if (viewmgr->get_soft_back_key())
+	if (viewmgr->need_soft_key())
 	{
 		Evas_Object *prev_btn = elm_button_add(layout);
 
