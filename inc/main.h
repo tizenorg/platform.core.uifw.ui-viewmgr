@@ -33,7 +33,7 @@
 #define PACKAGE "org.tizen.ui-viewmgr"
 #endif
 
-using namespace efl;
+using namespace efl_viewmgr;
 
 typedef struct appdata {
 	ui_viewmgr *viewmgr;

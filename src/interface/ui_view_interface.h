@@ -23,6 +23,8 @@ using namespace std;
 
 typedef void* T;
 
+namespace viewmgr {
+
 class ui_viewmgr_interface;
 class ui_controller_interface;
 
@@ -254,5 +256,7 @@ public:
 		return this->indicator;
 	}
 };
+
+}
 
 #endif /* UI_VIEW_INTERFACE_H_ */

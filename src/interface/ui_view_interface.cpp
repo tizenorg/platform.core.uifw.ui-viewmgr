@@ -16,6 +16,8 @@
  */
 #include "ui_viewmanager_interface.h"
 
+using namespace viewmgr;
+
 void ui_view_interface::set_event_block(bool block)
 {
 	this->event_block = block;

@@ -20,7 +20,7 @@
 #include <Elementary.h>
 #include "../interface/ui_viewmanager_interface.h"
 
-namespace efl
+namespace efl_viewmgr
 {
 class ui_viewmgr;
 

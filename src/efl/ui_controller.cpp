@@ -16,7 +16,8 @@
  */
 #include "ui_viewmanager.h"
 
-using namespace efl;
+using namespace efl_viewmgr;
+using namespace viewmgr;
 
 ui_view * ui_controller::get_view()
 {

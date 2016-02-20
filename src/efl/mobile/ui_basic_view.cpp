@@ -20,7 +20,8 @@
 #define EDJ_PATH "/opt/usr/apps/org.tizen.ui-viewmgr/res/ui-viewmgr.edj"
 #define GROUP "elm/layout/tizen_view/default"
 
-using namespace efl;
+using namespace efl_viewmgr;
+using namespace viewmgr;
 
 bool ui_basic_view::destroy_layout()
 {

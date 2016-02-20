@@ -16,6 +16,8 @@
  */
 #include "ui_viewmanager_interface.h"
 
+using namespace viewmgr;
+
 void ui_controller_interface::set_view(ui_view_interface *view)
 {
 	if (this->view)

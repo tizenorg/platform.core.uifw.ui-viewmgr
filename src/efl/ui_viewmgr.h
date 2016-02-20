@@ -21,12 +21,12 @@
 #include "../interface/ui_viewmanager_interface.h"
 #include "ui_key_listener.h"
 
-namespace efl
+namespace efl_viewmgr
 {
 
 class ui_view;
 
-class ui_viewmgr: public ui_viewmgr_interface
+class ui_viewmgr: public viewmgr::ui_viewmgr_interface
 {
 	friend class ui_view;
 

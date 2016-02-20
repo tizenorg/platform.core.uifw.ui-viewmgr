@@ -16,6 +16,8 @@
  */
 #include "ui_viewmanager_interface.h"
 
+using namespace viewmgr;
+
 bool ui_viewmgr_interface::connect_view(ui_view_interface *view)
 {
 	if (view->viewmgr)

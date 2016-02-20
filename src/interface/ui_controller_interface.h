@@ -17,6 +17,8 @@
 #ifndef UI_CONTROLLER_INTERFACE_H_
 #define UI_CONTROLLER_INTERFACE_H_
 
+namespace viewmgr {
+
 class ui_view_interface;
 
 /**
@@ -109,5 +111,7 @@ public:
 	 */
 	virtual void destroy() = 0;
 };
+
+}
 
 #endif /* UI_CONTROLLER_INTERFACE_H_ */

@@ -23,11 +23,11 @@
 #define CONVERT_TO_EO(T) static_cast<Evas_Object *>((T))
 #define CONVERT_TO_T(EO) static_cast<T>((EO))
 
-namespace efl
+namespace efl_viewmgr
 {
 class ui_controller;
 
-class ui_view: public ui_view_interface
+class ui_view: public viewmgr::ui_view_interface
 {
 	friend class ui_viewmgr;
 

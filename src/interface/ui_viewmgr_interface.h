@@ -21,6 +21,8 @@
 
 using namespace std;
 
+namespace viewmgr {
+
 class ui_view_interface;
 
 /**
@@ -244,5 +246,7 @@ public:
 	}
 
 };
+
+}
 
 #endif /* UI_VIEWMGR_INTERFACE_H_ */

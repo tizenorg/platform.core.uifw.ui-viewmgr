@@ -19,9 +19,9 @@
 
 #include "../interface/ui_viewmanager_interface.h"
 
-namespace efl
+namespace efl_viewmgr
 {
-class ui_controller: public ui_controller_interface
+class ui_controller: public viewmgr::ui_controller_interface
 {
 public:
 	virtual ~ui_controller();

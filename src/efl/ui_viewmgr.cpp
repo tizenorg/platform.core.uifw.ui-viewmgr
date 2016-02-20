@@ -16,7 +16,8 @@
  */
 #include "ui_viewmanager.h"
 
-using namespace efl;
+using namespace efl_viewmgr;
+using namespace viewmgr;
 
 bool ui_viewmgr::set_indicator(ui_view_indicator indicator)
 {

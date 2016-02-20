@@ -19,7 +19,7 @@
 
 #include "../ui_viewmanager.h"
 
-namespace efl
+namespace efl_viewmgr
 {
 class ui_viewmgr;
 
