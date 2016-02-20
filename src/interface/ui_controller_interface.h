@@ -22,15 +22,11 @@ namespace viewmgr {
 class ui_view_interface;
 
 /**
- *  @class ui_controller_base
+ *  @class ui_controller_interface
  *
- *  @ingroup ui_viewmgr
+ *  @ingroup viewmgr
  *
  *  @brief UI Controller Interface. This interface is designed for handling of life-cycle events from user side.
- *
- *  @date 2016/01/15
- *  @author Hermet Park <chuneon.park@samsung.com>
- *
  */
 class ui_controller_interface
 {

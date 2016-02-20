@@ -131,6 +131,12 @@ bool ui_view_interface::set_style(const char *style)
 	return true;
 }
 
+bool ui_view_interface::set_name(const char *name)
+{
+	this->name.assign(name);
+	return true;
+}
+
 void ui_view_interface::set_removable_content(bool removable)
 {
 	this->removable_content = removable;

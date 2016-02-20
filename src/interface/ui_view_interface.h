@@ -31,7 +31,7 @@ class ui_controller_interface;
 /**
  *  @class ui_view_interface
  *
- *  @ingroup ui_viewmgr
+ *  @ingroup viewmgr
  *
  *	@brief UI View Base Class. This is the base class of view. A view must have one content instance which represents a view for a current screen.
  *	       UI View may have it's own show/hide transition styles. That means, it's available that views have different show/hide effects on demands.
@@ -39,9 +39,6 @@ class ui_controller_interface;
  *
  *	@warning When the transitions are finished, the view must to call ui_viewmgr_interface :: _push_finished(), ui_viewmgr_interface :: _pop_finished() in order that
  *	         The ui_viewmgr_interface keeps the view states exactly.
- *
- *	@date 2016/01/15
- *	@author Hermet Park <chuneon.park@samsung.com>
  */
 class ui_view_interface
 {
@@ -210,6 +207,8 @@ public:
 	 *
 	 */
 	bool set_style(const char *style);
+
+	bool set_name(const char *name);
 
 	/** @brief set content removable
 	 *

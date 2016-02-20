@@ -66,6 +66,8 @@ public:
 	{
 		return this->conform;
 	}
+
+	ui_view *get_last_view();
 };
 }
 
