@@ -175,9 +175,9 @@ public:
 	 *  @warning Be aware the deletion of controller passed here will be covered by ui_view_interface.
 	 *           If you want to keep it for any reasons, please unset it using set_controller() before ui_view_interface is deleted.
 	 */
-	ui_view_interface(T content, ui_controller_interface *controller, const char *name);
+	ui_view_interface(T content, ui_controller_interface *controller, const char *name, const char *style = NULL);
 	///Constructor for initializing with controller.
-	ui_view_interface(ui_controller_interface *controller, const char *name = NULL);
+	ui_view_interface(ui_controller_interface *controller, const char *name = NULL, const char *style = NULL);
 	///Constructor for initializing with name.
 	ui_view_interface(const char *name = NULL);
 

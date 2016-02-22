@@ -32,7 +32,7 @@ class ui_view: public viewmgr::ui_view_interface
 	friend class ui_viewmgr;
 
 public:
-	ui_view(ui_controller *controller, const char *name = NULL);
+	ui_view(ui_controller *controller, const char *name = NULL, const char *style = NULL);
 	virtual ~ui_view();
 
 	virtual Evas_Object *set_content(Evas_Object *content);
