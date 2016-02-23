@@ -24,5 +24,6 @@ void ui_controller_interface::set_view(ui_view_interface *view)
 	{
 		this->view->set_controller(NULL);
 	}
+
 	this->view = view;
 }

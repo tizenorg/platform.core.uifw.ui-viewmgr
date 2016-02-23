@@ -87,6 +87,9 @@ ui_viewmgr::ui_viewmgr(const char *pkg)
 		LOGE("Invalid package name");
 		return;
 	}
+
+	//FIXME: does app can have only one viewmgr or not?
+
 	//Window
 	this->win = elm_win_util_standard_add(pkg, pkg);
 

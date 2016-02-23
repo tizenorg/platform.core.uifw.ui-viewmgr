@@ -22,7 +22,7 @@ namespace viewmgr {
 class ui_view_interface;
 
 /**
- *  @class ui_controller_interface
+ *  @class ui_controller_interface.
  *
  *  @ingroup viewmgr
  *
@@ -38,28 +38,41 @@ private:
 	void set_view(ui_view_interface *view);
 
 protected:
+	/**
+	 *  @brief Return a view which is matched with controller
+	 *
+	 *  @return The view which is matched with controller
+	 *
+	 *  @note User can set a controller 2 ways, 1. send a controller instance when view created,
+	 *        2. call set_view() method with controller instance.
+	 *
+	 *  @see set_view()
+	 */
 	ui_view_interface *get_view()
 	{
 		return this->view;
 	}
 
 public:
+	///Constructor.
 	ui_controller_interface() :
 			view(NULL)
 	{
 	}
+
+	///Destructor.
 	virtual ~ui_controller_interface()
 	{
 	}
 
-	/** @brief load callback
+	/** @brief load callback.
 	 *
 	 *  @note Now, this view is moving onto the screen. Get ready for this view. If this view content is alive, load callback won't be called.
 	 *        In the most cases, this callback will be triggered with this step load -> inactive -> active.
 	 */
 	virtual void load() = 0;
 
-	/** @brief unload callback
+	/** @brief unload callback.
 	 *
 	 *  @note Remove resources with regards to this view for saving memory or keep the content for performance. It's up to your scenario.
 	 *        Unload will be called just right before when the view is going to be deleted by popping or it's piled under the more than one view.
@@ -68,7 +81,7 @@ public:
 	 */
 	virtual void unload() = 0;
 
-	/** @brief active callback
+	/** @brief active callback.
 	 *
 	 *  @note View is on active state after show transition is finished.
 	 *        From whatever the state, if the view is on the screen, the active callback will be called.
@@ -76,7 +89,7 @@ public:
 	 */
 	virtual void active() = 0;
 
-	/** @brief inactive callback
+	/** @brief inactive callback.
 	 *
 	 *  @note View is on inactive state. Get ready for unload. Hide transition may be triggered at this point.
 	 *        Inactive state is triggered on this scenario that the view is still visible but it's not interactive with users.
@@ -85,15 +98,15 @@ public:
 	 */
 	virtual void inactive() = 0;
 
-	/** @brief pause callback
+	/** @brief pause callback.
 	 *
 	 *  @note When the system blocks the application running in cases such as phone call, system notification, switching applications ...
-	 *        When Window turns to deactivate. (@see ui_viewmgr_base :: deactivate())
+	 *        When Window turns to deactivate. (@see ui_viewmgr_base :: deactivate()).
 	 *        If the view were inactive or unload state, the pause won't be called.
 	 */
 	virtual void pause() = 0;
 
-	/** @brief resume callback
+	/** @brief resume callback.
 	 *
 	 *  @note View is turning back to the active state again from pause.
 	 *        When the system allows the application turns to activate.
@@ -101,7 +114,7 @@ public:
 	 */
 	virtual void resume() = 0;
 
-	/** @brief destroy callback
+	/** @brief destroy callback.
 	 *
 	 *  @note When this view is on destroying by popping or deleting.
 	 */

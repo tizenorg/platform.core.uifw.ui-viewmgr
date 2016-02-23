@@ -29,7 +29,6 @@ enum ui_key_event_type
 ui_key_listener::ui_key_listener(ui_viewmgr *viewmgr)
 		: viewmgr(viewmgr), key_grabber(NULL)
 {
-
 }
 
 static void event_proc(ui_key_listener *key_handler, Evas_Event_Key_Down *ev)
