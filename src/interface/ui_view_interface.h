@@ -33,12 +33,12 @@ class ui_controller_interface;
  *
  *  @ingroup viewmgr
  *
- *	@brief UI View Base Class. This is the base class of view. A view must have one content instance which represents a view for a current screen.
- *	       UI View may have it's own show/hide transition styles. That means, it's available that views have different show/hide effects on demands.
- *	       It's not mandatory but view should describe the transitions in this class.
+ *  @brief UI View Base Class. This is the base class of view. A view must have one content instance which represents a view for a current screen.
+ *         UI View may have it's own show/hide transition styles. That means, it's available that views have different show/hide effects on demands.
+ *         It's not mandatory but view should describe the transitions in this class.
  *
- *	@warning When the transitions are finished, the view must to call ui_viewmgr_interface :: _push_finished(), ui_viewmgr_interface :: _pop_finished() in order that
- *	         The ui_viewmgr_interface keeps the view states exactly.
+ *  @warning When the transitions are finished, the view must to call ui_viewmgr_interface :: _push_finished(), ui_viewmgr_interface :: _pop_finished() in order that
+ *           The ui_viewmgr_interface keeps the view states exactly.
  */
 class ui_view_interface
 {
@@ -58,78 +58,77 @@ private:
 	};
 
 	T content;                              ///< A content instance for a screen as a view.
-	ui_controller_interface *controller;         ///< View life-cycle controller interface.
-	string name;    		                   ///< View name
-	string style;           		           ///< View style name.
-	ui_viewmgr_interface *viewmgr;               ///< Viewmgr which this view belongs to.
-	ui_view_state state;                    ///< View state
-	ui_view_indicator indicator;            ///< View indicator mode
+	ui_controller_interface *controller;    ///< View life-cycle controller interface.
+	string name;                            ///< View name.
+	string style;                           ///< View style name.
+	ui_viewmgr_interface *viewmgr;          ///< Viewmgr which this view belongs to.
+	ui_view_state state;                    ///< View state.
+	ui_view_indicator indicator;            ///< View indicator mode.
 	bool event_block;                       ///< State of event block.
 	bool removable_content;                 ///< When this value is true, view removes it's content internally on unload state.
 
 protected:
 
-	/** @brief toggle event block
+	/** @brief toggle event block.
 	 *
 	 *  @note This interface is designed for toggling touch event on view transition.
 	 *        ui_viewmgr_interface will call this interface for notifying event blocking toggling on transition time.
 	 *
 	 *  @param block @c true, when blocking is enabled, otherwise @c false.
-	 *
 	 */
 	virtual void set_event_block(bool block);
 
-	/** @brief view load state
+	/** @brief view load state.
 	 *
-	 *  @note this state will be triggered by ui_viewmgr_interface
+	 *  @note this state will be triggered by ui_viewmgr_interface.
 	 *
 	 *  @see ui_controller_interface for this state in detail.
 	 */
 	virtual void load();
 
-	/** @brief view unload state
+	/** @brief view unload state.
 	 *
-	 *  @note this state will be triggered by ui_viewmgr_interface
+	 *  @note this state will be triggered by ui_viewmgr_interface.
 	 *
 	 *  @see ui_controller_interface for this state in detail.
 	 */
 	virtual void unload();
 
-	/** @brief view active state
+	/** @brief view active state.
 	 *
-	 *  @note this state will be triggered by ui_viewmgr_interface
+	 *  @note this state will be triggered by ui_viewmgr_interface.
 	 *
 	 *  @see ui_controller_interface for this state in detail.
 	 */
 	virtual void active();
 
-	/** @brief view inactive state
+	/** @brief view inactive state.
 	 *
-	 *  @note this state will be triggered by ui_viewmgr_interface
+	 *  @note this state will be triggered by ui_viewmgr_interface.
 	 *
 	 *  @see ui_controller_interface for this state in detail.
 	 */
 	virtual void inactive();
 
-	/** @brief view pause state
+	/** @brief view pause state.
 	 *
-	 *  @note this state will be triggered by ui_viewmgr_interface
+	 *  @note this state will be triggered by ui_viewmgr_interface.
 	 *
 	 *  @see ui_controller_interface for this state in detail.
 	 */
 	virtual void pause();
 
-	/** @brief view resume state
+	/** @brief view resume state.
 	 *
-	 *  @note this state will be triggered by ui_viewmgr_interface
+	 *  @note this state will be triggered by ui_viewmgr_interface.
 	 *
 	 *  @see ui_controller_interface for this state in detail.
 	 */
 	virtual void resume();
 
-	/** @brief view destroy state
+	/** @brief view destroy state.
 	 *
-	 *  @note this state will be triggered by ui_viewmgr_interface
+	 *  @note this state will be triggered by ui_viewmgr_interface.
 	 *
 	 *  @see ui_controller_interface for this state in detail.
 	 */
@@ -149,7 +148,7 @@ protected:
 		return this->controller;
 	}
 
-	/// Return a viewmgr which this view is belonging to
+	/// Return a viewmgr which this view is belonging to.
 	ui_viewmgr_interface *get_viewmgr()
 	{
 		return this->viewmgr;
@@ -157,8 +156,9 @@ protected:
 
 	/** @brief This is for replacing or setting a controller of the view.
 	 *
+	 *  @return A previous controller. If it wasn't, the return value will be @c NULL.
+	 *  @note this state will be triggered by ui_viewmgr_interface.
 	 *  @param controller a new controller. It allows @c NULL for canceling the previous controller.
-	 *  @return A previous controller. If it wasn't, the return value will be @c NULL
 	 *
 	 *  @warning Be aware deletion of controller passed here will be taken cover by ui_view_interface.
 	 *           If you want to keep the controller for any reasons, please unset it using set_controller() before ui_view_interface is deleted.
@@ -190,32 +190,33 @@ public:
 	 *        For instance, the type could be Evas_Object * in EFL and Layer * in Dali.
 	 *
 	 *  @param content a new content. It allows @c NULL for canceling the previous content.
-	 *  @return A previous content. If it wasn't, return value will be @c NULL
+	 *
+	 *  @return A previous content. If it wasn't, return value will be @c NULL.
 	 */
 	T set_content(T content);
 
 	/** @brief set style of the view.
 	 *
 	 *  @note style is reserved for supporting various kinds of view as well as it's transition effects.
-	 *  	  The actual behaviors with this style is up to your frameworks. Default value of the style is NULL.
+	 *        The actual behaviors with this style is up to your frameworks. Default value of the style is NULL.
 	 *
 	 *  @param style a new style name.
+	 *
 	 *  @return true if the given @c style is available, otherwise false.
 	 *
 	 *  @warning When you override this member function, you should implement the logic to check the given style name is available or not.
 	 *           If your framework doesn't support any styles then just allow a @c NULL argument and return true. Otherwise return false.
-	 *
 	 */
 	bool set_style(const char *style);
 
+	//FIXME: doc.
 	bool set_name(const char *name);
 
-	/** @brief set content removable
+	/** @brief set content removable.
 	 *
 	 *  @param removable if @p removable is @c true, content of this view will be removed on unload state. @c false otherwise.
  	 *
 	 *  @warning You should not remove a view content manually on unload status if removable content is set.
-	 *
 	 */
 	void set_removable_content(bool removable);
 
@@ -227,6 +228,7 @@ public:
 		return this->style.c_str();
 	}
 
+	//FIXME: doc.
 	const char *get_name()
 	{
 		return this->name.c_str();
