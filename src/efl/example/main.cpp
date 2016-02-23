@@ -30,6 +30,7 @@ create_tabbar(Evas_Object *parent)
 
 	toolbar = elm_toolbar_add(parent);
 
+	//FIXME: :( UI_View can set this style instead.
 	elm_object_style_set(toolbar, "tabbar_with_title");
 	elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_EXPAND);
 	elm_toolbar_transverse_expanded_set(toolbar, EINA_TRUE);
@@ -41,6 +42,7 @@ create_tabbar(Evas_Object *parent)
 
 	return toolbar;
 }
+
 Evas_Object*
 create_content(Evas_Object *parent, const char *text, Evas_Smart_Cb prev_btn_clicked_cb, Evas_Smart_Cb next_btn_clicked_cb, appdata_s *ad)
 {
@@ -86,7 +88,7 @@ create_content(Evas_Object *parent, const char *text, Evas_Smart_Cb prev_btn_cli
 static void create_base_gui(appdata_s *ad)
 {
 	//FIXME: Hide this creation.
-	ad->viewmgr = new ui_viewmgr(PACKAGE);
+	ad->viewmgr = new ui_basic_viewmgr(PACKAGE);
 
 	create_page1(ad);
 

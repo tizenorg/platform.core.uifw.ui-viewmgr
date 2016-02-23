@@ -70,3 +70,15 @@ void ui_view::set_indicator(ui_view_indicator indicator)
 
 	viewmgr->set_indicator(indicator);
 }
+
+void ui_view::back()
+{
+	if (this->get_controller())
+	{
+		if (!dynamic_cast<ui_controller *>(this->get_controller())->back())
+		{
+			return;
+		}
+	}
+	dynamic_cast<ui_viewmgr *>(this->get_viewmgr())->pop_view();
+}

@@ -48,6 +48,8 @@ public:
 	bool set_title(const char *text);
 	bool set_tabbar(Evas_Object *toolbar);
 
+	virtual void menu();
+
 	virtual Evas_Object *get_base()
 	{
 		return this->layout;

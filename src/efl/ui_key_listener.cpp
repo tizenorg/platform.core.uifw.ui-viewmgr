@@ -21,40 +21,27 @@ using namespace viewmgr;
 
 static const char *KEY_BACK = "XF86Back";
 
-enum ui_key_event_type
-{
-	UI_KEY_EVENT_BACK = 0,
-};
-
 ui_key_listener::ui_key_listener(ui_viewmgr *viewmgr)
 		: viewmgr(viewmgr), key_grabber(NULL)
 {
 
 }
 
-static void event_proc(ui_key_listener *key_handler, Evas_Event_Key_Down *ev)
+static void event_proc(ui_key_listener *key_listener, Evas_Event_Key_Down *ev)
 {
-   ui_key_event_type type;
+	//Only if view manager is activated
+	ui_viewmgr *viewmgr = key_listener->get_viewmgr();
+	if (!viewmgr->is_activated()) return;
 
-   if (!strcmp(ev->keyname, KEY_BACK))
-     type = UI_KEY_EVENT_BACK;
-   else return;
+	//Get Top View
+	ui_view *view = dynamic_cast<ui_view *>(viewmgr->get_last_view());
+	if (!view) return;
 
-   ui_viewmgr *viewmgr = key_handler->get_viewmgr();
-   if (!viewmgr->is_activated()) return;
+	key_listener->extend_event_proc(view, ev);
 
-   //Get Top View
-   ui_view *view = reinterpret_cast<ui_view *>(viewmgr->get_last_view());
-   if (!view) return;
+	if (strcmp(ev->keyname, KEY_BACK)) return;
 
-   //call events
-   switch (type)
-   {
-   case UI_KEY_EVENT_BACK:
-	   //view->back();
-	   LOGE("BACK!");
-	   break;
-   }
+	view->back();
 }
 
 bool ui_key_listener::term()
@@ -85,20 +72,18 @@ bool ui_key_listener::init()
 		return false;
 	}
 
-	evas_object_event_callback_add(key_grab_rect, EVAS_CALLBACK_KEY_UP,
-			[](void *data, Evas *e, Evas_Object *obj, void *event_info) -> void
-			{
-				Evas_Event_Key_Down *ev = static_cast<Evas_Event_Key_Down *>(event_info);
-				ui_key_listener *key_handler = static_cast<ui_key_listener *>(data);
-				event_proc(key_handler, ev);
-			},
-			this);
+	evas_object_event_callback_add(key_grab_rect, EVAS_CALLBACK_KEY_UP, [](void *data, Evas *e, Evas_Object *obj, void *event_info) -> void
+	{
+		Evas_Event_Key_Down *ev = static_cast<Evas_Event_Key_Down *>(event_info);
+		ui_key_listener *key_listener = static_cast<ui_key_listener *>(data);
+		event_proc(key_listener, ev);
+	}, this);
 
 	if (!evas_object_key_grab(key_grab_rect, KEY_BACK, 0, 0, EINA_FALSE))
 	{
-	     LOGE("Failed to grab BACK KEY(%s)\n", KEY_BACK);
-	     evas_object_del(key_grab_rect);
-	     return false;
+		LOGE("Failed to grab BACK KEY(%s)\n", KEY_BACK);
+		evas_object_del(key_grab_rect);
+		return false;
 	}
 
 	this->key_grabber = key_grab_rect;

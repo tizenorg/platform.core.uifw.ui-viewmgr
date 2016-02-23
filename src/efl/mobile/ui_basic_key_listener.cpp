@@ -19,12 +19,10 @@
 using namespace efl_viewmgr;
 using namespace viewmgr;
 
-static const char *KEY_BACK = "XF86Back";
 static const char *KEY_MENU = "XF86Menu";
 
 enum ui_key_event_type
 {
-	UI_KEY_EVENT_BACK = 0,
 	UI_KEY_EVENT_MENU
 };
 
@@ -33,89 +31,20 @@ ui_basic_key_listener::ui_basic_key_listener(ui_viewmgr *viewmgr)
 {
 }
 
-static void event_proc(ui_basic_key_listener *key_handler, Evas_Event_Key_Down *ev)
+void ui_basic_key_listener::extend_event_proc(ui_view *view, Evas_Event_Key_Down *ev)
 {
-   ui_key_event_type type;
-
-   if (!strcmp(ev->keyname, KEY_BACK))
-     type = UI_KEY_EVENT_BACK;
-   else if (!strcmp(ev->keyname, KEY_MENU))
-     type = UI_KEY_EVENT_MENU;
-   else return;
-
-   ui_viewmgr *viewmgr = key_handler->get_viewmgr();
-   if (!viewmgr->is_activated()) return;
-
-   //Get Top View
-   ui_view *view = reinterpret_cast<ui_view *>(viewmgr->get_last_view());
-   if (!view) return;
-
-   //call events
-   switch (type)
-   {
-   case UI_KEY_EVENT_BACK:
-	   //view->back();
-	   LOGE("BACK!");
-	   break;
-   case UI_KEY_EVENT_MENU:
-	   //view->menu();
-	   LOGE("MENU!");
-	   break;
-   }
-}
-
-bool ui_basic_key_listener::term()
-{
-	evas_object_del(this->key_grabber);
-	return true;
+	if (strcmp(ev->keyname, KEY_MENU)) return;
+	dynamic_cast<ui_basic_view *>(view)->menu();
 }
 
 bool ui_basic_key_listener::init()
 {
-	if (!this->viewmgr)
+	if (!ui_key_listener::init()) return false;
+
+	if (!evas_object_key_grab(this->key_grabber, KEY_MENU, 0, 0, EINA_FALSE))
 	{
-		LOGE("No view manager??");
+		LOGE("Failed to grab MENU KEY(%s)\n", KEY_MENU);
 		return false;
 	}
-
-	Evas *e = evas_object_evas_get(this->viewmgr->get_window());
-	if (!e)
-	{
-		LOGE("Failed to get Evas from window");
-		return false;
-	}
-
-	Evas_Object *key_grab_rect = evas_object_rectangle_add(e);
-	if (!key_grab_rect)
-	{
-		LOGE("Failed to create a key grabber rectangle");
-		return false;
-	}
-
-	evas_object_event_callback_add(key_grab_rect, EVAS_CALLBACK_KEY_UP,
-			[](void *data, Evas *e, Evas_Object *obj, void *event_info) -> void
-			{
-				Evas_Event_Key_Down *ev = static_cast<Evas_Event_Key_Down *>(event_info);
-				ui_basic_key_listener *key_handler = static_cast<ui_basic_key_listener *>(data);
-				event_proc(key_handler, ev);
-			},
-			this);
-
-	if (!evas_object_key_grab(key_grab_rect, KEY_BACK, 0, 0, EINA_FALSE))
-	{
-	     LOGE("Failed to grab BACK KEY(%s)\n", KEY_BACK);
-	     evas_object_del(key_grab_rect);
-	     return false;
-	}
-
-	if (!evas_object_key_grab(key_grab_rect, KEY_MENU, 0, 0, EINA_FALSE))
-	{
-	     LOGE("Failed to grab MENU KEY(%s)\n", KEY_MENU);
-	     evas_object_del(key_grab_rect);
-	     return false;
-	}
-
-	this->key_grabber = key_grab_rect;
-
 	return true;
 }

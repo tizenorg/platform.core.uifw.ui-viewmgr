@@ -14,7 +14,7 @@
  *  limitations under the License.
  *
  */
-class page6: public ui_controller
+class page6: public ui_basic_controller
 {
 private:
 	appdata_s *ad;

@@ -28,10 +28,8 @@ class ui_basic_key_listener : public ui_key_listener
 public:
 	ui_basic_key_listener(ui_viewmgr *viewmgr);
 
-	bool init();
-	bool term();
-
-	ui_viewmgr *get_viewmgr() { return this->viewmgr; }
+	virtual bool init();
+	virtual void extend_event_proc(ui_view *view, Evas_Event_Key_Down *ev);
 };
 
 }

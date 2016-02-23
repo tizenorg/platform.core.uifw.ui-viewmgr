@@ -21,5 +21,7 @@
 #endif
 #define LOG_TAG "UI_VIEWMGR"
 
-#include "ui_basic_key_listener.h"
+#include "ui_basic_controller.h"
 #include "ui_basic_view.h"
+#include "ui_basic_key_listener.h"
+#include "ui_basic_viewmgr.h"

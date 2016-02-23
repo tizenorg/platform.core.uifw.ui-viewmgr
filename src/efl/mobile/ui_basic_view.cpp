@@ -247,3 +247,9 @@ void ui_basic_view::unload_content()
 	ui_view::set_content(NULL);
 	this->destroy_layout();
 }
+
+void ui_basic_view::menu()
+{
+	if (!this->get_controller()) return;
+	(dynamic_cast<ui_basic_controller *>(this->get_controller()))->menu();
+}

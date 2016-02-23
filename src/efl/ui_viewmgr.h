@@ -40,9 +40,10 @@ private:
 	bool create_conformant(Evas_Object *win);
 	bool create_base_layout(Evas_Object *conform);
 	bool set_indicator(ui_view_indicator indicator);
-	virtual void set_key_listener();
 
 protected:
+	ui_viewmgr(const char *pkg, ui_key_listener *key_listener);
+
 	Evas_Object *get_base()
 	{
 		return this->layout;

@@ -14,7 +14,7 @@
  *  limitations under the License.
  *
  */
-class page1: public ui_controller
+class page1: public ui_basic_controller
 {
 private:
 	appdata_s *ad;
@@ -54,6 +54,12 @@ public:
 				this->ad);
 
 		view->set_content(content, "Title");
+	}
+
+	bool menu()
+	{
+		LOGE("Menu!");
+		return true;
 	}
 };
 

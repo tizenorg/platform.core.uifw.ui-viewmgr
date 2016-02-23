@@ -14,29 +14,26 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_CONTROLLER_H
-#define UI_CONTROLLER_H
+#ifndef UI_BASIC_VIEWMGR_H
+#define UI_BASIC_VIEWMGR_H
 
-#include "../interface/ui_viewmanager_interface.h"
+#include <Elementary.h>
+#include "../ui_viewmanager.h"
 
 namespace efl_viewmgr
 {
-class ui_controller: public viewmgr::ui_controller_interface
+
+class ui_basic_view;
+
+class ui_basic_viewmgr: public ui_viewmgr
 {
+	friend class ui_basic_view;
+
 public:
-	virtual ~ui_controller();
+	ui_basic_viewmgr(const char *pkg);
+	virtual ~ui_basic_viewmgr();
 
-	ui_view *get_view();
-	virtual void load() {}
-	virtual void unload() {}
-	virtual void active() {}
-	virtual void inactive() {}
-	virtual void pause() {}
-	virtual void resume() {}
-	virtual void destroy() {}
-
-	virtual bool back() { return true; }
 };
 }
 
-#endif /* UI_CONTROLLER_H */
+#endif /* UI_BASIC_VIEWMGR_H */

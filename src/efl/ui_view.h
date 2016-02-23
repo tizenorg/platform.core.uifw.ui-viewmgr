@@ -38,6 +38,8 @@ public:
 	virtual Evas_Object *set_content(Evas_Object *content);
 	virtual Evas_Object *get_base();
 
+	virtual void back();
+
 	void set_indicator(ui_view_indicator indicator);
 
 protected:

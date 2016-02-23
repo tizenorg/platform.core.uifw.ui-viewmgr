@@ -23,6 +23,7 @@
 namespace efl_viewmgr
 {
 class ui_viewmgr;
+class ui_view;
 
 class ui_key_listener
 {
@@ -36,6 +37,7 @@ public:
 
 	virtual bool init();
 	virtual bool term();
+	virtual void extend_event_proc(ui_view *view, Evas_Event_Key_Down *ev) {}
 
 	ui_viewmgr *get_viewmgr() { return this->viewmgr; }
 };

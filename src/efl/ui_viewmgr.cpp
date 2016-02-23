@@ -79,8 +79,8 @@ bool ui_viewmgr::create_base_layout(Evas_Object *conform)
 	return true;
 }
 
-ui_viewmgr::ui_viewmgr(const char *pkg)
-		: ui_viewmgr_interface(), key_listener(NULL)
+ui_viewmgr::ui_viewmgr(const char *pkg, ui_key_listener *key_listener)
+		: ui_viewmgr_interface(), key_listener(key_listener)
 {
 	if (!pkg)
 	{
@@ -134,18 +134,18 @@ ui_viewmgr::ui_viewmgr(const char *pkg)
 
 	elm_win_autodel_set(this->win, EINA_TRUE);
 
-	this->set_key_listener();
+	key_listener->init();
+}
+
+ui_viewmgr::ui_viewmgr(const char *pkg)
+		: ui_viewmgr(pkg, new ui_key_listener(this))
+{
 }
 
 ui_viewmgr::~ui_viewmgr()
 {
 	this->key_listener->term();
-}
-
-void ui_viewmgr::set_key_listener()
-{
-	this->key_listener = new ui_key_listener(this);
-	this->key_listener->init();
+	delete(this->key_listener);
 }
 
 bool ui_viewmgr::activate()

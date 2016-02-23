@@ -144,7 +144,7 @@ protected:
 	}
 
 	/// Return a controller of this view.
-	const ui_controller_interface* get_controller()
+	ui_controller_interface* get_controller()
 	{
 		return this->controller;
 	}
