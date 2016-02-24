@@ -36,10 +36,10 @@ class ui_controller;
  *         UI View may have it's own show/hide transition styles. That means, it's available that views have different show/hide effects on demands.
  *         It's not mandatory but view should describe the transitions in this class.
  *
- *  @warning When the transitions are finished, the view must to call ui_viewmgr_interface :: _push_finished(), ui_viewmgr_interface :: _pop_finished() in order that
- *           The ui_viewmgr_interface keeps the view states exactly.
+ *  @warning When the transitions are finished, the view must to call ui_iface_viewmgr :: _push_finished(), ui_iface_viewmgr :: _pop_finished() in order that
+ *           The ui_iface_viewmgr keeps the view states exactly.
  */
-class ui_view: public viewmgr::ui_view_interface
+class ui_view: public viewmgr::ui_iface_view
 {
 	friend class ui_viewmgr;
 

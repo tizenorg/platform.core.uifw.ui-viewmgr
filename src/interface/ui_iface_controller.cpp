@@ -18,7 +18,7 @@
 
 using namespace viewmgr;
 
-void ui_controller_interface::set_view(ui_view_interface *view)
+void ui_iface_controller::set_view(ui_iface_view *view)
 {
 	if (this->view)
 	{

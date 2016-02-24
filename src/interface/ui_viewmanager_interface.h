@@ -35,8 +35,8 @@ enum ui_view_indicator
 	UI_VIEW_INDICATOR_LAST
 };
 
-#include "ui_viewmgr_interface.h"
-#include "ui_view_interface.h"
-#include "ui_controller_interface.h"
+#include "ui_iface_viewmgr.h"
+#include "ui_iface_view.h"
+#include "ui_iface_controller.h"
 
 #endif /* UI_VIEWMANAGER_INTERFACE_H */

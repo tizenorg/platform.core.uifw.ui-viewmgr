@@ -69,7 +69,7 @@ bool ui_basic_view::create_layout()
 	}
 
 	//Set software back key, if it's needed
-	ui_viewmgr *viewmgr = dynamic_cast<ui_viewmgr *>(ui_view_interface::get_viewmgr());
+	ui_viewmgr *viewmgr = dynamic_cast<ui_viewmgr *>(ui_iface_view::get_viewmgr());
 	if (viewmgr->need_soft_key())
 	{
 		Evas_Object *prev_btn = elm_button_add(layout);

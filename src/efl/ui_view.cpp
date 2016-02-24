@@ -20,7 +20,7 @@ using namespace efl_viewmgr;
 using namespace viewmgr;
 
 ui_view::ui_view(ui_controller *controller, const char *name, const char *style)
-		: ui_view_interface(controller, name, style)
+		: ui_iface_view(controller, name, style)
 {
 }
 
@@ -30,13 +30,13 @@ ui_view::~ui_view()
 
 Evas_Object *ui_view::set_content(Evas_Object *content)
 {
-	T pcontent = ui_view_interface::set_content(CONVERT_TO_T(content));
+	T pcontent = ui_iface_view::set_content(CONVERT_TO_T(content));
 	return static_cast<Evas_Object *>(pcontent);
 }
 
 Evas_Object *ui_view::get_base()
 {
-	ui_viewmgr *viewmgr = dynamic_cast<ui_viewmgr *>(ui_view_interface::get_viewmgr());
+	ui_viewmgr *viewmgr = dynamic_cast<ui_viewmgr *>(ui_iface_view::get_viewmgr());
 	if (!viewmgr)
 	{
 		return NULL;
@@ -60,7 +60,7 @@ void ui_view::set_indicator(ui_view_indicator indicator)
 {
 	if (this->get_indicator() == indicator) return;
 
-	ui_view_interface::set_indicator(indicator);
+	ui_iface_view::set_indicator(indicator);
 
 	ui_viewmgr *viewmgr = dynamic_cast<ui_viewmgr *>(this->get_viewmgr());
 

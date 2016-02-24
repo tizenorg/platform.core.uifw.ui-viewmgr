@@ -18,12 +18,12 @@
 
 using namespace viewmgr;
 
-void ui_view_interface::set_event_block(bool block)
+void ui_iface_view::set_event_block(bool block)
 {
 	this->event_block = block;
 }
 
-void ui_view_interface::load()
+void ui_iface_view::load()
 {
 	this->state = UI_VIEW_STATE_LOAD;
 	if (this->content) return;
@@ -31,7 +31,7 @@ void ui_view_interface::load()
 	this->controller->load();
 }
 
-void ui_view_interface::unload()
+void ui_iface_view::unload()
 {
 	this->state = UI_VIEW_STATE_UNLOAD;
 	if (this->get_removable_content())
@@ -44,21 +44,21 @@ void ui_view_interface::unload()
 	this->controller->unload();
 }
 
-void ui_view_interface::active()
+void ui_iface_view::active()
 {
 	this->state = UI_VIEW_STATE_ACTIVE;
 	if (!this->controller) return;
 	this->controller->active();
 }
 
-void ui_view_interface::inactive()
+void ui_iface_view::inactive()
 {
 	this->state = UI_VIEW_STATE_INACTIVE;
 	if (!this->controller) return;
 	this->controller->inactive();
 }
 
-void ui_view_interface::pause()
+void ui_iface_view::pause()
 {
 	this->state = UI_VIEW_STATE_PAUSE;
 	if (!this->content) return;
@@ -67,7 +67,7 @@ void ui_view_interface::pause()
 	this->controller->pause();
 }
 
-void ui_view_interface::resume()
+void ui_iface_view::resume()
 {
 	this->state = UI_VIEW_STATE_ACTIVE;
 	if (state != UI_VIEW_STATE_PAUSE) return;
@@ -76,13 +76,13 @@ void ui_view_interface::resume()
 	this->controller->resume();
 }
 
-void ui_view_interface::destroy()
+void ui_iface_view::destroy()
 {
 	if (!this->controller) return;
 	this->controller->destroy();
 }
 
-ui_view_interface::ui_view_interface(T content, ui_controller_interface *controller, const char *name, const char *style)
+ui_iface_view::ui_iface_view(T content, ui_iface_controller *controller, const char *name, const char *style)
 		: content(content), controller(controller), name(string(name ? name : "")), style(string(style ? style : "")), viewmgr(NULL), state(UI_VIEW_STATE_LOAD),
 		  indicator(UI_VIEW_INDICATOR_DEFAULT), event_block(false), removable_content(true)
 {
@@ -91,60 +91,60 @@ ui_view_interface::ui_view_interface(T content, ui_controller_interface *control
 	controller->set_view(this);
 }
 
-ui_view_interface::ui_view_interface(ui_controller_interface *controller, const char *name, const char *style)
-		: ui_view_interface(NULL, controller, name, style)
+ui_iface_view::ui_iface_view(ui_iface_controller *controller, const char *name, const char *style)
+		: ui_iface_view(NULL, controller, name, style)
 {
 	this->state = UI_VIEW_STATE_UNLOAD;
 }
 
-ui_view_interface::ui_view_interface(const char *name)
-		: ui_view_interface(NULL, name)
+ui_iface_view::ui_iface_view(const char *name)
+		: ui_iface_view(NULL, name)
 {
 
 }
 
-ui_view_interface::~ui_view_interface()
+ui_iface_view::~ui_iface_view()
 {
 	this->viewmgr->remove_view(this);
 	if (this->controller) delete (this->controller);
 }
 
-ui_controller_interface* ui_view_interface::set_controller(ui_controller_interface *controller)
+ui_iface_controller* ui_iface_view::set_controller(ui_iface_controller *controller)
 {
-	ui_controller_interface *prev_controller = this->controller;
+	ui_iface_controller *prev_controller = this->controller;
 	this->controller = controller;
 	if (controller) controller->set_view(this);
 	if (prev_controller) prev_controller->set_view(NULL);
 	return prev_controller;
 }
 
-T ui_view_interface::set_content(T content)
+T ui_iface_view::set_content(T content)
 {
 	T prev = this->content;
 	this->content = content;
 	return prev;
 }
 
-bool ui_view_interface::set_style(const char *style)
+bool ui_iface_view::set_style(const char *style)
 {
 	this->style.assign(style);
 	return true;
 }
 
-bool ui_view_interface::set_name(const char *name)
+bool ui_iface_view::set_name(const char *name)
 {
 	this->name.assign(name);
 	return true;
 }
 
-void ui_view_interface::set_removable_content(bool removable)
+void ui_iface_view::set_removable_content(bool removable)
 {
 	this->removable_content = removable;
 
 	//FIXME: If this api is called on unload state? should we remove content right now?
 }
 
-void ui_view_interface::set_indicator(ui_view_indicator indicator)
+void ui_iface_view::set_indicator(ui_view_indicator indicator)
 {
 	this->indicator = indicator;
 }

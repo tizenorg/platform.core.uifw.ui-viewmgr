@@ -25,11 +25,11 @@ typedef void* T;
 
 namespace viewmgr {
 
-class ui_viewmgr_interface;
-class ui_controller_interface;
+class ui_iface_viewmgr;
+class ui_iface_controller;
 
 /**
- *  @class ui_view_interface
+ *  @class ui_iface_view
  *
  *  @ingroup viewmgr
  *
@@ -37,13 +37,13 @@ class ui_controller_interface;
  *         UI View may have it's own show/hide transition styles. That means, it's available that views have different show/hide effects on demands.
  *         It's not mandatory but view should describe the transitions in this class.
  *
- *  @warning When the transitions are finished, the view must to call ui_viewmgr_interface :: _push_finished(), ui_viewmgr_interface :: _pop_finished() in order that
- *           The ui_viewmgr_interface keeps the view states exactly.
+ *  @warning When the transitions are finished, the view must to call ui_iface_viewmgr :: _push_finished(), ui_iface_viewmgr :: _pop_finished() in order that
+ *           The ui_iface_viewmgr keeps the view states exactly.
  */
-class ui_view_interface
+class ui_iface_view
 {
-	friend class ui_viewmgr_interface;
-	friend class ui_controller_interface;
+	friend class ui_iface_viewmgr;
+	friend class ui_iface_controller;
 
 private:
 	/// View state definition
@@ -58,10 +58,10 @@ private:
 	};
 
 	T content;                              ///< A content instance for a screen as a view.
-	ui_controller_interface *controller;    ///< View life-cycle controller interface.
+	ui_iface_controller *controller;    ///< View life-cycle controller interface.
 	string name;                            ///< View name.
 	string style;                           ///< View style name.
-	ui_viewmgr_interface *viewmgr;          ///< Viewmgr which this view belongs to.
+	ui_iface_viewmgr *viewmgr;          ///< Viewmgr which this view belongs to.
 	ui_view_state state;                    ///< View state.
 	ui_view_indicator indicator;            ///< View indicator mode.
 	bool event_block;                       ///< State of event block.
@@ -72,7 +72,7 @@ protected:
 	/** @brief toggle event block.
 	 *
 	 *  @note This interface is designed for toggling touch event on view transition.
-	 *        ui_viewmgr_interface will call this interface for notifying event blocking toggling on transition time.
+	 *        ui_iface_viewmgr will call this interface for notifying event blocking toggling on transition time.
 	 *
 	 *  @param block @c true, when blocking is enabled, otherwise @c false.
 	 */
@@ -80,57 +80,57 @@ protected:
 
 	/** @brief view load state.
 	 *
-	 *  @note this state will be triggered by ui_viewmgr_interface.
+	 *  @note this state will be triggered by ui_iface_viewmgr.
 	 *
-	 *  @see ui_controller_interface for this state in detail.
+	 *  @see ui_iface_controller for this state in detail.
 	 */
 	virtual void load();
 
 	/** @brief view unload state.
 	 *
-	 *  @note this state will be triggered by ui_viewmgr_interface.
+	 *  @note this state will be triggered by ui_iface_viewmgr.
 	 *
-	 *  @see ui_controller_interface for this state in detail.
+	 *  @see ui_iface_controller for this state in detail.
 	 */
 	virtual void unload();
 
 	/** @brief view active state.
 	 *
-	 *  @note this state will be triggered by ui_viewmgr_interface.
+	 *  @note this state will be triggered by ui_iface_viewmgr.
 	 *
-	 *  @see ui_controller_interface for this state in detail.
+	 *  @see ui_iface_controller for this state in detail.
 	 */
 	virtual void active();
 
 	/** @brief view inactive state.
 	 *
-	 *  @note this state will be triggered by ui_viewmgr_interface.
+	 *  @note this state will be triggered by ui_iface_viewmgr.
 	 *
-	 *  @see ui_controller_interface for this state in detail.
+	 *  @see ui_iface_controller for this state in detail.
 	 */
 	virtual void inactive();
 
 	/** @brief view pause state.
 	 *
-	 *  @note this state will be triggered by ui_viewmgr_interface.
+	 *  @note this state will be triggered by ui_iface_viewmgr.
 	 *
-	 *  @see ui_controller_interface for this state in detail.
+	 *  @see ui_iface_controller for this state in detail.
 	 */
 	virtual void pause();
 
 	/** @brief view resume state.
 	 *
-	 *  @note this state will be triggered by ui_viewmgr_interface.
+	 *  @note this state will be triggered by ui_iface_viewmgr.
 	 *
-	 *  @see ui_controller_interface for this state in detail.
+	 *  @see ui_iface_controller for this state in detail.
 	 */
 	virtual void resume();
 
 	/** @brief view destroy state.
 	 *
-	 *  @note this state will be triggered by ui_viewmgr_interface.
+	 *  @note this state will be triggered by ui_iface_viewmgr.
 	 *
-	 *  @see ui_controller_interface for this state in detail.
+	 *  @see ui_iface_controller for this state in detail.
 	 */
 	virtual void destroy();
 
@@ -147,14 +147,14 @@ protected:
 	}
 
 	/// Return a controller of this view.
-	ui_controller_interface* get_controller()
+	ui_iface_controller* get_controller()
 	{
 		return this->controller;
 	}
 
 	/** @brief Return a viewmgr which this view is belonging to.
 	 */
-	ui_viewmgr_interface *get_viewmgr()
+	ui_iface_viewmgr *get_viewmgr()
 	{
 		return this->viewmgr;
 	}
@@ -162,13 +162,13 @@ protected:
 	/** @brief This is for replacing or setting a controller of the view.
 	 *
 	 *  @return A previous controller. If it wasn't, the return value will be @c NULL.
-	 *  @note this state will be triggered by ui_viewmgr_interface.
+	 *  @note this state will be triggered by ui_iface_viewmgr.
 	 *  @param controller a new controller. It allows @c NULL for canceling the previous controller.
 	 *
-	 *  @warning Be aware deletion of controller passed here will be taken cover by ui_view_interface.
-	 *           If you want to keep the controller for any reasons, please unset it using set_controller() before ui_view_interface is deleted.
+	 *  @warning Be aware deletion of controller passed here will be taken cover by ui_iface_view.
+	 *           If you want to keep the controller for any reasons, please unset it using set_controller() before ui_iface_view is deleted.
 	 */
-	ui_controller_interface* set_controller(ui_controller_interface *controller);
+	ui_iface_controller* set_controller(ui_iface_controller *controller);
 
 public:
 	/** @brief This is a constructor for initializing this view resources.
@@ -177,17 +177,17 @@ public:
 	 *  @param controller view life-cycle controller interface.
 	 *  @param name view name.
 	 *
-	 *  @warning Be aware the deletion of controller passed here will be covered by ui_view_interface.
-	 *           If you want to keep it for any reasons, please unset it using set_controller() before ui_view_interface is deleted.
+	 *  @warning Be aware the deletion of controller passed here will be covered by ui_iface_view.
+	 *           If you want to keep it for any reasons, please unset it using set_controller() before ui_iface_view is deleted.
 	 */
-	ui_view_interface(T content, ui_controller_interface *controller, const char *name, const char *style = NULL);
+	ui_iface_view(T content, ui_iface_controller *controller, const char *name, const char *style = NULL);
 	///Constructor for initializing with controller.
-	ui_view_interface(ui_controller_interface *controller, const char *name = NULL, const char *style = NULL);
+	ui_iface_view(ui_iface_controller *controller, const char *name = NULL, const char *style = NULL);
 	///Constructor for initializing with name.
-	ui_view_interface(const char *name = NULL);
+	ui_iface_view(const char *name = NULL);
 
 	///Destructor for terminating view.
-	virtual ~ui_view_interface();
+	virtual ~ui_iface_view();
 
 	/** @brief This is for replacing or setting a content of the view.
 	 *

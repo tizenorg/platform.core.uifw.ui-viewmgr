@@ -29,7 +29,7 @@ namespace efl_viewmgr
  *
  *  @brief UI Controller. This is a class for handling of life-cycle events from user side.
  */
-class ui_controller: public viewmgr::ui_controller_interface
+class ui_controller: public viewmgr::ui_iface_controller
 {
 public:
 	///Destructor.

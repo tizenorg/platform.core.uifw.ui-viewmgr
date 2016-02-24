@@ -80,7 +80,7 @@ bool ui_viewmgr::create_base_layout(Evas_Object *conform)
 }
 
 ui_viewmgr::ui_viewmgr(const char *pkg, ui_key_listener *key_listener)
-		: ui_viewmgr_interface(), key_listener(key_listener)
+		: ui_iface_viewmgr(), key_listener(key_listener)
 {
 	if (!pkg)
 	{
@@ -150,7 +150,7 @@ ui_viewmgr::~ui_viewmgr()
 
 bool ui_viewmgr::activate()
 {
-	ui_viewmgr_interface::activate();
+	ui_iface_viewmgr::activate();
 
 	elm_object_part_content_unset(this->get_base(), "elm.swallow.content");
 
@@ -177,7 +177,7 @@ bool ui_viewmgr::activate()
 
 bool ui_viewmgr::deactivate()
 {
-	ui_viewmgr_interface::deactivate();
+	ui_iface_viewmgr::deactivate();
 
 	//FIXME: based on the profile, we should app to go behind or terminate.
 	if (true)
@@ -198,7 +198,7 @@ bool ui_viewmgr::deactivate()
 bool ui_viewmgr::pop_view()
 {
 	if (this->get_view_count() == 1) this->deactivate();
-	else if(!ui_viewmgr_interface::pop_view()) return false;
+	else if(!ui_iface_viewmgr::pop_view()) return false;
 
 	ui_view *view = dynamic_cast<ui_view *>(this->get_last_view());
 
@@ -220,7 +220,7 @@ bool ui_viewmgr::pop_view()
 
 ui_view * ui_viewmgr::push_view(ui_view *view)
 {
-	ui_viewmgr_interface::push_view(view);
+	ui_iface_viewmgr::push_view(view);
 
 	//Don't prepare yet if viewmgr is not activated.
 	if (!this->is_activated()) return view;
@@ -245,5 +245,5 @@ ui_view * ui_viewmgr::push_view(ui_view *view)
 
 ui_view *ui_viewmgr::get_last_view()
 {
-   return dynamic_cast<ui_view *>(ui_viewmgr_interface::get_last_view());
+   return dynamic_cast<ui_view *>(ui_iface_viewmgr::get_last_view());
 }

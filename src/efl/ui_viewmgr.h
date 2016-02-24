@@ -37,7 +37,7 @@ class ui_view;
  *
  *  @warning viewmgr will remove all containing views when it's destroyed.
  */
-class ui_viewmgr: public viewmgr::ui_viewmgr_interface
+class ui_viewmgr: public viewmgr::ui_iface_viewmgr
 {
 	friend class ui_view;
 

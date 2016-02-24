@@ -23,10 +23,10 @@ using namespace std;
 
 namespace viewmgr {
 
-class ui_view_interface;
+class ui_iface_view;
 
 /**
- *  @class ui_viewmgr_interface
+ *  @class ui_iface_viewmgr
  *
  *  @ingroup viewmgr
  *
@@ -36,14 +36,14 @@ class ui_view_interface;
  *
  *  @warning viewmgr will remove all containing views when it's destroyed.
  */
-class ui_viewmgr_interface
+class ui_iface_viewmgr
 {
-	friend class ui_view_interface;
+	friend class ui_iface_view;
 
 private:
 	static bool soft_key;               //If system doesn't support HW back key, then this value is @c true.
 	static bool event_block;            //Event block on view transition. This value should be configurable by system.
-	list<ui_view_interface*> view_list; //View list.
+	list<ui_iface_view*> view_list; //View list.
 	bool activated;                     //Activated status of this viewmgr.
 
 	/**
@@ -56,7 +56,7 @@ private:
 	 *  @warning If the given view is already connected to a viewmgr, this call will be failed.
 	 *  @see disconnect_view()
 	 */
-	bool connect_view(ui_view_interface *view);
+	bool connect_view(ui_iface_view *view);
 
 	/**
 	 *  @brief Disconnect a given view from this viewmgr.
@@ -67,7 +67,7 @@ private:
 	 *
 	 *  @see connect_view()
 	 */
-	bool disconnect_view(ui_view_interface *view);
+	bool disconnect_view(ui_iface_view *view);
 
 	/**
 	 *  @brief Toggle event blocking to the given view.
@@ -79,7 +79,7 @@ private:
 	 *  @param view A view to toggle event blocking.
 	 *  @param block @c true is blocking event, otherwise @c false.
 	 */
-	void set_event_block(ui_view_interface *view, bool block);
+	void set_event_block(ui_iface_view *view, bool block);
 
 protected:
 	/**
@@ -91,7 +91,7 @@ protected:
 	 *
 	 *  @warning This function must be called when push transition is finished.
 	 */
-	bool push_view_finished(ui_view_interface *view);
+	bool push_view_finished(ui_iface_view *view);
 
 	/**
 	 *  @brief This function is designed for finishing process for pop transition.
@@ -104,7 +104,7 @@ protected:
 	 *
 	 *  @warning This function must be called when push transition is finished.
 	 */
-	bool pop_view_finished(ui_view_interface *view);
+	bool pop_view_finished(ui_iface_view *view);
 
 #if 0
 	/**
@@ -114,7 +114,7 @@ protected:
 	 *
 	 *  @warning Don't modify this view list.
 	 */
-	const list<ui_view_interface*>* const get_view_list()
+	const list<ui_iface_view*>* const get_view_list()
 	{
 		return &this->view_list;
 	}
@@ -137,7 +137,7 @@ protected:
 	 *  @see insert_view_after()
 	 *  @see pop_view()
 	 */
-	ui_view_interface *push_view(ui_view_interface *view);
+	ui_iface_view *push_view(ui_iface_view *view);
 
 	/**
 	 *  @brief Pop the top(last) view from this viewmgr view list.
@@ -162,7 +162,7 @@ protected:
 	 *
 	 *  @return @c true on success or @c false otherwise.
 	 */
-	bool insert_view_before(ui_view_interface *view, ui_view_interface *before);
+	bool insert_view_before(ui_iface_view *view, ui_iface_view *before);
 
 	/**
 	 *  @brief Insert a view in this viewmgr view list. Specifically, insert a given @p view right after of the given view, @after.
@@ -172,7 +172,7 @@ protected:
 	 *
 	 *  @return @c true on success or @c false otherwise.
 	 */
-	bool insert_view_after(ui_view_interface *view, ui_view_interface *after);
+	bool insert_view_after(ui_iface_view *view, ui_iface_view *after);
 
 	/**
 	 *  @brief Remove the given view from this viewmgr view list.
@@ -185,7 +185,7 @@ protected:
 	 *  @see insert_view_after()
 	 *  @see push_view()
 	 */
-	bool remove_view(ui_view_interface *view);
+	bool remove_view(ui_iface_view *view);
 
 	/**
 	 *  @brief Return a view which is matched with the index @p idx.
@@ -201,7 +201,7 @@ protected:
 	 *  @see get_view_index()
 	 *  @see get_view_count()
 	 */
-	ui_view_interface* get_view(unsigned int idx);
+	ui_iface_view* get_view(unsigned int idx);
 
 	/**
 	 *  @brief Return a view which is matched with the @p name.
@@ -213,16 +213,16 @@ protected:
 	 *  @return The view which name is matched with @p name.
 	 *          If there were no views name matched, @c NULL will be returned.
 	 *
-	 *  @see ui_view_interface::set_name()
+	 *  @see ui_iface_view::set_name()
 	 */
-	ui_view_interface *get_view(const char *name);
+	ui_iface_view *get_view(const char *name);
 
 	/**
 	 *  @brief Return a last(top) view.
 	 *
 	 *  @return The view which is last view of the viewmgr view list.
 	 */
-	ui_view_interface *get_last_view();
+	ui_iface_view *get_last_view();
 
 	/**
 	 *  @brief Return a view index(page) number of the given view.
@@ -234,14 +234,14 @@ protected:
 	 *
 	 *  @warning The index number of views are variable since the view list is variable.
 	 */
-	int get_view_index(const ui_view_interface *view);
+	int get_view_index(const ui_iface_view *view);
 
 public:
 	///Constructor.
-	ui_viewmgr_interface();
+	ui_iface_viewmgr();
 
 	///Destructor.
-	virtual ~ui_viewmgr_interface();
+	virtual ~ui_iface_viewmgr();
 
 	/**
 	 *  @brief Activate this view manager.

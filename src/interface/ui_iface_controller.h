@@ -19,23 +19,23 @@
 
 namespace viewmgr {
 
-class ui_view_interface;
+class ui_iface_view;
 
 /**
- *  @class ui_controller_interface.
+ *  @class ui_iface_controller.
  *
  *  @ingroup viewmgr
  *
  *  @brief UI Controller Interface. This interface is designed for handling of life-cycle events from user side.
  */
-class ui_controller_interface
+class ui_iface_controller
 {
-	friend class ui_view_interface;
+	friend class ui_iface_view;
 
 private:
-	ui_view_interface *view;
+	ui_iface_view *view;
 
-	void set_view(ui_view_interface *view);
+	void set_view(ui_iface_view *view);
 
 protected:
 	/**
@@ -48,20 +48,20 @@ protected:
 	 *
 	 *  @see set_view()
 	 */
-	ui_view_interface *get_view()
+	ui_iface_view *get_view()
 	{
 		return this->view;
 	}
 
 public:
 	///Constructor.
-	ui_controller_interface() :
+	ui_iface_controller() :
 			view(NULL)
 	{
 	}
 
 	///Destructor.
-	virtual ~ui_controller_interface()
+	virtual ~ui_iface_controller()
 	{
 	}
 
