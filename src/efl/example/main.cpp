@@ -66,19 +66,32 @@ create_content(Evas_Object *parent, const char *text, Evas_Smart_Cb prev_btn_cli
 	evas_object_show(layout);
 	elm_grid_pack(grid, layout, 0, 0, 100, 100);
 
+	/* Box */
+	box = elm_box_add(grid);
+	elm_box_horizontal_set(box, EINA_TRUE);
+	evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(box, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	elm_box_padding_set(box, ELM_SCALE_SIZE(50), 0);
+	evas_object_show(box);
+	elm_grid_pack(grid, box, 0, 0, 100, 100);
+
 	/* Previous Page Button */
 	btn = elm_button_add(grid);
+	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(btn, EVAS_HINT_FILL, 1.0);
 	elm_object_text_set(btn, "Prev");
 	evas_object_smart_callback_add(btn, "clicked", prev_btn_clicked_cb, ad);
 	evas_object_show(btn);
-	elm_grid_pack(grid, btn, 10, 90, 30, 8);
+	elm_box_pack_end(box, btn);
 
 	/* Next Page Button */
 	btn = elm_button_add(grid);
+	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(btn, EVAS_HINT_FILL, 1.0);
 	elm_object_text_set(btn, "Next");
 	evas_object_smart_callback_add(btn, "clicked", next_btn_clicked_cb, ad);
 	evas_object_show(btn);
-	elm_grid_pack(grid, btn, 60, 90, 30, 8);
+	elm_box_pack_end(box, btn);
 
 	elm_object_content_set(scroller, grid);
 
@@ -181,8 +194,7 @@ int main(int argc, char *argv[])
 
 	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_BATTERY], APP_EVENT_LOW_BATTERY, ui_app_low_battery, &ad);
 	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_MEMORY], APP_EVENT_LOW_MEMORY, ui_app_low_memory, &ad);
-	ui_app_add_event_handler(&handlers[APP_EVENT_DEVICE_ORIENTATION_CHANGED], APP_EVENT_DEVICE_ORIENTATION_CHANGED,
-			ui_app_orient_changed, &ad);
+	ui_app_add_event_handler(&handlers[APP_EVENT_DEVICE_ORIENTATION_CHANGED], APP_EVENT_DEVICE_ORIENTATION_CHANGED, ui_app_orient_changed, &ad);
 	ui_app_add_event_handler(&handlers[APP_EVENT_LANGUAGE_CHANGED], APP_EVENT_LANGUAGE_CHANGED, ui_app_lang_changed, &ad);
 	ui_app_add_event_handler(&handlers[APP_EVENT_REGION_FORMAT_CHANGED], APP_EVENT_REGION_FORMAT_CHANGED, ui_app_region_changed,
 			&ad);
