@@ -41,21 +41,15 @@
 #define TIZEN_VIEW_BADGE2_PADDING_WIDTH_INC (TIZEN_VIEW_BADGE_ICON_LEFT_PADDING_WIDTH_INC + TIZEN_VIEW_BADGE_TEXT_LEFT_PADDING_WIDTH_INC + TIZEN_VIEW_BADGE_TEXT_LEFT_PADDING_WIDTH_INC)
 #define TIZEN_VIEW_TITLE_LEFT_PADDING_WIDTH_INC 32
 #define TIZEN_VIEW_TITLE_FUNC_BTN_SIZE_INC 176 110
-#define TIZEN_VIEW_TOOLBAR_HEIGHT_INC 152
-#define TIZEN_VIEW_TOOLBAR_COLOR_INC 250 250 250 255
-#define TIZEN_VIEW_TOOLBAR_LEFT_TOP_PADDING_WIDTH_INC 32 23
-#define TIZEN_VIEW_TOOLBAR_RIGHT_BOTTOM_PADDING_WIDTH_INC 32 23
 #define TIZEN_VIEW_BACK_BUTTON_LR_PADDING_WIDTH_INC 10
-#define BUTTON_TIZEN_VIEW_TITLE_BUTTON_SIZE_INC 67 67
 #define TIZEN_VIEW_BACK_BUTTON_TITLE_RIGHT_PADDING_WIDTH_INC 90
 #define BUTTON_TIZEN_VIEW_BACK_BUTTON_SIZE_INC 80 80
 #define TIZEN_VIEW_TITLE_RIGHT_PADDING_WIDTH_INC 32
-#define TIZEN_VIEW_TABBAR_TITLE_TOP_PADDING_HEIGHT_INC 80
-#define TIZEN_VIEW_TABBAR_TITLE_HEIGHT_INC 100
-#define TIZEN_VIEW_TABBAR_TITLE_CLIPPER_HEIGHT_INC 80
-#define TIZEN_VIEW_TABBAR_LIGHT_VIEW_HEIGHT_INC 86
-#define TIZEN_VIEW_TABBAR2_HEIGHT_INC 144
-#define TIZEN_VIEW_TABBAR_TOP_DIVIDER_HEIGHT_INC 0
+#define TIZEN_VIEW_TOOLBAR_TITLE_TOP_PADDING_HEIGHT_INC 80
+#define TIZEN_VIEW_TOOLBAR_TITLE_HEIGHT_INC 100
+#define TIZEN_VIEW_TOOLBAR_TITLE_CLIPPER_HEIGHT_INC 80
+#define TIZEN_VIEW_TOOLBAR_LIGHT_VIEW_HEIGHT_INC 86
+#define TIZEN_VIEW_TOOLBAR_TOP_DIVIDER_HEIGHT_INC 0
 
 collections {
   base_scale: 2.6;
@@ -87,7 +81,7 @@ collections {
          public prev_btn_visible = 0;        //Previous button visible status
          public title_left_btn_visible = 0;  //Title left button visible status
          public title_right_btn_visible = 0; //Title right button visible status
-         public tabbar_visible = 0;          //Tabbar visible status (This value is used for tabbar group)
+         public toolbar_visible = 0;          //Tabbar visible status (This value is used for toolbar group)
       }
       parts {
          part { name: "base";
@@ -140,6 +134,75 @@ collections {
                inherit: "default" 0.0;
                min: 0 0;
                max: -1 0;
+            }
+         }
+         part { name: "toolbar_top_padding";
+            type: SPACER;
+            scale: 1;
+            repeat_events: 1;
+            description { state: "default" 0.0;
+               min: 0 TIZEN_VIEW_TOOLBAR_TITLE_TOP_PADDING_HEIGHT_INC;
+               max: -1 TIZEN_VIEW_TOOLBAR_TITLE_TOP_PADDING_HEIGHT_INC;
+               fixed: 0 1;
+               align: 0.5 0.0;
+               rel1 { to: "title_bg"; relative: 0.0 0.0; }
+               rel2 { to: "title_bg"; relative: 1.0 0.0; }
+            }
+         }
+         part { name: "toolbar";
+            type: SWALLOW;
+            scale: 1;
+            clip_to: "toolbar_clipper";
+            description { state: "default" 0.0;
+               min: 0 0;
+               max: -1 0;
+               fixed: 0 1;
+               align: 0.5 0.0;
+               rel1 { to: "toolbar_top_padding"; relative: 0.0 1.0; }
+               rel2 { to: "toolbar_top_padding"; relative: 1.0 1.0; }
+               visible: 0;
+            }
+            description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+               min: 0 TIZEN_VIEW_TOOLBAR_TITLE_HEIGHT_INC;
+               max: -1 TIZEN_VIEW_TOOLBAR_TITLE_HEIGHT_INC;
+               visible: 1;
+            }
+         }
+         part { name: "toolbar_top_divider";
+            type: RECT;
+            scale: 1;
+            mouse_events: 0;
+            clip_to: "toolbar_clipper";
+            description { state: "default" 0.0;
+               min: 0 0;
+               max: -1 0;
+               fixed: 0 1;
+               align: 0.5 0.0;
+               rel1 { to: "toolbar_clipper"; relative: 0.0 0.0; }
+               rel2 { to: "toolbar_clipper"; relative: 1.0 0.0; }
+               color: 244 244 244 25;
+               visible: 0;
+            }
+            description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+               min: 0 TIZEN_VIEW_TOOLBAR_TOP_DIVIDER_HEIGHT_INC;
+               max: -1 TIZEN_VIEW_TOOLBAR_TOP_DIVIDER_HEIGHT_INC;
+               visible: 1;
+            }
+         }
+         part { name: "toolbar_clipper";
+            type: RECT;
+            scale: 1;
+            mouse_events: 0;
+            clip_to: "clipper";
+            description { state: "default" 0.0;
+               min: 0 TIZEN_VIEW_TOOLBAR_TITLE_CLIPPER_HEIGHT_INC;
+               max: -1 TIZEN_VIEW_TOOLBAR_TITLE_CLIPPER_HEIGHT_INC;
+               fixed: 0 1;
+               align: 0.5 1.0;
+               rel1 { to: "toolbar"; relative: 0.0 1.0; }
+               rel2 { to: "toolbar"; relative: 1.0 1.0; }
             }
          }
          part { name: "title_clipper";
@@ -533,7 +596,13 @@ collections {
             description { state: "default" 0.0;
                align: 0.0 0.0;
                rel1 { to_x: "base"; to_y: "title_bg"; relative: 0.0 1.0; }
-               rel2 { to_x: "base"; to_y: "toolbar"; relative: 1.0 0.0; }
+               rel2.to: "base";
+            }
+            description { state: "toolbar" 0.0;
+               align: 0.0 0.0;
+               rel1 { to_x: "base"; to_y: "toolbar"; relative: 0.0 1.0; }
+               rel2.to: "base";
+
             }
          }
          part { name: "content_clipper";
@@ -543,45 +612,6 @@ collections {
             description { state: "default" 0.0;
                rel1.to_y: "elm.swallow.content";
                rel2.to_y: "elm.swallow.content";
-            }
-         }
-         part { name: "toolbar_bg";
-            type: RECT;
-            scale: 1;
-            clip_to: "toolbar_clipper";
-            description { state: "default" 0.0;
-               rel1.to: "toolbar";
-               rel2.to: "toolbar";
-               color: TIZEN_VIEW_TOOLBAR_COLOR_INC;
-            }
-         }
-         part { name: "toolbar";
-            type: SWALLOW;
-            scale: 1;
-            clip_to: "toolbar_clipper";
-            description { state: "default" 0.0;
-               min: 0 0;
-               max: -1 0;
-               fixed: 0 1;
-               align: 0.5 1.0;
-               rel1 { to: "base"; relative: 0.0 1.0; }
-               rel2 { to: "base"; relative: 1.0 1.0; }
-               visible: 0;
-            }
-            description { state: "visible" 0.0;
-               inherit: "default" 0.0;
-               min: 0 TIZEN_VIEW_TOOLBAR_HEIGHT_INC;
-               max: -1 TIZEN_VIEW_TOOLBAR_HEIGHT_INC;
-               visible: 1;
-            }
-         }
-         part { name: "toolbar_clipper";
-            type: RECT;
-            mouse_events: 0;
-            clip_to: "clipper";
-            description { state: "default" 0.0;
-               rel1.to: "toolbar";
-               rel2.to: "toolbar";
             }
          }
          part { name: "prev_btn_left_padding";
@@ -682,6 +712,12 @@ collections {
                      set_state(PART:"title_text_right_padding", "default", 0.0);
                   }
                }
+               if (get_int(toolbar_visible)) {
+                  set_state(PART:"toolbar", "visible", 0.0);
+                  set_state(PART:"toolbar_top_divider", "visible", 0.0);
+                  set_state(PART:"elm.swallow.content", "toolbar", 0.0);
+               }
+
             }
          }
          program { name: "title_hide";
@@ -701,6 +737,29 @@ collections {
                   set_state(PART:"title_text_left_padding", "prev_btn_visible", 0.0);
                   set_state(PART:"title_text_right_padding", "prev_btn_visible", 0.0);
                }
+               set_state(PART:"toolbar", "default", 0.0);
+               set_state(PART:"toolbar_top_divider", "default", 0.0);
+               set_state(PART:"elm.swallow.content", "default", 0.0);
+            }
+         }
+         program { name: "toolbar_show";
+            signal: "elm,state,toolbar,show";
+            source: "elm";
+            script {
+               set_state(PART:"toolbar", "visible", 0.0);
+               set_state(PART:"toolbar_top_divider", "visible", 0.0);
+               set_state(PART:"elm.swallow.content", "toolbar", 0.0);
+               set_int(toolbar_visible, 1);
+            }
+         }
+         program { name: "toolbar_hide";
+            signal: "elm,state,toolbar,hide";
+            source: "elm";
+            script {
+               set_state(PART:"toolbar", "default", 0.0);
+               set_state(PART:"toolbar_top_divider", "default", 0.0);
+               set_state(PART:"elm.swallow.content", "default", 0.0);
+               set_int(toolbar_visible, 0);
             }
          }
          program { name: "subtitle_show";
@@ -836,20 +895,6 @@ collections {
                set_state(PART:"title_text_right_padding", "default", 0.0);
             }
          }
-         program { name: "toolbar_show";
-            signal: "elm,state,toolbar,show";
-            source: "elm";
-            script {
-               set_state(PART:"toolbar", "visible", 0.0);
-            }
-         }
-         program { name: "toolbar_hide";
-            signal: "elm,state,toolbar,hide";
-            source: "elm";
-            script {
-               set_state(PART:"toolbar", "default", 0.0);
-            }
-         }
          program { name: "title_clicked";
             signal: "mouse,clicked,1";
             source: "click_event_area";
@@ -892,156 +937,6 @@ collections {
             source: "elm";
             signal: "elm,state,orient,180";
             after: "change_to_portrait";
-         }
-      }
-   }
-   group { name: "elm/layout/tizen_view/tabbar";
-      inherit: "elm/layout/tizen_view/default";
-      parts {
-         part { name: "tabbar_top_padding";
-            type: SPACER;
-            scale: 1;
-            repeat_events: 1;
-            description { state: "default" 0.0;
-               min: 0 TIZEN_VIEW_TABBAR_TITLE_TOP_PADDING_HEIGHT_INC;
-               max: -1 TIZEN_VIEW_TABBAR_TITLE_TOP_PADDING_HEIGHT_INC;
-               fixed: 0 1;
-               align: 0.5 0.0;
-               rel1 { to: "title_bg"; relative: 0.0 0.0; }
-               rel2 { to: "title_bg"; relative: 1.0 0.0; }
-            }
-         }
-         part { name: "tabbar";
-            type: SWALLOW;
-            scale: 1;
-            clip_to: "tabbar_clipper";
-            description { state: "default" 0.0;
-               min: 0 0;
-               max: -1 0;
-               fixed: 0 1;
-               align: 0.5 0.0;
-               rel1 { to: "tabbar_top_padding"; relative: 0.0 1.0; }
-               rel2 { to: "tabbar_top_padding"; relative: 1.0 1.0; }
-               visible: 0;
-            }
-            description { state: "visible" 0.0;
-               inherit: "default" 0.0;
-               min: 0 TIZEN_VIEW_TABBAR_TITLE_HEIGHT_INC;
-               max: -1 TIZEN_VIEW_TABBAR_TITLE_HEIGHT_INC;
-               visible: 1;
-            }
-         }
-         part { name: "tabbar_top_divider";
-            type: RECT;
-            scale: 1;
-            mouse_events: 0;
-            clip_to: "tabbar_clipper";
-            description { state: "default" 0.0;
-               min: 0 0;
-               max: -1 0;
-               fixed: 0 1;
-               align: 0.5 0.0;
-               rel1 { to: "tabbar_clipper"; relative: 0.0 0.0; }
-               rel2 { to: "tabbar_clipper"; relative: 1.0 0.0; }
-               color: 244 244 244 25;
-               visible: 0;
-            }
-            description { state: "visible" 0.0;
-               inherit: "default" 0.0;
-               min: 0 TIZEN_VIEW_TABBAR_TOP_DIVIDER_HEIGHT_INC;
-               max: -1 TIZEN_VIEW_TABBAR_TOP_DIVIDER_HEIGHT_INC;
-               visible: 1;
-            }
-         }
-         part { name: "tabbar_clipper";
-            type: RECT;
-            scale: 1;
-            mouse_events: 0;
-            clip_to: "clipper";
-            description { state: "default" 0.0;
-               min: 0 TIZEN_VIEW_TABBAR_TITLE_CLIPPER_HEIGHT_INC;
-               max: -1 TIZEN_VIEW_TABBAR_TITLE_CLIPPER_HEIGHT_INC;
-               fixed: 0 1;
-               align: 0.5 1.0;
-               rel1 { to: "tabbar"; relative: 0.0 1.0; }
-               rel2 { to: "tabbar"; relative: 1.0 1.0; }
-            }
-         }
-         part { name: "elm.swallow.content";
-            type: SWALLOW;
-            scale: 1;
-            repeat_events: 0;
-            clip_to: "content_clipper";
-            description { state: "default" 0.0;
-               align: 0.0 0.0;
-               rel1 { to_x: "base"; to_y: "tabbar"; relative: 0.0 1.0; }
-               rel2 { to_x: "base"; to_y: "toolbar"; relative: 1.0 0.0; }
-            }
-         }
-      }
-      programs {
-         program { name: "title_show";
-            signal: "elm,state,title,show";
-            source: "elm";
-            script {
-               set_state(PART:"title_bg", "default", 0.0);
-               set_state(PART:"title_clipper", "default", 0.0);
-               if (get_int(title_left_btn_visible)) {
-                  set_state(PART:"title_left_btn_bg", "visible", 0.0);
-                  set_state(PART:"title_left_padding", "hidden", 0.0);
-                  set_state(PART:"title_left_btn", "visible", 0.0);
-                  set_state(PART:"title_right_btn_bg", "visible", 0.0);
-                  set_state(PART:"title_right_padding", "hidden", 0.0);
-               }
-               else if (get_int(prev_btn_visible))
-                  set_state(PART:"elm.swallow.prev_btn", "default", 0.0);
-               if (get_int(title_right_btn_visible)) {
-                  set_state(PART:"title_right_btn_bg", "visible", 0.0);
-                  set_state(PART:"title_right_padding", "hidden", 0.0);
-                  set_state(PART:"title_right_btn", "visible", 0.0);
-                  set_state(PART:"title_left_btn_bg", "visible", 0.0);
-                  set_state(PART:"title_left_padding", "hidden", 0.0);
-               }
-               if (get_int(tabbar_visible)) {
-                  set_state(PART:"tabbar", "visible", 0.0);
-                  set_state(PART:"tabbar_top_divider", "visible", 0.0);
-               }
-            }
-         }
-         program { name: "title_hide";
-            signal: "elm,state,title,hide";
-            source: "elm";
-            script {
-               set_state(PART:"title_bg", "hidden", 0.0);
-               set_state(PART:"title_clipper", "hidden", 0.0);
-               set_state(PART:"title_left_btn_bg", "default", 0.0);
-               set_state(PART:"title_left_padding", "default", 0.0);
-               set_state(PART:"title_left_btn", "default", 0.0);
-               set_state(PART:"title_right_btn_bg", "default", 0.0);
-               set_state(PART:"title_right_padding", "default", 0.0);
-               set_state(PART:"title_right_btn", "default", 0.0);
-               set_state(PART:"tabbar", "default", 0.0);
-               set_state(PART:"tabbar_top_divider", "default", 0.0);
-               set_state(PART:"elm.swallow.prev_btn", "hidden", 0.0);
-            }
-         }
-         program { name: "tabbar_show";
-            signal: "elm,state,tabbar,show";
-            source: "elm";
-            script {
-               set_state(PART:"tabbar", "visible", 0.0);
-               set_state(PART:"tabbar_top_divider", "visible", 0.0);
-               set_int(tabbar_visible, 1);
-            }
-         }
-         program { name: "tabbar_hide";
-            signal: "elm,state,tabbar,hide";
-            source: "elm";
-            script {
-               set_state(PART:"tabbar", "default", 0.0);
-               set_state(PART:"tabbar_top_divider", "default", 0.0);
-               set_int(tabbar_visible, 0);
-            }
          }
       }
    }

@@ -24,14 +24,14 @@
 
 
 Evas_Object*
-create_tabbar(Evas_Object *parent)
+create_toolbar(Evas_Object *parent)
 {
 	Evas_Object *toolbar;
 
 	toolbar = elm_toolbar_add(parent);
 
 	//FIXME: :( UI_View can set this style instead.
-	elm_object_style_set(toolbar, "tabbar_with_title");
+	elm_object_style_set(toolbar, "toolbar_with_title");
 	elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_EXPAND);
 	elm_toolbar_transverse_expanded_set(toolbar, EINA_TRUE);
 
