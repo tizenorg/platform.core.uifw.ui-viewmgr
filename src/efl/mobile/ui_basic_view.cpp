@@ -97,8 +97,8 @@ bool ui_basic_view::create_layout()
 	return true;
 }
 
-ui_basic_view::ui_basic_view(ui_controller *controller, const char *name, const char *style)
-		: ui_view(controller, name, style), layout(NULL)
+ui_basic_view::ui_basic_view(ui_controller *controller, const char *name)
+		: ui_view(controller, name), layout(NULL)
 {
 }
 
@@ -228,18 +228,6 @@ Evas_Object *ui_basic_view::set_content(Evas_Object *content, const char *title,
 	}
 
 	return pcontent;
-}
-
-bool ui_basic_view::set_tabbar(Evas_Object *toolbar)
-{
-	if (this->layout)
-	{
-		elm_object_part_content_set(this->layout, "tabbar", toolbar);
-		if (toolbar) elm_object_signal_emit(this->layout, "elm,state,tabbar,show", "elm");
-		return true;
-	}
-	LOGE("Layout is not exist!");
-	return false;
 }
 
 void ui_basic_view::unload_content()

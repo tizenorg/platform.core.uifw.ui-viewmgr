@@ -28,15 +28,17 @@ private:
 	Evas_Object *layout; //Base layout for view
 
 	bool create_layout();
-	bool destroy_layout();
 
 protected:
 	virtual void load();
 	virtual void unload();
 	virtual void unload_content();
 
+	//It should be used in child class.
+	bool destroy_layout();
+
 public:
-	ui_basic_view(ui_controller *controller, const char *name = NULL, const char *style = NULL);
+	ui_basic_view(ui_controller *controller, const char *name = NULL);
 	virtual ~ui_basic_view();
 
 	Evas_Object *set_content(Evas_Object *content, const char *title = NULL);
@@ -46,7 +48,6 @@ public:
 	bool set_title_left_btn(Evas_Object *title_left_btn);
 	bool set_title_right_btn(Evas_Object *title_right_btn);
 	bool set_title(const char *text);
-	bool set_tabbar(Evas_Object *toolbar);
 
 	virtual void menu();
 

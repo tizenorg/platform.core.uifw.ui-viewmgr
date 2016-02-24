@@ -26,7 +26,7 @@ public:
 		/* ui_basic_view(controller, identity name, style name of view).
 		   Later, you could get the identity name using view->get_name();
 		   you could get the style name of view as well */
-		ad->viewmgr->push_view(new ui_basic_view(this, "page6", "tabbar"));
+		ad->viewmgr->push_view(new ui_tab_view(this, "page6"));
 	}
 
 	~page6()
@@ -35,9 +35,10 @@ public:
 
 	void load()
 	{
+
 		//Initialize contents.
 
-		ui_basic_view *view = dynamic_cast<ui_basic_view *>(this->get_view());
+		ui_tab_view *view = dynamic_cast<ui_tab_view *>(this->get_view());
 
 		//Create a main content.
 		Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 6<br>With Tabar",

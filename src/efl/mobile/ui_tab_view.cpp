@@ -14,15 +14,32 @@
  *  limitations under the License.
  *
  */
-#include <dlog.h>
+#include "ui_viewmanager.h"
 
-#ifdef  LOG_TAG
-#undef  LOG_TAG
-#endif
-#define LOG_TAG "UI_VIEWMGR"
+using namespace efl_viewmgr;
+using namespace viewmgr;
 
-#include "ui_basic_controller.h"
-#include "ui_basic_view.h"
-#include "ui_basic_key_listener.h"
-#include "ui_basic_viewmgr.h"
-#include "ui_tab_view.h"
+ui_tab_view::ui_tab_view(ui_controller *controller, const char *name)
+		: ui_basic_view(controller, name)
+{
+	this->set_style("tabbar");
+}
+
+ui_tab_view::~ui_tab_view()
+{
+	destroy_layout();
+}
+
+bool ui_tab_view::set_tabbar(Evas_Object *toolbar)
+{
+	Evas_Object *layout = this->get_base();
+
+	if (layout)
+	{
+		elm_object_part_content_set(layout, "tabbar", toolbar);
+		if (toolbar) elm_object_signal_emit(layout, "elm,state,tabbar,show", "elm");
+		return true;
+	}
+	LOGE("Layout is not exist!");
+	return false;
+}

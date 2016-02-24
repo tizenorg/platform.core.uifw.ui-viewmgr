@@ -14,15 +14,23 @@
  *  limitations under the License.
  *
  */
-#include <dlog.h>
+#ifndef UI_TAB_VIEW
+#define UI_TAB_VIEW
 
-#ifdef  LOG_TAG
-#undef  LOG_TAG
-#endif
-#define LOG_TAG "UI_VIEWMGR"
+#include "../ui_viewmanager.h"
 
-#include "ui_basic_controller.h"
-#include "ui_basic_view.h"
-#include "ui_basic_key_listener.h"
-#include "ui_basic_viewmgr.h"
-#include "ui_tab_view.h"
+namespace efl_viewmgr
+{
+
+class ui_tab_view: public ui_basic_view
+{
+public:
+	ui_tab_view(ui_controller *controller, const char *name = NULL);
+	virtual ~ui_tab_view();
+
+	bool set_tabbar(Evas_Object *toolbar);
+};
+
+}
+
+#endif /* UI_BASIC_VIEW */

@@ -14,6 +14,7 @@ SET(SRCS
 	src/efl/mobile/ui_basic_view.cpp
 	src/efl/mobile/ui_basic_key_listener.cpp
 	src/efl/mobile/ui_basic_viewmgr.cpp
+	src/efl/mobile/ui_tab_view.cpp
 	src/efl/example/main.cpp
    )
 
