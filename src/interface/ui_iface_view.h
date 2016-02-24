@@ -181,9 +181,9 @@ public:
 	 *  @warning Be aware the deletion of controller passed here will be covered by ui_iface_view.
 	 *           If you want to keep it for any reasons, please unset it using set_controller() before ui_iface_view is deleted.
 	 */
-	ui_iface_view(T content, ui_iface_controller *controller, const char *name, const char *style = NULL);
+	ui_iface_view(T content, ui_iface_controller *controller, const char *name);
 	///Constructor for initializing with controller.
-	ui_iface_view(ui_iface_controller *controller, const char *name = NULL, const char *style = NULL);
+	ui_iface_view(ui_iface_controller *controller, const char *name = NULL);
 	///Constructor for initializing with name.
 	ui_iface_view(const char *name = NULL);
 
