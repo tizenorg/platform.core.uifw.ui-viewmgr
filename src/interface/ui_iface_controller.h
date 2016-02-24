@@ -24,6 +24,7 @@ class ui_iface_view;
 /**
  *  @class ui_iface_controller.
  *
+ *  @internal
  *  @ingroup viewmgr
  *
  *  @brief UI Controller Interface. This interface is designed for handling of life-cycle events from user side.

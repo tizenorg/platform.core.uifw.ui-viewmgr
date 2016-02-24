@@ -31,6 +31,7 @@ class ui_iface_controller;
 /**
  *  @class ui_iface_view
  *
+ *  @internal
  *  @ingroup viewmgr
  *
  *  @brief UI View Base Class. This is the base class of view. A view must have one content instance which represents a view for a current screen.

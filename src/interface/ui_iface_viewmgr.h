@@ -28,6 +28,7 @@ class ui_iface_view;
 /**
  *  @class ui_iface_viewmgr
  *
+ *  @internal
  *  @ingroup viewmgr
  *
  *  @brief This is a interface class of viewmgr. One viewmgr represents a window which contains multiple views.
