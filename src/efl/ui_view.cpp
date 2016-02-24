@@ -19,8 +19,8 @@
 using namespace efl_viewmgr;
 using namespace viewmgr;
 
-ui_view::ui_view(ui_controller *controller, const char *name, const char *style)
-		: ui_iface_view(controller, name, style)
+ui_view::ui_view(ui_controller *controller, const char *name)
+		: ui_iface_view(controller, name)
 {
 }
 
