@@ -87,6 +87,7 @@ ui_viewmgr::ui_viewmgr(const char *pkg)
 		LOGE("Invalid package name");
 		return;
 	}
+
 	//Window
 	this->win = elm_win_util_standard_add(pkg, pkg);
 
