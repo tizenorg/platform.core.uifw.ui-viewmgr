@@ -31,7 +31,7 @@ class ui_view_interface;
  *  @ingroup viewmgr
  *
  *  @brief This is a interface class of viewmgr. One viewmgr represents a window which contains multiple views.
- *         A viewmgr manages not only views life-cycle but constructs basic infrastructures such as key event handlings, transition effects, transient views.
+ *         A viewmgr manages not only views life-cycle but constructs basic infrastructures such as key events handling, transition effects, transient views.
  *         This interface guide you a basic policy of a view manager.
  *
  *  @warning viewmgr will remove all containing views when it's destroyed.
@@ -42,7 +42,7 @@ class ui_viewmgr_interface
 
 private:
 	static bool soft_key;               //If system doesn't support HW back key, then this value is @c true.
-	static bool event_block;                   //Event block on view transition. This value should be configurable by system.
+	static bool event_block;            //Event block on view transition. This value should be configurable by system.
 	list<ui_view_interface*> view_list; //View list.
 	bool activated;                     //Activated status of this viewmgr.
 
@@ -50,6 +50,7 @@ private:
 	 *  @brief Connect a given view to this viewmgr.
 	 *
 	 *  @param view A view to connect to this viewmgr which means the @p view is to belong to this viewmgr.
+	 *
 	 *  @return @c true success or @c false not.
 	 *
 	 *  @warning If the given view is already connected to a viewmgr, this call will be failed.
@@ -61,6 +62,7 @@ private:
 	 *  @brief Disconnect a given view from this viewmgr.
 	 *
 	 *  @param view A view to disconnect from this viewmgr.
+	 *
 	 *  @return @c true on success or @c false otherwise.
 	 *
 	 *  @see connect_view()
@@ -70,12 +72,12 @@ private:
 	/**
 	 *  @brief Toggle event blocking to the given view.
 	 *
-	 *  @param view A view to toggle event blocking
-	 *  @param block @c true is blocking event, otherwise @c false.
-	 *
 	 *  @note If the event is blocked, product users won't be able to enter any inputs to this @p view. These inputs are mouse clicks, key press,
 	 *        screen touches, etc. Event if this function is called, @p view will be event-blocked only when system requires event blocking.
 	 *        Most of the times, This function should be used on transition. @see also push_view(), push_view_finished(), pop_view(), pop_view_finished().
+	 *
+	 *  @param view A view to toggle event blocking.
+	 *  @param block @c true is blocking event, otherwise @c false.
 	 */
 	void set_event_block(ui_view_interface *view, bool block);
 
@@ -84,6 +86,7 @@ protected:
 	 *  @brief This function is designed for finishing process of push transition.
 	 *
 	 *  @param view A view which is finished pushing.
+	 *
 	 *  @return @c true on success or @c false otherwise.
 	 *
 	 *  @warning This function must be called when push transition is finished.
@@ -93,8 +96,10 @@ protected:
 	/**
 	 *  @brief This function is designed for finishing process for pop transition.
 	 *
-	 *	@note If a new view is pushed
+	 *  @note If a new view is pushed.
+	 *
 	 *  @param view A view which is finished popping.
+	 *
 	 *  @return @c true on success or @c false otherwise.
 	 *
 	 *  @warning This function must be called when push transition is finished.
@@ -121,7 +126,9 @@ protected:
 	 *  @note Normally, the current view will be hidden by a new view. In default, when user calls this API, view will be switched to @p view instantly,
 	 *        only when viewmgr state is activated. Otherwise, the @p view will be shown later when viewmgr is activated. push_view() is designed for providing
 	 *        view transition effect. If you want push view instantly without any transition, you could use insert_view_before() or insert_view_after().
-	 *        If you want to pop the current view, the please use pop_view()
+	 *        If you want to pop the current view, the please use pop_view().
+	 *
+	 *  @param view A view to insert at the end of viewmgr view list.
 	 *
 	 *  @return @p view, @c NULL when it fails to push a @p view.
 	 *
@@ -148,27 +155,29 @@ protected:
 	bool pop_view();
 
 	/**
-	 *  @brief Insert a view in this viewmgr view list. Specifically, insert a given @p view right before of the given view, @before
+	 *  @brief Insert a view in this viewmgr view list. Specifically, insert a given @p view right before of the given view, @before.
 	 *
 	 *  @param view A view to insert in the viewmgr view list.
 	 *  @param before A view that will be just inserted after @p view. If you pass @c NULL, @p view will be inserted at the front of the view list.
-	 *  @return @c true on success or @c false otherwise.
 	 *
+	 *  @return @c true on success or @c false otherwise.
 	 */
 	bool insert_view_before(ui_view_interface *view, ui_view_interface *before);
 
 	/**
-	 *  @brief Insert a view in this viewmgr view list. Specifically, insert a given @p view right after of the given view, @after
+	 *  @brief Insert a view in this viewmgr view list. Specifically, insert a given @p view right after of the given view, @after.
 	 *
-	 *  @param view A view to insert in the viewmgr view list
+	 *  @param view A view to insert in the viewmgr view list.
 	 *  @param after A view that will be just inserted before the @p view. If you pass @c NULL, @p view will be inserted at the end of the view list.
-	 *  @return @c true on success or @c false otherwise.
 	 *
+	 *  @return @c true on success or @c false otherwise.
 	 */
 	bool insert_view_after(ui_view_interface *view, ui_view_interface *after);
 
 	/**
 	 *  @brief Remove the given view from this viewmgr view list.
+	 *
+	 *  @param view A view to remove from the viewmgr view list.
 	 *
 	 *  @return @c true on success or @c false otherwise.
 	 *
@@ -182,7 +191,8 @@ protected:
 	 *  @brief Return a view which is matched with the index @p idx.
 	 *
 	 *  @param idx A index of the view which you are looking for.
-	 *  @return The view which index is matched with @p idx
+	 *
+	 *  @return The view which index is matched with @p idx.
 	 *          If there were no views with index @p idx, @c NULL will be returned.
 	 *
 	 *  @note You could use the index as the page numbers of the views.
@@ -199,6 +209,7 @@ protected:
 	 *  @note Every view have their names as their own identifiers.
 	 *
 	 *  @param name The name of the view which you are looking for.
+	 *
 	 *  @return The view which name is matched with @p name.
 	 *          If there were no views name matched, @c NULL will be returned.
 	 *
@@ -218,6 +229,7 @@ protected:
 	 *         You could use this function to query the given @p view list order.
 	 *
 	 *  @param view A view to query the index.
+	 *
 	 *  @return An index of the give @p view on success, otherwise, -1.
 	 *
 	 *  @warning The index number of views are variable since the view list is variable.
@@ -225,17 +237,17 @@ protected:
 	int get_view_index(const ui_view_interface *view);
 
 public:
-	///Constructor
+	///Constructor.
 	ui_viewmgr_interface();
 
-	///Destructor
+	///Destructor.
 	virtual ~ui_viewmgr_interface();
 
 	/**
 	 *  @brief Activate this view manager.
 	 *
-	 *	@note viewmgr window and views will be shown once activate() is called. Usually this activate() should be called after applications set their all views
-	 *	on initialization time.
+	 *  @note viewmgr window and views will be shown once activate() is called. Usually this activate() should be called after applications set their all views
+	 *        on initialization time.
 	 *
 	 *  @return @c true on success or @c false otherwise.
 	 *
@@ -246,12 +258,12 @@ public:
 	/**
 	 *  @brief Deactivate this view manager.
 	 *
-	 *	@note viewmgr window and views will be hidden once deactivate() is called. deactivate() behavior is up ui system, but usually it hides(unmap)
-	 *	      current window in order that application go background.
+	 *  @note viewmgr window and views will be hidden once deactivate() is called. deactivate() behavior is up ui system, but usually it hides(unmap)
+	 *        current window in order that application go background.
 	 *
 	 *  @return @c true success or @c false not.
 	 *
-	 *  @see deactivate()
+	 *  @see activate()
 	 */
 	bool deactivate();
 
@@ -260,8 +272,8 @@ public:
 	 *
 	 *  @return @c true if viewmgr is active, @c false otherwise.
 	 *
-	 *	@see activate()
-	 *	@see deactivate()
+	 *  @see activate()
+	 *  @see deactivate()
 	 */
 	bool is_activated();
 
@@ -275,7 +287,7 @@ public:
 	/**
 	 *  @brief Return whether soft key is required or not.
 	 *
-	 *	@note Soft key is kind of like the software back button. It's used for product users to change current view to a previous view (pop).
+	 *  @note Soft key is kind of like the software back button. It's used for product users to change current view to a previous view (pop).
 	 *        If a device doesn't have any hardware back buttons, Soft back key is necessary which means this function will return @c true.
 	 *        Some devices may needs software back key as well as hardware back key at the same time. That decision is up to product design.
 	 *        And soft_key initial value should read from the system configuration.

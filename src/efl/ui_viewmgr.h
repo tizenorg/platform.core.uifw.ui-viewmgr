@@ -26,48 +26,146 @@ namespace efl_viewmgr
 
 class ui_view;
 
+/**
+ *  @class ui_viewmgr
+ *
+ *  @ingroup viewmgr
+ *
+ *  @brief This is a class of viewmgr. One viewmgr represents a window which contains multiple views.
+ *         A viewmgr manages not only views life-cycle but constructs basic infrastructures such as key events handling, transition effects, transient views.
+ *         This interface guide you a basic policy of a view manager.
+ *
+ *  @warning viewmgr will remove all containing views when it's destroyed.
+ */
 class ui_viewmgr: public viewmgr::ui_viewmgr_interface
 {
 	friend class ui_view;
 
 private:
-	Evas_Object *win;
-	Evas_Object *conform;
-	Evas_Object *layout;
+	Evas_Object *win;                //This is acting like a base object of viewmgr.
+	Evas_Object *conform;            //Conformant for viewmgr.
+	Evas_Object *layout;             //Viewmgr's base layout.
 	ui_key_listener *key_listener;   //HW Key Handler such as "BACK" key...
-	ui_view_indicator indicator;
+	ui_view_indicator indicator;     //Mode of indicator.
 
+	/**
+	 *  @brief Create a conformant.
+	 *
+	 *  @param win viewmgr's window object. this will be parent of conformant object.
+	 *
+	 *  @return @c true success or @c false not.
+	 */
 	bool create_conformant(Evas_Object *win);
+
+	/**
+	 *  @brief Create a base layout.
+	 *
+	 *  @param conform viewmgr's conformant object. this will be parent of layout object.
+	 *
+	 *  @return @c true success or @c false not.
+	 */
 	bool create_base_layout(Evas_Object *conform);
+
+	/** @brief Set the indicator mode.
+	 *
+	 *  @param indicator The mode to set, one of #ui_view_indicator.
+	 */
 	bool set_indicator(ui_view_indicator indicator);
 
 protected:
 	ui_viewmgr(const char *pkg, ui_key_listener *key_listener);
 
+	/** @brief Get a base layout of viewmgr.
+	 */
 	Evas_Object *get_base()
 	{
 		return this->layout;
 	}
 
 public:
+	///Constructor.
 	ui_viewmgr(const char *pkg);
+	///Destructor.
 	virtual ~ui_viewmgr();
 
+	/**
+	 *  @brief Activate this view manager.
+	 *
+	 *  @note viewmgr window and views will be shown once activate() is called. Usually this activate() should be called after applications set their all views
+	 *        on initialization time.
+	 *
+	 *  @return @c true on success or @c false otherwise.
+	 *
+	 *  @see deactivate()
+	 */
 	virtual bool activate();
+
+	/**
+	 *  @brief Deactivate this view manager.
+	 *
+	 *  @note viewmgr window and views will be hidden once deactivate() is called. deactivate() behavior is up ui system, but usually it hides(unmap)
+	 *        current window in order that application go background.
+	 *
+	 *  @return @c true success or @c false not.
+	 *
+	 *  @see activate()
+	 */
 	virtual bool deactivate();
+
+	/**
+	 *  @brief Push a new view into this viewmgr. This function is used for when application switches a current view to a new one.
+	 *
+	 *  @note Normally, the current view will be hidden by a new view. In default, when user calls this API, view will be switched to @p view instantly,
+	 *        only when viewmgr state is activated. Otherwise, the @p view will be shown later when viewmgr is activated. push_view() is designed for providing
+	 *        view transition effect. If you want push view instantly without any transition, you could use insert_view_before() or insert_view_after().
+	 *        If you want to pop the current view, the please use pop_view().
+	 *
+	 *  @param view A view to insert in the viewmgr view list.
+	 *
+	 *  @return @p view, @c NULL when it fails to push a @p view.
+	 *
+	 *  @see activated()
+	 *  @see insert_view_before()
+	 *  @see insert_view_after()
+	 *  @see pop_view()
+	 */
 	virtual ui_view *push_view(ui_view *view);
+
+	/**
+	 *  @brief Push a new view into this viewmgr. This function is used for when application switches a current view to a new one.
+	 *
+	 *  @note Normally, the current view will be hidden by a new view. In default, when user calls this API, view will be switched to @p view instantly,
+	 *        only when viewmgr state is activated. Otherwise, the @p view will be shown later when viewmgr is activated. push_view() is designed for providing
+	 *        view transition effect. If you want push view instantly without any transition, you could use insert_view_before() or insert_view_after().
+	 *        If you want to pop the current view, the please use pop_view().
+	 *
+	 *  @param view A view to insert in the viewmgr view list.
+	 *
+	 *  @return @p view, @c NULL when it fails to push a @p view.
+	 *
+	 *  @see activated()
+	 *  @see insert_view_before()
+	 *  @see insert_view_after()
+	 *  @see pop_view()
+	 */
 	virtual bool pop_view();
 
+	/** @brief Get a window object of viewmgr.
+	 */
 	Evas_Object *get_window()
 	{
 		return this->win;
 	}
 
+	/** @brief Get a conformant object of viewmgr.
+	 */
 	Evas_Object *get_conformant()
 	{
 		return this->conform;
 	}
 
+	/** @brief Get a last view of current view stack.
+	 */
 	ui_view *get_last_view();
 };
 }
