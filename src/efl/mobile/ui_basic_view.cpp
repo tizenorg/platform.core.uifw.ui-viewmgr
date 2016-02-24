@@ -19,7 +19,7 @@
 //FIXME: is it correct to define here?
 #define EDJ_PATH "/opt/usr/apps/org.tizen.ui-viewmgr/res/ui-viewmgr.edj"
 #define GROUP "elm/layout/tizen_view/default"
-#define TABBAR "elm/layout/tizen_view/tabbar"
+#define TOOLBAR "elm/layout/tizen_view/toolbar"
 
 using namespace efl_viewmgr;
 using namespace viewmgr;
@@ -45,16 +45,7 @@ bool ui_basic_view::create_layout()
 		return false;
 	}
 
-	if (!strcmp(this->get_style(), "tabbar"))
-	{
-		if (!elm_layout_file_set(layout, EDJ_PATH, TABBAR))
-		{
-			LOGE("Failed to set tabbar style = ui_basic_view(%p)", this);
-			evas_object_del(layout);
-			return false;
-		}
-	}
-	else if (!elm_layout_file_set(layout, EDJ_PATH, GROUP))
+	if (!elm_layout_file_set(layout, EDJ_PATH, GROUP))
 	{
 		LOGE("Failed to set file = ui_basic_view(%p), path(%s), group(%s)", this, EDJ_PATH, GROUP);
 		evas_object_del(layout);
@@ -97,8 +88,8 @@ bool ui_basic_view::create_layout()
 	return true;
 }
 
-ui_basic_view::ui_basic_view(ui_controller *controller, const char *name, const char *style)
-		: ui_view(controller, name, style), layout(NULL)
+ui_basic_view::ui_basic_view(ui_controller *controller, const char *name)
+		: ui_view(controller, name), layout(NULL)
 {
 }
 
@@ -230,12 +221,16 @@ Evas_Object *ui_basic_view::set_content(Evas_Object *content, const char *title,
 	return pcontent;
 }
 
-bool ui_basic_view::set_tabbar(Evas_Object *toolbar)
+bool ui_basic_view::set_toolbar(Evas_Object *toolbar)
 {
-	if (this->layout)
+	Evas_Object *layout = this->get_base();
+
+	if (layout)
 	{
-		elm_object_part_content_set(this->layout, "tabbar", toolbar);
-		if (toolbar) elm_object_signal_emit(this->layout, "elm,state,tabbar,show", "elm");
+		elm_object_part_content_set(layout, "toolbar", toolbar);
+		if (toolbar) elm_object_signal_emit(layout, "elm,state,toolbar,show", "elm");
+		else elm_object_signal_emit(layout, "elm,state,toolbar,hide", "elm");
+
 		return true;
 	}
 	LOGE("Layout is not exist!");
