@@ -15,7 +15,9 @@ SET(SRCS
 	src/efl/mobile/ui_basic_key_listener.cpp
 	src/efl/mobile/ui_basic_viewmgr.cpp
 	src/efl/mobile/ui_tab_view.cpp
-	src/efl/example/main.cpp
+	src/efl/CAPI/ui_viewmanager.cpp
+	src/efl/example/example_c/main.cpp
+	#src/efl/example/main.cpp
    )
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/inc)
