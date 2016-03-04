@@ -14,24 +14,16 @@
  *  limitations under the License.
  *
  */
-#ifndef MOBILE_KEY_HANDLER_H
-#define MOBILE_KEY_HANDLER_H
+#include "../../../include/efl/mobile/ui_viewmanager_mobile.h"
 
-#include "../ui_viewmanager.h"
+using namespace efl_viewmgr;
+using namespace viewmgr;
 
-namespace efl_viewmgr
+ui_basic_viewmgr::ui_basic_viewmgr(const char *pkg)
+		: ui_viewmgr(pkg, new ui_basic_key_listener(this))
 {
-class ui_viewmgr;
-
-class ui_basic_key_listener : public ui_key_listener
-{
-public:
-	ui_basic_key_listener(ui_viewmgr *viewmgr);
-
-	virtual bool init();
-	virtual void extend_event_proc(ui_view *view, Evas_Event_Key_Down *ev);
-};
-
 }
 
-#endif /* MOBILE_KEY_HANDLER_H */
+ui_basic_viewmgr::~ui_basic_viewmgr()
+{
+}

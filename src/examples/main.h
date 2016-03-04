@@ -14,19 +14,30 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_BASIC_CONTROLLER_H
-#define UI_BASIC_CONTROLLER_H
+#include <Elementary.h>
+//#include <system_settings.h>
+#include <dlog.h>
+#include "ui_viewmanager.h"
 
-#include "../ui_viewmanager.h"
+//uncomment if you want debug
+#ifndef TIZEN_ENGINEER_MODE
+#define TIZEN_ENGINEER_MODE
+#endif
 
-namespace efl_viewmgr
-{
-class ui_basic_controller: public ui_controller
-{
-public:
-	virtual ~ui_basic_controller();
-	virtual bool menu();
-};
-}
+#ifdef  LOG_TAG
+#undef  LOG_TAG
+#endif
+#define LOG_TAG "UI_VIEWMGR"
 
-#endif /* UI_BASIC_CONTROLLER_H */
+#if !defined(PACKAGE)
+#define PACKAGE "ui-viewmgr"
+#endif
+
+using namespace efl_viewmgr;
+
+typedef struct appdata {
+	ui_viewmgr *viewmgr;
+} appdata_s;
+
+Evas_Object *create_content(Evas_Object *parent, const char *text, Evas_Smart_Cb prev_btn_clicked_cb, Evas_Smart_Cb next_btn_clicked_cb, appdata_s *ad);
+Evas_Object *create_tabbar(Evas_Object *parent);

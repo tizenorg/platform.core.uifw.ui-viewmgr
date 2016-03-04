@@ -14,30 +14,15 @@
  *  limitations under the License.
  *
  */
-#include <app.h>
-#include <system_settings.h>
-#include <dlog.h>
-#include "../src/efl/mobile/ui_viewmanager.h"
+#include "../../include/interface/ui_viewmanager_interface.h"
 
-//uncomment if you want debug
-#ifndef TIZEN_ENGINEER_MODE
-#define TIZEN_ENGINEER_MODE
-#endif
+using namespace viewmgr;
 
-#ifdef  LOG_TAG
-#undef  LOG_TAG
-#endif
-#define LOG_TAG "UI_VIEWMGR"
-
-#if !defined(PACKAGE)
-#define PACKAGE "org.tizen.ui-viewmgr"
-#endif
-
-using namespace efl_viewmgr;
-
-typedef struct appdata {
-	ui_viewmgr *viewmgr;
-} appdata_s;
-
-Evas_Object *create_content(Evas_Object *parent, const char *text, Evas_Smart_Cb prev_btn_clicked_cb, Evas_Smart_Cb next_btn_clicked_cb, appdata_s *ad);
-Evas_Object *create_tabbar(Evas_Object *parent);
+void ui_iface_controller::set_view(ui_iface_view *view)
+{
+	if (this->view)
+	{
+		this->view->set_controller(NULL);
+	}
+	this->view = view;
+}

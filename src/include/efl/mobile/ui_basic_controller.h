@@ -14,19 +14,19 @@
  *  limitations under the License.
  *
  */
-#include "ui_viewmanager.h"
+#ifndef UI_BASIC_CONTROLLER_H
+#define UI_BASIC_CONTROLLER_H
 
-using namespace efl_viewmgr;
-using namespace viewmgr;
+#include "../ui_viewmanager_efl.h"
 
-ui_view * ui_controller::get_view()
+namespace efl_viewmgr
 {
-	ui_iface_view *view = ui_iface_controller::get_view();
-	if (!view) return NULL;
-	return dynamic_cast<ui_view *>(view);
+class ui_basic_controller: public ui_controller
+{
+public:
+	virtual ~ui_basic_controller();
+	virtual bool menu();
+};
 }
 
-ui_controller::~ui_controller()
-{
-
-}
+#endif /* UI_BASIC_CONTROLLER_H */
