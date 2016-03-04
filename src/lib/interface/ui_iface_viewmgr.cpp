@@ -14,7 +14,7 @@
  *  limitations under the License.
  *
  */
-#include "ui_viewmanager_interface.h"
+#include "../../include/interface/ui_viewmanager_interface.h"
 
 using namespace viewmgr;
 

@@ -14,16 +14,37 @@
  *  limitations under the License.
  *
  */
-#include "ui_viewmanager.h"
+#include "../../../include/efl/mobile/ui_viewmanager_mobile.h"
 
 using namespace efl_viewmgr;
 using namespace viewmgr;
 
-ui_basic_controller::~ui_basic_controller()
+static const char *KEY_MENU = "XF86Menu";
+
+enum ui_key_event_type
+{
+	UI_KEY_EVENT_MENU
+};
+
+ui_basic_key_listener::ui_basic_key_listener(ui_viewmgr *viewmgr)
+		: ui_key_listener(viewmgr)
 {
 }
 
-bool ui_basic_controller::menu()
+void ui_basic_key_listener::extend_event_proc(ui_view *view, Evas_Event_Key_Down *ev)
 {
+	if (strcmp(ev->keyname, KEY_MENU)) return;
+	dynamic_cast<ui_basic_view *>(view)->menu();
+}
+
+bool ui_basic_key_listener::init()
+{
+	if (!ui_key_listener::init()) return false;
+
+	if (!evas_object_key_grab(this->key_grabber, KEY_MENU, 0, 0, EINA_FALSE))
+	{
+		LOGE("Failed to grab MENU KEY(%s)\n", KEY_MENU);
+		return false;
+	}
 	return true;
 }

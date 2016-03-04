@@ -14,19 +14,16 @@
  *  limitations under the License.
  *
  */
-#include "ui_viewmanager.h"
+#include "../../../include/efl/mobile/ui_viewmanager_mobile.h"
 
 using namespace efl_viewmgr;
 using namespace viewmgr;
 
-ui_view * ui_controller::get_view()
+ui_basic_viewmgr::ui_basic_viewmgr(const char *pkg)
+		: ui_viewmgr(pkg, new ui_basic_key_listener(this))
 {
-	ui_iface_view *view = ui_iface_controller::get_view();
-	if (!view) return NULL;
-	return dynamic_cast<ui_view *>(view);
 }
 
-ui_controller::~ui_controller()
+ui_basic_viewmgr::~ui_basic_viewmgr()
 {
-
 }

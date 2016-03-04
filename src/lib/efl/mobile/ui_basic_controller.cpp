@@ -14,19 +14,16 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_BASIC_CONTROLLER_H
-#define UI_BASIC_CONTROLLER_H
+#include "../../../include/efl/mobile/ui_viewmanager_mobile.h"
 
-#include "../ui_viewmanager.h"
+using namespace efl_viewmgr;
+using namespace viewmgr;
 
-namespace efl_viewmgr
+ui_basic_controller::~ui_basic_controller()
 {
-class ui_basic_controller: public ui_controller
-{
-public:
-	virtual ~ui_basic_controller();
-	virtual bool menu();
-};
 }
 
-#endif /* UI_BASIC_CONTROLLER_H */
+bool ui_basic_controller::menu()
+{
+	return true;
+}

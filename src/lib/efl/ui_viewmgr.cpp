@@ -14,7 +14,7 @@
  *  limitations under the License.
  *
  */
-#include "ui_viewmanager.h"
+#include "../../include/efl/ui_viewmanager_efl.h"
 
 using namespace efl_viewmgr;
 using namespace viewmgr;

@@ -17,7 +17,7 @@
 #ifndef UI_BASIC_VIEW
 #define UI_BASIC_VIEW
 
-#include "../ui_viewmanager.h"
+#include "../ui_viewmanager_efl.h"
 
 namespace efl_viewmgr
 {
