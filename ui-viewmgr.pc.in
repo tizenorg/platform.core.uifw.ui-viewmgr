@@ -1,0 +1,11 @@
+prefix=@PREFIX@
+exec_prefix=@EXEC_DIR@
+libdir=@LIBDIR@
+includedir=@INCDIR@
+
+Name: UI VIEW MANAGER
+Description: An UI VIEW MANAGER library
+Version: @VERSION@
+Requires:
+Libs: -L${libdir} -lui-viewmgr
+Cflags: -I${includedir}/ui-viewmgr
