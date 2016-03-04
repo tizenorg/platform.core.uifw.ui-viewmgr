@@ -17,7 +17,7 @@
 #ifndef MOBILE_KEY_HANDLER_H
 #define MOBILE_KEY_HANDLER_H
 
-#include "../ui_viewmanager.h"
+#include "../ui_viewmanager_efl.h"
 
 namespace efl_viewmgr
 {

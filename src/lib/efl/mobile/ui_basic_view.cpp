@@ -17,7 +17,8 @@
 #include "ui_viewmanager.h"
 
 //FIXME: is it correct to define here?
-#define EDJ_PATH "/opt/usr/apps/org.tizen.ui-viewmgr/res/ui-viewmgr.edj"
+//#define EDJ_PATH "/opt/usr/apps/org.tizen.ui-viewmgr/res/ui-viewmgr.edj"
+#define EDJ_PATH "/usr/share/edje/ui-viewmgr/ui-viewmgr.edj"
 #define GROUP "elm/layout/tizen_view/default"
 #define TABBAR "elm/layout/tizen_view/tabbar"
 

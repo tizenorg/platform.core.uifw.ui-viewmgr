@@ -21,7 +21,7 @@ private:
 
 public:
 	page6(appdata_s *ad)
-			: ad(ad)
+		: ad(ad)
 	{
 		/* ui_basic_view(controller, identity name, style name of view).
 		   Later, you could get the identity name using view->get_name();
