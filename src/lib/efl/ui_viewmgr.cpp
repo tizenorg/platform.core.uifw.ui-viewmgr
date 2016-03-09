@@ -232,6 +232,8 @@ ui_view * ui_viewmgr::push_view(ui_view *view)
 {
 	ui_iface_viewmgr::push_view(view);
 
+	if (!this->is_activated()) return view;
+
 	this->active_top_view();
 
 	return view;
