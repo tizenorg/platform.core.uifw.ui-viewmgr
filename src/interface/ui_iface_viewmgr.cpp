@@ -256,6 +256,7 @@ ui_iface_viewmgr::get_last_view()
 bool ui_iface_viewmgr::activate()
 {
 	if (this->activated) return false;
+	if (this->get_view_count() == 0) return false;
 	this->activated = true;
 	return true;
 }

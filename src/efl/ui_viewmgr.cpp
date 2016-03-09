@@ -19,6 +19,25 @@
 using namespace efl_viewmgr;
 using namespace viewmgr;
 
+void ui_viewmgr::active_top_view()
+{
+	elm_object_part_content_unset(this->get_base(), "elm.swallow.content");
+
+	ui_view *view = dynamic_cast<ui_view *>(this->get_last_view());
+
+	Evas_Object *content = view->get_base();
+	if (content == this->get_base())
+	{
+		elm_object_part_content_set(this->get_base(), "elm.swallow.content", CONVERT_TO_EO(view->get_content()));
+	}
+	else
+	{
+		elm_object_part_content_set(this->get_base(), "elm.swallow.content", CONVERT_TO_EO(view->get_base()));
+	}
+
+	this->set_indicator(view->get_indicator());
+}
+
 bool ui_viewmgr::set_indicator(ui_view_indicator indicator)
 {
 	if (this->indicator == indicator) return false;
@@ -150,24 +169,12 @@ ui_viewmgr::~ui_viewmgr()
 
 bool ui_viewmgr::activate()
 {
-	ui_iface_viewmgr::activate();
+	if (!ui_iface_viewmgr::activate()) return false;
 
-	elm_object_part_content_unset(this->get_base(), "elm.swallow.content");
+	this->active_top_view();
 
+	//FIXME: Necessary??
 	ui_view *view = dynamic_cast<ui_view *>(this->get_last_view());
-
-	//TODO: get parent?
-	Evas_Object *content = view->get_base();
-	if (content == this->get_base())
-	{
-		elm_object_part_content_set(this->get_base(), "elm.swallow.content", CONVERT_TO_EO(view->get_content()));
-	}
-	else
-	{
-		elm_object_part_content_set(this->get_base(), "elm.swallow.content", CONVERT_TO_EO(view->get_base()));
-	}
-
-	this->set_indicator(view->get_indicator());
 	view->active();
 
 	evas_object_show(this->win);
@@ -213,6 +220,8 @@ bool ui_viewmgr::pop_view()
 		elm_object_part_content_set(this->get_base(), "elm.swallow.content", CONVERT_TO_EO(view->get_base()));
 	}
 
+	//FIXME: How to deal with indicator in UI other frameworks? Dali? Volt?
+	//Is it possible make this interface common?
 	this->set_indicator(view->get_indicator());
 
 	return true;
@@ -222,28 +231,12 @@ ui_view * ui_viewmgr::push_view(ui_view *view)
 {
 	ui_iface_viewmgr::push_view(view);
 
-	//Don't prepare yet if viewmgr is not activated.
-	if (!this->is_activated()) return view;
-
-	elm_object_part_content_unset(this->get_base(), "elm.swallow.content");
-
-	Evas_Object *content = view->get_base();
-
-	if (content == this->get_base())
-	{
-		elm_object_part_content_set(this->get_base(), "elm.swallow.content", CONVERT_TO_EO(view->get_content()));
-	}
-	else
-	{
-		elm_object_part_content_set(this->get_base(), "elm.swallow.content", CONVERT_TO_EO(view->get_base()));
-	}
-
-	this->set_indicator(view->get_indicator());
+	this->active_top_view();
 
 	return view;
 }
 
 ui_view *ui_viewmgr::get_last_view()
 {
-   return dynamic_cast<ui_view *>(ui_iface_viewmgr::get_last_view());
+	return dynamic_cast<ui_view *>(ui_iface_viewmgr::get_last_view());
 }
