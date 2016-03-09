@@ -72,6 +72,8 @@ private:
 	 */
 	bool set_indicator(ui_view_indicator indicator);
 
+	void active_top_view();
+
 protected:
 	ui_viewmgr(const char *pkg, ui_key_listener *key_listener);
 
