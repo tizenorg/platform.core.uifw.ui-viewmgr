@@ -82,19 +82,12 @@ void ui_iface_view::destroy()
 	this->controller->destroy();
 }
 
-ui_iface_view::ui_iface_view(T content, ui_iface_controller *controller, const char *name)
-		: content(content), controller(controller), name(string(name ? name : "")), style(string("")), viewmgr(NULL), state(UI_VIEW_STATE_LOAD),
+ui_iface_view::ui_iface_view(ui_iface_controller *controller, const char *name)
+		: content(NULL), controller(controller), name(string(name ? name : "")), style(string("")), viewmgr(NULL), state(UI_VIEW_STATE_LOAD),
 		  indicator(UI_VIEW_INDICATOR_DEFAULT), event_block(false), removable_content(true)
 {
-	if (!content) this->state = UI_VIEW_STATE_UNLOAD;
-	else this->state = UI_VIEW_STATE_LOAD;
-	controller->set_view(this);
-}
-
-ui_iface_view::ui_iface_view(ui_iface_controller *controller, const char *name)
-		: ui_iface_view(NULL, controller, name)
-{
 	this->state = UI_VIEW_STATE_UNLOAD;
+	controller->set_view(this);
 }
 
 ui_iface_view::ui_iface_view(const char *name)

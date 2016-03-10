@@ -52,6 +52,7 @@ public:
 
 	virtual Evas_Object *get_base()
 	{
+		if (!this->layout)this->create_layout();
 		return this->layout;
 	}
 };

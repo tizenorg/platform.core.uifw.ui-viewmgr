@@ -15,6 +15,7 @@
  *
  */
 #include "main.h"
+#include "page7.h"
 #include "page6.h"
 #include "page5.h"
 #include "page4.h"
@@ -23,21 +24,27 @@
 #include "page1.h"
 
 Evas_Object*
-create_toolbar(Evas_Object *parent)
+create_toolbar(Evas_Object *parent, const char *style)
 {
 	Evas_Object *toolbar;
 
 	toolbar = elm_toolbar_add(parent);
 
 	//FIXME: :( UI_View can set this style instead.
-	elm_object_style_set(toolbar, "toolbar_with_title");
+	elm_object_style_set(toolbar, style);
+
+	//FIXME: If not call below API, toolbar items create with min size.
+	//       It looks toolbar bug.
 	elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_EXPAND);
-	elm_toolbar_transverse_expanded_set(toolbar, EINA_TRUE);
 
 	elm_toolbar_item_append(toolbar, NULL, "Tab1", NULL, NULL);
 	elm_toolbar_item_append(toolbar, NULL, "Tab2", NULL, NULL);
 
-	elm_toolbar_select_mode_set(toolbar, ELM_OBJECT_SELECT_MODE_ALWAYS);
+	if (!strcmp(style, "navigationbar"))
+	{
+		elm_toolbar_item_append(toolbar, NULL, "Tab3", NULL, NULL);
+		elm_toolbar_item_append(toolbar, NULL, "Tab4", NULL, NULL);
+	}
 
 	return toolbar;
 }
