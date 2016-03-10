@@ -53,6 +53,11 @@ void ui_view::unload_content()
 Evas_Object *ui_view ::get_parent()
 {
 	ui_viewmgr *viewmgr = dynamic_cast<ui_viewmgr *>(this->get_viewmgr());
+	if (!viewmgr)
+	{
+		LOGE("Failed to get a viewmgr");
+		return NULL;
+	}
 	return viewmgr->get_base();
 }
 
