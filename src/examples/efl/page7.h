@@ -14,33 +14,26 @@
  *  limitations under the License.
  *
  */
-class page6: public ui_basic_controller
+class page7: public ui_basic_controller
 {
 private:
 	appdata_s *ad;
 
 public:
-	page6(appdata_s *ad)
+	page7(appdata_s *ad)
 		: ad(ad)
 	{
-		/* ui_basic_view(controller, identity name).
-		   Later, you could get the identity name using view->get_name(); */
-		ad->viewmgr->push_view(new ui_basic_view(this, "page6"));
-	}
+		/* ui_basic_view(controller, identity name, style name of view).
+		   Later, you could get the identity name using view->get_name();
+		   you could get the style name of view as well */
+		ui_basic_view *view = new ui_basic_view(this, "page7");
 
-	~page6()
-	{
-	}
-
-	void load()
-	{
-
-		//Initialize contents.
-
-		ui_basic_view *view = dynamic_cast<ui_basic_view *>(this->get_view());
+		//FIXME: It will be deleted or change to other way :(
+		//       We don't have any way to support it now.
+		view->set_viewmgr(ad->viewmgr);
 
 		//Create a main content.
-		Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 6<br>With Toolbar<br>(tabbar style)",
+		Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 7<br>With Toolbar<br>(Navigationbar style)",
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
@@ -51,18 +44,22 @@ public:
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
 					appdata_s *ad = static_cast<appdata_s *>(data);
-					create_page7(ad);
+					ad->viewmgr->deactivate();
 				},
 				this->ad);
 
-		//Arguments: content, title
 		view->set_content(content, "Title with toolbar");
-		Evas_Object *toolbar = create_toolbar(view->get_base(), "toolbar_with_title");
+		Evas_Object *toolbar = create_toolbar(view->get_base(), "navigationbar");
 		view->set_toolbar(toolbar);
+		ad->viewmgr->push_view(view);
+	}
+
+	~page7()
+	{
 	}
 };
 
-void create_page6(appdata_s *ad)
+void create_page7(appdata_s *ad)
 {
-	new page6(ad);
+	new page7(ad);
 }

@@ -101,7 +101,7 @@ ui_basic_view::~ui_basic_view()
 
 void ui_basic_view::load()
 {
-	this->create_layout();
+	if (!this->layout) this->create_layout();
 	ui_view::load();
 }
 
