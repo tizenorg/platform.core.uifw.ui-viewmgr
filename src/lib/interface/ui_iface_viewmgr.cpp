@@ -30,11 +30,14 @@ bool ui_iface_viewmgr::need_soft_key()
 
 bool ui_iface_viewmgr::connect_view(ui_iface_view *view)
 {
+	//FIXME: If user call a set_viewmgr() before, It should not return false.
+	/*
 	if (view->viewmgr)
 	{
 		LOGE("view(%p) has already connected to viewmgr(%p)", view, this);
 		return false;
 	}
+	*/
 
 	view->viewmgr = this;
 	return true;

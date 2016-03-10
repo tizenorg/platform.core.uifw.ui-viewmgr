@@ -101,7 +101,7 @@ ui_basic_view::~ui_basic_view()
 
 void ui_basic_view::load()
 {
-	this->create_layout();
+	if (!this->layout) this->create_layout();
 	ui_view::load();
 }
 
@@ -228,6 +228,24 @@ bool ui_basic_view::set_toolbar(Evas_Object *toolbar)
 
 	if (layout)
 	{
+
+		if ((!strcmp(elm_object_style_get(toolbar), "toolbar_with_title")) &&
+		    ((elm_toolbar_shrink_mode_get(toolbar) != ELM_TOOLBAR_SHRINK_EXPAND)))
+		{
+			elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_EXPAND);
+		}
+		else if (!strcmp(elm_object_style_get(toolbar), "navigationbar"))
+		{
+			if (elm_toolbar_shrink_mode_get(toolbar) != ELM_TOOLBAR_SHRINK_SCROLL)
+				elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_SCROLL);
+			elm_toolbar_align_set(toolbar, 0.0);
+		}
+		elm_toolbar_transverse_expanded_set(toolbar, EINA_TRUE);
+
+		//FIXME: It can be deleted when the application want to handle this property.
+		//       Some of application may want to select one of toolbar item when view activated.
+		elm_toolbar_select_mode_set(toolbar, ELM_OBJECT_SELECT_MODE_ALWAYS);
+
 		elm_object_part_content_set(layout, "toolbar", toolbar);
 		if (toolbar) elm_object_signal_emit(layout, "elm,state,toolbar,show", "elm");
 		else elm_object_signal_emit(layout, "elm,state,toolbar,hide", "elm");
