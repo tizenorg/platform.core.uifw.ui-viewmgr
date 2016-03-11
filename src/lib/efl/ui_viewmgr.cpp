@@ -19,22 +19,47 @@
 using namespace efl_viewmgr;
 using namespace viewmgr;
 
+//FIXME: is it correct to define here?
+#define EDJ_PATH "/usr/share/edje/ui-viewmgr/ui-viewmgr.edj"
+
+Evas_Object *ui_viewmgr::set_transition_layout(string transition_style)
+{
+	elm_object_part_content_unset(this->get_base(), "pcontent");
+	elm_object_part_content_unset(this->get_base(), "content");
+
+	if (transition_style == this->transition_style) return this->layout;
+
+	//FIXME: 1. Find current style effect layout
+	Evas_Object *effect = this->get_base();
+
+	//2. Switch effect layout to base layout
+	elm_object_part_content_unset(this->get_conformant(), "elm.swallow.content");
+	elm_object_part_content_set(this->get_conformant(), "elm.swallow.content", effect);
+
+	this->layout = effect;
+	this->transition_style = transition_style;
+
+	return this->layout;
+}
+
 void ui_viewmgr::active_top_view()
 {
-	elm_object_part_content_unset(this->get_base(), "elm.swallow.content");
+	elm_object_part_content_unset(this->get_base(), "content");
 
-	ui_view *view = dynamic_cast<ui_view *>(this->get_last_view());
+	ui_view *view = this->get_last_view();
 
-	//TODO: get parent?
-	Evas_Object *content = view->get_base();
-	if (content == this->get_base())
+	//In case of ui_view, it doesn't have any base form. It uses viewmgr base instead.
+	Evas_Object *content;
+	if (view->get_base() == this->get_base())
 	{
-		elm_object_part_content_set(this->get_base(), "elm.swallow.content", CONVERT_TO_EO(view->get_content()));
+		content = CONVERT_TO_EO(view->get_content());
 	}
 	else
 	{
-		elm_object_part_content_set(this->get_base(), "elm.swallow.content", CONVERT_TO_EO(view->get_base()));
+		content = CONVERT_TO_EO(view->get_base());
 	}
+
+	elm_object_part_content_set(this->get_base(), "content", content);
 
 	this->set_indicator(view->get_indicator());
 }
@@ -93,8 +118,33 @@ bool ui_viewmgr::create_base_layout(Evas_Object *conform)
 	Evas_Object *layout = elm_layout_add(conform);
 	if (!layout) return false;
 
-	elm_layout_theme_set(layout, "layout", "application", "default");
+	//default transition layout
+	elm_layout_file_set(layout, EDJ_PATH, "transition/default");
 	elm_object_content_set(conform, layout);
+
+	//Push Finished Event
+	elm_layout_signal_callback_add(layout, "push,finished", "viewmgr",
+			[](void *data, Evas_Object *obj, const char *emission, const char *source) -> void
+			{
+				ui_viewmgr *viewmgr = static_cast<ui_viewmgr *>(data);
+				ui_view *pview = viewmgr->get_view(viewmgr->get_view_count() - 2);
+				ui_view *view = viewmgr->get_last_view();
+				if (pview) viewmgr->push_view_finished(pview);
+				if (view) viewmgr->push_view_finished(view);
+			},
+			this);
+
+	//Pop Finished Event
+	elm_layout_signal_callback_add(layout, "pop,finished", "viewmgr",
+			[](void *data, Evas_Object *obj, const char *emission, const char *source) -> void
+			{
+				ui_viewmgr *viewmgr = static_cast<ui_viewmgr *>(data);
+				ui_view *pview = viewmgr->get_view(viewmgr->get_view_count() - 2);
+				ui_view *view = viewmgr->get_last_view();
+				if (pview) viewmgr->pop_view_finished(pview);
+				if (view) viewmgr->pop_view_finished(view);
+			},
+			this);
 
 	this->layout = layout;
 
@@ -102,7 +152,7 @@ bool ui_viewmgr::create_base_layout(Evas_Object *conform)
 }
 
 ui_viewmgr::ui_viewmgr(const char *pkg, ui_key_listener *key_listener)
-		: ui_iface_viewmgr(), key_listener(key_listener)
+		: ui_iface_viewmgr(), key_listener(key_listener), transition_style("")
 {
 	if (!pkg)
 	{
@@ -177,7 +227,7 @@ bool ui_viewmgr::activate()
 	this->active_top_view();
 
 	//FIXME: Necessary??
-	ui_view *view = dynamic_cast<ui_view *>(this->get_last_view());
+	ui_view *view = this->get_last_view();
 	view->active();
 
 	evas_object_show(this->win);
@@ -187,12 +237,12 @@ bool ui_viewmgr::activate()
 
 bool ui_viewmgr::deactivate()
 {
-	ui_iface_viewmgr::deactivate();
+	if (!ui_iface_viewmgr::deactivate()) return false;
 
 	//FIXME: based on the profile, we should app to go behind or terminate.
 	if (true)
 	{
-		ui_view *view = dynamic_cast<ui_view *>(this->get_last_view());
+		ui_view *view = this->get_last_view();
 		if (view) view->inactive();
 		evas_object_lower(this->win);
 	}
@@ -207,23 +257,49 @@ bool ui_viewmgr::deactivate()
 
 bool ui_viewmgr::pop_view()
 {
-	if (this->get_view_count() == 1) this->deactivate();
-	else if(!ui_iface_viewmgr::pop_view()) return false;
-
-	ui_view *view = dynamic_cast<ui_view *>(this->get_last_view());
-
-	//TODO: get parent?
-	Evas_Object *content = view->get_base();
-	if (content == this->get_base())
+	if (this->get_view_count() == 1)
 	{
-		elm_object_part_content_set(this->get_base(), "elm.swallow.content", CONVERT_TO_EO(view->get_content()));
-	}
-	else
-	{
-		elm_object_part_content_set(this->get_base(), "elm.swallow.content", CONVERT_TO_EO(view->get_base()));
+		this->deactivate();
+		return true;
 	}
 
-	this->set_indicator(view->get_indicator());
+	if(!ui_iface_viewmgr::pop_view())
+	{
+		return false;
+	}
+
+	ui_view *pview = this->get_view(this->get_view_count() - 2);
+	ui_view *view = this->get_last_view();
+
+	//In case, if view doesn't have transition effect
+	if (!strcmp(view->get_transition_style(), "none"))
+	{
+		this->pop_view_finished(pview);
+		this->pop_view_finished(view);
+		this->active_top_view();
+		return true;
+	}
+
+	//Choose an effect layout.
+	Evas_Object *effect = this->set_transition_layout(view->get_transition_style());
+	if (!effect) {
+		LOGE("invalid effect transition style?! = %s", view->get_transition_style());
+		this->pop_view_finished(pview);
+		this->pop_view_finished(view);
+		this->active_top_view();
+		return true;
+	}
+
+	//Trigger Effects.
+	Evas_Object *prv = CONVERT_TO_EO(this->get_base() == pview->get_base() ? pview->get_content() : pview->get_base());
+	elm_layout_content_set(effect, "content", prv);
+
+	Evas_Object *cur = CONVERT_TO_EO(this->get_base() == view->get_base() ? view->get_content() : view->get_base());
+	elm_layout_content_set(effect, "pcontent", cur);
+
+	elm_layout_signal_emit(effect, "view,pop", "viewmgr");
+
+	this->set_indicator(pview->get_indicator());
 
 	return true;
 }
@@ -234,12 +310,53 @@ ui_view * ui_viewmgr::push_view(ui_view *view)
 
 	if (!this->is_activated()) return view;
 
-	this->active_top_view();
+	//In case, if viewmgr has one view, we skip effect.
+	if (this->get_view_count() == 1) {
+		this->active_top_view();
+		this->push_view_finished(view);
+		return view;
+	}
+
+	ui_view *pview = this->get_view(this->get_view_count() - 2);
+
+	//In case, if view doesn't have transition effect
+	if (!strcmp(view->get_transition_style(), "none")) {
+		this->active_top_view();
+		this->push_view_finished(pview);
+		this->push_view_finished(view);
+		return view;
+	}
+
+	//Choose an effect layout.
+	Evas_Object *effect = this->set_transition_layout(view->get_transition_style());
+	if (!effect) {
+		LOGE("invalid effect transition style?! = %s", view->get_transition_style());
+		this->active_top_view();
+		this->push_view_finished(pview);
+		this->push_view_finished(view);
+		return view;
+	}
+
+	//Trigger Effects.
+	Evas_Object *prv = CONVERT_TO_EO(this->get_base() == pview->get_base() ? pview->get_content() : pview->get_base());
+	elm_layout_content_set(effect, "pcontent", prv);
+
+	Evas_Object *cur = CONVERT_TO_EO(this->get_base() == view->get_base() ? view->get_content() : view->get_base());
+	elm_layout_content_set(effect, "content", cur);
+
+	elm_layout_signal_emit(effect, "view,push", "viewmgr");
+
+	this->set_indicator(view->get_indicator());
 
 	return view;
 }
 
+ui_view *ui_viewmgr::get_view(unsigned int idx)
+{
+	return dynamic_cast<ui_view *>(ui_iface_viewmgr::get_view(idx));
+}
+
 ui_view *ui_viewmgr::get_last_view()
 {
-   return dynamic_cast<ui_view *>(ui_iface_viewmgr::get_last_view());
+	return dynamic_cast<ui_view *>(ui_iface_viewmgr::get_last_view());
 }
