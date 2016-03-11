@@ -70,7 +70,7 @@ bool ui_iface_viewmgr::push_view_finished(ui_iface_view *view)
 
 	//A new view has been pushed. This should be active.
 	view->active();
-	this->set_event_block(view, true);
+	this->set_event_block(view, false);
 
 	return true;
 }
@@ -90,7 +90,7 @@ bool ui_iface_viewmgr::pop_view_finished(ui_iface_view *view)
 
 	//The previous view has been popped. It should become active.
 	view->active();
-	this->set_event_block(view, true);
+	this->set_event_block(view, false);
 
 	return true;
 }
@@ -134,14 +134,11 @@ ui_iface_viewmgr::push_view(ui_iface_view *view)
 	ui_iface_view *pview;
 
 	//Previous view
-	if (this->view_list.size())
+	if (this->view_list.size() > 0)
 	{
 		pview = this->view_list.back();
 		pview->inactive();
 		this->set_event_block(pview, true);
-
-		//FIXME: Since we have no transition
-		pview->unload();
 	}
 
 	view_list.push_back(view);
@@ -159,13 +156,14 @@ ui_iface_viewmgr::push_view(ui_iface_view *view)
 
 bool ui_iface_viewmgr::pop_view()
 {
-	//No more view? destroy viewmgr?
+	//FIXME: No more view?
 	if (this->get_view_count() == 0)
 	{
+		LOGE("No Views. Can't pop anymore!");
 		return false;
 	}
 
-	//This is the last page. destroy viewmgr?
+	//This is the last page.
 	if (this->get_view_count() == 1)
 	{
 		//destroy viewmgr?
@@ -175,7 +173,7 @@ bool ui_iface_viewmgr::pop_view()
 		view->destroy();
 		delete(view);
 
-		return false;
+		return true;
 	}
 
 	//last page to be popped.
@@ -191,13 +189,6 @@ bool ui_iface_viewmgr::pop_view()
 	pview->load();
 	pview->inactive();
 	this->set_event_block(pview, true);
-
-	//FIXME: since we have no transition effect
-	pview->active();
-	view->inactive();
-	view->unload();
-	view->destroy();
-	delete (view);
 
 	return true;
 }

@@ -23,6 +23,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 #define TIZEN_VIEW_BG_PORTRAIT_HEIGHT_INC 1280
 #define TIZEN_VIEW_BG_LANDSPACPE_HEIGHT_INC 720
 #define TIZEN_VIEW_TITLE_HEIGHT_INC 110
@@ -49,6 +50,7 @@
 #define TIZEN_VIEW_TOOLBAR_TITLE_CLIPPER_HEIGHT_INC 80
 #define TIZEN_VIEW_TOOLBAR_LIGHT_VIEW_HEIGHT_INC 86
 #define TIZEN_VIEW_TOOLBAR_TOP_DIVIDER_HEIGHT_INC 0
+#define TRANSITION_TIME 0.25
 
 collections {
    base_scale: 2.6;
@@ -69,17 +71,22 @@ collections {
          tag:  "tab" "\t";
       }
    }
-   group { "elm/layout/tizen_view/default";
+   group { "tizen_view/default";
       images {
          image: "images/core_theme_bg_01.png" COMP;
          image: "images/core_icon_badge_container.#.png" COMP;
       }
       script {
-         public landscape_mode = 0;             //Landscape status
-         public prev_btn_visible = 0;           //Previous button visible status
-         public title_left_btn_visible = 0;     //Title left button visible status
-         public title_right_btn_visible = 0;    //Title right button visible status
-         public toolbar_visible = 0;            //Tabbar visible status (This value is used for toolbar group)
+         public landscape_mode = 0;
+         //Landscape status
+         public prev_btn_visible = 0;
+         //Previous button visible status
+         public title_left_btn_visible = 0;
+         //Title left button visible status
+         public title_right_btn_visible = 0;
+         //Title right button visible status
+         public toolbar_visible = 0;
+         //Tabbar visible status (This value is used for toolbar group)
       }
       parts {
          spacer { "base";
@@ -1083,6 +1090,86 @@ collections {
             source: "elm";
             signal: "elm,state,orient,180";
             after: "change_to_portrait";
+         }
+      }
+   }
+   /* Sliding Effect */
+   group { "transition/default";
+      alias: "transition/slide";
+      parts {
+         swallow { "pcontent";
+            desc { "default";
+            }
+            desc {"pushed";
+               rel1.relative: -1.0 0.0;
+               rel2.relative: 0.0 1.0;
+            }
+            desc {"popped";
+               rel1.relative: 1.0 0.0;
+               rel2.relative: 2.0 1.0;
+            }
+         }
+         swallow { "content";
+            desc { "default";
+            }
+            desc { "push_ready";
+               rel1.relative: 1.0 0.0;
+               rel2.relative: 2.0 1.0;
+            }
+            desc { "pop_ready";
+               rel1.relative: -1.0 0.0;
+               rel2.relative: 0.0 1.0;
+            }
+         }
+      }
+      programs {
+         program { "push_finished";
+            action: SIGNAL_EMIT "push,finished" "viewmgr";
+         }
+         program { "push_pcontent";
+            action: STATE_SET "pushed";
+            target: "pcontent";
+            transition: DECELERATE TRANSITION_TIME;
+            after: "push_finished";
+         }
+         program { "push_content";
+            action: STATE_SET "default";
+            target: "content";
+            transition: DECELERATE TRANSITION_TIME;
+         }
+         program { "push";
+            signal: "view,push";
+            source: "viewmgr";
+            script {
+               set_state(PART:"pcontent", "default", 0.0);
+               set_state(PART:"content", "push_ready", 0.0);
+               run_program(PROGRAM:"push_pcontent");
+               run_program(PROGRAM:"push_content");
+            }
+         }
+         program { "pop_finished";
+            action: SIGNAL_EMIT "pop,finished" "viewmgr";
+         }
+         program { "pop_pcontent";
+            action: STATE_SET "popped";
+            target: "pcontent";
+            transition: DECELERATE TRANSITION_TIME;
+            after: "pop_finished";
+         }
+         program { "pop_content";
+            action: STATE_SET "default";
+            target: "content";
+            transition: DECELERATE TRANSITION_TIME;
+         }
+         program { "pop";
+            signal: "view,pop";
+            source: "viewmgr";
+            script {
+               set_state(PART:"pcontent", "default", 0.0);
+               set_state(PART:"content", "pop_ready", 0.0);
+               run_program(PROGRAM:"pop_pcontent");
+               run_program(PROGRAM:"pop_content");
+            }
          }
       }
    }

@@ -47,6 +47,9 @@ private:
 	Evas_Object *layout;             //Viewmgr's base layout.
 	ui_key_listener *key_listener;   //HW Key Handler such as "BACK" key...
 	ui_view_indicator indicator;     //Mode of indicator.
+	string transition_style;         //Current transiton effect style name
+
+	Evas_Object *set_transition_layout(string transition_style);
 
 	/**
 	 *  @brief Create a conformant.
@@ -169,6 +172,22 @@ public:
 	/** @brief Get a last view of current view stack.
 	 */
 	ui_view *get_last_view();
+
+	/**
+	 *  @brief Return a view which is matched with the index @p idx.
+	 *
+	 *  @param idx A index of the view which you are looking for.
+	 *
+	 *  @return The view which index is matched with @p idx.
+	 *          If there were no views with index @p idx, @c NULL will be returned.
+	 *
+	 *  @note You could use the index as the page numbers of the views.
+	 *  @warning the index number of views are variable since the view list is variable.
+	 *
+	 *  @see get_view_index()
+	 *  @see get_view_count()
+	 */
+	ui_view *get_view(unsigned int idx);
 };
 }
 
