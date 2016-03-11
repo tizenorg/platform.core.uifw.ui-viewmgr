@@ -17,10 +17,8 @@
 #include "../../../include/efl/mobile/ui_viewmanager_mobile.h"
 
 //FIXME: is it correct to define here?
-//#define EDJ_PATH "/opt/usr/apps/org.tizen.ui-viewmgr/res/ui-viewmgr.edj"
 #define EDJ_PATH "/usr/share/edje/ui-viewmgr/ui-viewmgr.edj"
-#define GROUP "elm/layout/tizen_view/default"
-#define TOOLBAR "elm/layout/tizen_view/toolbar"
+#define GROUP "tizen_view/default"
 
 using namespace efl_viewmgr;
 using namespace viewmgr;
@@ -228,7 +226,6 @@ bool ui_basic_view::set_toolbar(Evas_Object *toolbar)
 
 	if (layout)
 	{
-
 		if ((!strcmp(elm_object_style_get(toolbar), "toolbar_with_title")) &&
 		    ((elm_toolbar_shrink_mode_get(toolbar) != ELM_TOOLBAR_SHRINK_EXPAND)))
 		{

@@ -59,10 +59,10 @@ private:
 	};
 
 	T content;                              ///< A content instance for a screen as a view.
-	ui_iface_controller *controller;    ///< View life-cycle controller interface.
+	ui_iface_controller *controller;        ///< View life-cycle controller interface.
 	string name;                            ///< View name.
-	string style;                           ///< View style name.
-	ui_iface_viewmgr *viewmgr;          ///< Viewmgr which this view belongs to.
+	string transition_style;                ///< View transition style name.
+	ui_iface_viewmgr *viewmgr;              ///< Viewmgr which this view belongs to.
 	ui_view_state state;                    ///< View state.
 	ui_view_indicator indicator;            ///< View indicator mode.
 	bool event_block;                       ///< State of event block.
@@ -205,19 +205,20 @@ public:
 	 */
 	T set_content(T content);
 
-	/** @brief set style of the view.
+	/** @brief set transition style of a view.
 	 *
-	 *  @note style is reserved for supporting various kinds of view as well as it's transition effects.
-	 *        The actual behaviors with this style is up to your frameworks. Default value of the style is NULL.
+	 *  @note @p style is reserved for supporting various kinds of view transition effects.
+	 *        The actual behaviors with this transition style is up to your frameworks. Default value of the style is NULL.
+	 *        and "none" represents none transition. If you don't like give any transition effects to this view, you can pass "none" as @p style.
 	 *
-	 *  @param style a new style name.
+	 *  @param style a transition style name.
 	 *
 	 *  @return true if the given @c style is available, otherwise false.
 	 *
 	 *  @warning When you override this member function, you should implement the logic to check the given style name is available or not.
 	 *           If your framework doesn't support any styles then just allow a @c NULL argument and return true. Otherwise return false.
 	 */
-	bool set_style(const char *style);
+	bool set_transition_style(const char *style);
 
 	/** @brief set name of the view.
 	 *
@@ -249,9 +250,9 @@ public:
 	 *
 	 *  @return style name of view.
 	 */
-	const char *get_style()
+	const char *get_transition_style()
 	{
-		return this->style.c_str();
+		return this->transition_style.c_str();
 	}
 
 	/** @brief Return a name of this view.
@@ -280,7 +281,6 @@ public:
 	{
 		return this->state;
 	}
-
 
 	/** @brief Return a state of removeable content.
 	 *

@@ -83,7 +83,7 @@ void ui_iface_view::destroy()
 }
 
 ui_iface_view::ui_iface_view(ui_iface_controller *controller, const char *name)
-		: content(NULL), controller(controller), name(string(name ? name : "")), style(string("")), viewmgr(NULL), state(UI_VIEW_STATE_LOAD),
+		: content(NULL), controller(controller), name(string(name ? name : "")), transition_style(string("")), viewmgr(NULL), state(UI_VIEW_STATE_LOAD),
 		  indicator(UI_VIEW_INDICATOR_DEFAULT), event_block(false), removable_content(true)
 {
 	this->state = UI_VIEW_STATE_UNLOAD;
@@ -118,9 +118,9 @@ T ui_iface_view::set_content(T content)
 	return prev;
 }
 
-bool ui_iface_view::set_style(const char *style)
+bool ui_iface_view::set_transition_style(const char *style)
 {
-	this->style.assign(style);
+	this->transition_style.assign(style);
 	return true;
 }
 
