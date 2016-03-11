@@ -33,7 +33,7 @@ public:
 		view->set_viewmgr(ad->viewmgr);
 
 		//Create a main content.
-		Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 7<br>With Toolbar<br>(Navigationbar style)",
+		Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 7<br>(Navigationbar style)",
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
