@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010 Samsung Electronics Co., Ltd All Rights Reserved
+ * Copyright (c) 2016 Samsung Electronics Co., Ltd All Rights Reserved
  *
  * BSD 2-Clause License (http://www.opensource.org/licenses/bsd-license.php)
  *
@@ -23,7 +23,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 #define TIZEN_VIEW_BG_PORTRAIT_HEIGHT_INC 1280
 #define TIZEN_VIEW_BG_LANDSPACPE_HEIGHT_INC 720
 #define TIZEN_VIEW_TITLE_HEIGHT_INC 110
@@ -52,49 +51,46 @@
 #define TIZEN_VIEW_TOOLBAR_TOP_DIVIDER_HEIGHT_INC 0
 
 collections {
-  base_scale: 2.6;
-  styles {
-      style { name: "tizen_view_title_style";
+   base_scale: 2.6;
+   styles {
+      style { "tizen_view_title_style";
          base: "font=Tizen:style=Condensed align=center font_size="TIZEN_VIEW_TITLE_TEXT_FONT_SIZE_INC" color=#FFFFFFFF wrap=none ellipsis=1.0 text_class=tizen";
          tag:  "br" "\n";
          tag:  "tab" "\t";
       }
-      style { name: "tizen_view_subtitle_visible_style";
+      style { "tizen_view_subtitle_visible_style";
          base: "font=Tizen:style=Condensed align=center font_size="TIZEN_VIEW_SUBTITLE_VISIBLE_TEXT_FONT_SIZE_INC" color=#FFFFFFFF wrap=none ellipsis=1.0 text_class=tizen";
          tag:  "br" "\n";
          tag:  "tab" "\t";
       }
-      style { name: "tizen_view_subtitle_style";
+      style { "tizen_view_subtitle_style";
          base: "font=Tizen:style=Condensed align=center font_size="TIZEN_VIEW_VISIBLE_TEXT_FONT_SIZE_INC" color=#FFFFFFFF wrap=none ellipsis=1.0 text_class=tizen";
          tag:  "br" "\n";
          tag:  "tab" "\t";
       }
    }
-
-   group { name: "elm/layout/tizen_view/default";
+   group { "elm/layout/tizen_view/default";
       images {
          image: "images/core_theme_bg_01.png" COMP;
          image: "images/core_icon_badge_container.#.png" COMP;
       }
       script {
-         public landscape_mode = 0;          //Landscape status
-         public prev_btn_visible = 0;        //Previous button visible status
-         public title_left_btn_visible = 0;  //Title left button visible status
-         public title_right_btn_visible = 0; //Title right button visible status
-         public toolbar_visible = 0;          //Tabbar visible status (This value is used for toolbar group)
+         public landscape_mode = 0;             //Landscape status
+         public prev_btn_visible = 0;           //Previous button visible status
+         public title_left_btn_visible = 0;     //Title left button visible status
+         public title_right_btn_visible = 0;    //Title right button visible status
+         public toolbar_visible = 0;            //Tabbar visible status (This value is used for toolbar group)
       }
       parts {
-         part { name: "base";
-            type: SPACER;
-            description { state: "default" 0.0;
+         spacer { "base";
+            desc { "default";
             }
          }
-         part { name: "bg_img";
-            type: IMAGE;
+         image { "bg_img";
             scale: 1;
             mouse_events: 0;
             clip_to: "clipper";
-            description { state: "default" 0.0;
+            desc { "default";
                rel1.to: "base";
                rel2.to: "base";
                align: 0.5 0.0;
@@ -102,160 +98,184 @@ collections {
                min: 0 TIZEN_VIEW_BG_PORTRAIT_HEIGHT_INC;
                image.normal: "images/core_theme_bg_01.png";
             }
-            description { state: "landscape" 0.0;
-               inherit: "default" 0.0;
+            desc { "landscape";
+               inherit: "default";
                min: 0 TIZEN_VIEW_BG_LANDSPACPE_HEIGHT_INC;
             }
          }
-         part { name: "clipper";
-            type: RECT;
+         rect { "clipper";
             mouse_events: 0;
-            description { state: "default" 0.0;
+            desc { "default";
                visible: 1;
             }
-            description { state: "hidden" 0.0;
+            desc { "hidden";
                visible: 0;
             }
          }
-         part { name: "title_bg";
-            type: RECT;
+         rect { "title_bg";
             scale: 1;
             mouse_events: 0;
-            description { state: "default" 0.0;
+            desc { "default";
                min: 0 TIZEN_VIEW_TITLE_HEIGHT_INC;
                max: -1 TIZEN_VIEW_TITLE_HEIGHT_INC;
                align: 0.0 0.0;
                fixed: 0 1;
-               rel1 { to: "base"; relative: 0.0 0.0; }
-               rel2 { to: "base"; relative: 1.0 0.0; }
+               rel1 {
+                  to: "base";
+                  relative: 0.0 0.0;
+               }
+               rel2 {
+                  to: "base";
+                  relative: 1.0 0.0;
+               }
                color: 61 185 204 255;
             }
-            description { state: "hidden" 0.0;
-               inherit: "default" 0.0;
+            desc { "hidden";
+               inherit: "default";
                min: 0 0;
                max: -1 0;
             }
          }
-         part { name: "toolbar_top_padding";
-            type: SPACER;
+         spacer { "toolbar_top_padding";
             scale: 1;
             repeat_events: 1;
-            description { state: "default" 0.0;
+            desc { "default";
                min: 0 TIZEN_VIEW_TOOLBAR_TITLE_TOP_PADDING_HEIGHT_INC;
                max: -1 TIZEN_VIEW_TOOLBAR_TITLE_TOP_PADDING_HEIGHT_INC;
                fixed: 0 1;
                align: 0.5 0.0;
-               rel1 { to: "title_bg"; relative: 0.0 0.0; }
-               rel2 { to: "title_bg"; relative: 1.0 0.0; }
+               rel1 {
+                  to: "title_bg";
+                  relative: 0.0 0.0;
+               }
+               rel2 {
+                  to: "title_bg";
+                  relative: 1.0 0.0;
+               }
             }
          }
-         part { name: "toolbar";
-            type: SWALLOW;
+         swallow { "toolbar";
             scale: 1;
             clip_to: "toolbar_clipper";
-            description { state: "default" 0.0;
+            desc { "default";
                min: 0 0;
                max: -1 0;
                fixed: 0 1;
                align: 0.5 0.0;
-               rel1 { to: "toolbar_top_padding"; relative: 0.0 1.0; }
-               rel2 { to: "toolbar_top_padding"; relative: 1.0 1.0; }
+               rel1 {
+                  to: "toolbar_top_padding";
+                  relative: 0.0 1.0;
+               }
+               rel2 {
+                  to: "toolbar_top_padding";
+                  relative: 1.0 1.0;
+               }
                visible: 0;
             }
-            description { state: "visible" 0.0;
-               inherit: "default" 0.0;
+            desc { "visible";
+               inherit: "default";
                min: 0 TIZEN_VIEW_TOOLBAR_TITLE_HEIGHT_INC;
                max: -1 TIZEN_VIEW_TOOLBAR_TITLE_HEIGHT_INC;
                visible: 1;
             }
          }
-         part { name: "toolbar_top_divider";
-            type: RECT;
+         rect { "toolbar_top_divider";
             scale: 1;
             mouse_events: 0;
             clip_to: "toolbar_clipper";
-            description { state: "default" 0.0;
+            desc { "default";
                min: 0 0;
                max: -1 0;
                fixed: 0 1;
                align: 0.5 0.0;
-               rel1 { to: "toolbar_clipper"; relative: 0.0 0.0; }
-               rel2 { to: "toolbar_clipper"; relative: 1.0 0.0; }
+               rel1 {
+                  to: "toolbar_clipper";
+                  relative: 0.0 0.0;
+               }
+               rel2 {
+                  to: "toolbar_clipper";
+                  relative: 1.0 0.0;
+               }
                color: 244 244 244 25;
                visible: 0;
             }
-            description { state: "visible" 0.0;
-               inherit: "default" 0.0;
+            desc { "visible";
+               inherit: "default";
                min: 0 TIZEN_VIEW_TOOLBAR_TOP_DIVIDER_HEIGHT_INC;
                max: -1 TIZEN_VIEW_TOOLBAR_TOP_DIVIDER_HEIGHT_INC;
                visible: 1;
             }
          }
-         part { name: "toolbar_clipper";
-            type: RECT;
+         rect { "toolbar_clipper";
             scale: 1;
             mouse_events: 0;
             clip_to: "clipper";
-            description { state: "default" 0.0;
+            desc { "default";
                min: 0 TIZEN_VIEW_TOOLBAR_TITLE_CLIPPER_HEIGHT_INC;
                max: -1 TIZEN_VIEW_TOOLBAR_TITLE_CLIPPER_HEIGHT_INC;
                fixed: 0 1;
                align: 0.5 1.0;
-               rel1 { to: "toolbar"; relative: 0.0 1.0; }
-               rel2 { to: "toolbar"; relative: 1.0 1.0; }
+               rel1 {
+                  to: "toolbar";
+                  relative: 0.0 1.0;
+               }
+               rel2 {
+                  to: "toolbar";
+                  relative: 1.0 1.0;
+               }
             }
          }
-         part { name: "title_clipper";
-            type: RECT;
+         rect { "title_clipper";
             mouse_events: 0;
             clip_to: "clipper";
-            description { state: "default" 0.0;
+            desc { "default";
                rel1.to_y: "title_bg";
                rel2.to_y: "title_bg";
             }
-            description { state: "hidden" 0.0;
-               inherit: "default" 0.0;
+            desc { "hidden";
+               inherit: "default";
                visible: 0;
             }
          }
-         part { name: "title_text_left_padding";
-            type: SPACER;
+         spacer { "title_text_left_padding";
             scale: 1;
-            description { state: "default" 0.0;
+            desc { "default";
                rel1.to: "title_bg";
                rel2.to: "title_left_btn_bg";
             }
-            description { state: "title_badge_visible" 0.0;
+            desc { "title_badge_visible";
                rel1.to: "title_bg";
                rel2.to: "title_badge2_padding";
             }
-            description { state: "prev_btn_visible" 0.0;
+            desc { "prev_btn_visible";
                rel1.to: "title_bg";
-               rel2 { to_x: "elm.swallow.prev_btn"; to_y: "title_bg"; relative: 1.0 1.0; }
+               rel2 {
+                  to_x: "elm.swallow.prev_btn";
+                  to_y: "title_bg";
+                  relative: 1.0 1.0;
+               }
             }
          }
-         part { name: "title_text_right_padding";
-            type: SPACER;
+         spacer { "title_text_right_padding";
             scale: 1;
-            description { state: "default" 0.0;
+            desc { "default";
                rel1.to: "title_right_btn_bg";
                rel2.to: "title_bg";
             }
-            description { state: "title_badge_visible" 0.0;
+            desc { "title_badge_visible";
                rel1.to: "badge_icon_left_padding";
                rel2.to: "title_bg";
             }
-            description { state: "prev_btn_visible" 0.0;
+            desc { "prev_btn_visible";
                rel1.to: "prev_btn_title_right_padding";
                rel2.to: "title_bg";
             }
          }
-         part { name: "elm.text.title";
-            type: TEXTBLOCK;
+         textblock {  "elm.text.title";
             scale: 1;
             mouse_events: 0;
             clip_to: "title_text_clipper";
-            description { state: "default" 0.0;
+            desc { "default";
                text {
                   style: "tizen_view_title_style";
                   size: TIZEN_VIEW_TITLE_TEXT_FONT_SIZE_INC;
@@ -263,10 +283,18 @@ collections {
                   fit: 1 0;
                }
                fixed: 1 1;
-               rel1 { to_x: "title_text_left_padding"; to_y: "title_bg"; relative: 1.0 0.0; }
-               rel2 { to_x: "title_text_right_padding"; to_y: "title_bg"; relative: 0.0 1.0; }
+               rel1 {
+                  to_x: "title_text_left_padding";
+                  to_y: "title_bg";
+                  relative: 1.0 0.0;
+               }
+               rel2 {
+                  to_x: "title_text_right_padding";
+                  to_y: "title_bg";
+                  relative: 0.0 1.0;
+               }
             }
-            description { state: "subtitle_visible" 0.0;
+            desc { "subtitle_visible";
                text {
                   style: "tizen_view_subtitle_visible_style";
                   size: TIZEN_VIEW_SUBTITLE_VISIBLE_TEXT_FONT_SIZE_INC;
@@ -274,168 +302,230 @@ collections {
                   fit: 1 0;
                }
                fixed: 1 1;
-               rel1 { to_x: "title_text_left_padding"; to_y: "title_top_padding"; relative: 1.0 1.0; }
-               rel2 { to_x: "title_text_right_padding"; to_y: "elm.text.subtitle"; relative: 0.0 0.0; }
+               rel1 {
+                  to_x: "title_text_left_padding";
+                  to_y: "title_top_padding";
+                  relative: 1.0 1.0;
+               }
+               rel2 {
+                  to_x: "title_text_right_padding";
+                  to_y: "elm.text.subtitle";
+                  relative: 0.0 0.0;
+               }
             }
          }
-         part { name: "title_text_clipper";
-            type: RECT;
+         rect { "title_text_clipper";
             mouse_events: 0;
             clip_to: "title_clipper";
-            description { state: "default" 0.0;
+            desc { "default";
                rel1.to: "elm.text.title";
                rel2.to: "elm.text.title";
             }
          }
-         part { name: "title_top_padding";
-            type: SPACER;
-            description { state: "default" 0.0;
+         spacer { "title_top_padding";
+            scale: 1;
+            desc { "default";
                min: 0 TIZEN_VIEW_TITLE_TOP_PADDING_HEIGHT_INC;
                max: -1 TIZEN_VIEW_TITLE_TOP_PADDING_HEIGHT_INC;
                fixed: 0 1;
                align: 0.5 0.0;
-               rel1 { to: "title_bg"; relative: 0.0 0.0; }
-               rel2 { to: "title_bg"; relative: 1.0 0.0; }
+               rel1 {
+                  to: "title_bg";
+                  relative: 0.0 0.0;
+               }
+               rel2 {
+                  to: "title_bg";
+                  relative: 1.0 0.0;
+               }
             }
          }
-         part { name: "elm.text.subtitle";
-            type: TEXTBLOCK;
+         textblock {  "elm.text.subtitle";
             scale: 1;
             mouse_events: 0;
-            description { state: "default" 0.0;
-               text { style: "tizen_view_subtitle_style";}
+            desc { "default";
+               text {
+                  style: "tizen_view_subtitle_style";
+               }
                min: 0 TIZEN_VIEW_SUBTITLE_HEIGHT_INC;
                max: -1 TIZEN_VIEW_SUBTITLE_HEIGHT_INC;
                fixed: 1 1;
                align: 0.5 1.0;
-               rel1 { to_x: "title_text_left_padding"; to_y: "subtitle_bottom_padding"; relative: 1.0 0.0; }
-               rel2 { to_x: "title_text_right_padding"; to_y: "subtitle_bottom_padding"; relative: 0.0 0.0; }
+               rel1 {
+                  to_x: "title_text_left_padding";
+                  to_y: "subtitle_bottom_padding";
+                  relative: 1.0 0.0;
+               }
+               rel2 {
+                  to_x: "title_text_right_padding";
+                  to_y: "subtitle_bottom_padding";
+                  relative: 0.0 0.0;
+               }
             }
          }
-         part { name: "subtitle_bottom_padding";
-            type: SPACER;
-            description { state: "default" 0.0;
+         spacer {  "subtitle_bottom_padding";
+            desc { "default";
                min: 0 TIZEN_VIEW_SUBTITLE_BOTTOM_PADDING_HEIGHT_INC;
                max: -1 TIZEN_VIEW_SUBTITLE_BOTTOM_PADDING_HEIGHT_INC;
                fixed: 0 1;
                align: 0.5 1.0;
-               rel1 { to: "title_bg"; relative: 0.0 1.0; }
-               rel2 { to: "title_bg"; relative: 1.0 1.0; }
+               rel1 {
+                  to: "title_bg";
+                  relative: 0.0 1.0;
+               }
+               rel2 {
+                  to: "title_bg";
+                  relative: 1.0 1.0;
+               }
             }
          }
-         part { name: "click_event_area";
-             type: RECT;
-             ignore_flags: ON_HOLD;
-             description { state: "default" 0.0;
-                rel1.to: "title_bg";
-                rel2.to: "title_bg";
-                color: 0 0 0 0;
-             }
-         }
-         part { name: "access.title";
-            type: RECT;
-            repeat_events: 1;
-            description { state: "default" 0.0;
+         rect { "click_event_area";
+            ignore_flags: ON_HOLD;
+            desc { "default";
                rel1.to: "title_bg";
                rel2.to: "title_bg";
                color: 0 0 0 0;
             }
          }
-         part { name: "elm.swallow.icon";
-            type: SWALLOW;
+         rect { "access.title";
+            repeat_events: 1;
+            desc { "default";
+               rel1.to: "title_bg";
+               rel2.to: "title_bg";
+               color: 0 0 0 0;
+            }
+         }
+         swallow { "elm.swallow.icon";
             scale: 1;
             clip_to: "title_clipper";
-            description { state: "default" 0.0;
+            desc { "default";
                max: 0 0;
                fixed: 1 0;
                align: 0.0 0.5;
-               rel1 { relative: 1.0 0.0; to: "title_left_padding"; }
-               rel2 { relative: 1.0 1.0; to: "title_left_padding"; }
+               rel1 {
+                  relative: 1.0 0.0;
+                  to: "title_left_padding";
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+                  to: "title_left_padding";
+               }
                visible: 0;
             }
          }
-         part { name: "badge_icon_left_padding";
-            type: SPACER;
+         spacer { "badge_icon_left_padding";
             scale: 1;
-            description { state: "default" 0.0;
+            desc { "default";
                min: 0 0;
                max: 0 -1;
                fixed: 1 0;
                align: 1.0 0.5;
-               rel1 { to_x: "badge_text_left_padding"; to_y: "title_bg"; relative: 0.0 0.0; }
-               rel2 { to_x: "badge_text_left_padding"; to_y: "title_bg"; relative: 0.0 1.0; }
+               rel1 {
+                  to_x: "badge_text_left_padding";
+                  to_y: "title_bg";
+                  relative: 0.0 0.0;
+               }
+               rel2 {
+                  to_x: "badge_text_left_padding";
+                  to_y: "title_bg";
+                  relative: 0.0 1.0;
+               }
             }
-            description { state: "visible" 0.0;
-               inherit: "default" 0.0;
+            desc { "visible";
+               inherit: "default";
                min: TIZEN_VIEW_BADGE_ICON_LEFT_PADDING_WIDTH_INC 0;
                max: TIZEN_VIEW_BADGE_ICON_LEFT_PADDING_WIDTH_INC -1;
             }
          }
-         part { name: "badge_icon";
-            type: IMAGE;
+         image { "badge_icon";
             scale: 1;
             mouse_events: 0;
             clip_to: "title_clipper";
-            description { state: "default" 0.0;
+            desc { "default";
                min: 0 0;
                max: 0 0;
                fixed: 1 1;
-               rel1 { to_x: "badge_text_left_padding"; to_y: "title_badge"; }
-               rel2 { to_x: "badge_text_right_padding"; to_y: "title_badge"; }
+               rel1 {
+                  to_x: "badge_text_left_padding";
+                  to_y: "title_badge";
+               }
+               rel2 {
+                  to_x: "badge_text_right_padding";
+                  to_y: "title_badge";
+               }
                color: 195 219 226 255;
                image.normal: "images/core_icon_badge_container.#.png";
                visible: 0;
             }
-            description { state: "visible" 0.0;
-               rel1 { to_x: "badge_text_left_padding"; to_y: "title_badge"; }
-               rel2 { to_x: "badge_text_right_padding"; to_y: "title_badge"; }
+            desc { "visible";
+               rel1 {
+                  to_x: "badge_text_left_padding";
+                  to_y: "title_badge";
+               }
+               rel2 {
+                  to_x: "badge_text_right_padding";
+                  to_y: "title_badge";
+               }
                color: 195 219 226 255;
                image.normal: "images/core_icon_badge_container.#.png";
                visible: 1;
             }
          }
-         part { name: "badge_text_left_padding";
-            type: SPACER;
+         spacer { "badge_text_left_padding";
             scale: 1;
-            description { state: "default" 0.0;
+            desc { "default";
                min: 0 0;
                max: 0 -1;
                fixed: 1 0;
                align: 1.0 0.5;
-               rel1 { to_x: "title_badge"; to_y: "title_bg"; relative: 0.0 0.0; }
-               rel2 { to_x: "title_badge"; to_y: "title_bg"; relative: 0.0 1.0; }
+               rel1 {
+                  to_x: "title_badge";
+                  to_y: "title_bg";
+                  relative: 0.0 0.0;
+               }
+               rel2 {
+                  to_x: "title_badge";
+                  to_y: "title_bg";
+                  relative: 0.0 1.0;
+               }
             }
-            description { state: "visible" 0.0;
-               inherit: "default" 0.0;
+            desc { "visible";
+               inherit: "default";
                min: TIZEN_VIEW_BADGE_TEXT_LEFT_PADDING_WIDTH_INC 0;
                max: TIZEN_VIEW_BADGE_TEXT_LEFT_PADDING_WIDTH_INC -1;
             }
          }
-         part { name: "badge_text_right_padding";
-            type: SPACER;
+         spacer { "badge_text_right_padding";
             scale: 1;
-            description { state: "default" 0.0;
+            desc { "default";
                min: 0 0;
                max: 0 -1;
                fixed: 1 0;
                align: 1.0 0.5;
-               rel1 { to_x: "title_right_padding"; to_y: "title_bg"; relative: 0.0 0.0; }
-               rel2 { to_x: "title_right_padding"; to_y: "title_bg"; relative: 0.0 1.0; }
+               rel1 {
+                  to_x: "title_right_padding";
+                  to_y: "title_bg";
+                  relative: 0.0 0.0;
+               }
+               rel2 {
+                  to_x: "title_right_padding";
+                  to_y: "title_bg";
+                  relative: 0.0 1.0;
+               }
             }
-            description { state: "visible" 0.0;
-               inherit: "default" 0.0;
+            desc { "visible";
+               inherit: "default";
                min: TIZEN_VIEW_BADGE_TEXT_LEFT_PADDING_WIDTH_INC 0;
                max: TIZEN_VIEW_BADGE_TEXT_LEFT_PADDING_WIDTH_INC -1;
             }
          }
-         part { name: "title_badge";
-            type: TEXT;
+         text { "title_badge";
             scale: 1;
             mouse_events: 0;
             clip_to: "title_clipper";
-            description { state: "default" 0.0;
+            desc { "default";
                text {
-                  font: "Tizen:style=Regular"; size: "32";
+                  font: "Tizen:style=Regular";
+                  size: "32";
                   text_class: "tizen";
                   min: 1 0;
                   max: 1 0;
@@ -447,18 +537,26 @@ collections {
                max: -1 TIZEN_VIEW_BADGE_HEIGHT_INC;
                fixed: 1 1;
                align: 1.0 0.5;
-               rel1 { to_x: "badge_text_right_padding"; to_y: "elm.text.title"; relative: 0.0 0.0; }
-               rel2 { to_x: "badge_text_right_padding"; to_y: "elm.text.title"; relative: 0.0 1.0; }
+               rel1 {
+                  to_x: "badge_text_right_padding";
+                  to_y: "elm.text.title";
+                  relative: 0.0 0.0;
+               }
+               rel2 {
+                  to_x: "badge_text_right_padding";
+                  to_y: "elm.text.title";
+                  relative: 0.0 1.0;
+               }
             }
          }
-         part { name: "title_badge2";
-            type: TEXT;
+         text { "title_badge2";
             scale: 1;
             mouse_events: 0;
             clip_to: "title_clipper";
-            description { state: "default" 0.0;
+            desc { "default";
                text {
-                  font: "Tizen:style=Regular"; size: "32";
+                  font: "Tizen:style=Regular";
+                  size: "32";
                   text_class: "tizen";
                   min: 1 0;
                   max: 1 0;
@@ -470,196 +568,248 @@ collections {
                max: -1 TIZEN_VIEW_BADGE_HEIGHT_INC;
                fixed: 1 1;
                align: 0.0 0.5;
-               rel1 { to_x: "title_left_padding"; to_y: "elm.text.title"; relative: 1.0 0.0; }
-               rel2 { to_x: "title_left_padding"; to_y: "elm.text.title"; relative: 1.0 1.0; }
+               rel1 {
+                  to_x: "title_left_padding";
+                  to_y: "elm.text.title";
+                  relative: 1.0 0.0;
+               }
+               rel2 {
+                  to_x: "title_left_padding";
+                  to_y: "elm.text.title";
+                  relative: 1.0 1.0;
+               }
                visible: 0;
             }
          }
-         part { name: "title_badge2_padding";
-            type: SPACER;
+         spacer { "title_badge2_padding";
             scale: 1;
-            description { state: "default" 0.0;
+            desc { "default";
                min: 0 0;
                max: 0 -1;
                fixed: 1 0;
                align: 0.0 0.5;
-               rel1 { to_x: "title_badge2"; to_y: "title_bg"; relative: 1.0 0.0; }
-               rel2 { to_x: "title_badge2"; to_y: "title_bg"; relative: 1.0 1.0; }
+               rel1 {
+                  to_x: "title_badge2";
+                  to_y: "title_bg";
+                  relative: 1.0 0.0;
+               }
+               rel2 {
+                  to_x: "title_badge2";
+                  to_y: "title_bg";
+                  relative: 1.0 1.0;
+               }
             }
-            description { state: "visible" 0.0;
-               inherit: "default" 0.0;
+            desc { "visible";
+               inherit: "default";
                min: TIZEN_VIEW_BADGE2_PADDING_WIDTH_INC 0;
                max: TIZEN_VIEW_BADGE2_PADDING_WIDTH_INC -1;
             }
          }
-         part { name: "title_left_padding";
-            type: SPACER;
+         spacer { "title_left_padding";
             scale: 1;
-            description { state: "default" 0.0;
+            desc { "default";
                min: TIZEN_VIEW_TITLE_LEFT_PADDING_WIDTH_INC 0;
                max: TIZEN_VIEW_TITLE_LEFT_PADDING_WIDTH_INC -1;
                fixed: 1 0;
                align: 0.0 0.0;
-               rel1 { to: "title_bg"; relative: 0.0 0.0; }
-               rel2 { to: "title_bg"; relative: 0.0 1.0; }
+               rel1 {
+                  to: "title_bg";
+                  relative: 0.0 0.0;
+               }
+               rel2 {
+                  to: "title_bg";
+                  relative: 0.0 1.0;
+               }
             }
-            description { state: "hidden" 0.0;
-               inherit: "default" 0.0;
+            desc { "hidden";
+               inherit: "default";
                min: 0 0;
                max: 0 -1;
             }
          }
-         part { name: "title_left_btn_bg";
-            type: SPACER;
+         spacer { "title_left_btn_bg";
             scale: 1;
-            description { state: "default" 0.0;
+            desc { "default";
                min: 0 0;
                fixed: 1 0;
                align: 0.0 0.5;
-               rel1 { to: "title_left_padding"; relative: 1.0 0.0; }
-               rel2 { to: "title_left_padding"; relative: 1.0 1.0; }
+               rel1 {
+                  to: "title_left_padding";
+                  relative: 1.0 0.0;
+               }
+               rel2 {
+                  to: "title_left_padding";
+                  relative: 1.0 1.0;
+               }
             }
-            description { state: "visible" 0.0;
-               inherit: "default" 0.0;
+            desc { "visible";
+               inherit: "default";
                min: TIZEN_VIEW_TITLE_FUNC_BTN_SIZE_INC;
                max: TIZEN_VIEW_TITLE_FUNC_BTN_SIZE_INC;
             }
          }
-         part { name: "title_left_btn";
-            type: SWALLOW;
+         swallow { "title_left_btn";
             scale: 1;
             clip_to: "title_clipper";
-            description { state: "default" 0.0;
+            desc { "default";
                fixed: 1 1;
                rel1.to: "title_left_btn_bg";
                rel2.to: "title_left_btn_bg";
                visible: 0;
             }
-            description { state: "visible" 0.0;
-               inherit: "default" 0.0;
+            desc { "visible";
+               inherit: "default";
                visible: 1;
             }
          }
-         part { name: "title_right_btn_bg";
-            type: SPACER;
+         spacer { "title_right_btn_bg";
             scale: 1;
-            description { state: "default" 0.0;
+            desc { "default";
                min: 0 0;
                fixed: 1 0;
                align: 1.0 0.5;
-               rel1 { to: "title_right_padding"; relative: 0.0 0.0; }
-               rel2 { to: "title_right_padding"; relative: 0.0 1.0; }
+               rel1 {
+                  to: "title_right_padding";
+                  relative: 0.0 0.0;
+               }
+               rel2 {
+                  to: "title_right_padding";
+                  relative: 0.0 1.0;
+               }
             }
-            description { state: "visible" 0.0;
-               inherit: "default" 0.0;
+            desc { "visible";
+               inherit: "default";
                min: TIZEN_VIEW_TITLE_FUNC_BTN_SIZE_INC;
                max: TIZEN_VIEW_TITLE_FUNC_BTN_SIZE_INC;
             }
          }
-         part { name: "title_right_padding";
-            type: SPACER;
+         spacer { "title_right_padding";
             scale: 1;
-            description { state: "default" 0.0;
+            desc { "default";
                min: TIZEN_VIEW_TITLE_RIGHT_PADDING_WIDTH_INC 0;
                max: TIZEN_VIEW_TITLE_RIGHT_PADDING_WIDTH_INC -1;
                fixed: 1 0;
                align: 1.0 0.0;
-               rel1 { to: "title_bg"; relative: 1.0 0.0; }
-               rel2 { to: "title_bg"; relative: 1.0 1.0; }
+               rel1 {
+                  to: "title_bg";
+                  relative: 1.0 0.0;
+               }
+               rel2 {
+                  to: "title_bg";
+                  relative: 1.0 1.0;
+               }
             }
-            description { state: "hidden" 0.0;
-               inherit: "default" 0.0;
+            desc { "hidden";
+               inherit: "default";
                min: 0 0;
                max: 0 -1;
             }
          }
-         part { name: "title_right_btn";
-            type: SWALLOW;
+         swallow { "title_right_btn";
             scale: 1;
             clip_to: "title_clipper";
-            description { state: "default" 0.0;
+            desc { "default";
                fixed: 1 1;
                rel1.to: "title_right_btn_bg";
                rel2.to: "title_right_btn_bg";
                visible: 0;
             }
-            description { state: "visible" 0.0;
-               inherit: "default" 0.0;
+            desc { "visible";
+               inherit: "default";
                visible: 1;
             }
          }
-         part { name: "elm.swallow.content";
-            type: SWALLOW;
+         swallow { "elm.swallow.content";
             scale: 1;
             repeat_events: 0;
             clip_to: "content_clipper";
-            description { state: "default" 0.0;
+            desc { "default";
                align: 0.0 0.0;
-               rel1 { to_x: "base"; to_y: "title_bg"; relative: 0.0 1.0; }
+               rel1 {
+                  to_x: "base";
+                  to_y: "title_bg";
+                  relative: 0.0 1.0;
+               }
                rel2.to: "base";
             }
-            description { state: "toolbar" 0.0;
+            desc { "toolbar";
                align: 0.0 0.0;
-               rel1 { to_x: "base"; to_y: "toolbar"; relative: 0.0 1.0; }
+               rel1 {
+                  to_x: "base";
+                  to_y: "toolbar";
+                  relative: 0.0 1.0;
+               }
                rel2.to: "base";
-
             }
          }
-         part { name: "content_clipper";
-            type: RECT;
+         rect { "content_clipper";
             mouse_events: 0;
             clip_to: "clipper";
-            description { state: "default" 0.0;
+            desc { "default";
                rel1.to_y: "elm.swallow.content";
                rel2.to_y: "elm.swallow.content";
             }
          }
-         part { name: "prev_btn_left_padding";
-            type: SPACER;
+         spacer { "prev_btn_left_padding";
             scale: 1;
-            description { state: "default" 0.0;
+            desc { "default";
                min: TIZEN_VIEW_BACK_BUTTON_LR_PADDING_WIDTH_INC 0;
                max: TIZEN_VIEW_BACK_BUTTON_LR_PADDING_WIDTH_INC -1;
                align: 0.0 0.0;
                fixed: 1 1;
-               rel1 { to: "title_bg"; relative: 0.0 0.0; }
-               rel2 { to: "title_bg"; relative: 0.0 1.0; }
+               rel1 {
+                  to: "title_bg";
+                  relative: 0.0 0.0;
+               }
+               rel2 {
+                  to: "title_bg";
+                  relative: 0.0 1.0;
+               }
             }
          }
-         part { name: "elm.swallow.prev_btn";
-            type: SWALLOW;
+         swallow { "elm.swallow.prev_btn";
             clip_to: "title_clipper";
             scale: 1;
-            description { state: "default" 0.0;
+            desc { "default";
                min: BUTTON_TIZEN_VIEW_BACK_BUTTON_SIZE_INC;
                max: BUTTON_TIZEN_VIEW_BACK_BUTTON_SIZE_INC;
                align: 0.0 0.5;
                fixed: 1 1;
-               rel1 { to: "prev_btn_left_padding"; relative: 1.0 0.0; }
-               rel2 { to: "prev_btn_left_padding"; relative: 1.0 1.0; }
+               rel1 {
+                  to: "prev_btn_left_padding";
+                  relative: 1.0 0.0;
+               }
+               rel2 {
+                  to: "prev_btn_left_padding";
+                  relative: 1.0 1.0;
+               }
                visible: 1;
             }
-            description { state: "hidden" 0.0;
-               inherit: "default" 0.0;
+            desc { "hidden";
+               inherit: "default";
                visible: 0;
             }
          }
-         part { name: "prev_btn_title_right_padding";
-            type: SPACER;
+         spacer { "prev_btn_title_right_padding";
             scale: 1;
-            description { state: "default" 0.0;
+            desc { "default";
                min: TIZEN_VIEW_BACK_BUTTON_TITLE_RIGHT_PADDING_WIDTH_INC 0;
                max: TIZEN_VIEW_BACK_BUTTON_TITLE_RIGHT_PADDING_WIDTH_INC -1;
                align: 1.0 0.0;
                fixed: 1 1;
-               rel1 { to: "title_bg"; relative: 1.0 0.0; }
-               rel2 { to: "title_bg"; relative: 1.0 1.0; }
+               rel1 {
+                  to: "title_bg";
+                  relative: 1.0 0.0;
+               }
+               rel2 {
+                  to: "title_bg";
+                  relative: 1.0 1.0;
+               }
             }
          }
-         part { name: "toolbar_more_btn";
-            type: SWALLOW;
+         swallow { "toolbar_more_btn";
             clip_to: "title_clipper";
-            description { state: "default" 0.0;
+            desc { "default";
                min: 0 0;
                max: 0 0;
                align: 0.0 0.0;
@@ -671,19 +821,19 @@ collections {
          }
       }
       programs {
-         program { name: "visible";
+         program { "visible";
             signal: "elm,state,visible";
             source: "elm";
             action: STATE_SET "default" 0.0;
             target: "clipper";
          }
-         program { name: "invisible";
+         program { "invisible";
             signal: "elm,state,invisible";
             source: "elm";
             action: STATE_SET "hidden" 0.0;
             target: "clipper";
          }
-         program { name: "title_show";
+         program { "title_show";
             signal: "elm,state,title,show";
             source: "elm";
             script {
@@ -717,10 +867,9 @@ collections {
                   set_state(PART:"toolbar_top_divider", "visible", 0.0);
                   set_state(PART:"elm.swallow.content", "toolbar", 0.0);
                }
-
             }
          }
-         program { name: "title_hide";
+         program { "title_hide";
             signal: "elm,state,title,hide";
             source: "elm";
             script {
@@ -742,7 +891,7 @@ collections {
                set_state(PART:"elm.swallow.content", "default", 0.0);
             }
          }
-         program { name: "toolbar_show";
+         program { "toolbar_show";
             signal: "elm,state,toolbar,show";
             source: "elm";
             script {
@@ -752,7 +901,7 @@ collections {
                set_int(toolbar_visible, 1);
             }
          }
-         program { name: "toolbar_hide";
+         program { "toolbar_hide";
             signal: "elm,state,toolbar,hide";
             source: "elm";
             script {
@@ -762,21 +911,21 @@ collections {
                set_int(toolbar_visible, 0);
             }
          }
-         program { name: "subtitle_show";
+         program { "subtitle_show";
             signal: "elm,state,subtitle,show";
             source: "elm";
             script {
                set_state(PART:"elm.text.title", "subtitle_visible", 0.0);
             }
          }
-         program { name: "subtitle_hide";
+         program { "subtitle_hide";
             signal: "elm,state,subtitle,hide";
             source: "elm";
             script {
                set_state(PART:"elm.text.title", "default", 0.0);
             }
          }
-         program { name: "prev_btn_show";
+         program { "prev_btn_show";
             signal: "elm,state,prev_btn,show";
             source: "elm";
             script {
@@ -788,7 +937,7 @@ collections {
                }
             }
          }
-         program { name: "prev_btn_hide";
+         program { "prev_btn_hide";
             signal: "elm,state,prev_btn,hide";
             source: "elm";
             script {
@@ -798,7 +947,7 @@ collections {
                set_int(prev_btn_visible, 0);
             }
          }
-         program { name: "title_left_btn_show";
+         program { "title_left_btn_show";
             signal: "elm,state,title_left_btn,show";
             source: "elm";
             script {
@@ -813,7 +962,7 @@ collections {
                set_int(title_left_btn_visible, 1);
             }
          }
-         program { name: "title_left_btn_hide";
+         program { "title_left_btn_hide";
             signal: "elm,state,title_left_btn,hide";
             source: "elm";
             script {
@@ -830,7 +979,7 @@ collections {
                }
             }
          }
-         program { name: "title_right_btn_show";
+         program { "title_right_btn_show";
             signal: "elm,state,title_right_btn,show";
             source: "elm";
             script {
@@ -846,7 +995,7 @@ collections {
                set_int(title_right_btn_visible, 1);
             }
          }
-         program { name: "title_right_btn_hide";
+         program { "title_right_btn_hide";
             signal: "elm,state,title_right_btn,hide";
             source: "elm";
             script {
@@ -862,17 +1011,15 @@ collections {
                }
             }
          }
-         program { name: "title_badge_show";
+         program { "title_badge_show";
             signal: "elm,state,title_badge,show";
             source: "elm";
             script {
                new buf[128];
-
                set_state(PART:"badge_text_left_padding", "visible", 0.0);
                set_state(PART:"badge_text_right_padding", "visible", 0.0);
                set_state(PART:"badge_icon", "visible", 0.0);
                set_state(PART:"badge_icon_left_padding", "visible", 0.0);
-
                get_text(PART:"title_badge", buf, 128);
                set_text(PART:"title_badge2", buf);
                set_state(PART:"title_badge2_padding", "visible", 0.0);
@@ -880,7 +1027,7 @@ collections {
                set_state(PART:"title_text_right_padding", "title_badge_visible", 0.0);
             }
          }
-         program { name: "title_badge_hide";
+         program { "title_badge_hide";
             signal: "elm,state,title_badge,hide";
             source: "elm";
             script {
@@ -888,21 +1035,20 @@ collections {
                set_state(PART:"badge_text_right_padding", "default", 0.0);
                set_state(PART:"badge_icon", "default", 0.0);
                set_state(PART:"badge_icon_left_padding", "default", 0.0);
-
                set_text(PART:"title_badge2", "");
                set_state(PART:"title_badge2_padding", "default", 0.0);
                set_state(PART:"title_text_left_padding", "default", 0.0);
                set_state(PART:"title_text_right_padding", "default", 0.0);
             }
          }
-         program { name: "title_clicked";
+         program { "title_clicked";
             signal: "mouse,clicked,1";
             source: "click_event_area";
             script {
                emit("elm,action,title,clicked", "");
             }
          }
-         program { name: "change_to_landscape";
+         program { "change_to_landscape";
             script {
                if (!get_int(landscape_mode)) {
                   set_int(landscape_mode, 1);
@@ -910,7 +1056,7 @@ collections {
                set_state(PART:"bg_img", "landscape", 0.0);
             }
          }
-         program { name: "change_to_portrait";
+         program { "change_to_portrait";
             script {
                if (get_int(landscape_mode)) {
                   set_int(landscape_mode, 0);
@@ -918,22 +1064,22 @@ collections {
                set_state(PART:"bg_img", "default", 0.0);
             }
          }
-         program { name: "landscape_mode";
+         program { "landscape_mode";
             source: "elm";
             signal: "elm,state,orient,90";
             after: "change_to_landscape";
          }
-         program { name: "landscape_mode2";
+         program { "landscape_mode2";
             source: "elm";
             signal: "elm,state,orient,270";
             after: "change_to_landscape";
          }
-         program { name: "portrait_mode";
+         program { "portrait_mode";
             source: "elm";
             signal: "elm,state,orient,0";
             after: "change_to_portrait";
          }
-         program { name: "portrait_mode2";
+         program { "portrait_mode2";
             source: "elm";
             signal: "elm,state,orient,180";
             after: "change_to_portrait";
