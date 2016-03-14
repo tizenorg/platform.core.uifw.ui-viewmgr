@@ -20,6 +20,7 @@ using namespace efl_viewmgr;
 using namespace viewmgr;
 
 static const char *KEY_BACK = "XF86Back";
+static const char *KEY_BACK2 = "XF86Stop";
 
 ui_key_listener::ui_key_listener(ui_viewmgr *viewmgr)
 		: viewmgr(viewmgr), key_grabber(NULL)
@@ -39,7 +40,7 @@ static void event_proc(ui_key_listener *key_listener, Evas_Event_Key_Down *ev)
 
 	key_listener->extend_event_proc(view, ev);
 
-	if (strcmp(ev->keyname, KEY_BACK)) return;
+	if (strcmp(ev->keyname, KEY_BACK) && strcmp(ev->keyname, KEY_BACK2)) return;
 
 	view->back();
 }
@@ -82,6 +83,13 @@ bool ui_key_listener::init()
 	if (!evas_object_key_grab(key_grab_rect, KEY_BACK, 0, 0, EINA_FALSE))
 	{
 		LOGE("Failed to grab BACK KEY(%s)\n", KEY_BACK);
+		evas_object_del(key_grab_rect);
+		return false;
+	}
+
+	if (!evas_object_key_grab(key_grab_rect, KEY_BACK2, 0, 0, EINA_FALSE))
+	{
+		LOGE("Failed to grab BACK KEY(%s)\n", KEY_BACK2);
 		evas_object_del(key_grab_rect);
 		return false;
 	}

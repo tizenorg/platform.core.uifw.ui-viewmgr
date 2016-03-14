@@ -187,7 +187,7 @@ ui_viewmgr::ui_viewmgr(const char *pkg, ui_key_listener *key_listener)
 			},
 			this);
 
-	//Conformant: Make this configurable.
+	//FIXME: Make conformant configurable?
 	if (!this->create_conformant(this->win))
 	{
 		LOGE("Failed to create a conformant (%s)", pkg);
