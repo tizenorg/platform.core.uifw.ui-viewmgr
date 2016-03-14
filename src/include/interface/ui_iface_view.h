@@ -282,7 +282,7 @@ public:
 		return this->state;
 	}
 
-	/** @brief Return a state of removeable content.
+	/** @brief Return a state of removable content.
 	 *
 	 *  @return true if the view's content is removable, otherwise false.
 	 */

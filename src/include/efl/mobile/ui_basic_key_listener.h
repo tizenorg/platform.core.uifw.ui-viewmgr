@@ -14,8 +14,8 @@
  *  limitations under the License.
  *
  */
-#ifndef MOBILE_KEY_HANDLER_H
-#define MOBILE_KEY_HANDLER_H
+#ifndef UI_BASIC_KEY_HANDLER_H
+#define UI_BASIC_KEY_HANDLER_H
 
 #include "../ui_viewmanager_efl.h"
 
@@ -34,4 +34,4 @@ public:
 
 }
 
-#endif /* MOBILE_KEY_HANDLER_H */
+#endif /* UI_BASIC_KEY_HANDLER_H */
