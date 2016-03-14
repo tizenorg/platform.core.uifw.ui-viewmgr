@@ -25,7 +25,8 @@ namespace efl_viewmgr
 class ui_basic_view: public ui_view
 {
 private:
-	Evas_Object *layout; //Base layout for view
+	Evas_Object *layout; 	  		 //Base layout for view
+	Evas_Object *ctxpopup; 	  		 //Menu Widget
 
 	bool create_layout();
 	bool destroy_layout();
@@ -47,6 +48,8 @@ public:
 	bool set_title_right_btn(Evas_Object *title_right_btn);
 	bool set_title(const char *text);
 	bool set_toolbar(Evas_Object *toolbar);
+	bool set_menu(Evas_Object *menu);
+	bool unset_menu();
 
 	virtual void menu();
 

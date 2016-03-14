@@ -14,6 +14,14 @@
  *  limitations under the License.
  *
  */
+static void ctxpopup_item_select_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	ui_basic_view *view = static_cast<ui_basic_view *>(data);
+	Elm_Object_Item *it = static_cast<Elm_Object_Item *>(event_info);
+	elm_ctxpopup_dismiss(obj);
+	LOGE("Item (%s) is selected", elm_object_item_text_get(it));
+}
+
 class page1: public ui_basic_controller
 {
 private:
@@ -58,7 +66,21 @@ public:
 
 	bool menu()
 	{
-		LOGE("Menu!");
+		ui_basic_view *view = dynamic_cast<ui_basic_view *>(this->get_view());
+
+		Evas_Object *ctxpopup = elm_ctxpopup_add(view->get_base());
+		elm_ctxpopup_item_append(ctxpopup, "Phone calls", NULL, ctxpopup_item_select_cb, this);
+		elm_ctxpopup_item_append(ctxpopup, "Favorites", NULL, ctxpopup_item_select_cb, this);
+		elm_ctxpopup_item_append(ctxpopup, "Search", NULL, ctxpopup_item_select_cb, this);
+		elm_ctxpopup_item_append(ctxpopup, "Dialer", NULL, ctxpopup_item_select_cb, this);
+		elm_ctxpopup_item_append(ctxpopup, "Add contact", NULL, ctxpopup_item_select_cb, this);
+		elm_ctxpopup_item_append(ctxpopup, "Phone calls", NULL, ctxpopup_item_select_cb, this);
+		elm_ctxpopup_item_append(ctxpopup, "Favorites", NULL, ctxpopup_item_select_cb, this);
+		elm_ctxpopup_item_append(ctxpopup, "Search", NULL, ctxpopup_item_select_cb, this);
+		elm_ctxpopup_item_append(ctxpopup, "Dialer", NULL, ctxpopup_item_select_cb, this);
+
+		view->set_menu(ctxpopup);
+
 		return true;
 	}
 };
