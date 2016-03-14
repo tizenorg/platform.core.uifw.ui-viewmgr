@@ -23,6 +23,28 @@
 using namespace efl_viewmgr;
 using namespace viewmgr;
 
+
+static void update_menu(Evas_Object *win, Evas_Object *ctxpopup)
+{
+	/* We convince the top widget is a window */
+	Evas_Coord w, h;
+	elm_win_screen_size_get(win, NULL, NULL, &w, &h);
+	int rot = elm_win_rotation_get(win);
+
+	switch (rot)
+	{
+	case 0:
+	case 180:
+		evas_object_move(ctxpopup, (w / 2), h);
+		break;
+	case 90:
+	case 270:
+		evas_object_move(ctxpopup, (h / 2), w);
+		break;
+	}
+	evas_object_show(ctxpopup);
+}
+
 bool ui_basic_view::destroy_layout()
 {
 	if (!this->layout) return false;
@@ -82,13 +104,38 @@ bool ui_basic_view::create_layout()
 		}
 	}
 
+	//FIXME: .... ?
+	evas_object_event_callback_add(layout, EVAS_CALLBACK_RESIZE,
+			[](void *data, Evas *e, Evas_Object *obj, void *event_info) -> void
+			{
+				ui_basic_view *view = static_cast<ui_basic_view *>(data);
+				Evas_Object *ctxpopup = view->get_menu();
+				if (ctxpopup && evas_object_visible_get(ctxpopup))
+				{
+					update_menu(dynamic_cast<ui_viewmgr *>(view->get_viewmgr())->get_window(), ctxpopup);
+				}
+			},
+			this);
+
+	evas_object_event_callback_add(layout, EVAS_CALLBACK_MOVE,
+			[](void *data, Evas *e, Evas_Object *obj, void *event_info) -> void
+			{
+				ui_basic_view *view = static_cast<ui_basic_view *>(data);
+				Evas_Object *ctxpopup = view->get_menu();
+				if (ctxpopup && evas_object_visible_get(ctxpopup))
+				{
+					elm_ctxpopup_dismiss(ctxpopup);
+				}
+			},
+			this);
+
 	this->layout = layout;
 
 	return true;
 }
 
 ui_basic_view::ui_basic_view(ui_controller *controller, const char *name)
-		: ui_view(controller, name), layout(NULL)
+		: ui_view(controller, name), layout(NULL), ctxpopup(NULL)
 {
 }
 
@@ -99,6 +146,7 @@ ui_basic_view::ui_basic_view(const char *name)
 
 ui_basic_view::~ui_basic_view()
 {
+	evas_object_del(this->ctxpopup);
 	destroy_layout();
 }
 
@@ -225,37 +273,78 @@ Evas_Object *ui_basic_view::set_content(Evas_Object *content, const char *title,
 	return pcontent;
 }
 
+Evas_Object* ui_basic_view::unset_menu()
+{
+	Evas_Object *menu = this->ctxpopup;
+	//FIXME: cancel callbacks
+	this->ctxpopup = NULL;
+	return menu;
+}
+
+bool ui_basic_view::set_menu(Evas_Object *menu)
+{
+	if (this->ctxpopup) evas_object_del(this->ctxpopup);
+
+	//validation!
+	if (strcmp(evas_object_type_get(menu), "elm_ctxpopup"))
+	{
+		LOGE("Menu widget is not a ctxpopup!");
+		return false;
+	}
+
+	//FIXME: rename style.
+	elm_object_style_set(menu, "more/default");
+	elm_ctxpopup_auto_hide_disabled_set(menu, EINA_TRUE);
+	evas_object_smart_callback_add(menu, "dismissed",
+			[](void *data, Evas_Object *obj, void *event_info) -> void
+			{
+				evas_object_hide(obj);
+			},
+			NULL);
+	evas_object_event_callback_add(menu, EVAS_CALLBACK_DEL,
+			[](void *data, Evas *e, Evas_Object *obj, void *event_info) -> void
+			{
+				ui_basic_view *view = static_cast<ui_basic_view *>(data);
+				view->unset_menu();
+			},
+			this);
+
+	this->ctxpopup = menu;
+
+	return true;
+}
+
 bool ui_basic_view::set_toolbar(Evas_Object *toolbar)
 {
 	Evas_Object *layout = this->get_base();
 
-	if (layout)
+	//FIXME: Keep this toolbar inside of this view then set up when layout is created after.
+	if (!layout)
 	{
-		if ((!strcmp(elm_object_style_get(toolbar), "toolbar_with_title")) &&
-		    ((elm_toolbar_shrink_mode_get(toolbar) != ELM_TOOLBAR_SHRINK_EXPAND)))
-		{
-			elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_EXPAND);
-		}
-		else if (!strcmp(elm_object_style_get(toolbar), "navigationbar"))
-		{
-			if (elm_toolbar_shrink_mode_get(toolbar) != ELM_TOOLBAR_SHRINK_SCROLL)
-				elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_SCROLL);
-			elm_toolbar_align_set(toolbar, 0.0);
-		}
-		elm_toolbar_transverse_expanded_set(toolbar, EINA_TRUE);
-
-		//FIXME: It can be deleted when the application want to handle this property.
-		//       Some of application may want to select one of toolbar item when view activated.
-		elm_toolbar_select_mode_set(toolbar, ELM_OBJECT_SELECT_MODE_ALWAYS);
-
-		elm_object_part_content_set(layout, "toolbar", toolbar);
-		if (toolbar) elm_object_signal_emit(layout, "elm,state,toolbar,show", "elm");
-		else elm_object_signal_emit(layout, "elm,state,toolbar,hide", "elm");
-
-		return true;
+		LOGE("Layout is not exist!");
+		return false;
 	}
-	LOGE("Layout is not exist!");
-	return false;
+
+	if (!strcmp(elm_object_style_get(toolbar), "navigationbar"))
+	{
+		if (elm_toolbar_shrink_mode_get(toolbar) != ELM_TOOLBAR_SHRINK_SCROLL) elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_SCROLL);
+		elm_toolbar_align_set(toolbar, 0.0);
+	}
+	else
+	{
+		elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_EXPAND);
+	}
+	elm_toolbar_transverse_expanded_set(toolbar, EINA_TRUE);
+
+	//FIXME: It can be deleted when the application want to handle this property.
+	//       Some of application may want to select one of toolbar item when view activated.
+	elm_toolbar_select_mode_set(toolbar, ELM_OBJECT_SELECT_MODE_ALWAYS);
+
+	elm_object_part_content_set(layout, "toolbar", toolbar);
+	if (toolbar) elm_object_signal_emit(layout, "elm,state,toolbar,show", "elm");
+	else elm_object_signal_emit(layout, "elm,state,toolbar,hide", "elm");
+
+	return true;
 }
 
 void ui_basic_view::unload_content()
@@ -266,8 +355,21 @@ void ui_basic_view::unload_content()
 
 void ui_basic_view::menu()
 {
-	if (!this->get_controller()) return;
-	(dynamic_cast<ui_basic_controller *>(this->get_controller()))->menu();
+	if (this->ctxpopup && evas_object_visible_get(this->ctxpopup))
+	{
+		elm_ctxpopup_dismiss(this->ctxpopup);
+		return;
+	}
+
+	if (this->get_controller())
+	{
+		(dynamic_cast<ui_basic_controller *>(this->get_controller()))->menu();
+	}
+
+	if (this->ctxpopup)
+	{
+		update_menu(dynamic_cast<ui_viewmgr *>(this->get_viewmgr())->get_window(), this->ctxpopup);
+	}
 }
 
 void ui_basic_view::set_event_block(bool block)
