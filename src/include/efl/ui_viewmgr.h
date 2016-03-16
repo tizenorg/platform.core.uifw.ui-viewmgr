@@ -20,6 +20,7 @@
 #include <Elementary.h>
 #include "../interface/ui_viewmanager_interface.h"
 #include "ui_key_listener.h"
+#include <map>
 
 namespace efl_viewmgr
 {
@@ -42,12 +43,13 @@ class ui_viewmgr: public viewmgr::ui_iface_viewmgr
 	friend class ui_view;
 
 private:
-	Evas_Object *win;                //This is acting like a base object of viewmgr.
-	Evas_Object *conform;            //Conformant for viewmgr.
-	Evas_Object *layout;             //Viewmgr's base layout.
-	ui_key_listener *key_listener;   //HW Key Handler such as "BACK" key...
-	ui_view_indicator indicator;     //Mode of indicator.
-	string transition_style;         //Current transiton effect style name
+	Evas_Object *win;                          //This is acting like a base object of viewmgr.
+	Evas_Object *conform;                      //Conformant for viewmgr.
+	Evas_Object *layout;                       //Viewmgr's base layout.
+	ui_key_listener *key_listener;             //HW Key Handler such as "BACK" key...
+	ui_view_indicator indicator;               //Mode of indicator.
+	string transition_style;                   //Current transiton effect style name
+	map<string, Evas_Object *> effect_map;     //Map for effect layouts.
 
 	Evas_Object *set_transition_layout(string transition_style);
 
@@ -64,10 +66,11 @@ private:
 	 *  @brief Create a base layout.
 	 *
 	 *  @param conform viewmgr's conformant object. this will be parent of layout object.
+	 *  @param style view's transition effect style.
 	 *
 	 *  @return @c true success or @c false not.
 	 */
-	bool create_base_layout(Evas_Object *conform);
+	bool create_base_layout(Evas_Object *conform, const char *style);
 
 	/** @brief Set the indicator mode.
 	 *
