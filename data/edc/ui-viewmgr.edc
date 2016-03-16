@@ -50,7 +50,7 @@
 #define TIZEN_VIEW_TOOLBAR_TITLE_CLIPPER_HEIGHT_INC 80
 #define TIZEN_VIEW_TOOLBAR_LIGHT_VIEW_HEIGHT_INC 86
 #define TIZEN_VIEW_TOOLBAR_TOP_DIVIDER_HEIGHT_INC 0
-#define TRANSITION_TIME 0.25
+#define TRANSITION_TIME 0.2
 
 collections {
    base_scale: 2.6;
@@ -1168,4 +1168,102 @@ collections {
          }
       }
    }
-}
+   /* Zoom Effect */
+   group { "transition/zoom";
+      parts {
+         rect { "opacity_content";
+            desc { "default";
+               rel1.relative: 0.0 0.0;
+               rel2.relative: 1.0 1.0;
+               color: 255 255 255 255;
+            }
+            desc { "appear_from";
+               rel1.relative: 0.2 0.2;
+               rel2.relative: 0.8 0.8;
+               color: 255 255 255 0;
+            }
+         }
+         rect { "opacity_pcontent";
+            desc { "default";
+               rel1.relative: 0.0 0.0;
+               rel2.relative: 1.0 1.0;
+               color: 255 255 255 255;
+            }
+            desc { "appear_from";
+               rel1.relative: 0.2 0.2;
+               rel2.relative: 0.8 0.8;
+               color: 255 255 255 0;
+            }
+            desc { "disappear_to";
+               inherit: "appear_from";
+            }
+         }
+         proxy { "content_proxy";
+            desc {
+               source: "content";
+               //FIXME: It has to added for zoom effect.
+               //       Can't use below command right now. It will be added in upstream.
+               //source_visible: 0;
+            }
+         }
+         swallow { "pcontent";
+            clip_to: opacity_pcontent;
+            desc { "default";
+               rel1.to: "opacity_pcontent";
+               rel2.to: "opacity_pcontent";
+            }
+         }
+         swallow { "content";
+            clip_to: opacity_content;
+            desc { "default";
+               rel1.to: "opacity_content";
+               rel2.to: "opacity_content";
+            }
+            desc { "hidden";
+               visible: 0;
+            }
+         }
+      }
+      programs {
+         program { "push_finished";
+            action: SIGNAL_EMIT "push,finished" "viewmgr";
+         }
+         program { "push_content";
+            action: STATE_SET "default" 0.0;
+            target: "opacity_content";
+            transition: DECELERATE TRANSITION_TIME;
+            after: "push_finished";
+         }
+         program { "push";
+            signal: "view,push";
+            source: "viewmgr";
+            script {
+               set_state(PART:"opacity_content", "appear_from", 0.0);
+               run_program(PROGRAM:"push_content");
+            }
+         }
+         program { "pop_finished"
+            action: SIGNAL_EMIT "pop,finished" "viewmgr";
+         }
+         program { "content_state_change";
+            action: STATE_SET "default" 0.0;
+            target: "content";
+            after: "pop_finished";
+         }
+         program { "pop_content";
+            action: STATE_SET "disappear_to" 0.0;
+            target: "opacity_pcontent";
+            transition: DECELERATE TRANSITION_TIME;
+            after: "content_state_change";
+         }
+         program { "pop";
+            signal: "view,pop";
+            source: "viewmgr";
+            script {
+               set_state(PART:"opacity_pcontent", "default", 0.0);
+               set_state(PART:"content", "hidden", 0.0);
+               run_program(PROGRAM:"pop_content");
+            }
+         }
+      }
+   }
