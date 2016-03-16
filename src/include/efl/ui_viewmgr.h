@@ -20,6 +20,7 @@
 #include <Elementary.h>
 #include "../interface/ui_viewmanager_interface.h"
 #include "ui_key_listener.h"
+#include <map>
 
 namespace efl_viewmgr
 {
@@ -49,6 +50,8 @@ private:
 	ui_view_indicator indicator;     //Mode of indicator.
 	string transition_style;         //Current transiton effect style name
 
+	map<string, Evas_Object *>   effect_map;
+
 	Evas_Object *set_transition_layout(string transition_style);
 
 	/**
@@ -67,7 +70,7 @@ private:
 	 *
 	 *  @return @c true success or @c false not.
 	 */
-	bool create_base_layout(Evas_Object *conform);
+	bool create_base_layout(Evas_Object *conform, const char *style);
 
 	/** @brief Set the indicator mode.
 	 *
