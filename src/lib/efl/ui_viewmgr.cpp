@@ -277,6 +277,7 @@ bool ui_viewmgr::deactivate()
 
 bool ui_viewmgr::pop_view()
 {
+	//FIXME: Should be check in parent's method?
 	if (this->get_view_count() == 1)
 	{
 		this->deactivate();
