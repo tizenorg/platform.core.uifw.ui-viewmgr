@@ -87,3 +87,23 @@ void ui_view::back()
 	}
 	dynamic_cast<ui_viewmgr *>(this->get_viewmgr())->pop_view();
 }
+
+void ui_view::set_event_block(bool block)
+{
+	if (this->get_event_block() != block)
+	{
+		ui_viewmgr *viewmgr = dynamic_cast<ui_viewmgr *>(this->get_viewmgr());
+		if (!viewmgr)
+		{
+			LOGE("Failed to get a viewmgr");
+			return;
+		}
+
+		if (block)
+			evas_object_freeze_events_set(viewmgr->conform, EINA_TRUE);
+		else
+			evas_object_freeze_events_set(viewmgr->conform, EINA_FALSE);
+
+		ui_iface_view::set_event_block(block);
+	}
+}
