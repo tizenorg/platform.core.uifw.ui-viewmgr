@@ -87,7 +87,9 @@ ui_iface_view::ui_iface_view(ui_iface_controller *controller, const char *name)
 		  indicator(UI_VIEW_INDICATOR_DEFAULT), event_block(false), removable_content(true)
 {
 	this->state = UI_VIEW_STATE_UNLOAD;
-	controller->set_view(this);
+
+	if (controller)
+		controller->set_view(this);
 }
 
 ui_iface_view::ui_iface_view(const char *name)
