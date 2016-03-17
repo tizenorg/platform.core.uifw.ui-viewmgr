@@ -84,6 +84,14 @@ protected:
 	 *  @return base layout of viewmgr.
 	 */
 	Evas_Object *get_parent();
+
+	/** @brief toggle event block.
+	 *
+	 *  @note It makes internal conformant event freeze during effect showing.
+	 *
+	 *  @param block @c true, when blocking is enabled, otherwise @c false.
+	 */
+	virtual void set_event_block(bool block);
 };
 
 }
