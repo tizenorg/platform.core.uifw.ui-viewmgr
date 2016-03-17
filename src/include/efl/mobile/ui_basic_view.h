@@ -38,6 +38,7 @@ protected:
 
 public:
 	ui_basic_view(ui_controller *controller, const char *name = NULL);
+	ui_basic_view(const char *name = NULL);
 	virtual ~ui_basic_view();
 
 	Evas_Object *set_content(Evas_Object *content, const char *title = NULL);

@@ -24,6 +24,11 @@ ui_view::ui_view(ui_controller *controller, const char *name)
 {
 }
 
+ui_view::ui_view(const char *name)
+		: ui_view(NULL, name)
+{
+}
+
 ui_view::~ui_view()
 {
 }

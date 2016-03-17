@@ -92,6 +92,11 @@ ui_basic_view::ui_basic_view(ui_controller *controller, const char *name)
 {
 }
 
+ui_basic_view::ui_basic_view(const char *name)
+		: ui_basic_view(NULL, name)
+{
+}
+
 ui_basic_view::~ui_basic_view()
 {
 	destroy_layout();

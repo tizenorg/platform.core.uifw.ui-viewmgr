@@ -46,6 +46,8 @@ class ui_view: public viewmgr::ui_iface_view
 public:
 	///Constructor.
 	ui_view(ui_controller *controller, const char *name = NULL);
+	///Constructor.
+	ui_view(const char *name = NULL);
 
 	///Destructor.
 	virtual ~ui_view();
