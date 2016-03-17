@@ -15,6 +15,7 @@
  *
  */
 #include "main.h"
+#include "page8.h"
 #include "page7.h"
 #include "page6.h"
 #include "page5.h"
