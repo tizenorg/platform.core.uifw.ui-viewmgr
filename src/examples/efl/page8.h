@@ -14,26 +14,17 @@
  *  limitations under the License.
  *
  */
-class page7: public ui_basic_controller
+
+class page8: public ui_basic_view
 {
 private:
 	appdata_s *ad;
 
-public:
-	page7(appdata_s *ad)
-		: ad(ad)
+protected:
+	virtual void load()
 	{
-		/* ui_basic_view(controller, identity name, style name of view).
-		   Later, you could get the identity name using view->get_name();
-		   you could get the style name of view as well */
-		ui_basic_view *view = new ui_basic_view(this, "page7");
-
-		//FIXME: It will be deleted or change to other way :(
-		//       We don't have any way to support it now.
-		view->set_viewmgr(ad->viewmgr);
-
 		//Create a main content.
-		Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 7<br>(Navigationbar style)",
+		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Page 8<br>(View inheritance lazy load)",
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
@@ -44,24 +35,28 @@ public:
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
 					appdata_s *ad = static_cast<appdata_s *>(data);
-					create_page8(ad);
+					create_page9(ad);
 				},
 				this->ad);
 
-		//Don't delete view's content when this view poped.
-		view->set_removable_content(false);
-		view->set_content(content, "Title with toolbar");
-		Evas_Object *toolbar = create_toolbar(view->get_base(), "navigationbar");
-		view->set_toolbar(toolbar);
-		ad->viewmgr->push_view(view);
+		this->set_content(content, "Title");
 	}
 
-	~page7()
+public:
+	page8(ui_controller *controller, const char *name, appdata_s *ad)
+		: ui_basic_view(controller, name), ad(ad)
+	{
+		ad->viewmgr->push_view(this);
+	}
+
+	~page8()
 	{
 	}
 };
 
-void create_page7(appdata_s *ad)
+void create_page8(appdata_s *ad)
 {
-	new page7(ad);
+	/* This page is case for content create in view class instead of
+	 * view create in controller class. */
+	new page8(NULL, "page8", ad);
 }
