@@ -15,6 +15,8 @@
  *
  */
 #include "main.h"
+#include "page9.h"
+#include "page8.h"
 #include "page7.h"
 #include "page6.h"
 #include "page5.h"
@@ -105,7 +107,7 @@ static void create_base_gui(appdata_s *ad)
 	//FIXME: Hide this creation.
 	ad->viewmgr = new ui_basic_viewmgr(PACKAGE);
 
-	create_page1(ad);
+	create_page6(ad);
 
 	ad->viewmgr->activate();
 }
