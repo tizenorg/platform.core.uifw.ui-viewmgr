@@ -52,7 +52,6 @@ bool ui_iface_viewmgr::disconnect_view(ui_iface_view *view)
 
 void ui_iface_viewmgr::set_event_block(ui_iface_view *view, bool block)
 {
-
 	if (!ui_iface_viewmgr::event_block) return;
 	view->set_event_block(block);
 }
@@ -149,7 +148,9 @@ ui_iface_viewmgr::push_view(ui_iface_view *view)
 	}
 
 	view->inactive();
-	this->set_event_block(view, true);
+
+	//FIXME: First view has no effect?
+	if (this->view_list.size() != 1) this->set_event_block(view, true);
 
 	return view;
 }

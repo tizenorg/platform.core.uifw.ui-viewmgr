@@ -34,6 +34,7 @@ protected:
 	virtual void load();
 	virtual void unload();
 	virtual void unload_content();
+	virtual void set_event_block(bool block);
 
 public:
 	ui_basic_view(ui_controller *controller, const char *name = NULL);

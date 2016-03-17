@@ -264,3 +264,8 @@ void ui_basic_view::menu()
 	if (!this->get_controller()) return;
 	(dynamic_cast<ui_basic_controller *>(this->get_controller()))->menu();
 }
+
+void ui_basic_view::set_event_block(bool block)
+{
+	evas_object_freeze_events_set(this->get_base(), block);
+}
