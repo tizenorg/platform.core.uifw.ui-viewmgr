@@ -93,7 +93,7 @@ protected:
 	 *
 	 *  @param block @c true, when blocking is enabled, otherwise @c false.
 	 */
-	virtual void set_event_block(bool block) {}
+	virtual void set_event_block(bool block);
 };
 
 }
