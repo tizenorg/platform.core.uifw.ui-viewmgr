@@ -83,7 +83,7 @@ void ui_iface_view::destroy()
 }
 
 ui_iface_view::ui_iface_view(ui_iface_controller *controller, const char *name)
-		: content(NULL), controller(controller), name(string(name ? name : "")), transition_style(string("")), viewmgr(NULL), state(UI_VIEW_STATE_LOAD),
+		: content(NULL), controller(controller), name(string(name ? name : "")), transition_style(string("default")), viewmgr(NULL), state(UI_VIEW_STATE_LOAD),
 		  indicator(UI_VIEW_INDICATOR_DEFAULT), event_block(false), removable_content(true)
 {
 	this->state = UI_VIEW_STATE_UNLOAD;

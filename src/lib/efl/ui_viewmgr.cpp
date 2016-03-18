@@ -22,21 +22,79 @@ using namespace viewmgr;
 //FIXME: is it correct to define here?
 #define EDJ_PATH "/usr/share/edje/ui-viewmgr/ui-viewmgr.edj"
 
+bool ui_viewmgr::create_base_layout(Evas_Object *conform, const char *style)
+{
+	char buf[128];
+	Evas_Object *layout = elm_layout_add(conform);
+	if (!layout) return false;
+
+	//FIXME: Is it C programming style? need to change?
+	snprintf(buf, sizeof(buf), "transition/%s", style);
+	//default transition layout
+	elm_layout_file_set(layout, EDJ_PATH, buf);
+	elm_object_content_set(conform, layout);
+
+	//Push Finished Event
+	elm_layout_signal_callback_add(layout, "push,finished", "viewmgr",
+			[](void *data, Evas_Object *obj, const char *emission, const char *source) -> void
+			{
+				ui_viewmgr *viewmgr = static_cast<ui_viewmgr *>(data);
+				ui_view *pview = viewmgr->get_view(viewmgr->get_view_count() - 2);
+				ui_view *view = viewmgr->get_last_view();
+				if (pview) viewmgr->push_view_finished(pview);
+				if (view) viewmgr->push_view_finished(view);
+			},
+			this);
+
+	//Pop Finished Event
+	elm_layout_signal_callback_add(layout, "pop,finished", "viewmgr",
+			[](void *data, Evas_Object *obj, const char *emission, const char *source) -> void
+			{
+				ui_viewmgr *viewmgr = static_cast<ui_viewmgr *>(data);
+				ui_view *pview = viewmgr->get_view(viewmgr->get_view_count() - 2);
+				ui_view *view = viewmgr->get_last_view();
+				if (pview) viewmgr->pop_view_finished(pview);
+				if (view) viewmgr->pop_view_finished(view);
+			},
+			this);
+
+	this->layout = layout;
+
+	return true;
+}
+
 Evas_Object *ui_viewmgr::set_transition_layout(string transition_style)
 {
+	Evas_Object *effect_layout = NULL;
+
 	elm_object_part_content_unset(this->get_base(), "pcontent");
 	elm_object_part_content_unset(this->get_base(), "content");
 
-	if (transition_style == this->transition_style) return this->layout;
+	if (transition_style.compare(this->transition_style) == 0) return this->layout;
 
-	//FIXME: 1. Find current style effect layout
-	Evas_Object *effect = this->get_base();
+	if (effect_map.size()) effect_layout = effect_map.find(transition_style)->second;
 
-	//2. Switch effect layout to base layout
-	elm_object_part_content_unset(this->get_conformant(), "elm.swallow.content");
-	elm_object_part_content_set(this->get_conformant(), "elm.swallow.content", effect);
+	//Conformant content change to current effect layout and change to hide prev layout.
+	Evas_Object *playout = elm_object_part_content_unset(this->conform, "elm.swallow.content");
+	evas_object_hide(playout);
 
-	this->layout = effect;
+	if (!effect_layout)
+	{
+		//Create and add effect_layouts in map here.
+		//FIXME: If we have to support many effects, this logic should be changed.
+		effect_map.insert(pair<string, Evas_Object *>("default", this->layout));
+
+		this->create_base_layout(this->get_conformant(), transition_style.c_str());
+
+		effect_map.insert(pair<string, Evas_Object *>(transition_style, this->layout));
+	}
+	else
+	{
+		elm_object_part_content_set(this->conform, "elm.swallow.content", effect_layout);
+
+		this->layout = effect_layout;
+	}
+
 	this->transition_style = transition_style;
 
 	return this->layout;
@@ -113,46 +171,8 @@ bool ui_viewmgr::create_conformant(Evas_Object *win)
 	return true;
 }
 
-bool ui_viewmgr::create_base_layout(Evas_Object *conform)
-{
-	Evas_Object *layout = elm_layout_add(conform);
-	if (!layout) return false;
-
-	//default transition layout
-	elm_layout_file_set(layout, EDJ_PATH, "transition/default");
-	elm_object_content_set(conform, layout);
-
-	//Push Finished Event
-	elm_layout_signal_callback_add(layout, "push,finished", "viewmgr",
-			[](void *data, Evas_Object *obj, const char *emission, const char *source) -> void
-			{
-				ui_viewmgr *viewmgr = static_cast<ui_viewmgr *>(data);
-				ui_view *pview = viewmgr->get_view(viewmgr->get_view_count() - 2);
-				ui_view *view = viewmgr->get_last_view();
-				if (pview) viewmgr->push_view_finished(pview);
-				if (view) viewmgr->push_view_finished(view);
-			},
-			this);
-
-	//Pop Finished Event
-	elm_layout_signal_callback_add(layout, "pop,finished", "viewmgr",
-			[](void *data, Evas_Object *obj, const char *emission, const char *source) -> void
-			{
-				ui_viewmgr *viewmgr = static_cast<ui_viewmgr *>(data);
-				ui_view *pview = viewmgr->get_view(viewmgr->get_view_count() - 2);
-				ui_view *view = viewmgr->get_last_view();
-				if (pview) viewmgr->pop_view_finished(pview);
-				if (view) viewmgr->pop_view_finished(view);
-			},
-			this);
-
-	this->layout = layout;
-
-	return true;
-}
-
 ui_viewmgr::ui_viewmgr(const char *pkg, ui_key_listener *key_listener)
-		: ui_iface_viewmgr(), key_listener(key_listener), transition_style("")
+		: ui_iface_viewmgr(), key_listener(key_listener), transition_style("default")
 {
 	if (!pkg)
 	{
@@ -194,7 +214,7 @@ ui_viewmgr::ui_viewmgr(const char *pkg, ui_key_listener *key_listener)
 		return;
 	}
 
-	if (!this->create_base_layout(this->conform))
+	if (!this->create_base_layout(this->conform, "default"))
 	{
 		LOGE("Failed to create a base layout (%s)", pkg);
 		return;
