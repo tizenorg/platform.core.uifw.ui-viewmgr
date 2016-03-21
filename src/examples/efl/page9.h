@@ -43,8 +43,6 @@ public:
 			},
 			this->ad);
 
-		//Don't delete view's content when this view poped.
-		this->set_removable_content(false);
 		this->set_content(content, "Title");
 		ad->viewmgr->push_view(this);
 	}

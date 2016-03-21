@@ -48,8 +48,6 @@ public:
 				},
 				this->ad);
 
-		//Don't delete view's content when this view poped.
-		view->set_removable_content(false);
 		view->set_content(content, "Title with toolbar");
 		Evas_Object *toolbar = create_toolbar(view->get_base(), "navigationbar");
 		view->set_toolbar(toolbar);

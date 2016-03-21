@@ -49,12 +49,6 @@ Evas_Object *ui_view::get_base()
 	return viewmgr->get_base();
 }
 
-void ui_view::unload_content()
-{
-	Evas_Object *pcontent = this->set_content(NULL);
-	if (pcontent) evas_object_del(pcontent);
-}
-
 Evas_Object *ui_view ::get_parent()
 {
 	ui_viewmgr *viewmgr = dynamic_cast<ui_viewmgr *>(this->get_viewmgr());

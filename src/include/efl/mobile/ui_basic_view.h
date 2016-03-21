@@ -33,7 +33,6 @@ private:
 protected:
 	virtual void load();
 	virtual void unload();
-	virtual void unload_content();
 	virtual void set_event_block(bool block);
 
 public:
