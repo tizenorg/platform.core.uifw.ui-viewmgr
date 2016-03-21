@@ -34,11 +34,6 @@ void ui_iface_view::load()
 void ui_iface_view::unload()
 {
 	this->state = UI_VIEW_STATE_UNLOAD;
-	if (this->get_removable_content())
-	{
-		this->unload_content();
-		return;
-	}
 	if (!this->content) return;
 	if (!this->controller) return;
 	this->controller->unload();
@@ -130,13 +125,6 @@ bool ui_iface_view::set_name(const char *name)
 {
 	this->name.assign(name);
 	return true;
-}
-
-void ui_iface_view::set_removable_content(bool removable)
-{
-	this->removable_content = removable;
-
-	//FIXME: If this api is called on unload state? should we remove content right now?
 }
 
 void ui_iface_view::set_indicator(ui_view_indicator indicator)

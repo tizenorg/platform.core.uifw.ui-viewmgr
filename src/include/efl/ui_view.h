@@ -73,12 +73,6 @@ public:
 	void set_indicator(ui_view_indicator indicator);
 
 protected:
-	/** @brief Unload current view's content
-	 *
-	 *  @note Make this view's content as NULL, then destroy content.
-	 */
-	virtual void unload_content();
-
 	/** @brief Get a parent object of view.
 	 *
 	 *  @note This is calling viewmgr get_base() method internally.

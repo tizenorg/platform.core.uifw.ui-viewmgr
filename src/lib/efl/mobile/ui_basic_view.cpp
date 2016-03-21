@@ -258,12 +258,6 @@ bool ui_basic_view::set_toolbar(Evas_Object *toolbar)
 	return false;
 }
 
-void ui_basic_view::unload_content()
-{
-	ui_view::set_content(NULL);
-	this->destroy_layout();
-}
-
 void ui_basic_view::menu()
 {
 	if (!this->get_controller()) return;

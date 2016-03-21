@@ -135,9 +135,6 @@ protected:
 	 */
 	virtual void destroy();
 
-	//Make this view's content as NULL, then destroy content.
-	virtual void unload_content() = 0;
-
 	/** @brief Return the state of event block.
 	 *
 	 *  @see set_event_block()
