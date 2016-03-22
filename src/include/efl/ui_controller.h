@@ -103,7 +103,19 @@ public:
 	 */
 	virtual void destroy() {}
 
+	/** @brief Back key callback.
+	 *
+	 *  @note This will be poped top view. If there is no implement in application side.
+	 *        If application override this method then return false for return value.
+	 *        view will be not poped.
+	 */
 	virtual bool back() { return true; }
+
+	/** @brief View rotated callback.
+	 *
+	 *  @note This method will be called when view rotation occurred.
+	 */
+	virtual void rotated() {}
 };
 }
 
