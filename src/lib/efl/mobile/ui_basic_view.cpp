@@ -26,7 +26,7 @@ using namespace viewmgr;
 #define MY_VIEWMGR dynamic_cast<ui_viewmgr *>(this->get_viewmgr())
 #define MY_CONTROLLER dynamic_cast<ui_basic_controller *>(this->get_controller()))
 
-static void update_menu(Evas_Object *win, Evas_Object *ctxpopup)
+static void update_menu(Elm_Win *win, Elm_Ctxpopup *ctxpopup)
 {
 	/* We convince the top widget is a window */
 	Evas_Coord w, h;
@@ -60,7 +60,7 @@ bool ui_basic_view::create_layout()
 {
 	if (this->layout) return false;
 
-	Evas_Object *layout = elm_layout_add(this->get_parent());
+	Elm_Layout *layout = elm_layout_add(this->get_parent());
 
 	if (!layout)
 	{
@@ -86,7 +86,7 @@ bool ui_basic_view::create_layout()
 	ui_viewmgr *viewmgr = MY_VIEWMGR;
 	if (viewmgr->need_soft_key())
 	{
-		Evas_Object *prev_btn = elm_button_add(layout);
+		Elm_Button *prev_btn = elm_button_add(layout);
 
 		if (!prev_btn)
 		{
@@ -111,7 +111,7 @@ bool ui_basic_view::create_layout()
 			[](void *data, Evas *e, Evas_Object *obj, void *event_info) -> void
 			{
 				ui_basic_view *view = static_cast<ui_basic_view *>(data);
-				Evas_Object *ctxpopup = view->get_menu();
+				Elm_Ctxpopup *ctxpopup = view->get_menu();
 				if (ctxpopup && evas_object_visible_get(ctxpopup))
 				{
 					update_menu(dynamic_cast<ui_viewmgr *>(view->get_viewmgr())->get_window(), ctxpopup);
@@ -123,7 +123,7 @@ bool ui_basic_view::create_layout()
 			[](void *data, Evas *e, Evas_Object *obj, void *event_info) -> void
 			{
 				ui_basic_view *view = static_cast<ui_basic_view *>(data);
-				Evas_Object *ctxpopup = view->get_menu();
+				Elm_Ctxpopup *ctxpopup = view->get_menu();
 				if (ctxpopup && evas_object_visible_get(ctxpopup))
 				{
 					elm_ctxpopup_dismiss(ctxpopup);
@@ -195,7 +195,7 @@ bool ui_basic_view::set_subtitle(const char *text)
 	return false;
 }
 
-bool ui_basic_view::set_title_left_btn(Evas_Object *title_left_btn)
+bool ui_basic_view::set_title_left_btn(Elm_Button *title_left_btn)
 {
 	if (this->layout)
 	{
@@ -212,7 +212,7 @@ bool ui_basic_view::set_title_left_btn(Evas_Object *title_left_btn)
 	return false;
 }
 
-bool ui_basic_view::set_title_right_btn(Evas_Object *title_right_btn)
+bool ui_basic_view::set_title_right_btn(Elm_Button *title_right_btn)
 {
 	if (this->layout)
 	{
@@ -255,8 +255,8 @@ bool ui_basic_view::set_title(const char *text)
 	return false;
 }
 
-Evas_Object *ui_basic_view::set_content(Evas_Object *content, const char *title, const char *subtitle, Evas_Object *title_left_btn,
-        Evas_Object *title_right_btn)
+Evas_Object *ui_basic_view::set_content(Evas_Object *content, const char *title, const char *subtitle, Elm_Button *title_left_btn,
+        Elm_Button *title_right_btn)
 {
 	Evas_Object *pcontent = this->set_content(content);
 
@@ -275,15 +275,15 @@ Evas_Object *ui_basic_view::set_content(Evas_Object *content, const char *title,
 	return pcontent;
 }
 
-Evas_Object* ui_basic_view::unset_menu()
+Elm_Ctxpopup* ui_basic_view::unset_menu()
 {
-	Evas_Object *menu = this->ctxpopup;
+	Elm_Ctxpopup *menu = this->ctxpopup;
 	//FIXME: cancel callbacks
 	this->ctxpopup = NULL;
 	return menu;
 }
 
-bool ui_basic_view::set_menu(Evas_Object *menu)
+bool ui_basic_view::set_menu(Elm_Ctxpopup *menu)
 {
 	if (this->ctxpopup) evas_object_del(this->ctxpopup);
 
@@ -316,9 +316,9 @@ bool ui_basic_view::set_menu(Evas_Object *menu)
 	return true;
 }
 
-bool ui_basic_view::set_toolbar(Evas_Object *toolbar)
+bool ui_basic_view::set_toolbar(Elm_Toolbar *toolbar)
 {
-	Evas_Object *layout = this->get_base();
+	Elm_Layout *layout = this->get_base();
 
 	//FIXME: Keep this toolbar inside of this view then set up when layout is created after.
 	if (!layout)

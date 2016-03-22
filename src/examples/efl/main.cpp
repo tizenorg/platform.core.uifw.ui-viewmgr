@@ -25,10 +25,10 @@
 #include "page2.h"
 #include "page1.h"
 
-Evas_Object*
+Elm_Toolbar*
 create_toolbar(Evas_Object *parent, const char *style)
 {
-	Evas_Object *toolbar;
+	Elm_Toolbar *toolbar;
 
 	toolbar = elm_toolbar_add(parent);
 
@@ -50,7 +50,11 @@ create_toolbar(Evas_Object *parent, const char *style)
 Evas_Object*
 create_content(Evas_Object *parent, const char *text, Evas_Smart_Cb prev_btn_clicked_cb, Evas_Smart_Cb next_btn_clicked_cb, appdata_s *ad)
 {
-	Evas_Object *grid, *box, *layout, *scroller, *btn, *button_layout;
+	Elm_Grid *grid;
+	Elm_Box *box;
+	Elm_Layout *layout;
+	Elm_Scroller *scroller;
+	Elm_Button *btn;
 
 	/* Scroller */
 	scroller = elm_scroller_add(parent);

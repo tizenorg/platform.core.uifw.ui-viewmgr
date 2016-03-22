@@ -39,7 +39,7 @@ ui_view::~ui_view()
 Evas_Object *ui_view::set_content(Evas_Object *content)
 {
 	T pcontent = ui_iface_view::set_content(CONVERT_TO_T(content));
-	return static_cast<Evas_Object *>(pcontent);
+	return CONVERT_TO_EO(pcontent);
 }
 
 Evas_Object *ui_view::get_base()
