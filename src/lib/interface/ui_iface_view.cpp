@@ -23,15 +23,15 @@ void ui_iface_view::set_event_block(bool block)
 	this->event_block = block;
 }
 
-void ui_iface_view::load()
+void ui_iface_view::on_load()
 {
 	this->state = UI_VIEW_STATE_LOAD;
 	if (this->content) return;
 	if (!this->controller) return;
-	this->controller->load();
+	this->controller->on_load();
 }
 
-void ui_iface_view::unload()
+void ui_iface_view::on_unload()
 {
 	this->state = UI_VIEW_STATE_UNLOAD;
 	if (this->get_removable_content())
@@ -41,45 +41,45 @@ void ui_iface_view::unload()
 	}
 	if (!this->content) return;
 	if (!this->controller) return;
-	this->controller->unload();
+	this->controller->on_unload();
 }
 
-void ui_iface_view::active()
+void ui_iface_view::on_active()
 {
 	this->state = UI_VIEW_STATE_ACTIVE;
 	if (!this->controller) return;
-	this->controller->active();
+	this->controller->on_active();
 }
 
-void ui_iface_view::inactive()
+void ui_iface_view::on_inactive()
 {
 	this->state = UI_VIEW_STATE_INACTIVE;
 	if (!this->controller) return;
-	this->controller->inactive();
+	this->controller->on_inactive();
 }
 
-void ui_iface_view::pause()
+void ui_iface_view::on_pause()
 {
 	this->state = UI_VIEW_STATE_PAUSE;
 	if (!this->content) return;
 	if (state != UI_VIEW_STATE_ACTIVE) return;
 	if (!this->controller) return;
-	this->controller->pause();
+	this->controller->on_pause();
 }
 
-void ui_iface_view::resume()
+void ui_iface_view::on_resume()
 {
 	this->state = UI_VIEW_STATE_ACTIVE;
 	if (state != UI_VIEW_STATE_PAUSE) return;
 	if (!this->content) return;
 	if (!this->controller) return;
-	this->controller->resume();
+	this->controller->on_resume();
 }
 
-void ui_iface_view::destroy()
+void ui_iface_view::on_destroy()
 {
 	if (!this->controller) return;
-	this->controller->destroy();
+	this->controller->on_destroy();
 }
 
 ui_iface_view::ui_iface_view(ui_iface_controller *controller, const char *name)

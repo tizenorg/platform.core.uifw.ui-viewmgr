@@ -21,7 +21,7 @@ private:
 	appdata_s *ad;
 
 protected:
-	virtual void load()
+	virtual void on_load()
 	{
 		//Create a main content.
 		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Page 8<br>(View inheritance lazy load)",

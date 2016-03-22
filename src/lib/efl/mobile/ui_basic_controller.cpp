@@ -23,7 +23,7 @@ ui_basic_controller::~ui_basic_controller()
 {
 }
 
-bool ui_basic_controller::menu()
+bool ui_basic_controller::on_menu()
 {
 	return true;
 }

@@ -81,11 +81,11 @@ void ui_view::set_indicator(ui_view_indicator indicator)
 	viewmgr->set_indicator(indicator);
 }
 
-void ui_view::back()
+void ui_view::on_back()
 {
 	if (this->get_controller())
 	{
-		if (!dynamic_cast<ui_controller *>(this->get_controller())->back())
+		if (!dynamic_cast<ui_controller *>(this->get_controller())->on_back())
 		{
 			return;
 		}
@@ -93,27 +93,27 @@ void ui_view::back()
 	dynamic_cast<ui_viewmgr *>(this->get_viewmgr())->pop_view();
 }
 
-void ui_view::rotate(int degree)
+void ui_view::on_rotate(int degree)
 {
 	if (this->get_controller())
 	{
-		dynamic_cast<ui_controller *>(this->get_controller())->rotate(degree);
+		dynamic_cast<ui_controller *>(this->get_controller())->on_rotate(degree);
 	}
 }
 
-void ui_view::portrait()
+void ui_view::on_portrait()
 {
 	if (this->get_controller())
 	{
-		dynamic_cast<ui_controller *>(this->get_controller())->portrait();
+		dynamic_cast<ui_controller *>(this->get_controller())->on_portrait();
 	}
 }
 
-void ui_view::landscape()
+void ui_view::on_landscape()
 {
 	if (this->get_controller())
 	{
-		dynamic_cast<ui_controller *>(this->get_controller())->landscape();
+		dynamic_cast<ui_controller *>(this->get_controller())->on_landscape();
 	}
 }
 void ui_view::set_event_block(bool block)

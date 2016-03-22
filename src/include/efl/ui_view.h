@@ -89,19 +89,19 @@ public:
 
 	/** @brief This is for calling controller's back method.
 	 */
-	virtual void back();
+	virtual void on_back();
 
 	/** @brief This is for calling controller's rotate method.
 	 */
-	virtual void rotate(int degree);
+	virtual void on_rotate(int degree);
 
 	/** @brief This is for calling controller's portrait method.
 	 */
-	virtual void portrait();
+	virtual void on_portrait();
 
 	/** @brief This is for calling controller's landscape method.
 	 */
-	virtual void landscape();
+	virtual void on_landscape();
 	/** @brief Set the indicator mode.
 	 *
 	 *  @param indicator The mode to set, one of #ui_view_indicator.

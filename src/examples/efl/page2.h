@@ -32,7 +32,7 @@ public:
 	{
 	}
 
-	void load()
+	void on_load()
 	{
 		//Initialize contents.
 		ui_basic_view *view = dynamic_cast<ui_basic_view *>(this->get_view());

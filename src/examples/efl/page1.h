@@ -39,7 +39,7 @@ public:
 	{
 	}
 
-	void load()
+	void on_load()
 	{
 		//Initialize contents.
 
@@ -67,7 +67,7 @@ public:
 		view->set_content(content, "Title");
 	}
 
-	bool menu()
+	bool on_menu()
 	{
 		ui_basic_view *view = dynamic_cast<ui_basic_view *>(this->get_view());
 
@@ -87,17 +87,17 @@ public:
 		return true;
 	}
 
-	void rotate(int degree)
+	void on_rotate(int degree)
 	{
 		LOGE("Current view's degree is %d\n", degree);
 	}
 
-	void portrait()
+	void on_portrait()
 	{
 		LOGE("View is on portrait mode\n");
 	}
 
-	void landscape()
+	void on_landscape()
 	{
 		LOGE("View is on landscape mode\n");
 	}

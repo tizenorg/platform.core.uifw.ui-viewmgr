@@ -42,7 +42,7 @@ static void event_proc(ui_key_listener *key_listener, Evas_Event_Key_Down *ev)
 
 	if (strcmp(ev->keyname, KEY_BACK) && strcmp(ev->keyname, KEY_BACK2)) return;
 
-	view->back();
+	view->on_back();
 }
 
 bool ui_key_listener::term()

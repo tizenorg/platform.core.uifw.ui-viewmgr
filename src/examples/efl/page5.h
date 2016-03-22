@@ -33,7 +33,7 @@ public:
 	{
 	}
 
-	void load()
+	void on_load()
 	{
 		//Initialize contents.
 

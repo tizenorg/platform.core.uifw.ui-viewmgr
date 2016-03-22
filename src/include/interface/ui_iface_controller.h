@@ -71,7 +71,7 @@ public:
 	 *  @note Now, this view is moving onto the screen. Get ready for this view. If this view content is alive, load callback won't be called.
 	 *        In the most cases, this callback will be triggered with this step load -> inactive -> active.
 	 */
-	virtual void load() = 0;
+	virtual void on_load() = 0;
 
 	/** @brief unload callback.
 	 *
@@ -80,7 +80,7 @@ public:
 	 *        If the view content is not alive, the unload won't be called.
 	 *        In the most cases, this callback will be triggered with this step. inactive -> unload -> destroy
 	 */
-	virtual void unload() = 0;
+	virtual void on_unload() = 0;
 
 	/** @brief active callback.
 	 *
@@ -88,7 +88,7 @@ public:
 	 *        From whatever the state, if the view is on the screen, the active callback will be called.
 	 *        In the most cases, this callback will be triggered with this step. load -> inactive -> active
 	 */
-	virtual void active() = 0;
+	virtual void on_active() = 0;
 
 	/** @brief inactive callback.
 	 *
@@ -97,7 +97,7 @@ public:
 	 *        In the most cases, when view is going to be popped or destroyed or pushed one more depth, the inactive state will be triggered.
 	 *        Some UI controls such as a center popup or a menu popup blocks the view, this view may be inactive but still visible in someway (with transparency)
 	 */
-	virtual void inactive() = 0;
+	virtual void on_inactive() = 0;
 
 	/** @brief pause callback.
 	 *
@@ -105,7 +105,7 @@ public:
 	 *        When Window turns to deactivate. (@see ui_viewmgr_base :: deactivate()).
 	 *        If the view were inactive or unload state, the pause won't be called.
 	 */
-	virtual void pause() = 0;
+	virtual void on_pause() = 0;
 
 	/** @brief resume callback.
 	 *
@@ -113,13 +113,13 @@ public:
 	 *        When the system allows the application turns to activate.
 	 *        When the Window turns to activate. (@see ui_viewmgr_base :: activate())
 	 */
-	virtual void resume() = 0;
+	virtual void on_resume() = 0;
 
 	/** @brief destroy callback.
 	 *
 	 *  @note When this view is on destroying by popping or deleting.
 	 */
-	virtual void destroy() = 0;
+	virtual void on_destroy() = 0;
 
 	/** @brief Back key callback.
 	 *
@@ -127,7 +127,7 @@ public:
 	 *        that viewmgr is requested to poo the current view.
 	 *        If you return false in the overriding, then popping will be stopped.
 	 */
-	virtual bool back() = 0;
+	virtual bool on_back() = 0;
 
 	/** @brief View rotate callback.
 	 *
@@ -135,19 +135,19 @@ public:
 	 *
 	 *  @note This method will be called when view rotation occurred.
 	 */
-	virtual void rotate(int degree) = 0;
+	virtual void on_rotate(int degree) = 0;
 
 	/** @brief Portrait callback.
 	 *
 	 *  @note When current view is on portrait mode.
 	 */
-	virtual void portrait() = 0;
+	virtual void on_portrait() = 0;
 
 	/** @brief Landscape callback.
 	 *
 	 *  @note When current view is on landscape mode.
 	 */
-	virtual void landscape() = 0;
+	virtual void on_landscape() = 0;
 };
 
 }

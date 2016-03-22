@@ -85,7 +85,7 @@ protected:
 	 *
 	 *  @see ui_iface_controller for this state in detail.
 	 */
-	virtual void load();
+	virtual void on_load();
 
 	/** @brief view unload state.
 	 *
@@ -93,7 +93,7 @@ protected:
 	 *
 	 *  @see ui_iface_controller for this state in detail.
 	 */
-	virtual void unload();
+	virtual void on_unload();
 
 	/** @brief view active state.
 	 *
@@ -101,7 +101,7 @@ protected:
 	 *
 	 *  @see ui_iface_controller for this state in detail.
 	 */
-	virtual void active();
+	virtual void on_active();
 
 	/** @brief view inactive state.
 	 *
@@ -109,7 +109,7 @@ protected:
 	 *
 	 *  @see ui_iface_controller for this state in detail.
 	 */
-	virtual void inactive();
+	virtual void on_inactive();
 
 	/** @brief view pause state.
 	 *
@@ -117,7 +117,7 @@ protected:
 	 *
 	 *  @see ui_iface_controller for this state in detail.
 	 */
-	virtual void pause();
+	virtual void on_pause();
 
 	/** @brief view resume state.
 	 *
@@ -125,7 +125,7 @@ protected:
 	 *
 	 *  @see ui_iface_controller for this state in detail.
 	 */
-	virtual void resume();
+	virtual void on_resume();
 
 	/** @brief view destroy state.
 	 *
@@ -133,7 +133,7 @@ protected:
 	 *
 	 *  @see ui_iface_controller for this state in detail.
 	 */
-	virtual void destroy();
+	virtual void on_destroy();
 
 	//Make this view's content as NULL, then destroy content.
 	virtual void unload_content() = 0;

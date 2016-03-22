@@ -203,11 +203,11 @@ ui_viewmgr::ui_viewmgr(const char *pkg, ui_key_listener *key_listener)
 
 				ui_viewmgr *viewmgr = static_cast<ui_viewmgr *>(data);
 				ui_view *view = viewmgr->get_last_view();
-				view->rotate(rot);
+				view->on_rotate(rot);
 
 				//FIXME: Change this configurable?
-				if (rot == 0 || rot == 180) view->portrait();
-				else view->landscape();
+				if (rot == 0 || rot == 180) view->on_portrait();
+				else view->on_landscape();
 			}
 			, this);
 
@@ -263,7 +263,7 @@ bool ui_viewmgr::activate()
 
 	//FIXME: Necessary??
 	ui_view *view = this->get_last_view();
-	view->active();
+	view->on_active();
 
 	evas_object_show(this->win);
 
@@ -278,7 +278,7 @@ bool ui_viewmgr::deactivate()
 	if (true)
 	{
 		ui_view *view = this->get_last_view();
-		if (view) view->inactive();
+		if (view) view->on_inactive();
 		evas_object_lower(this->win);
 	}
 	else

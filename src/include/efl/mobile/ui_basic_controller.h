@@ -25,7 +25,7 @@ class ui_basic_controller: public ui_controller
 {
 public:
 	virtual ~ui_basic_controller();
-	virtual bool menu();
+	virtual bool on_menu();
 };
 }
 

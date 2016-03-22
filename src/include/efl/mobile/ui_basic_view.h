@@ -32,8 +32,8 @@ private:
 	bool destroy_layout();
 
 protected:
-	virtual void load();
-	virtual void unload();
+	virtual void on_load();
+	virtual void on_unload();
 	virtual void unload_content();
 	virtual void set_event_block(bool block);
 
@@ -53,7 +53,7 @@ public:
 	bool set_menu(Evas_Object *menu);
 	Evas_Object * unset_menu();
 
-	virtual void menu();
+	virtual void on_menu();
 
 	virtual Evas_Object *get_base()
 	{

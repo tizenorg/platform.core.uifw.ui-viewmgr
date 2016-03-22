@@ -30,7 +30,7 @@ ui_basic_key_listener::ui_basic_key_listener(ui_viewmgr *viewmgr)
 void ui_basic_key_listener::extend_event_proc(ui_view *view, Evas_Event_Key_Down *ev)
 {
 	if (strcmp(ev->keyname, KEY_MENU) && strcmp(ev->keyname, KEY_MENU2)) return;
-	dynamic_cast<ui_basic_view *>(view)->menu();
+	dynamic_cast<ui_basic_view *>(view)->on_menu();
 }
 
 bool ui_basic_key_listener::init()

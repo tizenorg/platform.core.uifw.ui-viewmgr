@@ -150,15 +150,15 @@ ui_basic_view::~ui_basic_view()
 	destroy_layout();
 }
 
-void ui_basic_view::load()
+void ui_basic_view::on_load()
 {
 	if (!this->layout) this->create_layout();
-	ui_view::load();
+	ui_view::on_load();
 }
 
-void ui_basic_view::unload()
+void ui_basic_view::on_unload()
 {
-	ui_view::unload();
+	ui_view::on_unload();
 }
 
 Evas_Object *
@@ -353,7 +353,7 @@ void ui_basic_view::unload_content()
 	this->destroy_layout();
 }
 
-void ui_basic_view::menu()
+void ui_basic_view::on_menu()
 {
 	if (this->ctxpopup && evas_object_visible_get(this->ctxpopup))
 	{
@@ -363,7 +363,7 @@ void ui_basic_view::menu()
 
 	if (this->get_controller())
 	{
-		(dynamic_cast<ui_basic_controller *>(this->get_controller()))->menu();
+		(dynamic_cast<ui_basic_controller *>(this->get_controller()))->on_menu();
 	}
 
 	if (this->ctxpopup)
