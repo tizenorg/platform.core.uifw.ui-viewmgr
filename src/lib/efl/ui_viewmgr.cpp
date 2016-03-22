@@ -171,8 +171,22 @@ bool ui_viewmgr::create_conformant(Evas_Object *win)
 	return true;
 }
 
+static void rotation_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	int rot = elm_win_rotation_get(obj);
+
+	ui_viewmgr *viewmgr = static_cast<ui_viewmgr *>(data);
+	ui_view *view = viewmgr->get_last_view();
+	view->rotated(rot);
+
+	if (rot == 0 || rot == 180) view->portrait();
+	else view->landscape();
+
+	viewmgr->set_degree(rot);
+}
+
 ui_viewmgr::ui_viewmgr(const char *pkg, ui_key_listener *key_listener)
-		: ui_iface_viewmgr(), key_listener(key_listener), transition_style("default")
+		: ui_iface_viewmgr(), key_listener(key_listener), transition_style("default"), degree(0)
 {
 	if (!pkg)
 	{
@@ -188,6 +202,7 @@ ui_viewmgr::ui_viewmgr(const char *pkg, ui_key_listener *key_listener)
 		return;
 	}
 
+	//FIXME: Make method for set available rotation.
 	//Set window rotation
 	if (elm_win_wm_rotation_supported_get(this->win))
 	{
@@ -195,6 +210,7 @@ ui_viewmgr::ui_viewmgr(const char *pkg, ui_key_listener *key_listener)
 		{ 0, 90, 180, 270 };
 		elm_win_wm_rotation_available_rotations_set(this->win, (const int *) (&rots), 4);
 	}
+	evas_object_smart_callback_add(this->win, "wm,rotation,changed", rotation_cb, this);
 
 	//Window is requested to delete.
 	evas_object_smart_callback_add(this->win, "delete,request",

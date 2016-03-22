@@ -61,6 +61,21 @@ public:
 		LOGE("Menu!");
 		return true;
 	}
+
+	void rotated(int degree)
+	{
+		LOGE("Current view's degree is %d\n", degree);
+	}
+
+	void portrait()
+	{
+		LOGE("View is on portrait mode\n");
+	}
+
+	void landscape()
+	{
+		LOGE("View is on landscape mode\n");
+	}
 };
 
 void create_page1(appdata_s *ad)
