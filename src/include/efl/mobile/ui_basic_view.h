@@ -49,9 +49,9 @@ public:
 	bool set_title_left_btn(Evas_Object *title_left_btn);
 	bool set_title_right_btn(Evas_Object *title_right_btn);
 	bool set_title(const char *text);
-	bool set_toolbar(Evas_Object *toolbar);
-	bool set_menu(Evas_Object *menu);
-	Evas_Object * unset_menu();
+	bool set_toolbar(Elm_Toolbar *toolbar);
+	bool set_menu(Elm_Ctxpopup *menu);
+	Elm_Ctxpopup * unset_menu();
 
 	virtual void on_menu();
 
