@@ -22,10 +22,10 @@ using namespace viewmgr;
 //FIXME: is it correct to define here?
 #define EDJ_PATH "/usr/share/edje/ui-viewmgr/ui-viewmgr.edj"
 
-bool ui_viewmgr::create_base_layout(Evas_Object *conform, const char *style)
+bool ui_viewmgr::create_base_layout(Elm_Conformant *conform, const char *style)
 {
 	char buf[128];
-	Evas_Object *layout = elm_layout_add(conform);
+	Elm_Layout *layout = elm_layout_add(conform);
 	if (!layout) return false;
 
 	//FIXME: Is it C programming style? need to change?
@@ -63,9 +63,9 @@ bool ui_viewmgr::create_base_layout(Evas_Object *conform, const char *style)
 	return true;
 }
 
-Evas_Object *ui_viewmgr::set_transition_layout(string transition_style)
+Elm_Layout *ui_viewmgr::set_transition_layout(string transition_style)
 {
-	Evas_Object *effect_layout = NULL;
+	Elm_Layout *effect_layout = NULL;
 
 	elm_object_part_content_unset(this->get_base(), "pcontent");
 	elm_object_part_content_unset(this->get_base(), "content");
@@ -75,18 +75,16 @@ Evas_Object *ui_viewmgr::set_transition_layout(string transition_style)
 	if (effect_map.size()) effect_layout = effect_map.find(transition_style)->second;
 
 	//Conformant content change to current effect layout and change to hide prev layout.
-	Evas_Object *playout = elm_object_part_content_unset(this->conform, "elm.swallow.content");
+	Elm_Layout *playout = elm_object_part_content_unset(this->conform, "elm.swallow.content");
 	evas_object_hide(playout);
 
 	if (!effect_layout)
 	{
 		//Create and add effect_layouts in map here.
 		//FIXME: If we have to support many effects, this logic should be changed.
-		effect_map.insert(pair<string, Evas_Object *>("default", this->layout));
-
+		effect_map.insert(pair<string, Elm_Layout *>("default", this->layout));
 		this->create_base_layout(this->get_conformant(), transition_style.c_str());
-
-		effect_map.insert(pair<string, Evas_Object *>(transition_style, this->layout));
+		effect_map.insert(pair<string, Elm_Layout *>(transition_style, this->layout));
 	}
 	else
 	{
@@ -129,8 +127,8 @@ bool ui_viewmgr::set_indicator(ui_view_indicator indicator)
 	if (this->indicator == indicator) return false;
 	this->indicator = indicator;
 
-	Evas_Object *window = this->get_window();
-	Evas_Object *conform = this->get_conformant();
+	Elm_Win *window = this->get_window();
+	Elm_Conformant *conform = this->get_conformant();
 
 	switch (indicator)
 	{
@@ -156,9 +154,9 @@ bool ui_viewmgr::set_indicator(ui_view_indicator indicator)
 	return true;
 }
 
-bool ui_viewmgr::create_conformant(Evas_Object *win)
+bool ui_viewmgr::create_conformant(Elm_Win *win)
 {
-	Evas_Object *conform = elm_conformant_add(win);
+	Elm_Conformant *conform = elm_conformant_add(win);
 	if (!conform) return false;
 
 	evas_object_size_hint_weight_set(conform, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
@@ -316,7 +314,7 @@ bool ui_viewmgr::pop_view()
 	}
 
 	//Choose an effect layout.
-	Evas_Object *effect = this->set_transition_layout(view->get_transition_style());
+	Elm_Layout *effect = this->set_transition_layout(view->get_transition_style());
 	if (!effect) {
 		LOGE("invalid effect transition style?! = %s", view->get_transition_style());
 		this->pop_view_finished(pview);
@@ -363,7 +361,7 @@ ui_view * ui_viewmgr::push_view(ui_view *view)
 	}
 
 	//Choose an effect layout.
-	Evas_Object *effect = this->set_transition_layout(view->get_transition_style());
+	Elm_Layout *effect = this->set_transition_layout(view->get_transition_style());
 	if (!effect) {
 		LOGE("invalid effect transition style?! = %s", view->get_transition_style());
 		this->active_top_view();

@@ -25,8 +25,8 @@ namespace efl_viewmgr
 class ui_basic_view: public ui_view
 {
 private:
-	Evas_Object *layout; 	  		 //Base layout for view
-	Evas_Object *ctxpopup; 	  		 //Menu Widget
+	Elm_Layout *layout;                //Base layout for view
+	Elm_Ctxpopup *ctxpopup;            //Menu Widget
 
 	bool create_layout();
 	bool destroy_layout();
@@ -43,15 +43,15 @@ public:
 	virtual ~ui_basic_view();
 
 	Evas_Object *set_content(Evas_Object *content, const char *title = NULL);
-	Evas_Object *set_content(Evas_Object *content, const char *title, const char *subtitle, Evas_Object *title_left_btn, Evas_Object *title_right_btn);
+	Evas_Object *set_content(Evas_Object *content, const char *title, const char *subtitle, Elm_Button *title_left_btn, Elm_Button *title_right_btn);
 	bool set_title_badge(const char *text);
 	bool set_subtitle(const char *text);
-	bool set_title_left_btn(Evas_Object *title_left_btn);
-	bool set_title_right_btn(Evas_Object *title_right_btn);
+	bool set_title_left_btn(Elm_Button *title_left_btn);
+	bool set_title_right_btn(Elm_Button *title_right_btn);
 	bool set_title(const char *text);
-	bool set_toolbar(Evas_Object *toolbar);
-	bool set_menu(Evas_Object *menu);
-	Evas_Object * unset_menu();
+	bool set_toolbar(Elm_Toolbar *toolbar);
+	bool set_menu(Elm_Ctxpopup *menu);
+	Elm_Ctxpopup * unset_menu();
 
 	virtual void on_menu();
 
@@ -61,7 +61,7 @@ public:
 		return this->layout;
 	}
 
-	Evas_Object *get_menu()
+	Elm_Ctxpopup *get_menu()
 	{
 		return this->ctxpopup;
 	}

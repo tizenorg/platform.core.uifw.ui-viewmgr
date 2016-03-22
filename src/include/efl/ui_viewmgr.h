@@ -22,6 +22,12 @@
 #include "ui_key_listener.h"
 #include <map>
 
+
+//FIXME: ??
+#ifndef Elm_Conformant
+#define Elm_Conformant Evas_Object
+#endif
+
 namespace efl_viewmgr
 {
 
@@ -43,15 +49,15 @@ class ui_viewmgr: public viewmgr::ui_iface_viewmgr
 	friend class ui_view;
 
 private:
-	Evas_Object *win;                          //This is acting like a base object of viewmgr.
-	Evas_Object *conform;                      //Conformant for viewmgr.
-	Evas_Object *layout;                       //Viewmgr's base layout.
+	Elm_Win *win;             		           //This is acting like a base object of viewmgr.
+	Elm_Conformant *conform;                   //Conformant for viewmgr.
+	Elm_Layout *layout;                        //Viewmgr's base layout.
 	ui_key_listener *key_listener;             //HW Key Handler such as "BACK" key...
 	ui_view_indicator indicator;               //Mode of indicator.
 	string transition_style;                   //Current transiton effect style name
-	map<string, Evas_Object *> effect_map;     //Map for effect layouts.
+	map<string, Elm_Layout *> effect_map;      //Map for effect layouts.
 
-	Evas_Object *set_transition_layout(string transition_style);
+	Elm_Layout *set_transition_layout(string transition_style);
 
 	/**
 	 *  @brief Create a conformant.
@@ -60,7 +66,7 @@ private:
 	 *
 	 *  @return @c true success or @c false not.
 	 */
-	bool create_conformant(Evas_Object *win);
+	bool create_conformant(Elm_Win *win);
 
 	/**
 	 *  @brief Create a base layout.
@@ -70,7 +76,7 @@ private:
 	 *
 	 *  @return @c true success or @c false not.
 	 */
-	bool create_base_layout(Evas_Object *conform, const char *style);
+	bool create_base_layout(Elm_Conformant *conform, const char *style);
 
 	/** @brief Set the indicator mode.
 	 *
@@ -160,14 +166,14 @@ public:
 
 	/** @brief Get a window object of viewmgr.
 	 */
-	Evas_Object *get_window()
+	Elm_Win *get_window()
 	{
 		return this->win;
 	}
 
 	/** @brief Get a conformant object of viewmgr.
 	 */
-	Evas_Object *get_conformant()
+	Elm_Conformant *get_conformant()
 	{
 		return this->conform;
 	}

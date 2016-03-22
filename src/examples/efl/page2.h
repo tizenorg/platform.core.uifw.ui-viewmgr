@@ -54,11 +54,11 @@ public:
 		        this->ad);
 
 		//Title left button
-		Evas_Object *left_title_btn = elm_button_add(view->get_base());
+		Elm_Button *left_title_btn = elm_button_add(view->get_base());
 		elm_object_text_set(left_title_btn, "Cancel");
 
 		//Title right button
-		Evas_Object *right_title_btn = elm_button_add(view->get_base());
+		Elm_Button *right_title_btn = elm_button_add(view->get_base());
 		elm_object_text_set(right_title_btn, "Done");
 
 		//Arguments: content, title, subtitle, title left button, title right button

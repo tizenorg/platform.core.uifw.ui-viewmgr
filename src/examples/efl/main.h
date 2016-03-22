@@ -40,4 +40,4 @@ typedef struct appdata {
 } appdata_s;
 
 Evas_Object *create_content(Evas_Object *parent, const char *text, Evas_Smart_Cb prev_btn_clicked_cb, Evas_Smart_Cb next_btn_clicked_cb, appdata_s *ad);
-Evas_Object *create_toolbar(Evas_Object *parent, const char *style);
+Elm_Toolbar *create_toolbar(Evas_Object *parent, const char *style);
