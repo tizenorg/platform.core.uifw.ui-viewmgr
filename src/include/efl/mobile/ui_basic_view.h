@@ -50,6 +50,11 @@ public:
 	bool set_title(const char *text);
 	bool set_toolbar(Evas_Object *toolbar);
 
+	Evas_Object *unset_content();
+	Evas_Object *unset_title_left_btn();
+	Evas_Object *unset_title_right_btn();
+	Evas_Object *unset_toolbar();
+
 	virtual void menu();
 
 	virtual Evas_Object *get_base()

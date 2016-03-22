@@ -227,9 +227,7 @@ Evas_Object *ui_basic_view::set_content(Evas_Object *content, const char *title,
 
 bool ui_basic_view::set_toolbar(Evas_Object *toolbar)
 {
-	Evas_Object *layout = this->get_base();
-
-	if (layout)
+	if (this->layout)
 	{
 		if ((!strcmp(elm_object_style_get(toolbar), "toolbar_with_title")) &&
 		    ((elm_toolbar_shrink_mode_get(toolbar) != ELM_TOOLBAR_SHRINK_EXPAND)))
@@ -248,9 +246,9 @@ bool ui_basic_view::set_toolbar(Evas_Object *toolbar)
 		//       Some of application may want to select one of toolbar item when view activated.
 		elm_toolbar_select_mode_set(toolbar, ELM_OBJECT_SELECT_MODE_ALWAYS);
 
-		elm_object_part_content_set(layout, "toolbar", toolbar);
-		if (toolbar) elm_object_signal_emit(layout, "elm,state,toolbar,show", "elm");
-		else elm_object_signal_emit(layout, "elm,state,toolbar,hide", "elm");
+		elm_object_part_content_set(this->layout, "toolbar", toolbar);
+		if (toolbar) elm_object_signal_emit(this->layout, "elm,state,toolbar,show", "elm");
+		else elm_object_signal_emit(this->layout, "elm,state,toolbar,hide", "elm");
 
 		return true;
 	}
@@ -274,4 +272,33 @@ void ui_basic_view::set_event_block(bool block)
 {
 	ui_iface_view::set_event_block(block);
 	evas_object_freeze_events_set(this->get_base(), block);
+}
+
+Evas_Object *ui_basic_view::unset_content()
+{
+	if (this->layout)
+		return elm_object_part_content_unset(this->layout, "elm.swallow.content");
+
+	return NULL;
+}
+Evas_Object *ui_basic_view::unset_title_left_btn()
+{
+	if (this->layout)
+		return elm_object_part_content_unset(this->layout, "title_left_btn");
+
+	return NULL;
+}
+Evas_Object *ui_basic_view::unset_title_right_btn()
+{
+	if (this->layout)
+		return elm_object_part_content_unset(this->layout, "toolbar");
+
+	return NULL;
+}
+Evas_Object *ui_basic_view::unset_toolbar()
+{
+	if (this->layout)
+		return elm_object_part_content_unset(this->layout, "title_right_btn");
+
+	return NULL;
 }
