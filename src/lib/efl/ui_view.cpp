@@ -19,6 +19,9 @@
 using namespace efl_viewmgr;
 using namespace viewmgr;
 
+#define MY_CONTROLLER dynamic_cast<ui_controller *>(this->get_controller())
+#define MY_VIEWMGR dynamic_cast<ui_viewmgr *>(this->get_viewmgr())
+
 ui_view::ui_view(ui_controller *controller, const char *name)
 		: ui_iface_view(controller, name)
 {
@@ -41,7 +44,7 @@ Evas_Object *ui_view::set_content(Evas_Object *content)
 
 Evas_Object *ui_view::get_base()
 {
-	ui_viewmgr *viewmgr = dynamic_cast<ui_viewmgr *>(ui_iface_view::get_viewmgr());
+	ui_viewmgr *viewmgr = MY_VIEWMGR;
 	if (!viewmgr)
 	{
 		return NULL;
@@ -57,7 +60,7 @@ void ui_view::unload_content()
 
 Evas_Object *ui_view ::get_parent()
 {
-	ui_viewmgr *viewmgr = dynamic_cast<ui_viewmgr *>(this->get_viewmgr());
+	ui_viewmgr *viewmgr = MY_VIEWMGR;
 	if (!viewmgr)
 	{
 		LOGE("Failed to get a viewmgr");
@@ -72,7 +75,7 @@ void ui_view::set_indicator(ui_view_indicator indicator)
 
 	ui_iface_view::set_indicator(indicator);
 
-	ui_viewmgr *viewmgr = dynamic_cast<ui_viewmgr *>(this->get_viewmgr());
+	ui_viewmgr *viewmgr = MY_VIEWMGR;
 
 	if (!viewmgr->is_activated()) return;
 
@@ -85,19 +88,19 @@ void ui_view::on_back()
 {
 	if (this->get_controller())
 	{
-		if (!dynamic_cast<ui_controller *>(this->get_controller())->on_back())
+		if (!MY_CONTROLLER->on_back())
 		{
 			return;
 		}
 	}
-	dynamic_cast<ui_viewmgr *>(this->get_viewmgr())->pop_view();
+	MY_VIEWMGR->pop_view();
 }
 
 void ui_view::on_rotate(int degree)
 {
 	if (this->get_controller())
 	{
-		dynamic_cast<ui_controller *>(this->get_controller())->on_rotate(degree);
+		MY_CONTROLLER->on_rotate(degree);
 	}
 }
 
@@ -105,7 +108,7 @@ void ui_view::on_portrait()
 {
 	if (this->get_controller())
 	{
-		dynamic_cast<ui_controller *>(this->get_controller())->on_portrait();
+		MY_CONTROLLER->on_portrait();
 	}
 }
 
@@ -113,7 +116,7 @@ void ui_view::on_landscape()
 {
 	if (this->get_controller())
 	{
-		dynamic_cast<ui_controller *>(this->get_controller())->on_landscape();
+		MY_CONTROLLER->on_landscape();
 	}
 }
 void ui_view::set_event_block(bool block)
@@ -124,7 +127,7 @@ void ui_view::set_event_block(bool block)
 
 int ui_view::get_degree()
 {
-	ui_viewmgr *viewmgr = dynamic_cast<ui_viewmgr *>(ui_iface_view::get_viewmgr());
+	ui_viewmgr *viewmgr = MY_VIEWMGR;
 	if (!viewmgr)
 	{
 		LOGE("Failed to get a viewmgr");
