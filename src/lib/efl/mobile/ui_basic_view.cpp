@@ -23,6 +23,8 @@
 using namespace efl_viewmgr;
 using namespace viewmgr;
 
+#define MY_VIEWMGR dynamic_cast<ui_viewmgr *>(this->get_viewmgr())
+#define MY_CONTROLLER dynamic_cast<ui_basic_controller *>(this->get_controller()))
 
 static void update_menu(Evas_Object *win, Evas_Object *ctxpopup)
 {
@@ -81,7 +83,7 @@ bool ui_basic_view::create_layout()
 	}
 
 	//Set software back key, if it's needed
-	ui_viewmgr *viewmgr = dynamic_cast<ui_viewmgr *>(ui_iface_view::get_viewmgr());
+	ui_viewmgr *viewmgr = MY_VIEWMGR;
 	if (viewmgr->need_soft_key())
 	{
 		Evas_Object *prev_btn = elm_button_add(layout);
@@ -363,12 +365,12 @@ void ui_basic_view::on_menu()
 
 	if (this->get_controller())
 	{
-		(dynamic_cast<ui_basic_controller *>(this->get_controller()))->on_menu();
+		(MY_CONTROLLER->on_menu();
 	}
 
 	if (this->ctxpopup)
 	{
-		update_menu(dynamic_cast<ui_viewmgr *>(this->get_viewmgr())->get_window(), this->ctxpopup);
+		update_menu(MY_VIEWMGR->get_window(), this->ctxpopup);
 	}
 }
 
