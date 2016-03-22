@@ -57,7 +57,7 @@ public:
 
 		//Arguments: content, title
 		view->set_content(content, "Title with toolbar");
-		Evas_Object *toolbar = create_toolbar(view->get_base(), "toolbar_with_title");
+		Elm_Toolbar *toolbar = create_toolbar(view->get_base(), "toolbar_with_title");
 		view->set_toolbar(toolbar);
 	}
 };

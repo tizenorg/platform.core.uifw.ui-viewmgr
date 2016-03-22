@@ -71,7 +71,7 @@ public:
 	{
 		ui_basic_view *view = dynamic_cast<ui_basic_view *>(this->get_view());
 
-		Evas_Object *ctxpopup = elm_ctxpopup_add(view->get_base());
+		Elm_Ctxpopup *ctxpopup = elm_ctxpopup_add(view->get_base());
 		elm_ctxpopup_item_append(ctxpopup, "Phone calls", NULL, ctxpopup_item_select_cb, this);
 		elm_ctxpopup_item_append(ctxpopup, "Favorites", NULL, ctxpopup_item_select_cb, this);
 		elm_ctxpopup_item_append(ctxpopup, "Search", NULL, ctxpopup_item_select_cb, this);

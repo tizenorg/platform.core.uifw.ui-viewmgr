@@ -25,7 +25,7 @@
 #include "page2.h"
 #include "page1.h"
 
-Evas_Object*
+Elm_Toolbar*
 create_toolbar(Evas_Object *parent, const char *style)
 {
 	Evas_Object *toolbar;
