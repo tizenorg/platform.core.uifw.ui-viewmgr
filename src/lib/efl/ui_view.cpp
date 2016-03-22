@@ -95,5 +95,6 @@ void ui_view::back()
 
 void ui_view::set_event_block(bool block)
 {
+	ui_iface_view::set_event_block(block);
 	evas_object_freeze_events_set(CONVERT_TO_EO(this->get_content()), block);
 }

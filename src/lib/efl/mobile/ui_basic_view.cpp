@@ -272,5 +272,6 @@ void ui_basic_view::menu()
 
 void ui_basic_view::set_event_block(bool block)
 {
+	ui_iface_view::set_event_block(block);
 	evas_object_freeze_events_set(this->get_base(), block);
 }
