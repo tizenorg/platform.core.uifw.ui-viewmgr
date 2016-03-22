@@ -43,35 +43,6 @@ class ui_view: public viewmgr::ui_iface_view
 {
 	friend class ui_viewmgr;
 
-public:
-	///Constructor.
-	ui_view(ui_controller *controller, const char *name = NULL);
-	///Constructor.
-	ui_view(const char *name = NULL);
-
-	///Destructor.
-	virtual ~ui_view();
-
-	/** @brief This is for replacing or setting a content of the view.
-	 *
-	 *  @param content a new content. It allows @c NULL for canceling the previous content.
-	 *
-	 *  @return A previous content. If it wasn't, return value will be @c NULL.
-	 */
-	virtual Evas_Object *set_content(Evas_Object *content);
-
-	/**  @brief Get a base layout of viewmgr.
-	 */
-	virtual Evas_Object *get_base();
-
-	virtual void back();
-
-	/** @brief Set the indicator mode.
-	 *
-	 *  @param indicator The mode to set, one of #ui_view_indicator.
-	 */
-	void set_indicator(ui_view_indicator indicator);
-
 protected:
 	/** @brief Unload current view's content
 	 *
@@ -94,6 +65,52 @@ protected:
 	 *  @param block @c true, when blocking is enabled, otherwise @c false.
 	 */
 	virtual void set_event_block(bool block);
+
+public:
+	///Constructor.
+	ui_view(ui_controller *controller, const char *name = NULL);
+	///Constructor.
+	ui_view(const char *name = NULL);
+
+	///Destructor.
+	virtual ~ui_view();
+
+	/** @brief This is for replacing or setting a content of the view.
+	 *
+	 *  @param content a new content. It allows @c NULL for canceling the previous content.
+	 *
+	 *  @return A previous content. If it wasn't, return value will be @c NULL.
+	 */
+	virtual Evas_Object *set_content(Evas_Object *content);
+
+	/**  @brief Get a base layout of viewmgr.
+	 */
+	virtual Evas_Object *get_base();
+
+	/** @brief This is for calling controller's back method.
+	 */
+	virtual void back();
+
+	/** @brief This is for calling controller's rotated method.
+	 */
+	virtual void rotated(int degree);
+
+	/** @brief This is for calling controller's portrait method.
+	 */
+	virtual void portrait();
+
+	/** @brief This is for calling controller's landscape method.
+	 */
+	virtual void landscape();
+	/** @brief Set the indicator mode.
+	 *
+	 *  @param indicator The mode to set, one of #ui_view_indicator.
+	 */
+	void set_indicator(ui_view_indicator indicator);
+
+	/** @brief Get current view's degree.
+	 */
+	int get_degree();
 };
 
 }

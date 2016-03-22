@@ -50,6 +50,7 @@ private:
 	ui_view_indicator indicator;               //Mode of indicator.
 	string transition_style;                   //Current transiton effect style name
 	map<string, Evas_Object *> effect_map;     //Map for effect layouts.
+	int degree;                                 //Current window's rotation degree.
 
 	Evas_Object *set_transition_layout(string transition_style);
 
@@ -191,6 +192,20 @@ public:
 	 *  @see get_view_count()
 	 */
 	ui_view *get_view(unsigned int idx);
+
+	/** @brief Set current view's degree
+	 */
+	void set_degree(int degree)
+	{
+		this->degree = degree;
+	}
+
+	/** @brief Get current view's degree
+	 */
+	int get_degree()
+	{
+		return this->degree;
+	}
 };
 }
 
