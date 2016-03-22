@@ -93,6 +93,14 @@ void ui_view::back()
 	dynamic_cast<ui_viewmgr *>(this->get_viewmgr())->pop_view();
 }
 
+void ui_view::rotated()
+{
+	if (this->get_controller())
+	{
+		dynamic_cast<ui_controller *>(this->get_controller())->rotated();
+	}
+}
+
 void ui_view::set_event_block(bool block)
 {
 	ui_iface_view::set_event_block(block);
