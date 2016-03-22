@@ -37,6 +37,7 @@ public:
 
 		ui_basic_view *view = dynamic_cast<ui_basic_view *>(this->get_view());
 
+		printf("view 1 load rot = %d\n", view->get_degree());
 		//Create a main content.
 		Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 1",
 				//Prev Button Callback
@@ -60,6 +61,21 @@ public:
 	{
 		LOGE("Menu!");
 		return true;
+	}
+
+	void rotated(int degree)
+	{
+		LOGE("Current view's degree is %d\n", degree);
+	}
+
+	void portrait()
+	{
+		LOGE("View is on portrait mode\n");
+	}
+
+	void landscape()
+	{
+		LOGE("View is on landscape mode\n");
 	}
 };
 

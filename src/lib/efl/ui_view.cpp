@@ -93,8 +93,38 @@ void ui_view::back()
 	dynamic_cast<ui_viewmgr *>(this->get_viewmgr())->pop_view();
 }
 
+void ui_view::rotated(int degree)
+{
+	if (this->get_controller())
+	{
+		dynamic_cast<ui_controller *>(this->get_controller())->rotated(degree);
+	}
+}
+
+void ui_view::portrait()
+{
+	if (this->get_controller())
+	{
+		dynamic_cast<ui_controller *>(this->get_controller())->portrait();
+	}
+}
+
+void ui_view::landscape()
+{
+	if (this->get_controller())
+	{
+		dynamic_cast<ui_controller *>(this->get_controller())->landscape();
+	}
+}
 void ui_view::set_event_block(bool block)
 {
 	ui_iface_view::set_event_block(block);
 	evas_object_freeze_events_set(CONVERT_TO_EO(this->get_content()), block);
+}
+
+int ui_view::get_degree()
+{
+	ui_viewmgr *viewmgr = dynamic_cast<ui_viewmgr *>(ui_iface_view::get_viewmgr());
+
+	return viewmgr->get_degree();
 }

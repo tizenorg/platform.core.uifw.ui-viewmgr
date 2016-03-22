@@ -50,6 +50,7 @@ private:
 	ui_view_indicator indicator;               //Mode of indicator.
 	string transition_style;                   //Current transiton effect style name
 	map<string, Evas_Object *> effect_map;     //Map for effect layouts.
+	int degree;                                 //Current window's rotation degree.
 
 	Evas_Object *set_transition_layout(string transition_style);
 
@@ -90,6 +91,15 @@ protected:
 		return this->layout;
 	}
 
+	void set_degree(int degree)
+	{
+		this->degree = degree;
+	}
+
+	int get_degree()
+	{
+		return this->degree;
+	}
 public:
 	///Constructor.
 	ui_viewmgr(const char *pkg);
