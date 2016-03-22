@@ -103,7 +103,33 @@ public:
 	 */
 	virtual void destroy() {}
 
+	/** @brief Back key callback.
+	 *
+	 *  @note In default. current view will be popped by viewmgr in those scenarios
+	 *        that viewmgr is requested to poo the current view.
+	 *        If you return false in the overriding, then popping will be stopped.
+	 */
 	virtual bool back() { return true; }
+
+	/** @brief View rotate callback.
+	 *
+	 *  @param degree Current rotation degree.
+	 *
+	 *  @note This method will be called when view rotation occurred.
+	 */
+	virtual void rotate(int degree) {}
+
+	/** @brief Portrait callback.
+	 *
+	 *  @note When current view is on portrait mode.
+	 */
+	virtual void portrait() {}
+
+	/** @brief Landscape callback.
+	 *
+	 *  @note When current view is on landscape mode.
+	 */
+	virtual void landscape() {}
 };
 }
 
