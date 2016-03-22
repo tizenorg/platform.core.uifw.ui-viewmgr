@@ -92,3 +92,11 @@ void ui_view::back()
 	}
 	dynamic_cast<ui_viewmgr *>(this->get_viewmgr())->pop_view();
 }
+
+void ui_view::rotated()
+{
+	if (this->get_controller())
+	{
+		dynamic_cast<ui_controller *>(this->get_controller())->rotated();
+	}
+}

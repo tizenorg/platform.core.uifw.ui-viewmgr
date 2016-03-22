@@ -61,6 +61,11 @@ public:
 		LOGE("Menu!");
 		return true;
 	}
+
+	void rotated()
+	{
+		LOGE("Current view's degree is %d\n", elm_win_rotation_get(this->ad->viewmgr->get_window()));
+	}
 };
 
 void create_page1(appdata_s *ad)
