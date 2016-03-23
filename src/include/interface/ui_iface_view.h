@@ -205,6 +205,12 @@ public:
 	 */
 	T set_content(T content);
 
+	/** @brief This is for unsetting a content of the view.
+	 *
+	 *  @return A previous content. If it wasn't, return value will be @c NULL.
+	 */
+	T unset_content();
+
 	/** @brief set transition style of a view.
 	 *
 	 *  @note @p style is reserved for supporting various kinds of view transition effects.

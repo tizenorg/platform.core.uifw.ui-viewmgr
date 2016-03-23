@@ -275,14 +275,6 @@ Evas_Object *ui_basic_view::set_content(Evas_Object *content, const char *title,
 	return pcontent;
 }
 
-Elm_Ctxpopup* ui_basic_view::unset_menu()
-{
-	Elm_Ctxpopup *menu = this->ctxpopup;
-	//FIXME: cancel callbacks
-	this->ctxpopup = NULL;
-	return menu;
-}
-
 bool ui_basic_view::set_menu(Elm_Ctxpopup *menu)
 {
 	if (this->ctxpopup) evas_object_del(this->ctxpopup);
@@ -378,4 +370,67 @@ void ui_basic_view::set_event_block(bool block)
 {
 	ui_iface_view::set_event_block(block);
 	evas_object_freeze_events_set(this->get_base(), block);
+}
+
+Elm_Ctxpopup* ui_basic_view::unset_menu()
+{
+	Elm_Ctxpopup *menu = this->ctxpopup;
+	//FIXME: cancel callbacks
+	this->ctxpopup = NULL;
+	return menu;
+}
+
+Evas_Object *ui_basic_view::unset_content()
+{
+	Evas_Object *pcontent = ui_view::unset_content();
+
+	if (this->layout)
+	{
+		elm_object_part_content_unset(this->layout, "elm.swallow.content");
+		evas_object_hide(pcontent);
+	}
+	return pcontent;
+}
+
+Evas_Object *ui_basic_view::unset_title_left_btn()
+{
+	Evas_Object *title_left_btn;
+
+	if (this->layout)
+	{
+		title_left_btn = elm_object_part_content_unset(this->layout, "title_left_btn");
+		if (title_left_btn)
+			elm_object_signal_emit(this->layout, "elm,state,title_left_btn,hide", "elm");
+		evas_object_hide(title_left_btn);
+		return title_left_btn;
+	}
+	return NULL;
+}
+
+Evas_Object *ui_basic_view::unset_title_right_btn()
+{
+	Evas_Object *title_right_btn;
+
+	if (this->layout)
+	{
+		title_right_btn = elm_object_part_content_unset(this->layout, "title_right_btn");
+		if (title_right_btn)
+			elm_object_signal_emit(this->layout, "elm,state,title_right_btn,hide", "elm");
+		evas_object_hide(title_right_btn);
+		return title_right_btn;
+	}
+	return NULL;
+}
+
+Evas_Object *ui_basic_view::unset_toolbar()
+{
+	Evas_Object *toolbar;
+	if (this->layout)
+	{
+		toolbar = elm_object_part_content_unset(this->layout, "toolbar");
+		if (toolbar) elm_object_signal_emit(layout, "elm,state,toolbar,hide", "elm");
+		evas_object_hide(toolbar);
+		return toolbar;
+	}
+	return NULL;
 }
