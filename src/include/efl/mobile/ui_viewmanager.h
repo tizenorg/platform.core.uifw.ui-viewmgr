@@ -14,16 +14,14 @@
  *  limitations under the License.
  *
  */
-#include "../../../include/efl/mobile/ui_viewmanager_mobile.h"
+#include <dlog.h>
 
-using namespace efl_viewmgr;
-using namespace viewmgr;
+#ifdef  LOG_TAG
+#undef  LOG_TAG
+#endif
+#define LOG_TAG "UI_VIEWMGR"
 
-ui_basic_viewmgr::ui_basic_viewmgr(const char *pkg)
-		: ui_viewmgr(pkg, new ui_basic_key_listener(this))
-{
-}
-
-ui_basic_viewmgr::~ui_basic_viewmgr()
-{
-}
+#include "ui_controller.h"
+#include "ui_view.h"
+#include "ui_key_listener.h"
+#include "ui_viewmgr.h"

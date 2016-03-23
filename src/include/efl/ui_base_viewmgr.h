@@ -14,12 +14,12 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_VIEWMGR_H
-#define UI_VIEWMGR_H
+#ifndef UI_BASE_VIEWMGR_H
+#define UI_BASE_VIEWMGR_H
 
 #include <Elementary.h>
 #include "../interface/ui_viewmanager_interface.h"
-#include "ui_key_listener.h"
+#include "ui_base_key_listener.h"
 #include <map>
 
 
@@ -31,10 +31,10 @@
 namespace efl_viewmgr
 {
 
-class ui_view;
+class ui_base_view;
 
 /**
- *  @class ui_viewmgr
+ *  @class ui_base_viewmgr
  *
  *  @ingroup viewmgr
  *
@@ -44,15 +44,15 @@ class ui_view;
  *
  *  @warning viewmgr will remove all containing views when it's destroyed.
  */
-class ui_viewmgr: public viewmgr::ui_iface_viewmgr
+class ui_base_viewmgr: public viewmgr::ui_iface_viewmgr
 {
-	friend class ui_view;
+	friend class ui_base_view;
 
 private:
 	Elm_Win *win;             		           //This is acting like a base object of viewmgr.
 	Elm_Conformant *conform;                   //Conformant for viewmgr.
 	Elm_Layout *layout;                        //Viewmgr's base layout.
-	ui_key_listener *key_listener;             //HW Key Handler such as "BACK" key...
+	ui_base_key_listener *key_listener;        //HW Key Handler such as "BACK" key...
 	ui_view_indicator indicator;               //Mode of indicator.
 	string transition_style;                   //Current transiton effect style name
 	map<string, Elm_Layout *> effect_map;      //Map for effect layouts.
@@ -87,7 +87,7 @@ private:
 	void active_top_view();
 
 protected:
-	ui_viewmgr(const char *pkg, ui_key_listener *key_listener);
+	ui_base_viewmgr(const char *pkg, ui_base_key_listener *key_listener);
 
 	/** @brief Get a base layout of viewmgr.
 	 */
@@ -98,9 +98,9 @@ protected:
 
 public:
 	///Constructor.
-	ui_viewmgr(const char *pkg);
+	ui_base_viewmgr(const char *pkg);
 	///Destructor.
-	virtual ~ui_viewmgr();
+	virtual ~ui_base_viewmgr();
 
 	/**
 	 *  @brief Activate this view manager.
@@ -143,7 +143,7 @@ public:
 	 *  @see insert_view_after()
 	 *  @see pop_view()
 	 */
-	virtual ui_view *push_view(ui_view *view);
+	virtual ui_base_view *push_view(ui_base_view *view);
 
 	/**
 	 *  @brief Push a new view into this viewmgr. This function is used for when application switches a current view to a new one.
@@ -180,7 +180,7 @@ public:
 
 	/** @brief Get a last view of current view stack.
 	 */
-	ui_view *get_last_view();
+	ui_base_view *get_last_view();
 
 	/**
 	 *  @brief Return a view which is matched with the index @p idx.
@@ -196,8 +196,8 @@ public:
 	 *  @see get_view_index()
 	 *  @see get_view_count()
 	 */
-	ui_view *get_view(unsigned int idx);
+	ui_base_view *get_view(unsigned int idx);
 };
 }
 
-#endif /* UI_VIEWMGR_H */
+#endif /* UI_BASE_VIEWMGR_H */

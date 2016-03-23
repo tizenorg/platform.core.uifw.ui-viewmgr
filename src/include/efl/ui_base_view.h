@@ -14,8 +14,8 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_VIEW_H
-#define UI_VIEW_H
+#ifndef UI_BASE_VIEW_H
+#define UI_BASE_VIEW_H
 
 #include <Elementary.h>
 #include "../interface/ui_viewmanager_interface.h"
@@ -25,10 +25,10 @@
 
 namespace efl_viewmgr
 {
-class ui_controller;
+class ui_base_controller;
 
 /**
- *  @class ui_view
+ *  @class ui_base_view
  *
  *  @ingroup viewmgr
  *
@@ -39,9 +39,9 @@ class ui_controller;
  *  @warning When the transitions are finished, the view must to call ui_iface_viewmgr :: _push_finished(), ui_iface_viewmgr :: _pop_finished() in order that
  *           The ui_iface_viewmgr keeps the view states exactly.
  */
-class ui_view: public viewmgr::ui_iface_view
+class ui_base_view: public viewmgr::ui_iface_view
 {
-	friend class ui_viewmgr;
+	friend class ui_base_viewmgr;
 
 protected:
 	/** @brief Unload current view's content
@@ -68,12 +68,12 @@ protected:
 
 public:
 	///Constructor.
-	ui_view(ui_controller *controller, const char *name = NULL);
+	ui_base_view(ui_base_controller *controller, const char *name = NULL);
 	///Constructor.
-	ui_view(const char *name = NULL);
+	ui_base_view(const char *name = NULL);
 
 	///Destructor.
-	virtual ~ui_view();
+	virtual ~ui_base_view();
 
 	/** @brief This is for replacing or setting a content of the view.
 	 *
@@ -110,7 +110,7 @@ public:
 	virtual void on_landscape();
 	/** @brief Set the indicator mode.
 	 *
-	 *  @param indicator The mode to set, one of #ui_view_indicator.
+	 *  @param indicator The mode to set, one of #ui_base_view_indicator.
 	 */
 	void set_indicator(ui_view_indicator indicator);
 
@@ -123,4 +123,4 @@ public:
 
 }
 
-#endif /* UI_VIEW_H */
+#endif /* UI_BASE_VIEW_H */

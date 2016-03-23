@@ -14,15 +14,15 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_BASIC_VIEW
-#define UI_BASIC_VIEW
+#ifndef UI_VIEW
+#define UI_VIEW
 
-#include "../ui_viewmanager_efl.h"
+#include "../ui_viewmanager_base.h"
 
 namespace efl_viewmgr
 {
 
-class ui_basic_view: public ui_view
+class ui_view: public ui_base_view
 {
 private:
 	Elm_Layout *layout;                //Base layout for view
@@ -38,9 +38,9 @@ protected:
 	virtual void set_event_block(bool block);
 
 public:
-	ui_basic_view(ui_controller *controller, const char *name = NULL);
-	ui_basic_view(const char *name = NULL);
-	virtual ~ui_basic_view();
+	ui_view(ui_controller *controller, const char *name = NULL);
+	ui_view(const char *name = NULL);
+	virtual ~ui_view();
 
 	Evas_Object *set_content(Evas_Object *content, const char *title = NULL);
 	Evas_Object *set_content(Evas_Object *content, const char *title, const char *subtitle, Elm_Button *title_left_btn, Elm_Button *title_right_btn);
@@ -74,4 +74,4 @@ public:
 
 }
 
-#endif /* UI_BASIC_VIEW */
+#endif /* UI_VIEW */

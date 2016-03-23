@@ -14,7 +14,7 @@
  *  limitations under the License.
  *
  */
-class page5: public ui_basic_controller
+class page5: public ui_controller
 {
 private:
 	appdata_s *ad;
@@ -26,7 +26,7 @@ public:
 		//No basic form.
 		/* ui_view(controller, identity name).
 		   Later, you could get the identity name using view->get_name(); */
-		ad->viewmgr->push_view(new ui_view(this, "page5"));
+		ad->viewmgr->push_view(new ui_base_view(this, "page5"));
 	}
 
 	~page5()
@@ -37,7 +37,7 @@ public:
 	{
 		//Initialize contents.
 
-		ui_view *view = dynamic_cast<ui_view *>(this->get_view());
+		ui_base_view *view = dynamic_cast<ui_base_view *>(this->get_view());
 
 		//Create a main content.
 		Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 5<br>(Full View)",

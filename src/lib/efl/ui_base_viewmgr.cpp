@@ -14,7 +14,7 @@
  *  limitations under the License.
  *
  */
-#include "../../include/efl/ui_viewmanager_efl.h"
+#include "../../include/efl/ui_viewmanager_base.h"
 
 using namespace efl_viewmgr;
 using namespace viewmgr;
@@ -22,7 +22,7 @@ using namespace viewmgr;
 //FIXME: is it correct to define here?
 #define EDJ_PATH "/usr/share/edje/ui-viewmgr/ui-viewmgr.edj"
 
-bool ui_viewmgr::create_base_layout(Elm_Conformant *conform, const char *style)
+bool ui_base_viewmgr::create_base_layout(Elm_Conformant *conform, const char *style)
 {
 	char buf[128];
 	Elm_Layout *layout = elm_layout_add(conform);
@@ -38,9 +38,9 @@ bool ui_viewmgr::create_base_layout(Elm_Conformant *conform, const char *style)
 	elm_layout_signal_callback_add(layout, "push,finished", "viewmgr",
 			[](void *data, Evas_Object *obj, const char *emission, const char *source) -> void
 			{
-				ui_viewmgr *viewmgr = static_cast<ui_viewmgr *>(data);
-				ui_view *pview = viewmgr->get_view(viewmgr->get_view_count() - 2);
-				ui_view *view = viewmgr->get_last_view();
+				ui_base_viewmgr *viewmgr = static_cast<ui_base_viewmgr *>(data);
+				ui_base_view *pview = viewmgr->get_view(viewmgr->get_view_count() - 2);
+				ui_base_view *view = viewmgr->get_last_view();
 				if (pview) viewmgr->push_view_finished(pview);
 				if (view) viewmgr->push_view_finished(view);
 			},
@@ -50,9 +50,9 @@ bool ui_viewmgr::create_base_layout(Elm_Conformant *conform, const char *style)
 	elm_layout_signal_callback_add(layout, "pop,finished", "viewmgr",
 			[](void *data, Evas_Object *obj, const char *emission, const char *source) -> void
 			{
-				ui_viewmgr *viewmgr = static_cast<ui_viewmgr *>(data);
-				ui_view *pview = viewmgr->get_view(viewmgr->get_view_count() - 2);
-				ui_view *view = viewmgr->get_last_view();
+				ui_base_viewmgr *viewmgr = static_cast<ui_base_viewmgr *>(data);
+				ui_base_view *pview = viewmgr->get_view(viewmgr->get_view_count() - 2);
+				ui_base_view *view = viewmgr->get_last_view();
 				if (pview) viewmgr->pop_view_finished(pview);
 				if (view) viewmgr->pop_view_finished(view);
 			},
@@ -63,7 +63,7 @@ bool ui_viewmgr::create_base_layout(Elm_Conformant *conform, const char *style)
 	return true;
 }
 
-Elm_Layout *ui_viewmgr::set_transition_layout(string transition_style)
+Elm_Layout *ui_base_viewmgr::set_transition_layout(string transition_style)
 {
 	Elm_Layout *effect_layout = NULL;
 
@@ -98,13 +98,13 @@ Elm_Layout *ui_viewmgr::set_transition_layout(string transition_style)
 	return this->layout;
 }
 
-void ui_viewmgr::active_top_view()
+void ui_base_viewmgr::active_top_view()
 {
 	elm_object_part_content_unset(this->get_base(), "content");
 
-	ui_view *view = this->get_last_view();
+	ui_base_view *view = this->get_last_view();
 
-	//In case of ui_view, it doesn't have any base form. It uses viewmgr base instead.
+	//In case of ui_base_view, it doesn't have any base form. It uses viewmgr base instead.
 	Evas_Object *content;
 	if (view->get_base() == this->get_base())
 	{
@@ -122,7 +122,7 @@ void ui_viewmgr::active_top_view()
 
 //FIXME: How to deal with indicator in other UI framework? Dali? Volt?
 //Is it possible make this interface common?
-bool ui_viewmgr::set_indicator(ui_view_indicator indicator)
+bool ui_base_viewmgr::set_indicator(ui_view_indicator indicator)
 {
 	if (this->indicator == indicator) return false;
 	this->indicator = indicator;
@@ -154,7 +154,7 @@ bool ui_viewmgr::set_indicator(ui_view_indicator indicator)
 	return true;
 }
 
-bool ui_viewmgr::create_conformant(Elm_Win *win)
+bool ui_base_viewmgr::create_conformant(Elm_Win *win)
 {
 	Elm_Conformant *conform = elm_conformant_add(win);
 	if (!conform) return false;
@@ -169,7 +169,7 @@ bool ui_viewmgr::create_conformant(Elm_Win *win)
 	return true;
 }
 
-ui_viewmgr::ui_viewmgr(const char *pkg, ui_key_listener *key_listener)
+ui_base_viewmgr::ui_base_viewmgr(const char *pkg, ui_base_key_listener *key_listener)
 		: ui_iface_viewmgr(), key_listener(key_listener), transition_style("default")
 {
 	if (!pkg)
@@ -199,8 +199,8 @@ ui_viewmgr::ui_viewmgr(const char *pkg, ui_key_listener *key_listener)
 			{
 				int rot = elm_win_rotation_get(obj);
 
-				ui_viewmgr *viewmgr = static_cast<ui_viewmgr *>(data);
-				ui_view *view = viewmgr->get_last_view();
+				ui_base_viewmgr *viewmgr = static_cast<ui_base_viewmgr *>(data);
+				ui_base_view *view = viewmgr->get_last_view();
 				view->on_rotate(rot);
 
 				//FIXME: Change this configurable?
@@ -213,7 +213,7 @@ ui_viewmgr::ui_viewmgr(const char *pkg, ui_key_listener *key_listener)
 	evas_object_smart_callback_add(this->win, "delete,request",
 			[](void *data, Evas_Object *obj, void *event_info) -> void
 			{
-				ui_viewmgr *viewmgr = static_cast<ui_viewmgr*>(data);
+				ui_base_viewmgr *viewmgr = static_cast<ui_base_viewmgr*>(data);
 				delete(viewmgr);
 				//FIXME: Window is destroyed. Terminate Application!
 				//ui_app_exit();
@@ -242,25 +242,25 @@ ui_viewmgr::ui_viewmgr(const char *pkg, ui_key_listener *key_listener)
 	key_listener->init();
 }
 
-ui_viewmgr::ui_viewmgr(const char *pkg)
-		: ui_viewmgr(pkg, new ui_key_listener(this))
+ui_base_viewmgr::ui_base_viewmgr(const char *pkg)
+		: ui_base_viewmgr(pkg, new ui_base_key_listener(this))
 {
 }
 
-ui_viewmgr::~ui_viewmgr()
+ui_base_viewmgr::~ui_base_viewmgr()
 {
 	this->key_listener->term();
 	delete(this->key_listener);
 }
 
-bool ui_viewmgr::activate()
+bool ui_base_viewmgr::activate()
 {
 	if (!ui_iface_viewmgr::activate()) return false;
 
 	this->active_top_view();
 
 	//FIXME: Necessary??
-	ui_view *view = this->get_last_view();
+	ui_base_view *view = this->get_last_view();
 	view->on_active();
 
 	evas_object_show(this->win);
@@ -268,14 +268,14 @@ bool ui_viewmgr::activate()
 	return true;
 }
 
-bool ui_viewmgr::deactivate()
+bool ui_base_viewmgr::deactivate()
 {
 	if (!ui_iface_viewmgr::deactivate()) return false;
 
 	//FIXME: based on the profile, we should app to go behind or terminate.
 	if (true)
 	{
-		ui_view *view = this->get_last_view();
+		ui_base_view *view = this->get_last_view();
 		if (view) view->on_inactive();
 		evas_object_lower(this->win);
 	}
@@ -288,7 +288,7 @@ bool ui_viewmgr::deactivate()
 	return true;
 }
 
-bool ui_viewmgr::pop_view()
+bool ui_base_viewmgr::pop_view()
 {
 	if (this->get_view_count() == 1)
 	{
@@ -301,8 +301,8 @@ bool ui_viewmgr::pop_view()
 		return false;
 	}
 
-	ui_view *pview = this->get_view(this->get_view_count() - 2);
-	ui_view *view = this->get_last_view();
+	ui_base_view *pview = this->get_view(this->get_view_count() - 2);
+	ui_base_view *view = this->get_last_view();
 
 	//In case, if view doesn't have transition effect
 	if (!strcmp(view->get_transition_style(), "none"))
@@ -337,7 +337,7 @@ bool ui_viewmgr::pop_view()
 	return true;
 }
 
-ui_view * ui_viewmgr::push_view(ui_view *view)
+ui_base_view * ui_base_viewmgr::push_view(ui_base_view *view)
 {
 	ui_iface_viewmgr::push_view(view);
 
@@ -350,7 +350,7 @@ ui_view * ui_viewmgr::push_view(ui_view *view)
 		return view;
 	}
 
-	ui_view *pview = this->get_view(this->get_view_count() - 2);
+	ui_base_view *pview = this->get_view(this->get_view_count() - 2);
 
 	//In case, if view doesn't have transition effect
 	if (!strcmp(view->get_transition_style(), "none")) {
@@ -384,12 +384,12 @@ ui_view * ui_viewmgr::push_view(ui_view *view)
 	return view;
 }
 
-ui_view *ui_viewmgr::get_view(unsigned int idx)
+ui_base_view *ui_base_viewmgr::get_view(unsigned int idx)
 {
-	return dynamic_cast<ui_view *>(ui_iface_viewmgr::get_view(idx));
+	return dynamic_cast<ui_base_view *>(ui_iface_viewmgr::get_view(idx));
 }
 
-ui_view *ui_viewmgr::get_last_view()
+ui_base_view *ui_base_viewmgr::get_last_view()
 {
-	return dynamic_cast<ui_view *>(ui_iface_viewmgr::get_last_view());
+	return dynamic_cast<ui_base_view *>(ui_iface_viewmgr::get_last_view());
 }

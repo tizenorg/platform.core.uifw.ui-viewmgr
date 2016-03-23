@@ -15,7 +15,7 @@
  *
  */
 
-class page8: public ui_basic_view
+class page8: public ui_view
 {
 private:
 	appdata_s *ad;
@@ -44,7 +44,7 @@ protected:
 
 public:
 	page8(const char *name, appdata_s *ad)
-		: ui_basic_view(name), ad(ad)
+		: ui_view(name), ad(ad)
 	{
 		ad->viewmgr->push_view(this);
 	}

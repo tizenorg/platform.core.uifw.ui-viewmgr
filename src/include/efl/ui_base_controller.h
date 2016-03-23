@@ -14,8 +14,8 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_CONTROLLER_H
-#define UI_CONTROLLER_H
+#ifndef UI_BASE_CONTROLLER_H
+#define UI_BASE_CONTROLLER_H
 
 #include "../interface/ui_viewmanager_interface.h"
 
@@ -23,17 +23,17 @@ namespace efl_viewmgr
 {
 
 /**
- *  @class ui_controller
+ *  @class ui_base_controller
  *
  *  @ingroup viewmgr
  *
  *  @brief UI Controller. This is a class for handling of life-cycle events from user side.
  */
-class ui_controller: public viewmgr::ui_iface_controller
+class ui_base_controller: public viewmgr::ui_iface_controller
 {
 public:
 	///Destructor.
-	virtual ~ui_controller();
+	virtual ~ui_base_controller();
 
 	/**
 	 *  @brief Return a view which is matched with controller
@@ -46,7 +46,7 @@ public:
 	 *  @see set_view()
 	 */
 
-	ui_view *get_view();
+	ui_base_view *get_view();
 
 	/** @brief load callback.
 	 *
@@ -84,7 +84,7 @@ public:
 	/** @brief pause callback.
 	 *
 	 *  @note When the system blocks the application running in cases such as phone call, system notification, switching applications ...
-	 *        When Window turns to deactivate. (@see ui_viewmgr_base :: deactivate()).
+	 *        When Window turns to deactivate. (@see ui_base_viewmgr_base :: deactivate()).
 	 *        If the view were inactive or unload state, the pause won't be called.
 	 */
 	virtual void on_pause() {}
@@ -93,7 +93,7 @@ public:
 	 *
 	 *  @note View is turning back to the active state again from pause.
 	 *        When the system allows the application turns to activate.
-	 *        When the Window turns to activate. (@see ui_viewmgr_base :: activate())
+	 *        When the Window turns to activate. (@see ui_base_viewmgr :: activate())
 	 */
 	virtual void on_resume() {}
 
@@ -133,4 +133,4 @@ public:
 };
 }
 
-#endif /* UI_CONTROLLER_H */
+#endif /* UI_BASE_CONTROLLER_H */

@@ -14,7 +14,7 @@
  *  limitations under the License.
  *
  */
-#include "../../../include/efl/mobile/ui_viewmanager_mobile.h"
+#include "../../../include/efl/mobile/ui_viewmanager.h"
 
 //FIXME: is it correct to define here?
 #define EDJ_PATH "/usr/share/edje/ui-viewmgr/ui-viewmgr.edj"
@@ -24,7 +24,7 @@ using namespace efl_viewmgr;
 using namespace viewmgr;
 
 #define MY_VIEWMGR dynamic_cast<ui_viewmgr *>(this->get_viewmgr())
-#define MY_CONTROLLER dynamic_cast<ui_basic_controller *>(this->get_controller()))
+#define MY_CONTROLLER dynamic_cast<ui_controller *>(this->get_controller()))
 
 static void update_menu(Elm_Win *win, Elm_Ctxpopup *ctxpopup)
 {
@@ -47,7 +47,7 @@ static void update_menu(Elm_Win *win, Elm_Ctxpopup *ctxpopup)
 	evas_object_show(ctxpopup);
 }
 
-bool ui_basic_view::destroy_layout()
+bool ui_view::destroy_layout()
 {
 	if (!this->layout) return false;
 	evas_object_del(this->layout);
@@ -56,7 +56,7 @@ bool ui_basic_view::destroy_layout()
 	return true;
 }
 
-bool ui_basic_view::create_layout()
+bool ui_view::create_layout()
 {
 	if (this->layout) return false;
 
@@ -64,13 +64,13 @@ bool ui_basic_view::create_layout()
 
 	if (!layout)
 	{
-		LOGE("Failed to create a layout = ui_basic_view(%p)", this);
+		LOGE("Failed to create a layout = ui_view(%p)", this);
 		return false;
 	}
 
 	if (!elm_layout_file_set(layout, EDJ_PATH, GROUP))
 	{
-		LOGE("Failed to set file = ui_basic_view(%p), path(%s), group(%s)", this, EDJ_PATH, GROUP);
+		LOGE("Failed to set file = ui_view(%p), path(%s), group(%s)", this, EDJ_PATH, GROUP);
 		evas_object_del(layout);
 		return false;
 	}
@@ -90,7 +90,7 @@ bool ui_basic_view::create_layout()
 
 		if (!prev_btn)
 		{
-			LOGE("Failed to create a button = ui_basic_view(%p)", this);
+			LOGE("Failed to create a button = ui_view(%p)", this);
 		}
 		else
 		{
@@ -110,7 +110,7 @@ bool ui_basic_view::create_layout()
 	evas_object_event_callback_add(layout, EVAS_CALLBACK_RESIZE,
 			[](void *data, Evas *e, Evas_Object *obj, void *event_info) -> void
 			{
-				ui_basic_view *view = static_cast<ui_basic_view *>(data);
+				ui_view *view = static_cast<ui_view *>(data);
 				Elm_Ctxpopup *ctxpopup = view->get_menu();
 				if (ctxpopup && evas_object_visible_get(ctxpopup))
 				{
@@ -122,7 +122,7 @@ bool ui_basic_view::create_layout()
 	evas_object_event_callback_add(layout, EVAS_CALLBACK_MOVE,
 			[](void *data, Evas *e, Evas_Object *obj, void *event_info) -> void
 			{
-				ui_basic_view *view = static_cast<ui_basic_view *>(data);
+				ui_view *view = static_cast<ui_view *>(data);
 				Elm_Ctxpopup *ctxpopup = view->get_menu();
 				if (ctxpopup && evas_object_visible_get(ctxpopup))
 				{
@@ -136,37 +136,37 @@ bool ui_basic_view::create_layout()
 	return true;
 }
 
-ui_basic_view::ui_basic_view(ui_controller *controller, const char *name)
-		: ui_view(controller, name), layout(NULL), ctxpopup(NULL)
+ui_view::ui_view(ui_controller *controller, const char *name)
+		: ui_base_view(controller, name), layout(NULL), ctxpopup(NULL)
 {
 }
 
-ui_basic_view::ui_basic_view(const char *name)
-		: ui_basic_view(NULL, name)
+ui_view::ui_view(const char *name)
+		: ui_view(NULL, name)
 {
 }
 
-ui_basic_view::~ui_basic_view()
+ui_view::~ui_view()
 {
 	evas_object_del(this->ctxpopup);
 	destroy_layout();
 }
 
-void ui_basic_view::on_load()
+void ui_view::on_load()
 {
 	if (!this->layout) this->create_layout();
-	ui_view::on_load();
+	ui_base_view::on_load();
 }
 
-void ui_basic_view::on_unload()
+void ui_view::on_unload()
 {
-	ui_view::on_unload();
+	ui_base_view::on_unload();
 }
 
 Evas_Object *
-ui_basic_view::set_content(Evas_Object *content, const char *title)
+ui_view::set_content(Evas_Object *content, const char *title)
 {
-	Evas_Object *pcontent = ui_view::set_content(content);
+	Evas_Object *pcontent = ui_base_view::set_content(content);
 
 	if (this->layout)
 	{
@@ -182,7 +182,7 @@ ui_basic_view::set_content(Evas_Object *content, const char *title)
 	return pcontent;
 }
 
-bool ui_basic_view::set_subtitle(const char *text)
+bool ui_view::set_subtitle(const char *text)
 {
 	if (this->layout)
 	{
@@ -195,7 +195,7 @@ bool ui_basic_view::set_subtitle(const char *text)
 	return false;
 }
 
-bool ui_basic_view::set_title_left_btn(Elm_Button *title_left_btn)
+bool ui_view::set_title_left_btn(Elm_Button *title_left_btn)
 {
 	if (this->layout)
 	{
@@ -212,7 +212,7 @@ bool ui_basic_view::set_title_left_btn(Elm_Button *title_left_btn)
 	return false;
 }
 
-bool ui_basic_view::set_title_right_btn(Elm_Button *title_right_btn)
+bool ui_view::set_title_right_btn(Elm_Button *title_right_btn)
 {
 	if (this->layout)
 	{
@@ -229,7 +229,7 @@ bool ui_basic_view::set_title_right_btn(Elm_Button *title_right_btn)
 	return false;
 }
 
-bool ui_basic_view::set_title_badge(const char *text)
+bool ui_view::set_title_badge(const char *text)
 {
 	if (this->layout)
 	{
@@ -242,7 +242,7 @@ bool ui_basic_view::set_title_badge(const char *text)
 	return false;
 }
 
-bool ui_basic_view::set_title(const char *text)
+bool ui_view::set_title(const char *text)
 {
 	if (this->layout)
 	{
@@ -255,7 +255,7 @@ bool ui_basic_view::set_title(const char *text)
 	return false;
 }
 
-Evas_Object *ui_basic_view::set_content(Evas_Object *content, const char *title, const char *subtitle, Elm_Button *title_left_btn,
+Evas_Object *ui_view::set_content(Evas_Object *content, const char *title, const char *subtitle, Elm_Button *title_left_btn,
         Elm_Button *title_right_btn)
 {
 	Evas_Object *pcontent = this->set_content(content);
@@ -275,7 +275,7 @@ Evas_Object *ui_basic_view::set_content(Evas_Object *content, const char *title,
 	return pcontent;
 }
 
-bool ui_basic_view::set_menu(Elm_Ctxpopup *menu)
+bool ui_view::set_menu(Elm_Ctxpopup *menu)
 {
 	if (this->ctxpopup) evas_object_del(this->ctxpopup);
 
@@ -298,7 +298,7 @@ bool ui_basic_view::set_menu(Elm_Ctxpopup *menu)
 	evas_object_event_callback_add(menu, EVAS_CALLBACK_DEL,
 			[](void *data, Evas *e, Evas_Object *obj, void *event_info) -> void
 			{
-				ui_basic_view *view = static_cast<ui_basic_view *>(data);
+				ui_view *view = static_cast<ui_view *>(data);
 				view->unset_menu();
 			},
 			this);
@@ -308,7 +308,7 @@ bool ui_basic_view::set_menu(Elm_Ctxpopup *menu)
 	return true;
 }
 
-bool ui_basic_view::set_toolbar(Elm_Toolbar *toolbar)
+bool ui_view::set_toolbar(Elm_Toolbar *toolbar)
 {
 	Elm_Layout *layout = this->get_base();
 
@@ -341,13 +341,13 @@ bool ui_basic_view::set_toolbar(Elm_Toolbar *toolbar)
 	return true;
 }
 
-void ui_basic_view::unload_content()
+void ui_view::unload_content()
 {
 	ui_view::set_content(NULL);
 	this->destroy_layout();
 }
 
-void ui_basic_view::on_menu()
+void ui_view::on_menu()
 {
 	if (this->ctxpopup && evas_object_visible_get(this->ctxpopup))
 	{
@@ -366,13 +366,13 @@ void ui_basic_view::on_menu()
 	}
 }
 
-void ui_basic_view::set_event_block(bool block)
+void ui_view::set_event_block(bool block)
 {
 	ui_iface_view::set_event_block(block);
 	evas_object_freeze_events_set(this->get_base(), block);
 }
 
-Elm_Ctxpopup* ui_basic_view::unset_menu()
+Elm_Ctxpopup* ui_view::unset_menu()
 {
 	Elm_Ctxpopup *menu = this->ctxpopup;
 	//FIXME: cancel callbacks
@@ -380,7 +380,7 @@ Elm_Ctxpopup* ui_basic_view::unset_menu()
 	return menu;
 }
 
-Evas_Object *ui_basic_view::unset_content()
+Evas_Object *ui_view::unset_content()
 {
 	Evas_Object *pcontent = ui_view::unset_content();
 
@@ -392,7 +392,7 @@ Evas_Object *ui_basic_view::unset_content()
 	return pcontent;
 }
 
-Elm_Button *ui_basic_view::unset_title_left_btn()
+Elm_Button *ui_view::unset_title_left_btn()
 {
 	Elm_Button *title_left_btn;
 
@@ -406,7 +406,7 @@ Elm_Button *ui_basic_view::unset_title_left_btn()
 	return title_left_btn;
 }
 
-Elm_Button *ui_basic_view::unset_title_right_btn()
+Elm_Button *ui_view::unset_title_right_btn()
 {
 	Elm_Button *title_right_btn;
 
@@ -420,7 +420,7 @@ Elm_Button *ui_basic_view::unset_title_right_btn()
 	return title_right_btn;
 }
 
-Elm_Toolbar *ui_basic_view::unset_toolbar()
+Elm_Toolbar *ui_view::unset_toolbar()
 {
 	Elm_Toolbar *toolbar;
 
