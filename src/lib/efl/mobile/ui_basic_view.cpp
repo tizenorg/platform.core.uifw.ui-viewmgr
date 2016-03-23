@@ -275,14 +275,6 @@ Evas_Object *ui_basic_view::set_content(Evas_Object *content, const char *title,
 	return pcontent;
 }
 
-Elm_Ctxpopup* ui_basic_view::unset_menu()
-{
-	Elm_Ctxpopup *menu = this->ctxpopup;
-	//FIXME: cancel callbacks
-	this->ctxpopup = NULL;
-	return menu;
-}
-
 bool ui_basic_view::set_menu(Elm_Ctxpopup *menu)
 {
 	if (this->ctxpopup) evas_object_del(this->ctxpopup);
@@ -378,4 +370,66 @@ void ui_basic_view::set_event_block(bool block)
 {
 	ui_iface_view::set_event_block(block);
 	evas_object_freeze_events_set(this->get_base(), block);
+}
+
+Elm_Ctxpopup* ui_basic_view::unset_menu()
+{
+	Elm_Ctxpopup *menu = this->ctxpopup;
+	//FIXME: cancel callbacks
+	this->ctxpopup = NULL;
+	return menu;
+}
+
+Evas_Object *ui_basic_view::unset_content()
+{
+	Evas_Object *pcontent = ui_view::unset_content();
+
+	if (!this->get_base()) return pcontent;
+
+	elm_object_part_content_unset(this->get_base(), "elm.swallow.content");
+	evas_object_hide(pcontent);
+
+	return pcontent;
+}
+
+Elm_Button *ui_basic_view::unset_title_left_btn()
+{
+	Elm_Button *title_left_btn;
+
+	if (!this->get_base()) return NULL;
+
+	title_left_btn = elm_object_part_content_unset(this->get_base(), "title_left_btn");
+	if (title_left_btn)
+		elm_object_signal_emit(this->get_base(), "elm,state,title_left_btn,hide", "elm");
+	evas_object_hide(title_left_btn);
+
+	return title_left_btn;
+}
+
+Elm_Button *ui_basic_view::unset_title_right_btn()
+{
+	Elm_Button *title_right_btn;
+
+	if (!this->get_base()) return NULL;
+
+	title_right_btn = elm_object_part_content_unset(this->get_base(), "title_right_btn");
+	if (title_right_btn)
+		elm_object_signal_emit(this->get_base(), "elm,state,title_right_btn,hide", "elm");
+	evas_object_hide(title_right_btn);
+
+	return title_right_btn;
+}
+
+Elm_Toolbar *ui_basic_view::unset_toolbar()
+{
+	Elm_Toolbar *toolbar;
+
+	if (!this->get_base()) return NULL;
+
+	toolbar = elm_object_part_content_unset(this->get_base(), "toolbar");
+	if (toolbar)
+		elm_object_signal_emit(this->get_base(), "elm,state,toolbar,hide", "elm");
+	evas_object_hide(toolbar);
+
+	return toolbar;
 }

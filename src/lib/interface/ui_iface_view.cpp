@@ -120,6 +120,13 @@ T ui_iface_view::set_content(T content)
 	return prev;
 }
 
+T ui_iface_view::unset_content()
+{
+	T prev = this->content;
+	this->content = NULL;
+	return prev;
+}
+
 bool ui_iface_view::set_transition_style(const char *style)
 {
 	this->transition_style.assign(style);
