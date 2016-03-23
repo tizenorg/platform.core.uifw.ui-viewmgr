@@ -23,7 +23,6 @@ ui_controller::~ui_controller()
 {
 }
 
-bool ui_controller::on_menu()
+void ui_controller::on_menu(ui_menu *menu)
 {
-	return true;
 }

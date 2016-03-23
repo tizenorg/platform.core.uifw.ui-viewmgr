@@ -34,4 +34,4 @@ public:
 
 }
 
-#endif /* UI_BASIC_KEY_HANDLER_H */
+#endif /* UI_KEY_HANDLER_H */

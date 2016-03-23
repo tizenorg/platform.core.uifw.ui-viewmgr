@@ -103,14 +103,6 @@ public:
 	 */
 	virtual void on_destroy() {}
 
-	/** @brief Back key callback.
-	 *
-	 *  @note In default. current view will be popped by viewmgr in those scenarios
-	 *        that viewmgr is requested to poo the current view.
-	 *        If you return false in the overriding, then popping will be stopped.
-	 */
-	virtual bool on_back() { return true; }
-
 	/** @brief View rotate callback.
 	 *
 	 *  @param degree Current rotation degree.
@@ -130,6 +122,15 @@ public:
 	 *  @note When current view is on landscape mode.
 	 */
 	virtual void on_landscape() {}
+
+	/** @brief Back key callback.
+	 *
+	 *  @note In default. current view will be popped by viewmgr in those scenarios
+	 *        that viewmgr is requested to poo the current view.
+	 *        If you return false in the overriding, then popping will be stopped.
+	 */
+	virtual bool on_back() { return true; }
+
 };
 }
 

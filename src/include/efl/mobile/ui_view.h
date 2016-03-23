@@ -24,9 +24,12 @@ namespace efl_viewmgr
 
 class ui_view: public ui_base_view
 {
+	friend class ui_menu;
+	friend class ui_key_listener;
+
 private:
 	Elm_Layout *layout;                //Base layout for view
-	Elm_Ctxpopup *ctxpopup;            //Menu Widget
+	ui_menu *menu;                     //Menu
 
 	bool create_layout();
 	bool destroy_layout();
@@ -34,6 +37,7 @@ private:
 protected:
 	virtual void on_load();
 	virtual void on_unload();
+	virtual void on_menu();
 	virtual void unload_content();
 	virtual void set_event_block(bool block);
 
@@ -50,14 +54,10 @@ public:
 	bool set_title_right_btn(Elm_Button *title_right_btn);
 	bool set_title(const char *text);
 	bool set_toolbar(Elm_Toolbar *toolbar);
-	bool set_menu(Elm_Ctxpopup *menu);
-	Elm_Ctxpopup *unset_menu();
 	Evas_Object *unset_content();
 	Elm_Button *unset_title_left_btn();
 	Elm_Button *unset_title_right_btn();
 	Elm_Toolbar *unset_toolbar();
-
-	virtual void on_menu();
 
 	virtual Evas_Object *get_base()
 	{
@@ -65,9 +65,9 @@ public:
 		return this->layout;
 	}
 
-	Elm_Ctxpopup *get_menu()
+	const ui_menu *get_menu()
 	{
-		return this->ctxpopup;
+		return this->menu;
 	}
 
 };

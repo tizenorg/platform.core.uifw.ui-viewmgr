@@ -24,39 +24,7 @@ using namespace efl_viewmgr;
 using namespace viewmgr;
 
 #define MY_VIEWMGR dynamic_cast<ui_viewmgr *>(this->get_viewmgr())
-#define MY_CONTROLLER dynamic_cast<ui_controller *>(this->get_controller()))
-
-static void menu_dismissed_cb(void *data, Evas_Object *obj, void *event_info)
-{
-	evas_object_hide(obj);
-}
-
-static void menu_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
-{
-	ui_view *view = static_cast<ui_view *>(data);
-	view->unset_menu();
-}
-
-static void update_menu(Elm_Win *win, Elm_Ctxpopup *ctxpopup)
-{
-	/* We convince the top widget is a window */
-	Evas_Coord w, h;
-	elm_win_screen_size_get(win, NULL, NULL, &w, &h);
-	int rot = elm_win_rotation_get(win);
-
-	switch (rot)
-	{
-	case 0:
-	case 180:
-		evas_object_move(ctxpopup, (w / 2), h);
-		break;
-	case 90:
-	case 270:
-		evas_object_move(ctxpopup, (h / 2), w);
-		break;
-	}
-	evas_object_show(ctxpopup);
-}
+#define MY_CONTROLLER dynamic_cast<ui_controller *>(this->get_controller())
 
 bool ui_view::destroy_layout()
 {
@@ -117,38 +85,13 @@ bool ui_view::create_layout()
 		}
 	}
 
-	//FIXME: .... ?
-	evas_object_event_callback_add(layout, EVAS_CALLBACK_RESIZE,
-			[](void *data, Evas *e, Evas_Object *obj, void *event_info) -> void
-			{
-				ui_view *view = static_cast<ui_view *>(data);
-				Elm_Ctxpopup *ctxpopup = view->get_menu();
-				if (ctxpopup && evas_object_visible_get(ctxpopup))
-				{
-					update_menu(dynamic_cast<ui_viewmgr *>(view->get_viewmgr())->get_window(), ctxpopup);
-				}
-			},
-			this);
-
-	evas_object_event_callback_add(layout, EVAS_CALLBACK_MOVE,
-			[](void *data, Evas *e, Evas_Object *obj, void *event_info) -> void
-			{
-				ui_view *view = static_cast<ui_view *>(data);
-				Elm_Ctxpopup *ctxpopup = view->get_menu();
-				if (ctxpopup && evas_object_visible_get(ctxpopup))
-				{
-					elm_ctxpopup_dismiss(ctxpopup);
-				}
-			},
-			this);
-
 	this->layout = layout;
 
 	return true;
 }
 
 ui_view::ui_view(ui_controller *controller, const char *name)
-		: ui_base_view(controller, name), layout(NULL), ctxpopup(NULL)
+		: ui_base_view(controller, name), layout(NULL), menu(NULL)
 {
 }
 
@@ -159,7 +102,7 @@ ui_view::ui_view(const char *name)
 
 ui_view::~ui_view()
 {
-	evas_object_del(this->ctxpopup);
+	if (menu) delete(this->menu);
 	destroy_layout();
 }
 
@@ -286,28 +229,6 @@ Evas_Object *ui_view::set_content(Evas_Object *content, const char *title, const
 	return pcontent;
 }
 
-bool ui_view::set_menu(Elm_Ctxpopup *menu)
-{
-	if (this->ctxpopup) evas_object_del(this->ctxpopup);
-
-	//validation!
-	if (strcmp(evas_object_type_get(menu), "elm_ctxpopup"))
-	{
-		LOGE("Menu widget is not a ctxpopup!");
-		return false;
-	}
-
-	//FIXME: rename style.
-	elm_object_style_set(menu, "more/default");
-	elm_ctxpopup_auto_hide_disabled_set(menu, EINA_TRUE);
-	evas_object_smart_callback_add(menu, "dismissed", menu_dismissed_cb, NULL);
-	evas_object_event_callback_add(menu, EVAS_CALLBACK_DEL, menu_del_cb, this);
-
-	this->ctxpopup = menu;
-
-	return true;
-}
-
 bool ui_view::set_toolbar(Elm_Toolbar *toolbar)
 {
 	Elm_Layout *layout = this->get_base();
@@ -349,20 +270,24 @@ void ui_view::unload_content()
 
 void ui_view::on_menu()
 {
-	if (this->ctxpopup && evas_object_visible_get(this->ctxpopup))
+	if (this->menu && this->menu->is_activated())
 	{
-		elm_ctxpopup_dismiss(this->ctxpopup);
+		this->menu->deactivate();
 		return;
 	}
 
 	if (this->get_controller())
 	{
-		(MY_CONTROLLER->on_menu();
+		if (!this->menu)
+		{
+			this->menu = new ui_menu(this);
+		}
+		MY_CONTROLLER->on_menu(this->menu);
 	}
 
-	if (this->ctxpopup)
+	if (this->menu && this->menu->get_content())
 	{
-		update_menu(MY_VIEWMGR->get_window(), this->ctxpopup);
+		this->menu->activate();
 	}
 }
 
@@ -370,15 +295,6 @@ void ui_view::set_event_block(bool block)
 {
 	ui_iface_view::set_event_block(block);
 	evas_object_freeze_events_set(this->get_base(), block);
-}
-
-Elm_Ctxpopup* ui_view::unset_menu()
-{
-	Elm_Ctxpopup *menu = this->ctxpopup;
-	evas_object_event_callback_del(menu, EVAS_CALLBACK_DEL, menu_del_cb);
-	evas_object_smart_callback_del(menu, "dismissed", menu_dismissed_cb);
-	this->ctxpopup = NULL;
-	return menu;
 }
 
 Evas_Object *ui_view::unset_content()

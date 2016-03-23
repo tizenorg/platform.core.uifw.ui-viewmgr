@@ -25,3 +25,4 @@
 #include "ui_view.h"
 #include "ui_key_listener.h"
 #include "ui_viewmgr.h"
+#include "ui_menu.h"

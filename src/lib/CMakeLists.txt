@@ -7,6 +7,7 @@ SET(LIB_SRCS
      efl/ui_base_viewmgr.cpp
      efl/ui_base_key_listener.cpp
      efl/mobile/ui_controller.cpp
+     efl/mobile/ui_menu.cpp
      efl/mobile/ui_view.cpp
      efl/mobile/ui_key_listener.cpp
      efl/mobile/ui_viewmgr.cpp

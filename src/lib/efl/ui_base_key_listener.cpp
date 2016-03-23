@@ -42,6 +42,7 @@ static void event_proc(ui_base_key_listener *key_listener, Evas_Event_Key_Down *
 
 	if (strcmp(ev->keyname, KEY_BACK) && strcmp(ev->keyname, KEY_BACK2)) return;
 
+	//FIXME: cancel menu??
 	view->on_back();
 }
 

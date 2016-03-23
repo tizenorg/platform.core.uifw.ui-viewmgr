@@ -14,21 +14,42 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_CONTROLLER_H
-#define UI_CONTROLLER_H
+#ifndef UI_MENU_H
+#define UI_MENU_H
 
 #include "../ui_viewmanager_base.h"
 
 namespace efl_viewmgr
 {
-class ui_menu;
+class ui_view;
 
-class ui_controller: public ui_base_controller
+class ui_menu
 {
+	friend class ui_view;
+private:
+	ui_view *view;
+	Elm_Ctxpopup *ctxpopup;
+
+	ui_menu(ui_view *view);
+	virtual ~ui_menu();
+
+	Elm_Win *get_window();
+
 public:
-	virtual ~ui_controller();
-	virtual void on_menu(ui_menu *menu);
+	virtual bool activate();
+	virtual bool deactivate();
+	virtual bool set_content(Elm_Ctxpopup* ctxpopup);
+	virtual Elm_Ctxpopup *unset_content();
+
+	virtual Elm_Ctxpopup *get_content()
+	{
+		return this->ctxpopup;
+	}
+
+	virtual bool is_activated();
+	virtual Evas_Object *get_base();
 };
+
 }
 
-#endif /* UI_CONTROLLER_H */
+#endif /* UI_MENU_H */

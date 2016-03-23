@@ -121,14 +121,6 @@ public:
 	 */
 	virtual void on_destroy() = 0;
 
-	/** @brief Back key callback.
-	 *
-	 *  @note In default. current view will be popped by viewmgr in those scenarios
-	 *        that viewmgr is requested to poo the current view.
-	 *        If you return false in the overriding, then popping will be stopped.
-	 */
-	virtual bool on_back() = 0;
-
 	/** @brief View rotate callback.
 	 *
 	 *  @param degree Current rotation degree.
