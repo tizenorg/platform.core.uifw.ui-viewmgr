@@ -14,27 +14,14 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_BASIC_VIEWMGR_H
-#define UI_BASIC_VIEWMGR_H
+#include <dlog.h>
 
-#include <Elementary.h>
-#include "../ui_viewmanager_efl.h"
+#ifdef  LOG_TAG
+#undef  LOG_TAG
+#endif
+#define LOG_TAG "UI_VIEWMGR"
 
-namespace efl_viewmgr
-{
-
-class ui_basic_view;
-
-class ui_basic_viewmgr: public ui_viewmgr
-{
-	friend class ui_basic_view;
-
-public:
-	ui_basic_viewmgr(const char *pkg);
-
-	virtual ~ui_basic_viewmgr();
-
-};
-}
-
-#endif /* UI_BASIC_VIEWMGR_H */
+#include "ui_controller.h"
+#include "ui_view.h"
+#include "ui_key_listener.h"
+#include "ui_viewmgr.h"

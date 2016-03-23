@@ -2,14 +2,14 @@ SET(LIB_SRCS
      interface/ui_iface_controller.cpp
      interface/ui_iface_view.cpp
      interface/ui_iface_viewmgr.cpp
-     efl/ui_controller.cpp
-     efl/ui_view.cpp
-     efl/ui_viewmgr.cpp
-     efl/ui_key_listener.cpp
-     efl/mobile/ui_basic_controller.cpp
-     efl/mobile/ui_basic_view.cpp
-     efl/mobile/ui_basic_key_listener.cpp
-     efl/mobile/ui_basic_viewmgr.cpp
+     efl/ui_base_controller.cpp
+     efl/ui_base_view.cpp
+     efl/ui_base_viewmgr.cpp
+     efl/ui_base_key_listener.cpp
+     efl/mobile/ui_controller.cpp
+     efl/mobile/ui_view.cpp
+     efl/mobile/ui_key_listener.cpp
+     efl/mobile/ui_viewmgr.cpp
     )
 
 ADD_LIBRARY(${LIB_NAME} SHARED ${LIB_SRCS})

@@ -14,43 +14,43 @@
  *  limitations under the License.
  *
  */
-#include "../../include/efl/ui_viewmanager_efl.h"
+#include "../../include/efl/ui_viewmanager_base.h"
 
 using namespace efl_viewmgr;
 using namespace viewmgr;
 
-#define MY_CONTROLLER dynamic_cast<ui_controller *>(this->get_controller())
-#define MY_VIEWMGR dynamic_cast<ui_viewmgr *>(this->get_viewmgr())
+#define MY_CONTROLLER dynamic_cast<ui_base_controller *>(this->get_controller())
+#define MY_VIEWMGR dynamic_cast<ui_base_viewmgr *>(this->get_viewmgr())
 
-ui_view::ui_view(ui_controller *controller, const char *name)
+ui_base_view::ui_base_view(ui_base_controller *controller, const char *name)
 		: ui_iface_view(controller, name)
 {
 }
 
-ui_view::ui_view(const char *name)
-		: ui_view(NULL, name)
+ui_base_view::ui_base_view(const char *name)
+		: ui_base_view(NULL, name)
 {
 }
 
-ui_view::~ui_view()
+ui_base_view::~ui_base_view()
 {
 }
 
-Evas_Object *ui_view::set_content(Evas_Object *content)
+Evas_Object *ui_base_view::set_content(Evas_Object *content)
 {
 	T pcontent = ui_iface_view::set_content(CONVERT_TO_T(content));
 	return CONVERT_TO_EO(pcontent);
 }
 
-Evas_Object *ui_view::unset_content()
+Evas_Object *ui_base_view::unset_content()
 {
 	T pcontent = ui_iface_view::unset_content();
 	return static_cast<Evas_Object *>(pcontent);
 }
 
-Evas_Object *ui_view::get_base()
+Evas_Object *ui_base_view::get_base()
 {
-	ui_viewmgr *viewmgr = MY_VIEWMGR;
+	ui_base_viewmgr *viewmgr = MY_VIEWMGR;
 	if (!viewmgr)
 	{
 		return NULL;
@@ -58,15 +58,15 @@ Evas_Object *ui_view::get_base()
 	return viewmgr->get_base();
 }
 
-void ui_view::unload_content()
+void ui_base_view::unload_content()
 {
 	Evas_Object *pcontent = this->set_content(NULL);
 	if (pcontent) evas_object_del(pcontent);
 }
 
-Evas_Object *ui_view ::get_parent()
+Evas_Object *ui_base_view ::get_parent()
 {
-	ui_viewmgr *viewmgr = MY_VIEWMGR;
+	ui_base_viewmgr *viewmgr = MY_VIEWMGR;
 	if (!viewmgr)
 	{
 		LOGE("Failed to get a viewmgr");
@@ -75,22 +75,22 @@ Evas_Object *ui_view ::get_parent()
 	return viewmgr->get_base();
 }
 
-void ui_view::set_indicator(ui_view_indicator indicator)
+void ui_base_view::set_indicator(ui_view_indicator indicator)
 {
 	if (this->get_indicator() == indicator) return;
 
 	ui_iface_view::set_indicator(indicator);
 
-	ui_viewmgr *viewmgr = MY_VIEWMGR;
+	ui_base_viewmgr *viewmgr = MY_VIEWMGR;
 
 	if (!viewmgr->is_activated()) return;
 
-	if (dynamic_cast<ui_view *>(viewmgr->get_last_view()) != this) return;
+	if (dynamic_cast<ui_base_view *>(viewmgr->get_last_view()) != this) return;
 
 	viewmgr->set_indicator(indicator);
 }
 
-void ui_view::on_back()
+void ui_base_view::on_back()
 {
 	if (this->get_controller())
 	{
@@ -102,7 +102,7 @@ void ui_view::on_back()
 	MY_VIEWMGR->pop_view();
 }
 
-void ui_view::on_rotate(int degree)
+void ui_base_view::on_rotate(int degree)
 {
 	if (this->get_controller())
 	{
@@ -110,7 +110,7 @@ void ui_view::on_rotate(int degree)
 	}
 }
 
-void ui_view::on_portrait()
+void ui_base_view::on_portrait()
 {
 	if (this->get_controller())
 	{
@@ -118,22 +118,22 @@ void ui_view::on_portrait()
 	}
 }
 
-void ui_view::on_landscape()
+void ui_base_view::on_landscape()
 {
 	if (this->get_controller())
 	{
 		MY_CONTROLLER->on_landscape();
 	}
 }
-void ui_view::set_event_block(bool block)
+void ui_base_view::set_event_block(bool block)
 {
 	ui_iface_view::set_event_block(block);
 	evas_object_freeze_events_set(CONVERT_TO_EO(this->get_content()), block);
 }
 
-int ui_view::get_degree()
+int ui_base_view::get_degree()
 {
-	ui_viewmgr *viewmgr = MY_VIEWMGR;
+	ui_base_viewmgr *viewmgr = MY_VIEWMGR;
 	if (!viewmgr)
 	{
 		LOGE("Failed to get a viewmgr");

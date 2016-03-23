@@ -3,14 +3,14 @@ SET(EXAM_SRCS
 	  ../../lib/interface/ui_iface_controller.cpp
 	  ../../lib/interface/ui_iface_view.cpp
 	  ../../lib/interface/ui_iface_viewmgr.cpp
-	  ../../lib/efl/ui_controller.cpp
-	  ../../lib/efl/ui_view.cpp
-	  ../../lib/efl/ui_viewmgr.cpp
-	  ../../lib/efl/ui_key_listener.cpp
-	  ../../lib/efl/mobile/ui_basic_controller.cpp
-	  ../../lib/efl/mobile/ui_basic_view.cpp
-	  ../../lib/efl/mobile/ui_basic_key_listener.cpp
-	  ../../lib/efl/mobile/ui_basic_viewmgr.cpp
+	  ../../lib/efl/ui_base_controller.cpp
+	  ../../lib/efl/ui_base_view.cpp
+	  ../../lib/efl/ui_base_viewmgr.cpp
+	  ../../lib/efl/ui_base_key_listener.cpp
+	  ../../lib/efl/mobile/ui_controller.cpp
+	  ../../lib/efl/mobile/ui_view.cpp
+	  ../../lib/efl/mobile/ui_key_listener.cpp
+	  ../../lib/efl/mobile/ui_viewmgr.cpp
 	  main.cpp
    )
 

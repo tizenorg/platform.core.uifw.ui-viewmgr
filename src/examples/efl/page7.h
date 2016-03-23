@@ -14,7 +14,7 @@
  *  limitations under the License.
  *
  */
-class page7: public ui_basic_controller
+class page7: public ui_controller
 {
 private:
 	appdata_s *ad;
@@ -23,10 +23,10 @@ public:
 	page7(appdata_s *ad)
 		: ad(ad)
 	{
-		/* ui_basic_view(controller, identity name, style name of view).
+		/* ui_view(controller, identity name, style name of view).
 		   Later, you could get the identity name using view->get_name();
 		   you could get the style name of view as well */
-		ui_basic_view *view = new ui_basic_view(this, "page7");
+		ui_view *view = new ui_view(this, "page7");
 
 		//FIXME: It will be deleted or change to other way :(
 		//       We don't have any way to support it now.

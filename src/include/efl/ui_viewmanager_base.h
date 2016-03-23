@@ -14,19 +14,15 @@
  *  limitations under the License.
  *
  */
-#include "../../include/efl/ui_viewmanager_efl.h"
+#include <dlog.h>
 
-using namespace efl_viewmgr;
-using namespace viewmgr;
+#ifdef  LOG_TAG
+#undef  LOG_TAG
+#endif
+#define LOG_TAG "UI_VIEWMGR"
 
-ui_view * ui_controller::get_view()
-{
-	ui_iface_view *view = ui_iface_controller::get_view();
-	if (!view) return NULL;
-	return dynamic_cast<ui_view *>(view);
-}
+#include "ui_base_viewmgr.h"
+#include "ui_base_controller.h"
+#include "ui_base_view.h"
+#include "ui_base_key_listener.h"
 
-ui_controller::~ui_controller()
-{
-
-}

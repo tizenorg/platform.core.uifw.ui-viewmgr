@@ -14,24 +14,19 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_BASIC_KEY_HANDLER_H
-#define UI_BASIC_KEY_HANDLER_H
+#ifndef UI_CONTROLLER_H
+#define UI_CONTROLLER_H
 
-#include "../ui_viewmanager_efl.h"
+#include "../ui_viewmanager_base.h"
 
 namespace efl_viewmgr
 {
-class ui_viewmgr;
-
-class ui_basic_key_listener : public ui_key_listener
+class ui_controller: public ui_base_controller
 {
 public:
-	ui_basic_key_listener(ui_viewmgr *viewmgr);
-
-	virtual bool init();
-	virtual void extend_event_proc(ui_view *view, Evas_Event_Key_Down *ev);
+	virtual ~ui_controller();
+	virtual bool on_menu();
 };
-
 }
 
-#endif /* UI_BASIC_KEY_HANDLER_H */
+#endif /* UI_CONTROLLER_H */

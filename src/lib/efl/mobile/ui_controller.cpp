@@ -14,16 +14,16 @@
  *  limitations under the License.
  *
  */
-#include "../../../include/efl/mobile/ui_viewmanager_mobile.h"
+#include "../../../include/efl/mobile/ui_viewmanager.h"
 
 using namespace efl_viewmgr;
 using namespace viewmgr;
 
-ui_basic_controller::~ui_basic_controller()
+ui_controller::~ui_controller()
 {
 }
 
-bool ui_basic_controller::on_menu()
+bool ui_controller::on_menu()
 {
 	return true;
 }

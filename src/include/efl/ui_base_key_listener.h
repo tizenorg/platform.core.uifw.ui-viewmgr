@@ -14,34 +14,34 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_KEY_LISTENER_H
-#define UI_KEY_LISTENER_H
+#ifndef UI_BASE_KEY_LISTENER_H
+#define UI_BASE_KEY_LISTENER_H
 
 #include <Elementary.h>
 #include "../interface/ui_viewmanager_interface.h"
 
 namespace efl_viewmgr
 {
-class ui_viewmgr;
-class ui_view;
+class ui_base_viewmgr;
+class ui_base_view;
 
-class ui_key_listener
+class ui_base_key_listener
 {
 protected:
-	ui_viewmgr *viewmgr;
+	ui_base_viewmgr *viewmgr;
 	Evas_Object *key_grabber;
 
 public:
-	ui_key_listener(ui_viewmgr *viewmgr);
-	virtual ~ui_key_listener() {}
+	ui_base_key_listener(ui_base_viewmgr *viewmgr);
+	virtual ~ui_base_key_listener() {}
 
 	virtual bool init();
 	virtual bool term();
-	virtual void extend_event_proc(ui_view *view, Evas_Event_Key_Down *ev) {}
+	virtual void extend_event_proc(ui_base_view *view, Evas_Event_Key_Down *ev) {}
 
-	ui_viewmgr *get_viewmgr() { return this->viewmgr; }
+	ui_base_viewmgr *get_viewmgr() { return this->viewmgr; }
 };
 
 }
 
-#endif /* UI_KEY_LISTENER_H */
+#endif /* UI_BASE_KEY_LISTENER_H */

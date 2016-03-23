@@ -14,7 +14,7 @@
  *  limitations under the License.
  *
  */
-#include "../../include/efl/ui_viewmanager_efl.h"
+#include "../../include/efl/ui_viewmanager_base.h"
 
 using namespace efl_viewmgr;
 using namespace viewmgr;
@@ -22,20 +22,20 @@ using namespace viewmgr;
 static const char *KEY_BACK = "XF86Back";
 static const char *KEY_BACK2 = "XF86Stop";
 
-ui_key_listener::ui_key_listener(ui_viewmgr *viewmgr)
+ui_base_key_listener::ui_base_key_listener(ui_base_viewmgr *viewmgr)
 		: viewmgr(viewmgr), key_grabber(NULL)
 {
 
 }
 
-static void event_proc(ui_key_listener *key_listener, Evas_Event_Key_Down *ev)
+static void event_proc(ui_base_key_listener *key_listener, Evas_Event_Key_Down *ev)
 {
 	//Only if view manager is activated
-	ui_viewmgr *viewmgr = key_listener->get_viewmgr();
+	ui_base_viewmgr *viewmgr = key_listener->get_viewmgr();
 	if (!viewmgr->is_activated()) return;
 
 	//Get Top View
-	ui_view *view = dynamic_cast<ui_view *>(viewmgr->get_last_view());
+	ui_base_view *view = dynamic_cast<ui_base_view *>(viewmgr->get_last_view());
 	if (!view) return;
 
 	key_listener->extend_event_proc(view, ev);
@@ -45,13 +45,13 @@ static void event_proc(ui_key_listener *key_listener, Evas_Event_Key_Down *ev)
 	view->on_back();
 }
 
-bool ui_key_listener::term()
+bool ui_base_key_listener::term()
 {
 	evas_object_del(this->key_grabber);
 	return true;
 }
 
-bool ui_key_listener::init()
+bool ui_base_key_listener::init()
 {
 	if (!this->viewmgr)
 	{
@@ -76,7 +76,7 @@ bool ui_key_listener::init()
 	evas_object_event_callback_add(key_grab_rect, EVAS_CALLBACK_KEY_UP, [](void *data, Evas *e, Evas_Object *obj, void *event_info) -> void
 	{
 		Evas_Event_Key_Down *ev = static_cast<Evas_Event_Key_Down *>(event_info);
-		ui_key_listener *key_listener = static_cast<ui_key_listener *>(data);
+		ui_base_key_listener *key_listener = static_cast<ui_base_key_listener *>(data);
 		event_proc(key_listener, ev);
 	}, this);
 

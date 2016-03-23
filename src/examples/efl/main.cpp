@@ -109,7 +109,7 @@ create_content(Evas_Object *parent, const char *text, Evas_Smart_Cb prev_btn_cli
 static void create_base_gui(appdata_s *ad)
 {
 	//FIXME: Hide this creation.
-	ad->viewmgr = new ui_basic_viewmgr(PACKAGE);
+	ad->viewmgr = new ui_viewmgr(PACKAGE);
 
 	create_page1(ad);
 

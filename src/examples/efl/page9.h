@@ -14,14 +14,14 @@
  *  limitations under the License.
  *
  */
-class page9: public ui_basic_view
+class page9: public ui_view
 {
 private:
 	appdata_s *ad;
 
 public:
 	page9(const char *name, appdata_s *ad)
-		: ui_basic_view(name), ad(ad)
+		: ui_view(name), ad(ad)
 	{
 		//FIXME: It will be deleted or change to other way :(
 		//       We don't have any way to support it now.

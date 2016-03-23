@@ -16,13 +16,13 @@
  */
 static void ctxpopup_item_select_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	ui_basic_view *view = static_cast<ui_basic_view *>(data);
+	ui_view *view = static_cast<ui_view *>(data);
 	Elm_Object_Item *it = static_cast<Elm_Object_Item *>(event_info);
 	elm_ctxpopup_dismiss(obj);
 	LOGE("Item (%s) is selected", elm_object_item_text_get(it));
 }
 
-class page1: public ui_basic_controller
+class page1: public ui_controller
 {
 private:
 	appdata_s *ad;
@@ -31,9 +31,9 @@ public:
 	page1(appdata_s *ad)
 			: ad(ad)
 	{
-		/* ui_basic_view(controller, identity name).
+		/* ui_view(controller, identity name).
 		   Later, you could get the identity name using view->get_name(); */
-		ad->viewmgr->push_view(new ui_basic_view(this, "page1"));
+		ad->viewmgr->push_view(new ui_view(this, "page1"));
 	}
 	~page1()
 	{
@@ -43,7 +43,7 @@ public:
 	{
 		//Initialize contents.
 
-		ui_basic_view *view = dynamic_cast<ui_basic_view *>(this->get_view());
+		ui_view *view = dynamic_cast<ui_view *>(this->get_view());
 
 		//Check the current rotation for set portrait or landscape content if any.
 		LOGE("view 1 load rotation = %d\n", view->get_degree());
@@ -69,7 +69,7 @@ public:
 
 	bool on_menu()
 	{
-		ui_basic_view *view = dynamic_cast<ui_basic_view *>(this->get_view());
+		ui_view *view = dynamic_cast<ui_view *>(this->get_view());
 
 		Elm_Ctxpopup *ctxpopup = elm_ctxpopup_add(view->get_base());
 		elm_ctxpopup_item_append(ctxpopup, "Phone calls", NULL, ctxpopup_item_select_cb, this);
