@@ -26,6 +26,17 @@ using namespace viewmgr;
 #define MY_VIEWMGR dynamic_cast<ui_viewmgr *>(this->get_viewmgr())
 #define MY_CONTROLLER dynamic_cast<ui_controller *>(this->get_controller()))
 
+static void menu_dismissed_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	evas_object_hide(obj);
+}
+
+static void menu_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+	ui_view *view = static_cast<ui_view *>(data);
+	view->unset_menu();
+}
+
 static void update_menu(Elm_Win *win, Elm_Ctxpopup *ctxpopup)
 {
 	/* We convince the top widget is a window */
@@ -289,19 +300,8 @@ bool ui_view::set_menu(Elm_Ctxpopup *menu)
 	//FIXME: rename style.
 	elm_object_style_set(menu, "more/default");
 	elm_ctxpopup_auto_hide_disabled_set(menu, EINA_TRUE);
-	evas_object_smart_callback_add(menu, "dismissed",
-			[](void *data, Evas_Object *obj, void *event_info) -> void
-			{
-				evas_object_hide(obj);
-			},
-			NULL);
-	evas_object_event_callback_add(menu, EVAS_CALLBACK_DEL,
-			[](void *data, Evas *e, Evas_Object *obj, void *event_info) -> void
-			{
-				ui_view *view = static_cast<ui_view *>(data);
-				view->unset_menu();
-			},
-			this);
+	evas_object_smart_callback_add(menu, "dismissed", menu_dismissed_cb, NULL);
+	evas_object_event_callback_add(menu, EVAS_CALLBACK_DEL, menu_del_cb, this);
 
 	this->ctxpopup = menu;
 
@@ -375,7 +375,8 @@ void ui_view::set_event_block(bool block)
 Elm_Ctxpopup* ui_view::unset_menu()
 {
 	Elm_Ctxpopup *menu = this->ctxpopup;
-	//FIXME: cancel callbacks
+	evas_object_event_callback_del(menu, EVAS_CALLBACK_DEL, menu_del_cb);
+	evas_object_smart_callback_del(menu, "dismissed", menu_dismissed_cb);
 	this->ctxpopup = NULL;
 	return menu;
 }
