@@ -42,6 +42,12 @@ Evas_Object *ui_view::set_content(Evas_Object *content)
 	return CONVERT_TO_EO(pcontent);
 }
 
+Evas_Object *ui_view::unset_content()
+{
+	T pcontent = ui_iface_view::unset_content();
+	return static_cast<Evas_Object *>(pcontent);
+}
+
 Evas_Object *ui_view::get_base()
 {
 	ui_viewmgr *viewmgr = MY_VIEWMGR;

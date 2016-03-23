@@ -83,6 +83,12 @@ public:
 	 */
 	virtual Evas_Object *set_content(Evas_Object *content);
 
+	/** @brief This is for unsetting a content of the view.
+	 *
+	 *  @return A previous content. If it wasn't, return value will be @c NULL.
+	 */
+	virtual Evas_Object *unset_content();
+
 	/**  @brief Get a base layout of viewmgr.
 	 */
 	virtual Evas_Object *get_base();

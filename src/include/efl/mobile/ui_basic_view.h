@@ -51,7 +51,11 @@ public:
 	bool set_title(const char *text);
 	bool set_toolbar(Elm_Toolbar *toolbar);
 	bool set_menu(Elm_Ctxpopup *menu);
-	Elm_Ctxpopup * unset_menu();
+	Elm_Ctxpopup *unset_menu();
+	Evas_Object *unset_content();
+	Elm_Button *unset_title_left_btn();
+	Elm_Button *unset_title_right_btn();
+	Elm_Toolbar *unset_toolbar();
 
 	virtual void on_menu();
 
