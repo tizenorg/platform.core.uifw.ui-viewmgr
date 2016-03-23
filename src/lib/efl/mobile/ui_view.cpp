@@ -117,10 +117,9 @@ void ui_view::on_unload()
 	ui_base_view::on_unload();
 }
 
-Evas_Object *
-ui_view::set_content(Evas_Object *content, const char *title)
+bool ui_view::set_content(Evas_Object *content, const char *title)
 {
-	Evas_Object *pcontent = ui_base_view::set_content(content);
+	ui_base_view::set_content(content);
 
 	if (this->layout)
 	{
@@ -131,9 +130,10 @@ ui_view::set_content(Evas_Object *content, const char *title)
 	else
 	{
 		LOGE("Layout is not exist!");
+		return false;
 	}
 
-	return pcontent;
+	return true;
 }
 
 bool ui_view::set_subtitle(const char *text)
@@ -209,10 +209,10 @@ bool ui_view::set_title(const char *text)
 	return false;
 }
 
-Evas_Object *ui_view::set_content(Evas_Object *content, const char *title, const char *subtitle, Elm_Button *title_left_btn,
+bool ui_view::set_content(Evas_Object *content, const char *title, const char *subtitle, Elm_Button *title_left_btn,
         Elm_Button *title_right_btn)
 {
-	Evas_Object *pcontent = this->set_content(content);
+	if (!this->set_content(content)) return false;
 
 	if (this->layout)
 	{
@@ -224,9 +224,10 @@ Evas_Object *ui_view::set_content(Evas_Object *content, const char *title, const
 	else
 	{
 		LOGE("Layout is not exist!");
+		return false;
 	}
 
-	return pcontent;
+	return true;
 }
 
 bool ui_view::set_toolbar(Elm_Toolbar *toolbar)

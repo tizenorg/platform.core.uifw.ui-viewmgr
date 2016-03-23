@@ -46,8 +46,8 @@ public:
 	ui_view(const char *name = NULL);
 	virtual ~ui_view();
 
-	Evas_Object *set_content(Evas_Object *content, const char *title = NULL);
-	Evas_Object *set_content(Evas_Object *content, const char *title, const char *subtitle, Elm_Button *title_left_btn, Elm_Button *title_right_btn);
+	bool set_content(Evas_Object *content, const char *title = NULL);
+	bool set_content(Evas_Object *content, const char *title, const char *subtitle, Elm_Button *title_left_btn, Elm_Button *title_right_btn);
 	bool set_title_badge(const char *text);
 	bool set_subtitle(const char *text);
 	bool set_title_left_btn(Elm_Button *title_left_btn);

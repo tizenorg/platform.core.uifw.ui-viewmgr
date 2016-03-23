@@ -36,16 +36,19 @@ ui_base_view::~ui_base_view()
 {
 }
 
-Evas_Object *ui_base_view::set_content(Evas_Object *content)
+bool ui_base_view::set_content(Evas_Object *content)
 {
-	T pcontent = ui_iface_view::set_content(CONVERT_TO_T(content));
-	return CONVERT_TO_EO(pcontent);
+	T pcontent = this->get_content();
+	if (pcontent) evas_object_del(CONVERT_TO_EO(pcontent));
+	if (content) ui_iface_view::set_content(CONVERT_TO_T(content));
+	else ui_iface_view::set_content(NULL);
+	return true;
 }
 
 Evas_Object *ui_base_view::unset_content()
 {
 	T pcontent = ui_iface_view::unset_content();
-	return static_cast<Evas_Object *>(pcontent);
+	return CONVERT_TO_EO(pcontent);
 }
 
 Evas_Object *ui_base_view::get_base()
@@ -58,10 +61,12 @@ Evas_Object *ui_base_view::get_base()
 	return viewmgr->get_base();
 }
 
+//FIXME: seems it could be replaced with set_content(NULL);
 void ui_base_view::unload_content()
 {
-	Evas_Object *pcontent = this->set_content(NULL);
-	if (pcontent) evas_object_del(pcontent);
+	T pcontent = this->get_content();
+	if (pcontent) evas_object_del(CONVERT_TO_EO(pcontent));
+	this->set_content(NULL);
 }
 
 Evas_Object *ui_base_view ::get_parent()

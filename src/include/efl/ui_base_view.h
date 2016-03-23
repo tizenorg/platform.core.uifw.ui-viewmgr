@@ -81,7 +81,7 @@ public:
 	 *
 	 *  @return A previous content. If it wasn't, return value will be @c NULL.
 	 */
-	virtual Evas_Object *set_content(Evas_Object *content);
+	virtual bool set_content(Evas_Object *content);
 
 	/** @brief This is for unsetting a content of the view.
 	 *
