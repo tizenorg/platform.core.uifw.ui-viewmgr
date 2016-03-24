@@ -59,6 +59,7 @@ cp %{_builddir}/%{buildsubdir}/LICENSE %{buildroot}/usr/share/license/%{name}
 %defattr(-,root,root,-)
 %{_libdir}/libui-viewmgr.so.*
 %manifest %{name}.manifest
+%{_datadir}/ui-viewmgr/images/*
 /usr/share/license/%{name}
 /usr/share/edje/ui-viewmgr/ui-viewmgr.edj
 
