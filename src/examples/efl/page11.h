@@ -21,50 +21,6 @@ private:
 	appdata_s *ad;
 
 protected:
-	Evas_Object *create_page11_content(bool is_portrait)
-	{
-		Evas_Object *content;
-
-		if (is_portrait)
-		{
-			//Create portrait content.
-			content = create_content(this->get_base(), "ViewMgr Demo<br>Page 11 (View inheritance)<br>With on_rotate()",
-					//Prev Button Callback
-					[](void *data, Evas_Object *obj, void *event_info) -> void
-					{
-						appdata_s *ad = static_cast<appdata_s *>(data);
-						ad->viewmgr->pop_view();
-					},
-					//Next Button Callback
-					[](void *data, Evas_Object *obj, void *event_info) -> void
-					{
-						appdata_s *ad = static_cast<appdata_s *>(data);
-						ad->viewmgr->deactivate();
-					},
-					this->ad);
-		}
-		else
-		{
-			//Create landscape content.
-			content = create_landscape_content(this->get_base(), "ViewMgr Demo<br>Page 11 (View inheritance)<br>With on_rotate()",
-					//Prev Button Callback
-					[](void *data, Evas_Object *obj, void *event_info) -> void
-					{
-						appdata_s *ad = static_cast<appdata_s *>(data);
-						ad->viewmgr->pop_view();
-					},
-					//Next Button Callback
-					[](void *data, Evas_Object *obj, void *event_info) -> void
-					{
-						appdata_s *ad = static_cast<appdata_s *>(data);
-						ad->viewmgr->deactivate();
-					},
-					this->ad);
-		}
-
-		return content;
-	}
-
 	virtual void on_load()
 	{
 		this->on_rotate(this->get_degree());
@@ -72,16 +28,42 @@ protected:
 
 	virtual void on_rotate(int degree)
 	{
-		Evas_Object *content;
-
+		//Portrait
 		if (this->get_degree() == 0 || this->get_degree() == 180)
 		{
-			content = this->create_page11_content(true);
+			Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Page 11 (View inheritance)<br>With on_rotate()",
+					//Prev Button Callback
+			        [](void *data, Evas_Object *obj, void *event_info) -> void
+			        {
+				        appdata_s *ad = static_cast<appdata_s *>(data);
+				        ad->viewmgr->pop_view();
+			        },
+			        //Next Button Callback
+			        [](void *data, Evas_Object *obj, void *event_info) -> void
+			        {
+				        appdata_s *ad = static_cast<appdata_s *>(data);
+						ad->viewmgr->deactivate();
+			        },
+			        this->ad);
 			this->set_content(content, "Title Portrait");
 		}
+		//Landscape
 		else
 		{
-			content = this->create_page11_content(false);
+			Evas_Object *content = create_landscape_content(this->get_base(), "ViewMgr Demo<br>Page 11 (View inheritance)<br>With on_rotate()",
+					//Prev Button Callback
+			        [](void *data, Evas_Object *obj, void *event_info) -> void
+			        {
+				        appdata_s *ad = static_cast<appdata_s *>(data);
+				        ad->viewmgr->pop_view();
+			        },
+			        //Next Button Callback
+			        [](void *data, Evas_Object *obj, void *event_info) -> void
+			        {
+				        appdata_s *ad = static_cast<appdata_s *>(data);
+						ad->viewmgr->deactivate();
+			        },
+			        this->ad);
 			this->set_content(content, "Title Landscape");
 		}
 	}
