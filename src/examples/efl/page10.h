@@ -47,7 +47,7 @@ public:
 	void on_portrait()
 	{
 		ui_view *view = dynamic_cast<ui_view *>(this->get_view());
-		Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 10 With<br>on_portrait(), on_landscape()",
+		Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 10<br>(Portrait + Landscape)",
 								//Prev Button Callback
 						        [](void *data, Evas_Object *obj, void *event_info) -> void
 						        {
@@ -61,13 +61,13 @@ public:
 							        create_page11(ad);
 						        },
 						        this->ad);
-		view->set_content(content, "Title Portrait");
+		view->set_content(content, "Title");
 	}
 
 	void on_landscape()
 	{
 		ui_view *view = dynamic_cast<ui_view *>(this->get_view());
-		Evas_Object *content = create_landscape_content(view->get_base(), "ViewMgr Demo<br>Page 10 With<br>on_portrait(), on_landscape()",
+		Evas_Object *content = create_landscape_content(view->get_base(), "ViewMgr Demo<br>Page 10<br>(Portrait + Landscape)",
 				//Prev Button Callback
 		        [](void *data, Evas_Object *obj, void *event_info) -> void
 		        {
@@ -81,7 +81,7 @@ public:
 			        create_page11(ad);
 		        },
 		        this->ad);
-		view->set_content(content, "Title Landscape");
+		view->set_content(content, "Title");
 	}
 
 };
