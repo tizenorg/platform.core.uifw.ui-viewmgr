@@ -114,6 +114,19 @@ bool ui_view::create_layout()
 	return true;
 }
 
+void ui_view::on_back()
+{
+	if (this->menu)
+	{
+		if (this->menu->is_activated())
+		{
+			this->menu->deactivate();
+			return;
+		}
+	}
+	ui_base_view ::on_back();
+}
+
 ui_view::ui_view(ui_controller *controller, const char *name)
 		: ui_base_view(controller, name), layout(NULL), menu(NULL)
 {

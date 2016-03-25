@@ -27,6 +27,8 @@ class ui_base_view;
 
 class ui_base_key_listener
 {
+	friend class ui_base_view;
+
 protected:
 	ui_base_viewmgr *viewmgr;
 	Evas_Object *key_grabber;
