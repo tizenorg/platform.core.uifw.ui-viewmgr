@@ -108,12 +108,16 @@ bool ui_menu::deactivate()
 		return false;
 	}
 
+	this->view->on_resume();
+
 	return true;
 }
 
 bool ui_menu::activate()
 {
-	return update_menu(this);
+	bool ret = update_menu(this);
+	if (ret) this->view->on_pause();
+	return ret;
 }
 
 bool ui_menu::set_content(Elm_Ctxpopup *ctxpopup)
