@@ -52,8 +52,8 @@ private:
 	{
 		UI_VIEW_STATE_LOAD = 0,        ///< Load state
 		UI_VIEW_STATE_UNLOAD,          ///< Unload state
-		UI_VIEW_STATE_ACTIVE,          ///< Active state
-		UI_VIEW_STATE_INACTIVE,        ///< Inactive state
+		UI_VIEW_STATE_ACTIVATE,        ///< Activate state
+		UI_VIEW_STATE_DEACTIVATE,      ///< Deactivate state
 		UI_VIEW_STATE_PAUSE,           ///< Pause state
 		UI_VIEW_STATE_LAST
 	};
@@ -95,21 +95,21 @@ protected:
 	 */
 	virtual void on_unload();
 
-	/** @brief view active state.
+	/** @brief view activate state.
 	 *
 	 *  @note this state will be triggered by ui_iface_viewmgr.
 	 *
 	 *  @see ui_iface_controller for this state in detail.
 	 */
-	virtual void on_active();
+	virtual void on_activate();
 
-	/** @brief view inactive state.
+	/** @brief view deactivate state.
 	 *
 	 *  @note this state will be triggered by ui_iface_viewmgr.
 	 *
 	 *  @see ui_iface_controller for this state in detail.
 	 */
-	virtual void on_inactive();
+	virtual void on_deactivate();
 
 	/** @brief view pause state.
 	 *

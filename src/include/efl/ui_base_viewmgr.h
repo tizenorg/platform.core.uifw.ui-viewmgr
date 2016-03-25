@@ -100,7 +100,7 @@ private:
 	 */
 	bool set_indicator(ui_view_indicator indicator);
 
-	void active_top_view();
+	void activate_top_view();
 
 protected:
 	ui_base_viewmgr(const char *pkg, ui_base_key_listener *key_listener);

@@ -67,8 +67,8 @@ bool ui_iface_viewmgr::push_view_finished(ui_iface_view *view)
 		return true;
 	}
 
-	//A new view has been pushed. This should be active.
-	view->on_active();
+	//A new view has been pushed. This should be activate.
+	view->on_activate();
 	this->set_event_block(view, false);
 
 	return true;
@@ -87,8 +87,8 @@ bool ui_iface_viewmgr::pop_view_finished(ui_iface_view *view)
 		return true;
 	}
 
-	//The previous view has been popped. It should become active.
-	view->on_active();
+	//The previous view has been popped. It should become activate.
+	view->on_activate();
 	this->set_event_block(view, false);
 
 	return true;
@@ -105,7 +105,7 @@ ui_iface_viewmgr::~ui_iface_viewmgr()
 	for (typename std::list<ui_iface_view*>::reverse_iterator it = this->view_list.rbegin(); it != this->view_list.rend(); it++)
 	{
 		ui_iface_view *view = *it;
-		view->on_inactive();
+		view->on_deactivate();
 		view->on_unload();
 		view->on_destroy();
 		delete (view);
@@ -136,7 +136,7 @@ ui_iface_viewmgr::push_view(ui_iface_view *view)
 	if (this->view_list.size() > 0)
 	{
 		pview = this->view_list.back();
-		pview->on_inactive();
+		pview->on_deactivate();
 		this->set_event_block(pview, true);
 	}
 
@@ -147,7 +147,7 @@ ui_iface_viewmgr::push_view(ui_iface_view *view)
 		view->on_load();
 	}
 
-	view->on_inactive();
+	view->on_deactivate();
 
 	//FIXME: First view has no effect?
 	if (this->view_list.size() != 1) this->set_event_block(view, true);
@@ -169,7 +169,7 @@ bool ui_iface_viewmgr::pop_view()
 	{
 		//destroy viewmgr?
 		ui_iface_view *view = this->view_list.back();
-		view->on_inactive();
+		view->on_deactivate();
 		view->on_unload();
 		view->on_destroy();
 		delete(view);
@@ -179,16 +179,16 @@ bool ui_iface_viewmgr::pop_view()
 
 	//last page to be popped.
 	ui_iface_view *view = this->view_list.back();
-	view->on_inactive();
+	view->on_deactivate();
 	this->set_event_block(view, true);
 
 	//Below object has to be used in child class...
 	//Make this getter method? or define instance?
-	//previous page to be current active.
+	//previous page is to be active page.
 	auto nx = std::prev(this->view_list.end(), 2);
 	ui_iface_view *pview = *nx;
 	pview->on_load();
-	pview->on_inactive();
+	pview->on_deactivate();
 	this->set_event_block(pview, true);
 
 	return true;

@@ -100,7 +100,7 @@ Elm_Layout *ui_base_viewmgr::set_transition_layout(string transition_style)
 	return this->layout;
 }
 
-void ui_base_viewmgr::active_top_view()
+void ui_base_viewmgr::activate_top_view()
 {
 	elm_object_part_content_unset(this->get_base(), "content");
 
@@ -281,11 +281,11 @@ bool ui_base_viewmgr::activate()
 {
 	if (!ui_iface_viewmgr::activate()) return false;
 
-	this->active_top_view();
+	this->activate_top_view();
 
 	//FIXME: Necessary??
 	ui_base_view *view = this->get_last_view();
-	view->on_active();
+	view->on_activate();
 
 	evas_object_show(this->win);
 
@@ -300,7 +300,7 @@ bool ui_base_viewmgr::deactivate()
 	if (true)
 	{
 		ui_base_view *view = this->get_last_view();
-		if (view) view->on_inactive();
+		if (view) view->on_deactivate();
 		evas_object_lower(this->win);
 	}
 	else
@@ -333,7 +333,7 @@ bool ui_base_viewmgr::pop_view()
 	{
 		this->pop_view_finished(pview);
 		this->pop_view_finished(view);
-		this->active_top_view();
+		this->activate_top_view();
 		return true;
 	}
 
@@ -343,7 +343,7 @@ bool ui_base_viewmgr::pop_view()
 		LOGE("invalid effect transition style?! = %s", view->get_transition_style());
 		this->pop_view_finished(pview);
 		this->pop_view_finished(view);
-		this->active_top_view();
+		this->activate_top_view();
 		return true;
 	}
 
@@ -369,7 +369,7 @@ ui_base_view * ui_base_viewmgr::push_view(ui_base_view *view)
 
 	//In case, if viewmgr has one view, we skip effect.
 	if (this->get_view_count() == 1) {
-		this->active_top_view();
+		this->activate_top_view();
 		this->push_view_finished(view);
 		return view;
 	}
@@ -378,7 +378,7 @@ ui_base_view * ui_base_viewmgr::push_view(ui_base_view *view)
 
 	//In case, if view doesn't have transition effect
 	if (!strcmp(view->get_transition_style(), "none")) {
-		this->active_top_view();
+		this->activate_top_view();
 		this->push_view_finished(pview);
 		this->push_view_finished(view);
 		return view;
@@ -388,7 +388,7 @@ ui_base_view * ui_base_viewmgr::push_view(ui_base_view *view)
 	Elm_Layout *effect = this->set_transition_layout(view->get_transition_style());
 	if (!effect) {
 		LOGE("invalid effect transition style?! = %s", view->get_transition_style());
-		this->active_top_view();
+		this->activate_top_view();
 		this->push_view_finished(pview);
 		this->push_view_finished(view);
 		return view;
