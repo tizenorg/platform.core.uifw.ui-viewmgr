@@ -43,6 +43,7 @@ protected:
 	virtual void on_menu();
 	virtual void unload_content();
 	virtual void set_event_block(bool block);
+	virtual void on_back();
 
 public:
 	ui_view(ui_controller *controller, const char *name = NULL);

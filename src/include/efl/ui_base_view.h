@@ -66,6 +66,18 @@ protected:
 	 */
 	virtual void set_event_block(bool block);
 
+	/** @brief This is for calling controller's rotate method.
+	 */
+	virtual void on_rotate(int degree);
+
+	/** @brief This is for calling controller's portrait method.
+	 */
+	virtual void on_portrait();
+
+	/** @brief This is for calling controller's landscape method.
+	 */
+	virtual void on_landscape();
+
 public:
 	///Constructor.
 	ui_base_view(ui_base_controller *controller, const char *name = NULL);
@@ -95,19 +107,9 @@ public:
 
 	/** @brief This is for calling controller's back method.
 	 */
+	//FIXME: public?
 	virtual void on_back();
 
-	/** @brief This is for calling controller's rotate method.
-	 */
-	virtual void on_rotate(int degree);
-
-	/** @brief This is for calling controller's portrait method.
-	 */
-	virtual void on_portrait();
-
-	/** @brief This is for calling controller's landscape method.
-	 */
-	virtual void on_landscape();
 	/** @brief Set the indicator mode.
 	 *
 	 *  @param indicator The mode to set, one of #ui_base_view_indicator.
