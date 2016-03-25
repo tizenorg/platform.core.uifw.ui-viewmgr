@@ -29,6 +29,9 @@ class ui_view: public ui_base_view
 
 private:
 	Elm_Layout *layout;                //Base layout for view
+	Elm_Toolbar *toolbar;              //Toolbar
+	Elm_Button *title_left_btn;        //Title left button
+	Elm_Button *title_right_btn;       //Title right button
 	ui_menu *menu;                     //Menu
 
 	bool create_layout();
@@ -63,6 +66,21 @@ public:
 	{
 		if (!this->layout)this->create_layout();
 		return this->layout;
+	}
+
+	const Elm_Button *get_title_left_btn()
+	{
+		return this->title_left_btn;
+	}
+
+	const Elm_Button *get_title_right_btn()
+	{
+		return this->title_right_btn;
+	}
+
+	const Elm_Toolbar *get_toolbar()
+	{
+		return this->toolbar;
 	}
 
 	const ui_menu *get_menu()

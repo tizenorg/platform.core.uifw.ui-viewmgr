@@ -26,6 +26,30 @@ using namespace viewmgr;
 #define MY_VIEWMGR dynamic_cast<ui_viewmgr *>(this->get_viewmgr())
 #define MY_CONTROLLER dynamic_cast<ui_controller *>(this->get_controller())
 
+static void content_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+	ui_view *view = static_cast<ui_view *>(data);
+	view->unset_content();
+}
+
+static void title_left_btn_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+	ui_view *view = static_cast<ui_view *>(data);
+	view->unset_title_left_btn();
+}
+
+static void title_right_btn_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+	ui_view *view = static_cast<ui_view *>(data);
+	view->unset_title_right_btn();
+}
+
+static void toolbar_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+	ui_view *view = static_cast<ui_view *>(data);
+	view->unset_toolbar();
+}
+
 bool ui_view::destroy_layout()
 {
 	if (!this->layout) return false;
@@ -133,6 +157,8 @@ bool ui_view::set_content(Evas_Object *content, const char *title)
 		return false;
 	}
 
+	evas_object_event_callback_add(this->layout, EVAS_CALLBACK_DEL, content_del_cb, this);
+
 	return true;
 }
 
@@ -160,6 +186,11 @@ bool ui_view::set_title_left_btn(Elm_Button *title_left_btn)
 		elm_object_part_content_set(this->layout, "title_left_btn", title_left_btn);
 		if (title_left_btn) elm_object_signal_emit(this->layout, "elm,state,title_left_btn,show", "elm");
 		else elm_object_signal_emit(this->layout, "elm,state,title_left_btn,hide", "elm");
+
+		this->title_left_btn = title_left_btn;
+
+		evas_object_event_callback_add(this->title_left_btn, EVAS_CALLBACK_DEL, title_left_btn_del_cb, this);
+
 		return true;
 	}
 	LOGE("Layout is not exist!");
@@ -177,6 +208,11 @@ bool ui_view::set_title_right_btn(Elm_Button *title_right_btn)
 		elm_object_part_content_set(this->layout, "title_right_btn", title_right_btn);
 		if (title_right_btn) elm_object_signal_emit(this->layout, "elm,state,title_right_btn,show", "elm");
 		else elm_object_signal_emit(this->layout, "elm,state,title_right_btn,hide", "elm");
+
+		this->title_right_btn = title_right_btn;
+
+		evas_object_event_callback_add(this->title_right_btn, EVAS_CALLBACK_DEL, title_right_btn_del_cb, this);
+
 		return true;
 	}
 	LOGE("Layout is not exist!");
@@ -260,6 +296,11 @@ bool ui_view::set_toolbar(Elm_Toolbar *toolbar)
 	if (toolbar) elm_object_signal_emit(layout, "elm,state,toolbar,show", "elm");
 	else elm_object_signal_emit(layout, "elm,state,toolbar,hide", "elm");
 
+	this->toolbar= toolbar;
+
+	evas_object_event_callback_add(this->toolbar, EVAS_CALLBACK_DEL, toolbar_del_cb, this);
+
+
 	return true;
 }
 
@@ -305,6 +346,7 @@ Evas_Object *ui_view::unset_content()
 	if (!this->get_base()) return pcontent;
 
 	elm_object_part_content_unset(this->get_base(), "elm.swallow.content");
+	evas_object_event_callback_del(pcontent, EVAS_CALLBACK_DEL, content_del_cb);
 	evas_object_hide(pcontent);
 
 	return pcontent;
@@ -319,6 +361,7 @@ Elm_Button *ui_view::unset_title_left_btn()
 	title_left_btn = elm_object_part_content_unset(this->get_base(), "title_left_btn");
 	if (title_left_btn)
 		elm_object_signal_emit(this->get_base(), "elm,state,title_left_btn,hide", "elm");
+	evas_object_event_callback_del(title_left_btn, EVAS_CALLBACK_DEL, title_left_btn_del_cb);
 	evas_object_hide(title_left_btn);
 
 	return title_left_btn;
@@ -333,6 +376,7 @@ Elm_Button *ui_view::unset_title_right_btn()
 	title_right_btn = elm_object_part_content_unset(this->get_base(), "title_right_btn");
 	if (title_right_btn)
 		elm_object_signal_emit(this->get_base(), "elm,state,title_right_btn,hide", "elm");
+	evas_object_event_callback_del(title_right_btn, EVAS_CALLBACK_DEL, title_right_btn_del_cb);
 	evas_object_hide(title_right_btn);
 
 	return title_right_btn;
@@ -347,6 +391,7 @@ Elm_Toolbar *ui_view::unset_toolbar()
 	toolbar = elm_object_part_content_unset(this->get_base(), "toolbar");
 	if (toolbar)
 		elm_object_signal_emit(this->get_base(), "elm,state,toolbar,hide", "elm");
+	evas_object_event_callback_del(toolbar, EVAS_CALLBACK_DEL, toolbar_del_cb);
 	evas_object_hide(toolbar);
 
 	return toolbar;
