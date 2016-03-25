@@ -32,56 +32,8 @@ public:
 	{
 	}
 
-	Evas_Object *create_page10_content(ui_view *view, bool is_portrait)
-	{
-		Evas_Object *content;
-
-		if (is_portrait)
-		{
-			//Create portrait content.
-			content = create_content(view->get_base(),
-					"ViewMgr Demo<br>Page 10 With<br>on_portrait(), on_landscape()",
-					//Prev Button Callback
-					[](void *data, Evas_Object *obj, void *event_info) -> void
-					{
-					appdata_s *ad = static_cast<appdata_s *>(data);
-					ad->viewmgr->pop_view();
-					},
-					//Next Button Callback
-					[](void *data, Evas_Object *obj, void *event_info) -> void
-					{
-						appdata_s *ad = static_cast<appdata_s *>(data);
-						create_page11(ad);
-					},
-					this->ad);
-		}
-		else
-		{
-			//Create landscape content.
-			content = create_landscape_content(view->get_base(),
-					"ViewMgr Demo<br>Page 10 With<br>on_portrait(), on_landscape()",
-					//Prev Button Callback
-					[](void *data, Evas_Object *obj, void *event_info) -> void
-					{
-					appdata_s *ad = static_cast<appdata_s *>(data);
-					ad->viewmgr->pop_view();
-					},
-					//Next Button Callback
-					[](void *data, Evas_Object *obj, void *event_info) -> void
-					{
-						appdata_s *ad = static_cast<appdata_s *>(data);
-						create_page11(ad);
-					},
-					this->ad);
-		}
-
-		return content;
-	}
-
 	void on_load()
 	{
-		Evas_Object *content;
-
 		//Initialize contents.
 		ui_view *view = dynamic_cast<ui_view *>(this->get_view());
 
@@ -94,21 +46,41 @@ public:
 
 	void on_portrait()
 	{
-		Evas_Object *content;
-
 		ui_view *view = dynamic_cast<ui_view *>(this->get_view());
-
-		content = this->create_page10_content(view, true);
+		Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 10 With<br>on_portrait(), on_landscape()",
+								//Prev Button Callback
+						        [](void *data, Evas_Object *obj, void *event_info) -> void
+						        {
+							        appdata_s *ad = static_cast<appdata_s *>(data);
+							        ad->viewmgr->pop_view();
+						        },
+						        //Next Button Callback
+						        [](void *data, Evas_Object *obj, void *event_info) -> void
+						        {
+							        appdata_s *ad = static_cast<appdata_s *>(data);
+							        create_page11(ad);
+						        },
+						        this->ad);
 		view->set_content(content, "Title Portrait");
 	}
 
 	void on_landscape()
 	{
-		Evas_Object *content;
-
 		ui_view *view = dynamic_cast<ui_view *>(this->get_view());
-
-		content = this->create_page10_content(view, false);
+		Evas_Object *content = create_landscape_content(view->get_base(), "ViewMgr Demo<br>Page 10 With<br>on_portrait(), on_landscape()",
+				//Prev Button Callback
+		        [](void *data, Evas_Object *obj, void *event_info) -> void
+		        {
+			        appdata_s *ad = static_cast<appdata_s *>(data);
+			        ad->viewmgr->pop_view();
+		        },
+		        //Next Button Callback
+		        [](void *data, Evas_Object *obj, void *event_info) -> void
+		        {
+			        appdata_s *ad = static_cast<appdata_s *>(data);
+			        create_page11(ad);
+		        },
+		        this->ad);
 		view->set_content(content, "Title Landscape");
 	}
 
