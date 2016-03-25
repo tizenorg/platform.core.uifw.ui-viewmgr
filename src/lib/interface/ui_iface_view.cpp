@@ -44,32 +44,32 @@ void ui_iface_view::on_unload()
 	this->controller->on_unload();
 }
 
-void ui_iface_view::on_active()
+void ui_iface_view::on_activate()
 {
-	this->state = UI_VIEW_STATE_ACTIVE;
+	this->state = UI_VIEW_STATE_ACTIVATE;
 	if (!this->controller) return;
-	this->controller->on_active();
+	this->controller->on_activate();
 }
 
-void ui_iface_view::on_inactive()
+void ui_iface_view::on_deactivate()
 {
-	this->state = UI_VIEW_STATE_INACTIVE;
+	this->state = UI_VIEW_STATE_DEACTIVATE;
 	if (!this->controller) return;
-	this->controller->on_inactive();
+	this->controller->on_deactivate();
 }
 
 void ui_iface_view::on_pause()
 {
 	this->state = UI_VIEW_STATE_PAUSE;
 	if (!this->content) return;
-	if (state != UI_VIEW_STATE_ACTIVE) return;
+	if (state != UI_VIEW_STATE_ACTIVATE) return;
 	if (!this->controller) return;
 	this->controller->on_pause();
 }
 
 void ui_iface_view::on_resume()
 {
-	this->state = UI_VIEW_STATE_ACTIVE;
+	this->state = UI_VIEW_STATE_ACTIVATE;
 	if (state != UI_VIEW_STATE_PAUSE) return;
 	if (!this->content) return;
 	if (!this->controller) return;

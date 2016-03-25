@@ -51,7 +51,7 @@ public:
 	/** @brief load callback.
 	 *
 	 *  @note Now, this view is moving onto the screen. Get ready for this view. If this view content is alive, load callback won't be called.
-	 *        In the most cases, this callback will be triggered with this step load -> inactive -> active.
+	 *        In the most cases, this callback will be triggered with this step load -> deactivate -> activate.
 	 */
 	virtual void on_load() {}
 
@@ -60,38 +60,38 @@ public:
 	 *  @note Remove resources with regards to this view for saving memory or keep the content for performance. It's up to your scenario.
 	 *        Unload will be called just right before when the view is going to be deleted by popping or it's piled under the more than one view.
 	 *        If the view content is not alive, the unload won't be called.
-	 *        In the most cases, this callback will be triggered with this step. inactive -> unload -> destroy
+	 *        In the most cases, this callback will be triggered with this step. deactivate -> unload -> destroy
 	 */
 	virtual void on_unload() {}
 
-	/** @brief active callback.
+	/** @brief activate callback.
 	 *
-	 *  @note View is on active state after show transition is finished.
-	 *        From whatever the state, if the view is on the screen, the active callback will be called.
-	 *        In the most cases, this callback will be triggered with this step. load -> inactive -> active
+	 *  @note View is on activate state after show transition is finished.
+	 *        From whatever the state, if the view is on the screen, the activate callback will be called.
+	 *        In the most cases, this callback will be triggered with this step. load -> deactivate -> activate
 	 */
-	virtual void on_active() {}
+	virtual void on_activate() {}
 
-	/** @brief inactive callback.
+	/** @brief deactivate callback.
 	 *
-	 *  @note View is on inactive state. Get ready for unload. Hide transition may be triggered at this point.
-	 *        Inactive state is triggered on this scenario that the view is still visible but it's not interactive with users.
-	 *        In the most cases, when view is going to be popped or destroyed or pushed one more depth, the inactive state will be triggered.
-	 *        Some UI controls such as a center popup or a menu popup blocks the view, this view may be inactive but still visible in someway (with transparency)
+	 *  @note View is on deactivate state. Get ready for unload. Hide transition may be triggered at this point.
+	 *        Deactivate state is triggered on this scenario that the view is still visible but it's not interactivate with users.
+	 *        In the most cases, when view is going to be popped or destroyed or pushed one more depth, the deactivate state will be triggered.
+	 *        Some UI controls such as a center popup or a menu popup blocks the view, this view may be deactivate but still visible in someway (with transparency)
 	 */
-	virtual void on_inactive() {}
+	virtual void on_deactivate() {}
 
 	/** @brief pause callback.
 	 *
 	 *  @note When the system blocks the application running in cases such as phone call, system notification, switching applications ...
 	 *        When Window turns to deactivate. (@see ui_base_viewmgr_base :: deactivate()).
-	 *        If the view were inactive or unload state, the pause won't be called.
+	 *        If the view were deactivate or unload state, the pause won't be called.
 	 */
 	virtual void on_pause() {}
 
 	/** @brief resume callback.
 	 *
-	 *  @note View is turning back to the active state again from pause.
+	 *  @note View is turning back to the activate state again from pause.
 	 *        When the system allows the application turns to activate.
 	 *        When the Window turns to activate. (@see ui_base_viewmgr :: activate())
 	 */

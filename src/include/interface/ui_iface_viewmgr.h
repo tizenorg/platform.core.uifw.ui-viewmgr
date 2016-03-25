@@ -44,7 +44,7 @@ class ui_iface_viewmgr
 private:
 	static bool soft_key;               //If system doesn't support HW back key, then this value is @c true.
 	static bool event_block;            //Event block on view transition. This value should be configurable by system.
-	list<ui_iface_view*> view_list; //View list.
+	list<ui_iface_view*> view_list;     //View list.
 	bool activated;                     //Activated status of this viewmgr.
 
 	/**
@@ -269,9 +269,9 @@ public:
 	bool deactivate();
 
 	/**
-	 *  @brief Return the active status of viewmgr.
+	 *  @brief Return the activate status of viewmgr.
 	 *
-	 *  @return @c true if viewmgr is active, @c false otherwise.
+	 *  @return @c true if viewmgr is activated, @c false otherwise.
 	 *
 	 *  @see activate()
 	 *  @see deactivate()
