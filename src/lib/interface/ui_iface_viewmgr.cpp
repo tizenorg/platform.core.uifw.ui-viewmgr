@@ -184,7 +184,7 @@ bool ui_iface_viewmgr::pop_view()
 
 	//Below object has to be used in child class...
 	//Make this getter method? or define instance?
-	//previous page is to be active page.
+	//previous page is to be an active page.
 	auto nx = std::prev(this->view_list.end(), 2);
 	ui_iface_view *pview = *nx;
 	pview->on_load();

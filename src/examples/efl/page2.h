@@ -38,7 +38,7 @@ public:
 		ui_view *view = dynamic_cast<ui_view *>(this->get_view());
 
 		//Create a main content.
-		Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 2",
+		Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 2<br>",
 				//Prev Button Callback
 		        [](void *data, Evas_Object *obj, void *event_info) -> void
 		        {

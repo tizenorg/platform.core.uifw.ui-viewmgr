@@ -14,14 +14,6 @@
  *  limitations under the License.
  *
  */
-static void ctxpopup_item_select_cb(void *data, Evas_Object *obj, void *event_info)
-{
-	ui_view *view = static_cast<ui_view *>(data);
-	Elm_Object_Item *it = static_cast<Elm_Object_Item *>(event_info);
-	elm_ctxpopup_dismiss(obj);
-	LOGE("Item (%s) is selected", elm_object_item_text_get(it));
-}
-
 class page1: public ui_controller
 {
 private:
@@ -42,11 +34,7 @@ public:
 	void on_load()
 	{
 		//Initialize contents.
-
 		ui_view *view = dynamic_cast<ui_view *>(this->get_view());
-
-		//Check the current rotation for set portrait or landscape content if any.
-		LOGE("view 1 load rotation = %d\n", view->get_degree());
 
 		//Create a main content.
 		Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 1",
@@ -65,37 +53,6 @@ public:
 				this->ad);
 
 		view->set_content(content, "Title");
-	}
-
-	void on_menu(ui_menu *menu)
-	{
-		Elm_Ctxpopup *ctxpopup = elm_ctxpopup_add(menu->get_base());
-		elm_ctxpopup_item_append(ctxpopup, "Phone calls", NULL, ctxpopup_item_select_cb, this);
-		elm_ctxpopup_item_append(ctxpopup, "Favorites", NULL, ctxpopup_item_select_cb, this);
-		elm_ctxpopup_item_append(ctxpopup, "Search", NULL, ctxpopup_item_select_cb, this);
-		elm_ctxpopup_item_append(ctxpopup, "Dialer", NULL, ctxpopup_item_select_cb, this);
-		elm_ctxpopup_item_append(ctxpopup, "Add contact", NULL, ctxpopup_item_select_cb, this);
-		elm_ctxpopup_item_append(ctxpopup, "Phone calls", NULL, ctxpopup_item_select_cb, this);
-		elm_ctxpopup_item_append(ctxpopup, "Favorites", NULL, ctxpopup_item_select_cb, this);
-		elm_ctxpopup_item_append(ctxpopup, "Search", NULL, ctxpopup_item_select_cb, this);
-		elm_ctxpopup_item_append(ctxpopup, "Dialer", NULL, ctxpopup_item_select_cb, this);
-
-		menu->set_content(ctxpopup);
-	}
-
-	void on_rotate(int degree)
-	{
-		LOGE("Current view's degree is %d\n", degree);
-	}
-
-	void on_portrait()
-	{
-		LOGE("View is on portrait mode\n");
-	}
-
-	void on_landscape()
-	{
-		LOGE("View is on landscape mode\n");
 	}
 };
 

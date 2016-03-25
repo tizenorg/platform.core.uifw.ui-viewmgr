@@ -28,7 +28,7 @@ public:
 		this->set_viewmgr(ad->viewmgr);
 
 		//Create a main content.
-		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Page 9<br>(View inheritance)",
+		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Page 9<br>(Content Preloading)",
 			//Prev Button Callback
 			[](void *data, Evas_Object *obj, void *event_info) -> void
 			{
