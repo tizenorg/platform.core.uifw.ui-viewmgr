@@ -22,17 +22,19 @@ using namespace viewmgr;
 //FIXME: is it correct to define here?
 #define EDJ_PATH "/usr/share/edje/ui-viewmgr/ui-viewmgr.edj"
 
-bool ui_base_viewmgr::create_base_layout(Elm_Conformant *conform, const char *style)
+bool ui_base_viewmgr::create_base_layout(Elm_Scroller *scroller, const char *style)
 {
 	char buf[128];
-	Elm_Layout *layout = elm_layout_add(conform);
+	Elm_Layout *layout = elm_layout_add(scroller);
 	if (!layout) return false;
 
 	//FIXME: Is it C programming style? need to change?
 	snprintf(buf, sizeof(buf), "transition/%s", style);
 	//default transition layout
 	elm_layout_file_set(layout, EDJ_PATH, buf);
-	elm_object_content_set(conform, layout);
+	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(layout, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	elm_object_content_set(scroller, layout);
 
 	//Push Finished Event
 	elm_layout_signal_callback_add(layout, "push,finished", "viewmgr",
@@ -75,7 +77,7 @@ Elm_Layout *ui_base_viewmgr::set_transition_layout(string transition_style)
 	if (effect_map.size()) effect_layout = effect_map.find(transition_style)->second;
 
 	//Conformant content change to current effect layout and change to hide prev layout.
-	Elm_Layout *playout = elm_object_part_content_unset(this->conform, "elm.swallow.content");
+	Elm_Layout *playout = elm_object_part_content_unset(this->scroller, "elm.swallow.content");
 	evas_object_hide(playout);
 
 	if (!effect_layout)
@@ -83,12 +85,12 @@ Elm_Layout *ui_base_viewmgr::set_transition_layout(string transition_style)
 		//Create and add effect_layouts in map here.
 		//FIXME: If we have to support many effects, this logic should be changed.
 		effect_map.insert(pair<string, Elm_Layout *>("default", this->layout));
-		this->create_base_layout(this->get_conformant(), transition_style.c_str());
+		this->create_base_layout(this->get_scroller(), transition_style.c_str());
 		effect_map.insert(pair<string, Elm_Layout *>(transition_style, this->layout));
 	}
 	else
 	{
-		elm_object_part_content_set(this->conform, "elm.swallow.content", effect_layout);
+		elm_object_part_content_set(this->scroller, "elm.swallow.content", effect_layout);
 
 		this->layout = effect_layout;
 	}
@@ -169,6 +171,23 @@ bool ui_base_viewmgr::create_conformant(Elm_Win *win)
 	return true;
 }
 
+bool ui_base_viewmgr::create_scroller(Elm_Conformant *conform)
+{
+	Elm_Scroller *scroller = elm_scroller_add(conform);
+	if (!scroller) return false;
+
+	elm_scroller_bounce_set(scroller, EINA_FALSE, EINA_TRUE);
+	elm_scroller_policy_set(scroller, ELM_SCROLLER_POLICY_OFF, ELM_SCROLLER_POLICY_AUTO);
+	evas_object_size_hint_weight_set(scroller, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(scroller, EVAS_HINT_FILL, EVAS_HINT_FILL);
+
+	elm_object_content_set(conform, scroller);
+
+	this->scroller = scroller;
+
+	return true;
+}
+
 ui_base_viewmgr::ui_base_viewmgr(const char *pkg, ui_base_key_listener *key_listener)
 		: ui_iface_viewmgr(), key_listener(key_listener), transition_style("default")
 {
@@ -227,7 +246,13 @@ ui_base_viewmgr::ui_base_viewmgr(const char *pkg, ui_base_key_listener *key_list
 		return;
 	}
 
-	if (!this->create_base_layout(this->conform, "default"))
+	if (!this->create_scroller(this->conform))
+	{
+		LOGE("Failed to create a scroller (%s)", pkg);
+		return;
+	}
+
+	if (!this->create_base_layout(this->scroller, "default"))
 	{
 		LOGE("Failed to create a base layout (%s)", pkg);
 		return;

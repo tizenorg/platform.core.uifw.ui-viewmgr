@@ -49,8 +49,9 @@ class ui_base_viewmgr: public viewmgr::ui_iface_viewmgr
 	friend class ui_base_view;
 
 private:
-	Elm_Win *win;             		           //This is acting like a base object of viewmgr.
+	Elm_Win *win;                              //This is acting like a base object of viewmgr.
 	Elm_Conformant *conform;                   //Conformant for viewmgr.
+	Elm_Scroller *scroller;                    //Scroller for viewmgr.
 	Elm_Layout *layout;                        //Viewmgr's base layout.
 	ui_base_key_listener *key_listener;        //HW Key Handler such as "BACK" key...
 	ui_view_indicator indicator;               //Mode of indicator.
@@ -68,6 +69,7 @@ private:
 	 */
 	bool create_conformant(Elm_Win *win);
 
+	bool create_scroller(Elm_Conformant *conform);
 	/**
 	 *  @brief Create a base layout.
 	 *
@@ -76,7 +78,7 @@ private:
 	 *
 	 *  @return @c true success or @c false not.
 	 */
-	bool create_base_layout(Elm_Conformant *conform, const char *style);
+	bool create_base_layout(Elm_Scroller *scroller, const char *style);
 
 	/** @brief Set the indicator mode.
 	 *
@@ -176,6 +178,11 @@ public:
 	Elm_Conformant *get_conformant()
 	{
 		return this->conform;
+	}
+
+	Elm_Scroller *get_scroller()
+	{
+		return this->scroller;
 	}
 
 	/** @brief Get a last view of current view stack.
