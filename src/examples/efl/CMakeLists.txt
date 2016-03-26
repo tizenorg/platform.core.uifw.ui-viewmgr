@@ -9,6 +9,7 @@ SET(EXAM_SRCS
 	  ../../lib/efl/ui_base_key_listener.cpp
 	  ../../lib/efl/mobile/ui_controller.cpp
 	  ../../lib/efl/mobile/ui_menu.cpp
+	  ../../lib/efl/mobile/ui_popup.cpp
 	  ../../lib/efl/mobile/ui_view.cpp
 	  ../../lib/efl/mobile/ui_key_listener.cpp
 	  ../../lib/efl/mobile/ui_viewmgr.cpp
