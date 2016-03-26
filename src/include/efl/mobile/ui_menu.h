@@ -40,14 +40,14 @@ public:
 	virtual bool deactivate();
 	virtual bool set_content(Elm_Ctxpopup* ctxpopup);
 	virtual Elm_Ctxpopup *unset_content();
+	virtual void on_back();
+	virtual bool is_activated();
+	virtual Evas_Object *get_base();
 
 	virtual Elm_Ctxpopup *get_content()
 	{
 		return this->ctxpopup;
 	}
-
-	virtual bool is_activated();
-	virtual Evas_Object *get_base();
 };
 
 }

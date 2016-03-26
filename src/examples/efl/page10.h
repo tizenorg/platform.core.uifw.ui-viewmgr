@@ -62,6 +62,7 @@ public:
 						        },
 						        this->ad);
 		view->set_content(content, "Title");
+		view->set_indicator(UI_VIEW_INDICATOR_DEFAULT);
 	}
 
 	void on_landscape()
@@ -82,6 +83,7 @@ public:
 		        },
 		        this->ad);
 		view->set_content(content, "Title");
+		view->set_indicator(UI_VIEW_INDICATOR_OPTIMAL);
 	}
 
 };

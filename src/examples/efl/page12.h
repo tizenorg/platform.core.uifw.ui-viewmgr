@@ -46,7 +46,7 @@ protected:
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
 					appdata_s *ad = static_cast<appdata_s *>(data);
-					ad->viewmgr->deactivate();
+					create_page13(ad);
 				},
 				this->ad);
 

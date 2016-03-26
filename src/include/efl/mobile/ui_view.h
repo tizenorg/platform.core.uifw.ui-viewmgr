@@ -69,17 +69,17 @@ public:
 		return this->layout;
 	}
 
-	const Elm_Button *get_title_left_btn()
+	Elm_Button *get_title_left_btn()
 	{
 		return this->title_left_btn;
 	}
 
-	const Elm_Button *get_title_right_btn()
+	Elm_Button *get_title_right_btn()
 	{
 		return this->title_right_btn;
 	}
 
-	const Elm_Toolbar *get_toolbar()
+	Elm_Toolbar *get_toolbar()
 	{
 		return this->toolbar;
 	}
@@ -88,7 +88,6 @@ public:
 	{
 		return this->menu;
 	}
-
 };
 
 }

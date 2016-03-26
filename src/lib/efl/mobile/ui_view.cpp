@@ -120,7 +120,7 @@ void ui_view::on_back()
 	{
 		if (this->menu->is_activated())
 		{
-			this->menu->deactivate();
+			this->menu->on_back();
 			return;
 		}
 	}
