@@ -15,75 +15,82 @@
  *
  */
 
-class page11: public ui_view
+/** This page inherit ui_controller
+ *  And implement on_rotate() method to create portarit, landscape content.
+ *  This page will be created suitable content in on_rotate() method.
+ */
+class page11: public ui_controller
 {
 private:
 	appdata_s *ad;
 
-protected:
-	void on_load()
-	{
-		this->on_rotate(this->get_degree());
-	}
-
-	void on_rotate(int degree)
-	{
-		//Portrait
-		if (this->get_degree() == 0 || this->get_degree() == 180)
-		{
-			Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Page 11<br>(Rotate)",
-					//Prev Button Callback
-			        [](void *data, Evas_Object *obj, void *event_info) -> void
-			        {
-				        appdata_s *ad = static_cast<appdata_s *>(data);
-				        ad->viewmgr->pop_view();
-			        },
-			        //Next Button Callback
-			        [](void *data, Evas_Object *obj, void *event_info) -> void
-			        {
-				        appdata_s *ad = static_cast<appdata_s *>(data);
-				        create_page12(ad);
-			        },
-			        this->ad);
-			this->set_content(content, "Title");
-			this->set_indicator(UI_VIEW_INDICATOR_DEFAULT);
-		}
-		//Landscape
-		else
-		{
-			Evas_Object *content = create_landscape_content(this->get_base(), "ViewMgr Demo<br>Page 11<br>(Rotate)",
-					//Prev Button Callback
-			        [](void *data, Evas_Object *obj, void *event_info) -> void
-			        {
-				        appdata_s *ad = static_cast<appdata_s *>(data);
-				        ad->viewmgr->pop_view();
-			        },
-			        //Next Button Callback
-			        [](void *data, Evas_Object *obj, void *event_info) -> void
-			        {
-				        appdata_s *ad = static_cast<appdata_s *>(data);
-				        create_page12(ad);
-			        },
-			        this->ad);
-			this->set_content(content, "Title");
-			this->set_indicator(UI_VIEW_INDICATOR_OPTIMAL);
-		}
-	}
-
 public:
-	page11(const char *name, appdata_s *ad)
-		: ui_view(name), ad(ad)
+	page11(appdata_s *ad)
+			: ad(ad)
 	{
-		ad->viewmgr->push_view(this);
+		ad->viewmgr->push_view(new ui_view(this, "page11"));
 	}
 
 	~page11()
 	{
 	}
+
+	void on_load()
+	{
+		ui_view *view = dynamic_cast<ui_view *>(this->get_view());
+
+		this->on_rotate(view->get_degree());
+	}
+
+	void on_rotate(int degree)
+	{
+		ui_view *view = dynamic_cast<ui_view *>(this->get_view());
+
+		//Portrait
+		if (view->get_degree() == 0 || view->get_degree() == 180)
+		{
+			Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 11<br>(Rotate)",
+					//Prev Button Callback
+			        [](void *data, Evas_Object *obj, void *event_info) -> void
+			        {
+				        appdata_s *ad = static_cast<appdata_s *>(data);
+				        ad->viewmgr->pop_view();
+			        },
+			        //Next Button Callback
+			        [](void *data, Evas_Object *obj, void *event_info) -> void
+			        {
+				        appdata_s *ad = static_cast<appdata_s *>(data);
+				        create_page12(ad);
+			        },
+			        this->ad);
+			view->set_content(content, "Title");
+			view->set_indicator(UI_VIEW_INDICATOR_DEFAULT);
+		}
+		//Landscape
+		else
+		{
+			Evas_Object *content = create_landscape_content(view->get_base(), "ViewMgr Demo<br>Page 11<br>(Rotate)",
+					//Prev Button Callback
+			        [](void *data, Evas_Object *obj, void *event_info) -> void
+			        {
+				        appdata_s *ad = static_cast<appdata_s *>(data);
+				        ad->viewmgr->pop_view();
+			        },
+			        //Next Button Callback
+			        [](void *data, Evas_Object *obj, void *event_info) -> void
+			        {
+				        appdata_s *ad = static_cast<appdata_s *>(data);
+				        create_page12(ad);
+			        },
+			        this->ad);
+			view->set_content(content, "Title");
+			view->set_indicator(UI_VIEW_INDICATOR_OPTIMAL);
+		}
+	}
+
 };
 
 void create_page11(appdata_s *ad)
 {
-	/* A example for view class extension instead of using controller class. */
-	new page11("page11", ad);
+	new page11(ad);
 }

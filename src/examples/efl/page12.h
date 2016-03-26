@@ -15,6 +15,11 @@
  *
  */
 
+
+/** This page inherit ui_controller
+ *  And implement on_menu() method to create ctxpopup when menu HW key clicked.
+ *  This page will be created menu(ctxpopup)items in on_menu() method.
+ */
 static void ctxpopup_item_select_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	ui_view *view = static_cast<ui_view *>(data);
@@ -83,6 +88,5 @@ public:
 
 void create_page12(appdata_s *ad)
 {
-	/* A example for view class extension instead of using controller class. */
 	new page12(ad);
 }

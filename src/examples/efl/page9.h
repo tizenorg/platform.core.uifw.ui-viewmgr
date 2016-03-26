@@ -14,21 +14,27 @@
  *  limitations under the License.
  *
  */
-class page9: public ui_view
+
+/** This page inherit ui_controller to show view create in controller side.
+ *  And this page create content in controller constructor time.
+ */
+class page9: public ui_controller
 {
 private:
 	appdata_s *ad;
 
 public:
-	page9(const char *name, appdata_s *ad)
-		: ui_view(name), ad(ad)
+	page9(appdata_s *ad)
+			: ad(ad)
 	{
+		ui_view *view = new ui_view(this, "page9");
+
 		//FIXME: It will be deleted or change to other way :(
 		//       We don't have any way to support it now.
-		this->set_viewmgr(ad->viewmgr);
+		view->set_viewmgr(ad->viewmgr);
 
 		//Create a main content.
-		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Page 9<br>(Content Preloading)",
+		Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 9<br>(Content Preloading)",
 			//Prev Button Callback
 			[](void *data, Evas_Object *obj, void *event_info) -> void
 			{
@@ -44,11 +50,10 @@ public:
 			this->ad);
 
 		//Don't delete view's content when this view poped.
-		this->set_removable_content(false);
-		this->set_content(content, "Title");
-		ad->viewmgr->push_view(this);
+		view->set_removable_content(false);
+		view->set_content(content, "Title");
+		ad->viewmgr->push_view(view);
 	}
-
 	~page9()
 	{
 	}
@@ -56,6 +61,5 @@ public:
 
 void create_page9(appdata_s *ad)
 {
-	/* A example for view class extension instead of using controller class. */
-	new page9("page9", ad);
+	new page9(ad);
 }

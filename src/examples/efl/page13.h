@@ -15,6 +15,10 @@
  *
  */
 
+/** This page inherit ui_ui_view
+ *  And make a button on right top side of title area to activate popup.
+ *  The created popup has view and it will be managed by viewmgr.
+ */
 class page13: public ui_view
 {
 private:
