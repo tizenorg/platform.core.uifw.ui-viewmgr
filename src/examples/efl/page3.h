@@ -14,32 +14,21 @@
  *  limitations under the License.
  *
  */
-class page3: public ui_controller
+
+/** A example for view class extension.
+ *  This example will be created content in view load time.
+ *  And set subtitle in title area.
+ */
+class page3: public ui_view
 {
 private:
 	appdata_s *ad;
 
-public:
-	page3(appdata_s *ad)
-			: ad(ad)
-	{
-		/* ui_view(controller, identity name).
-		   Later, you could get the identity name using view->get_name(); */
-		ad->viewmgr->push_view(new ui_view(this, "page3"));
-	}
-
-	~page3()
-	{
-	}
-
+protected:
 	void on_load()
 	{
-		//Initialize contents.
-
-		ui_view *view = dynamic_cast<ui_view *>(this->get_view());
-
 		//Create a main content.
-		Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 3",
+		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Page 3",
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
@@ -55,7 +44,18 @@ public:
 				this->ad);
 
 		//Arguments: content, title, subtitle, title left button, title right button
-		view->set_content(content, "Title", "Subtitle", NULL, NULL);
+		this->set_content(content, "Title", "Subtitle", NULL, NULL);
+	}
+
+public:
+	page3(appdata_s *ad) : ui_view("page3"), ad(ad)
+	{
+		//Push this view in viewmgr.
+		ad->viewmgr->push_view(this);
+	}
+
+	~page3()
+	{
 	}
 };
 
