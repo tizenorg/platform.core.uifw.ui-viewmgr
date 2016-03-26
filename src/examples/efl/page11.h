@@ -45,7 +45,8 @@ protected:
 				        create_page12(ad);
 			        },
 			        this->ad);
-			this->set_content(content, "Title Portrait");
+			this->set_content(content, "Title");
+			this->set_indicator(UI_VIEW_INDICATOR_DEFAULT);
 		}
 		//Landscape
 		else
@@ -64,7 +65,8 @@ protected:
 				        create_page12(ad);
 			        },
 			        this->ad);
-			this->set_content(content, "Title Landscape");
+			this->set_content(content, "Title");
+			this->set_indicator(UI_VIEW_INDICATOR_OPTIMAL);
 		}
 	}
 

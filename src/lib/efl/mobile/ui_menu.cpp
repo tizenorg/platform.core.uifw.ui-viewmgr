@@ -170,3 +170,8 @@ Evas_Object *ui_menu::get_base()
 
 	return this->get_window();
 }
+
+void ui_menu::on_back()
+{
+	this->deactivate();
+}
