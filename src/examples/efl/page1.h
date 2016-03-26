@@ -14,30 +14,20 @@
  *  limitations under the License.
  *
  */
-class page1: public ui_controller
+
+/** This example create a simple view which is inheritance ui_view.
+ *  Then push in viewmgr.
+ */
+class page1: public ui_view
 {
 private:
 	appdata_s *ad;
 
-public:
-	page1(appdata_s *ad)
-			: ad(ad)
-	{
-		/* ui_view(controller, identity name).
-		   Later, you could get the identity name using view->get_name(); */
-		ad->viewmgr->push_view(new ui_view(this, "page1"));
-	}
-	~page1()
-	{
-	}
-
+protected:
 	void on_load()
 	{
-		//Initialize contents.
-		ui_view *view = dynamic_cast<ui_view *>(this->get_view());
-
 		//Create a main content.
-		Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 1",
+		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Page 1",
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
@@ -52,7 +42,17 @@ public:
 				},
 				this->ad);
 
-		view->set_content(content, "Title");
+		this->set_content(content, "Title");
+	}
+
+public:
+	page1(appdata_s *ad) : ui_view("page1"), ad(ad)
+	{
+		ad->viewmgr->push_view(this);
+	}
+
+	~page1()
+	{
 	}
 };
 

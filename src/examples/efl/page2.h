@@ -14,55 +14,55 @@
  *  limitations under the License.
  *
  */
-class page2: public ui_controller
+
+/** This example create a simple view which is inheritance ui_view.
+ *  And add two buttons in view title area. hen push in viewmgr.
+ */
+class page2: public ui_view
 {
 private:
 	appdata_s *ad;
 
-public:
-	page2(appdata_s *ad)
-			: ad(ad)
+protected:
+	void on_load()
 	{
-		/* ui_view(controller, identity name).
-		   Later, you could get the identity name using view->get_name(); */
-		ad->viewmgr->push_view(new ui_view(this, "page2"));
+		//Create a main content.
+		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Page 2",
+				//Prev Button Callback
+				[](void *data, Evas_Object *obj, void *event_info) -> void
+				{
+					appdata_s *ad = static_cast<appdata_s *>(data);
+					ad->viewmgr->pop_view();
+				},
+				//Next Button Callback
+				[](void *data, Evas_Object *obj, void *event_info) -> void
+				{
+					appdata_s *ad = static_cast<appdata_s *>(data);
+					create_page3(ad);
+				},
+				this->ad);
+
+		//Title left button
+		Elm_Button *left_title_btn = elm_button_add(this->get_base());
+		elm_object_text_set(left_title_btn, "Cancel");
+
+		//Title right button
+		Elm_Button *right_title_btn = elm_button_add(this->get_base());
+		elm_object_text_set(right_title_btn, "Done");
+
+		//Arguments: content, title, subtitle, title left button, title right button
+		this->set_content(content, "Title Buttons", NULL, left_title_btn, right_title_btn);
+	}
+
+public:
+	page2(appdata_s *ad) : ui_view("page2"), ad(ad)
+	{
+		//Push this view in viewmgr.
+		ad->viewmgr->push_view(this);
 	}
 
 	~page2()
 	{
-	}
-
-	void on_load()
-	{
-		//Initialize contents.
-		ui_view *view = dynamic_cast<ui_view *>(this->get_view());
-
-		//Create a main content.
-		Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 2",
-				//Prev Button Callback
-		        [](void *data, Evas_Object *obj, void *event_info) -> void
-		        {
-			        appdata_s *ad = static_cast<appdata_s *>(data);
-			        ad->viewmgr->pop_view();
-		        },
-		        //Next Button Callback
-		        [](void *data, Evas_Object *obj, void *event_info) -> void
-		        {
-			        appdata_s *ad = static_cast<appdata_s *>(data);
-			        create_page3(ad);
-		        },
-		        this->ad);
-
-		//Title left button
-		Elm_Button *left_title_btn = elm_button_add(view->get_base());
-		elm_object_text_set(left_title_btn, "Cancel");
-
-		//Title right button
-		Elm_Button *right_title_btn = elm_button_add(view->get_base());
-		elm_object_text_set(right_title_btn, "Done");
-
-		//Arguments: content, title, subtitle, title left button, title right button
-		view->set_content(content, "Title Buttons", NULL, left_title_btn, right_title_btn);
 	}
 };
 
