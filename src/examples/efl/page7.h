@@ -14,26 +14,24 @@
  *  limitations under the License.
  *
  */
-class page7: public ui_controller
+
+/** This page inherit ui_view to show title with toolbar sample.
+ *  And this page make a content in page constructor time.
+ */
+class page7: public ui_view
 {
 private:
 	appdata_s *ad;
 
 public:
-	page7(appdata_s *ad)
-		: ad(ad)
+	page7(appdata_s *ad) : ui_view("page7"), ad(ad)
 	{
-		/* ui_view(controller, identity name, style name of view).
-		   Later, you could get the identity name using view->get_name();
-		   you could get the style name of view as well */
-		ui_view *view = new ui_view(this, "page7");
-
 		//FIXME: It will be deleted or change to other way :(
 		//       We don't have any way to support it now.
-		view->set_viewmgr(ad->viewmgr);
+		this->set_viewmgr(ad->viewmgr);
 
 		//Create a main content.
-		Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 7<br>(Navigationbar style)",
+		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Page 7<br>(Navigationbar style)",
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
@@ -49,11 +47,11 @@ public:
 				this->ad);
 
 		//Don't delete view's content when this view poped.
-		view->set_removable_content(false);
-		view->set_content(content, "Title with toolbar");
-		Elm_Toolbar *toolbar = create_toolbar(view->get_base(), "navigationbar");
-		view->set_toolbar(toolbar);
-		ad->viewmgr->push_view(view);
+		this->set_removable_content(false);
+		this->set_content(content, "Title with toolbar");
+		Elm_Toolbar *toolbar = create_toolbar(this->get_base(), "navigationbar");
+		this->set_toolbar(toolbar);
+		ad->viewmgr->push_view(this);
 	}
 
 	~page7()

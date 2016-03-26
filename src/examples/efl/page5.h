@@ -14,33 +14,20 @@
  *  limitations under the License.
  *
  */
-class page5: public ui_controller
+
+/** This page inherit ui_base_view to show how to create full view.
+ *  And set indicator state as hide.
+ */
+class page5: public ui_base_view
 {
 private:
 	appdata_s *ad;
 
-public:
-	page5(appdata_s *ad)
-			: ad(ad)
-	{
-		//No basic form.
-		/* ui_view(controller, identity name).
-		   Later, you could get the identity name using view->get_name(); */
-		ad->viewmgr->push_view(new ui_base_view(this, "page5"));
-	}
-
-	~page5()
-	{
-	}
-
+protected:
 	void on_load()
 	{
-		//Initialize contents.
-
-		ui_base_view *view = dynamic_cast<ui_base_view *>(this->get_view());
-
 		//Create a main content.
-		Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 5<br>(Full View)",
+		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Page 5<br>(Full View)",
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
@@ -55,8 +42,18 @@ public:
 				},
 				this->ad);
 
-		view->set_content(content);
-		view->set_indicator(UI_VIEW_INDICATOR_HIDE);
+		this->set_content(content);
+		this->set_indicator(UI_VIEW_INDICATOR_HIDE);
+	}
+
+public:
+	page5(appdata_s *ad) : ui_base_view("page5"), ad(ad)
+	{
+		ad->viewmgr->push_view(this);
+	}
+
+	~page5()
+	{
 	}
 };
 
