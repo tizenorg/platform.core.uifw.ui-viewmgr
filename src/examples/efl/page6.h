@@ -14,33 +14,19 @@
  *  limitations under the License.
  *
  */
-class page6: public ui_controller
+
+/** This page inherit ui_view to show title with toolbar sample.
+ */
+class page6: public ui_view
 {
 private:
 	appdata_s *ad;
 
-public:
-	page6(appdata_s *ad)
-		: ad(ad)
-	{
-		/* ui_view(controller, identity name).
-		   Later, you could get the identity name using view->get_name(); */
-		ad->viewmgr->push_view(new ui_view(this, "page6"));
-	}
-
-	~page6()
-	{
-	}
-
+protected:
 	void on_load()
 	{
-
-		//Initialize contents.
-
-		ui_view *view = dynamic_cast<ui_view *>(this->get_view());
-
 		//Create a main content.
-		Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 6",
+		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Page 6",
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
@@ -56,13 +42,24 @@ public:
 				this->ad);
 
 		//Arguments: content, title
-		view->set_content(content, "Title with toolbar");
-		Elm_Toolbar *toolbar = create_toolbar(view->get_base(), "toolbar_with_title");
-		view->set_toolbar(toolbar);
+		this->set_content(content, "Title with toolbar");
+		Elm_Toolbar *toolbar = create_toolbar(this->get_base(), "toolbar_with_title");
+		this->set_toolbar(toolbar);
+	}
+
+public:
+	page6(appdata_s *ad) : ui_view("page6"), ad(ad)
+	{
+		ad->viewmgr->push_view(this);
+	}
+
+	~page6()
+	{
 	}
 };
 
 void create_page6(appdata_s *ad)
 {
+	/* A example for view class extension instead of using controller class. */
 	new page6(ad);
 }
