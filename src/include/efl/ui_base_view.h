@@ -39,7 +39,7 @@ class ui_base_controller;
  *  @warning When the transitions are finished, the view must to call ui_iface_viewmgr :: _push_finished(), ui_iface_viewmgr :: _pop_finished() in order that
  *           The ui_iface_viewmgr keeps the view states exactly.
  */
-class ui_base_view: public viewmgr::ui_iface_view
+class ui_base_view: public viewmgr::ui_iface_view, public viewmgr::ui_iface_rotatable
 {
 	friend class ui_base_viewmgr;
 
@@ -114,13 +114,13 @@ public:
 	 *
 	 *  @param indicator The mode to set, one of #ui_base_view_indicator.
 	 */
-	void set_indicator(ui_view_indicator indicator);
+	virtual void set_indicator(ui_view_indicator indicator);
 
 	/** @brief Get current view's degree.
 	 *
-	 *  @return Current rotation degree, -1 if failed to get viewmgr degree.
+	 *  @return Current rotation degree, -1 if it fails to get degree information.
 	 */
-	int get_degree();
+	virtual int get_degree();
 };
 
 }

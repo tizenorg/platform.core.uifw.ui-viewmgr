@@ -18,12 +18,13 @@
 #define UI_MENU_H
 
 #include "../ui_viewmanager_base.h"
+#include "../../interface/ui_viewmanager_interface.h"
 
 namespace efl_viewmgr
 {
 class ui_view;
 
-class ui_menu
+class ui_menu: public viewmgr::ui_iface_rotatable
 {
 	friend class ui_view;
 private:
@@ -42,8 +43,9 @@ public:
 	virtual Elm_Ctxpopup *unset_content();
 	virtual void on_back();
 	virtual bool is_activated();
-	virtual Evas_Object *get_base();
 
+	virtual Evas_Object *get_base();
+	virtual int get_degree();
 	virtual Elm_Ctxpopup *get_content()
 	{
 		return this->ctxpopup;

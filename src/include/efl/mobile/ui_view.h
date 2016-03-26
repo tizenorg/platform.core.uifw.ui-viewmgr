@@ -45,6 +45,18 @@ protected:
 	virtual void set_event_block(bool block);
 	virtual void on_back();
 
+	/** @brief This is for calling controller's rotate method.
+	 */
+	virtual void on_rotate(int degree);
+
+	/** @brief This is for calling controller's portrait method.
+	 */
+	virtual void on_portrait();
+
+	/** @brief This is for calling controller's landscape method.
+	 */
+	virtual void on_landscape();
+
 public:
 	ui_view(ui_controller *controller, const char *name = NULL);
 	ui_view(const char *name = NULL);

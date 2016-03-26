@@ -14,30 +14,34 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_VIEWMANAGER_INTERFACE_H_
-#define UI_VIEWMANAGER_INTERFACE_H_
+#ifndef UI_ROTATABLE_INTERFACE_H_
+#define UI_ROTATABLE_INTERFACE_H_
 
-#include <app.h>
-#include <dlog.h>
-
-#ifdef  LOG_TAG
-#undef  LOG_TAG
-#endif
-#define LOG_TAG "UI_VIEWMGR"
-
-enum ui_view_indicator
+namespace viewmgr
 {
-	UI_VIEW_INDICATOR_DEFAULT = 0,
-	UI_VIEW_INDICATOR_OPTIMAL,
-	UI_VIEW_INDICATOR_OVERLAP,
-	UI_VIEW_INDICATOR_HIDE,
-	UI_VIEW_INDICATOR_SHOW,
-	UI_VIEW_INDICATOR_LAST
+class ui_iface_rotatable
+{
+protected:
+	/** @brief This is for calling controller's portrait method.
+	 */
+	virtual void on_portrait() {}
+
+	/** @brief This is for calling controller's landscape method.
+	 */
+	virtual void on_landscape() {}
+
+	/** @brief This is for calling controller's rotate method.
+	 */
+	virtual void on_rotate(int degree) {}
+
+public:
+	/** @brief Get current view's degree.
+	 *
+	 *  @return Current rotation degree, -1 if it fails to get degree information.
+	 */
+	virtual int get_degree() { return 0; }
 };
 
-#include "ui_iface_rotatable.h"
-#include "ui_iface_viewmgr.h"
-#include "ui_iface_view.h"
-#include "ui_iface_controller.h"
+}
 
-#endif /* UI_VIEWMANAGER_INTERFACE_H */
+#endif /* UI_ROTATABLE_INTERFACE_H_ */
