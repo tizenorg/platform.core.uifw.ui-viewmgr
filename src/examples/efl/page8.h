@@ -15,16 +15,32 @@
  *
  */
 
-class page8: public ui_view
+/** This page inherit ui_controller to show view create in controller side.
+ */
+class page8: public ui_controller
 {
 private:
 	appdata_s *ad;
 
-protected:
+public:
+	page8(appdata_s *ad)
+			: ad(ad)
+	{
+		/* ui_view(controller, identity name).
+		   Later, you could get the identity name using view->get_name(); */
+		ad->viewmgr->push_view(new ui_view(this, "page8"));
+	}
+	~page8()
+	{
+	}
+
 	void on_load()
 	{
+		//Initialize contents.
+		ui_view *view = dynamic_cast<ui_view *>(this->get_view());
+
 		//Create a main content.
-		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Page 8<br>(View inheritance)",
+		Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 8",
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
@@ -39,23 +55,11 @@ protected:
 				},
 				this->ad);
 
-		this->set_content(content, "Title");
-	}
-
-public:
-	page8(const char *name, appdata_s *ad)
-		: ui_view(name), ad(ad)
-	{
-		ad->viewmgr->push_view(this);
-	}
-
-	~page8()
-	{
+		view->set_content(content, "Title");
 	}
 };
 
 void create_page8(appdata_s *ad)
 {
-	/* A example for view class extension instead of using controller class. */
-	new page8("page8", ad);
+	new page8(ad);
 }
