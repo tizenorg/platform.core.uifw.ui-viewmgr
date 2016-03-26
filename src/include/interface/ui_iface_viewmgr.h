@@ -107,6 +107,7 @@ protected:
 	 */
 	bool pop_view_finished(ui_iface_view *view);
 
+//FIXME: Necessary?
 #if 0
 	/**
 	 *  @brief Return a list of views which this viewmgr has.

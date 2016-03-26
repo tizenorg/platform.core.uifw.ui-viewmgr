@@ -66,8 +66,7 @@ public:
 
 	void create_popup()
 	{
-#if 0
-		ui_popup_view *view = new ui_popup_view(this);
+		ui_popup *view = new ui_popup(this);
 
 		Evas_Object *popup = elm_popup_add(view->get_base());
 
@@ -90,7 +89,6 @@ public:
 
 		view->set_content(popup);
 		view->activate();
-#endif
 	}
 };
 
