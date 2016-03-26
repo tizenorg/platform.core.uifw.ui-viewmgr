@@ -18,8 +18,6 @@
 
 using namespace efl_viewmgr;
 
-#define MY_VIEWMGR
-
 static void ctxpopup_dismissed_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	evas_object_hide(obj);
@@ -174,4 +172,9 @@ Evas_Object *ui_menu::get_base()
 void ui_menu::on_back()
 {
 	this->deactivate();
+}
+
+int ui_menu::get_degree()
+{
+	return this->view->get_degree();
 }

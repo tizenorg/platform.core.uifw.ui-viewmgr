@@ -409,3 +409,30 @@ Elm_Toolbar *ui_view::unset_toolbar()
 
 	return toolbar;
 }
+
+void ui_view::on_rotate(int degree)
+{
+	ui_base_view::on_rotate(degree);
+	if (this->menu && this->menu->is_activated())
+	{
+		this->menu->on_rotate(degree);
+	}
+}
+
+void ui_view::on_portrait()
+{
+	ui_base_view::on_portrait();
+	if (this->menu && this->menu->is_activated())
+	{
+		this->menu->on_portrait();
+	}
+}
+
+void ui_view::on_landscape()
+{
+	ui_base_view::on_landscape();
+	if (this->menu && this->menu->is_activated())
+	{
+		this->menu->on_landscape();
+	}
+}

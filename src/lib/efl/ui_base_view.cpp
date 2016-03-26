@@ -109,26 +109,20 @@ void ui_base_view::on_back()
 
 void ui_base_view::on_rotate(int degree)
 {
-	if (this->get_controller())
-	{
-		MY_CONTROLLER->on_rotate(degree);
-	}
+	if (!this->get_controller()) return;
+	MY_CONTROLLER->on_rotate(degree);
 }
 
 void ui_base_view::on_portrait()
 {
-	if (this->get_controller())
-	{
-		MY_CONTROLLER->on_portrait();
-	}
+	if (!this->get_controller()) return;
+	MY_CONTROLLER->on_portrait();
 }
 
 void ui_base_view::on_landscape()
 {
-	if (this->get_controller())
-	{
-		MY_CONTROLLER->on_landscape();
-	}
+	if (!this->get_controller()) return;
+	MY_CONTROLLER->on_landscape();
 }
 void ui_base_view::set_event_block(bool block)
 {
