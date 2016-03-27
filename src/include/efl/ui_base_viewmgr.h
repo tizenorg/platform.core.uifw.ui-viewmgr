@@ -180,6 +180,26 @@ public:
 	 */
 	virtual bool pop_view();
 
+	/**
+	 *  @brief Insert a view in this viewmgr view list. Specifically, insert a given @p view right before of the given view, @before.
+	 *
+	 *  @param view A view to insert in the viewmgr view list.
+	 *  @param before A view that will be just inserted after @p view. If you pass @c NULL, @p view will be inserted at the front of the view list.
+	 *
+	 *  @return @c true on success or @c false otherwise.
+	 */
+	virtual bool insert_view_before(ui_base_view *view, ui_base_view *before);
+
+	/**
+	 *  @brief Insert a view in this viewmgr view list. Specifically, insert a given @p view right after of the given view, @after.
+	 *
+	 *  @param view A view to insert in the viewmgr view list.
+	 *  @param after A view that will be just inserted before the @p view. If you pass @c NULL, @p view will be inserted at the end of the view list.
+	 *
+	 *  @return @c true on success or @c false otherwise.
+	 */
+	virtual bool insert_view_after(ui_base_view *view, ui_base_view *after);
+
 	/** @brief Get a window object of viewmgr.
 	 */
 	Elm_Win *get_window()
