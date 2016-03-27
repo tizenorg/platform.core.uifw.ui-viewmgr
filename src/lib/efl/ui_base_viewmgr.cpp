@@ -408,6 +408,20 @@ ui_base_view * ui_base_viewmgr::push_view(ui_base_view *view)
 	return view;
 }
 
+bool ui_base_viewmgr::insert_view_before(ui_base_view *view, ui_base_view *before)
+{
+	ui_iface_viewmgr::insert_view_before(view, before);
+
+	return true;
+}
+
+bool ui_base_viewmgr::insert_view_after(ui_base_view *view, ui_base_view *after)
+{
+	ui_iface_viewmgr::insert_view_after(view, after);
+
+	return true;
+}
+
 ui_base_view *ui_base_viewmgr::get_view(unsigned int idx)
 {
 	return dynamic_cast<ui_base_view *>(ui_iface_viewmgr::get_view(idx));

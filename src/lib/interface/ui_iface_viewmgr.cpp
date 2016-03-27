@@ -196,13 +196,80 @@ bool ui_iface_viewmgr::pop_view()
 
 bool ui_iface_viewmgr::insert_view_before(ui_iface_view *view, ui_iface_view *before)
 {
-	//TODO: ...
+	typename std::list<ui_iface_view*>::iterator it;
+
+	if (!view)
+	{
+		LOGE("invalid view argument. view(NULL)");
+		return false;
+	}
+
+	if (!this->connect_view(view))
+	{
+		LOGE("connect view failed");
+		return false;
+	}
+
+	if (this->view_list.size() > 0)
+	{
+		for (it = this->view_list.begin(); it != this->view_list.end(); it++)
+		{
+			if (before == *it)
+			{
+				this->view_list.insert(it, view);
+
+				return true;
+			}
+		}
+	}
+
+	//If there is no matching before view with current list.
+	//also in case of before is NULL.
+	this->push_view(view);
+
 	return true;
 }
 
 bool ui_iface_viewmgr::insert_view_after(ui_iface_view *view, ui_iface_view *after)
 {
-	//TODO: ...
+	typename std::list<ui_iface_view*>::iterator it;
+
+	if (!view)
+	{
+		LOGE("invalid view argument. view(NULL)");
+		return false;
+	}
+
+	if (!this->connect_view(view))
+	{
+		LOGE("connect view failed");
+		return false;
+	}
+
+	ui_iface_view *bview;
+
+	if (this->view_list.size() > 0)
+	{
+		for (it = this->view_list.begin(); it != this->view_list.end(); it++)
+		{
+			if (after == *it)
+			{
+				//If the after is a last item of list.
+				//view has to push now.
+				if (it == this->view_list.end())
+					this->push_view(view);
+				else
+					this->view_list.insert(++it, view);
+
+				return true;
+			}
+		}
+	}
+
+	//If there is no matching after view with current list.
+	//also in case of after is NULL.
+	this->push_view(view);
+
 	return true;
 }
 
