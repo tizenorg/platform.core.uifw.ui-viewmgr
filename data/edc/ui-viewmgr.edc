@@ -1169,58 +1169,38 @@ collections {
       }
    }
    /* Zoom Effect */
-   group { "transition/zoom";
+   group { "transition/blend";
       parts {
-         rect { "opacity_content";
+         rect { "pclipper";
             desc { "default";
-               rel1.relative: 0.0 0.0;
-               rel2.relative: 1.0 1.0;
-               color: 255 255 255 255;
-            }
-            desc { "appear_from";
-               rel1.relative: 0.2 0.2;
-               rel2.relative: 0.8 0.8;
                color: 255 255 255 0;
             }
-         }
-         rect { "opacity_pcontent";
-            desc { "default";
-               rel1.relative: 0.0 0.0;
-               rel2.relative: 1.0 1.0;
+            desc { "invisible";
+               inherit: "default";
+            }
+            desc { "visible";
                color: 255 255 255 255;
             }
-            desc { "appear_from";
-               rel1.relative: 0.2 0.2;
-               rel2.relative: 0.8 0.8;
+         }
+         rect { "clipper";
+            desc { "default";
+               color: 255 255 255 255;
+            }
+            desc { "invisible";
                color: 255 255 255 0;
             }
-            desc { "disappear_to";
-               inherit: "appear_from";
-            }
-         }
-         proxy { "content_proxy";
-            desc {
-               source: "content";
-               //FIXME: It has to added for zoom effect.
-               //       Can't use below command right now. It will be added in upstream.
-               //source_visible: 0;
+            desc { "visible";
+               color: 255 255 255 255;
             }
          }
          swallow { "pcontent";
-            clip_to: opacity_pcontent;
+            clip_to: "pclipper";
             desc { "default";
-               rel1.to: "opacity_pcontent";
-               rel2.to: "opacity_pcontent";
             }
          }
          swallow { "content";
-            clip_to: opacity_content;
+            clip_to: "clipper";
             desc { "default";
-               rel1.to: "opacity_content";
-               rel2.to: "opacity_content";
-            }
-            desc { "hidden";
-               visible: 0;
             }
          }
       }
@@ -1230,7 +1210,8 @@ collections {
          }
          program { "push_content";
             action: STATE_SET "default" 0.0;
-            target: "opacity_content";
+            target: "clipper";
+            target: "pclipper";
             transition: DECELERATE TRANSITION_TIME;
             after: "push_finished";
          }
@@ -1238,32 +1219,30 @@ collections {
             signal: "view,push";
             source: "viewmgr";
             script {
-               set_state(PART:"opacity_content", "appear_from", 0.0);
+               set_state(PART:"pclipper", "visible", 0.0);
+               set_state(PART:"clipper", "invisible", 0.0);
                run_program(PROGRAM:"push_content");
             }
          }
          program { "pop_finished"
             action: SIGNAL_EMIT "pop,finished" "viewmgr";
          }
-         program { "content_state_change";
-            action: STATE_SET "default" 0.0;
-            target: "content";
-            after: "pop_finished";
-         }
          program { "pop_content";
-            action: STATE_SET "disappear_to" 0.0;
-            target: "opacity_pcontent";
+            action: STATE_SET "default" 0.0;
+            target: "pclipper";
+            target: "clipper";
             transition: DECELERATE TRANSITION_TIME;
-            after: "content_state_change";
+            after: "pop_finished";
          }
          program { "pop";
             signal: "view,pop";
             source: "viewmgr";
             script {
-               set_state(PART:"opacity_pcontent", "default", 0.0);
-               set_state(PART:"content", "hidden", 0.0);
+               set_state(PART:"pclipper", "visible", 0.0);
+               set_state(PART:"clipper", "invisible", 0.0);
                run_program(PROGRAM:"pop_content");
             }
          }
       }
    }
+}
