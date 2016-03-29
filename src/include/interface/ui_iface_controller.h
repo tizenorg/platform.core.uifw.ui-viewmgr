@@ -54,18 +54,6 @@ protected:
 		return this->view;
 	}
 
-public:
-	///Constructor.
-	ui_iface_controller() :
-			view(NULL)
-	{
-	}
-
-	///Destructor.
-	virtual ~ui_iface_controller()
-	{
-	}
-
 	/** @brief load callback.
 	 *
 	 *  @note Now, this view is moving onto the screen. Get ready for this view. If this view content is alive, load callback won't be called.
@@ -140,6 +128,19 @@ public:
 	 *  @note When current view is on landscape mode.
 	 */
 	virtual void on_landscape() = 0;
+
+
+public:
+	///Constructor.
+	ui_iface_controller() :
+			view(NULL)
+	{
+	}
+
+	///Destructor.
+	virtual ~ui_iface_controller()
+	{
+	}
 };
 
 }

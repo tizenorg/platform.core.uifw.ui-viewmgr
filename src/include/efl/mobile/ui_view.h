@@ -26,6 +26,7 @@ class ui_view: public ui_base_view
 {
 	friend class ui_menu;
 	friend class ui_key_listener;
+	friend class ui_controller;
 
 private:
 	Elm_Layout *layout;                //Base layout for view

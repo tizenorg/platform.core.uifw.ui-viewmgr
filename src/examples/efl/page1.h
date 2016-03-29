@@ -20,9 +20,6 @@
  */
 class page1: public ui_view
 {
-private:
-	appdata_s *ad;
-
 protected:
 	void on_load()
 	{
@@ -31,32 +28,23 @@ protected:
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					appdata_s *ad = static_cast<appdata_s *>(data);
-					ad->viewmgr->deactivate();
+					UI_VIEWMGR->deactivate();
 				},
 				//Next Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					appdata_s *ad = static_cast<appdata_s *>(data);
-					create_page2(ad);
-				},
-				this->ad);
-
+					create_page2();
+				});
 		this->set_content(content, "Title");
 	}
 
 public:
-	page1(appdata_s *ad) : ui_view("page1"), ad(ad)
-	{
-		ad->viewmgr->push_view(this);
-	}
-
-	~page1()
-	{
-	}
+	page1() : ui_view("page1") {}
+	~page1() {}
 };
 
-void create_page1(appdata_s *ad)
+void create_page1()
 {
-	new page1(ad);
+	//Push this view in viewmgr.
+	UI_VIEWMGR->push_view(new page1());
 }

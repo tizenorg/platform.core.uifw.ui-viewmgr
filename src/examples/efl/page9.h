@@ -20,46 +20,34 @@
  */
 class page9: public ui_controller
 {
-private:
-	appdata_s *ad;
-
 public:
-	page9(appdata_s *ad)
-			: ad(ad)
+	page9()
 	{
 		ui_view *view = new ui_view(this, "page9");
 
-		//FIXME: It will be deleted or change to other way :(
-		//       We don't have any way to support it now.
-		view->set_viewmgr(ad->viewmgr);
-
 		//Create a main content.
-		Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 9<br>(Content Preloading)",
+		Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 9<br>(Controller Inheritance + Content Preloading)",
 			//Prev Button Callback
 			[](void *data, Evas_Object *obj, void *event_info) -> void
 			{
-				appdata_s *ad = static_cast<appdata_s *>(data);
-				ad->viewmgr->pop_view();
+				UI_VIEWMGR->pop_view();
 			},
 			//Next Button Callback
 			[](void *data, Evas_Object *obj, void *event_info) -> void
 			{
-				appdata_s *ad = static_cast<appdata_s *>(data);
-				create_page10(ad);
-			},
-			this->ad);
+				create_page10();
+			});
 
 		//Don't delete view's content when this view poped.
 		view->set_removable_content(false);
 		view->set_content(content, "Title");
-		ad->viewmgr->push_view(view);
+
+		UI_VIEWMGR->push_view(view);
 	}
-	~page9()
-	{
-	}
+	~page9() {}
 };
 
-void create_page9(appdata_s *ad)
+void create_page9()
 {
-	new page9(ad);
+	page9 *controller = new page9();
 }

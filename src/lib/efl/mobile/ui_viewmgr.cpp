@@ -20,7 +20,7 @@ using namespace efl_viewmgr;
 using namespace viewmgr;
 
 ui_viewmgr::ui_viewmgr(const char *pkg)
-		: ui_base_viewmgr(pkg, new ui_key_listener(this))
+		: singleton(), ui_base_viewmgr(pkg, new ui_key_listener(this))
 {
 }
 

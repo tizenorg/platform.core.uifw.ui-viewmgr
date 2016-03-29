@@ -31,9 +31,6 @@ static void popup_dismissed_cb(void *data, Evas_Object *obj, void *event_info)
 
 class page13: public ui_view
 {
-private:
-	appdata_s *ad;
-
 protected:
 	void on_load()
 	{
@@ -42,16 +39,14 @@ protected:
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					appdata_s *ad = static_cast<appdata_s *>(data);
-					ad->viewmgr->pop_view();
+					UI_VIEWMGR->pop_view();
 				},
 				//Next Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					appdata_s *ad = static_cast<appdata_s *>(data);
-					create_page14(ad);
-				},
-				this->ad);
+					create_page14();
+				});
+
 		this->set_content(content, "Title");
 
 		//Title Right button
@@ -68,15 +63,8 @@ protected:
 	}
 
 public:
-	page13(const char *name, appdata_s *ad)
-			: ui_view(name), ad(ad)
-	{
-		ad->viewmgr->push_view(this);
-	}
-
-	~page13()
-	{
-	}
+	page13() : ui_view("page13") {}
+	~page13() {}
 
 	void create_popup()
 	{
@@ -104,7 +92,8 @@ public:
 	}
 };
 
-void create_page13(appdata_s *ad)
+void create_page13()
 {
-	new page13("page13", ad);
+	//Push this view in viewmgr.
+	UI_VIEWMGR->push_view(new page13());
 }

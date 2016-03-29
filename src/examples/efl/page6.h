@@ -19,9 +19,6 @@
  */
 class page6: public ui_view
 {
-private:
-	appdata_s *ad;
-
 protected:
 	void on_load()
 	{
@@ -30,16 +27,13 @@ protected:
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					appdata_s *ad = static_cast<appdata_s *>(data);
-					ad->viewmgr->pop_view();
+					UI_VIEWMGR->pop_view();
 				},
 				//Next Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					appdata_s *ad = static_cast<appdata_s *>(data);
-					create_page7(ad);
-				},
-				this->ad);
+					create_page7();
+				});
 
 		//Arguments: content, title
 		this->set_content(content, "Title with toolbar");
@@ -48,18 +42,12 @@ protected:
 	}
 
 public:
-	page6(appdata_s *ad) : ui_view("page6"), ad(ad)
-	{
-		ad->viewmgr->push_view(this);
-	}
-
-	~page6()
-	{
-	}
+	page6() : ui_view("page6") {}
+	~page6() {}
 };
 
-void create_page6(appdata_s *ad)
+void create_page6()
 {
-	/* A example for view class extension instead of using controller class. */
-	new page6(ad);
+	//Push this view in viewmgr.
+	UI_VIEWMGR->push_view(new page6());
 }

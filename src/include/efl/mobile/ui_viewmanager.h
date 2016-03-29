@@ -26,3 +26,5 @@
 #include "ui_key_listener.h"
 #include "ui_viewmgr.h"
 #include "ui_menu.h"
+
+#define UI_VIEWMGR efl_viewmgr::ui_viewmgr::get_instance()

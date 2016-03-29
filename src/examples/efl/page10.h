@@ -21,9 +21,6 @@
  */
 class page10: public ui_view
 {
-private:
-	appdata_s *ad;
-
 protected:
 	void on_load()
 	{
@@ -38,18 +35,15 @@ protected:
 	{
 		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Page 10<br>(Portrait + Landscape)",
 			//Prev Button Callback
-		        [](void *data, Evas_Object *obj, void *event_info) -> void
-		        {
-		        appdata_s *ad = static_cast<appdata_s *>(data);
-		        ad->viewmgr->pop_view();
-		        },
-		        //Next Button Callback
-		        [](void *data, Evas_Object *obj, void *event_info) -> void
-		        {
-		        appdata_s *ad = static_cast<appdata_s *>(data);
-		        create_page11(ad);
-		        },
-		        this->ad);
+				[](void *data, Evas_Object *obj, void *event_info) -> void
+				{
+					UI_VIEWMGR->pop_view();
+				},
+				//Next Button Callback
+				[](void *data, Evas_Object *obj, void *event_info) -> void
+				{
+					create_page11();
+		        });
 		this->set_content(content, "Title");
 		this->set_indicator(UI_VIEW_INDICATOR_DEFAULT);
 	}
@@ -58,34 +52,26 @@ protected:
 	{
 		Evas_Object *content = create_landscape_content(this->get_base(), "ViewMgr Demo<br>Page 10<br>(Portrait + Landscape)",
 				//Prev Button Callback
-		        [](void *data, Evas_Object *obj, void *event_info) -> void
-		        {
-			        appdata_s *ad = static_cast<appdata_s *>(data);
-			        ad->viewmgr->pop_view();
-		        },
-		        //Next Button Callback
-		        [](void *data, Evas_Object *obj, void *event_info) -> void
-		        {
-			        appdata_s *ad = static_cast<appdata_s *>(data);
-			        create_page11(ad);
-		        },
-		        this->ad);
+				[](void *data, Evas_Object *obj, void *event_info) -> void
+				{
+					UI_VIEWMGR->pop_view();
+				},
+				//Next Button Callback
+				[](void *data, Evas_Object *obj, void *event_info) -> void
+				{
+					create_page11();
+				});
 		this->set_content(content, "Title");
 		this->set_indicator(UI_VIEW_INDICATOR_OPTIMAL);
 	}
 
 public:
-	page10(appdata_s *ad) : ui_view("page10"), ad(ad)
-	{
-		ad->viewmgr->push_view(this);
-	}
-
-	~page10()
-	{
-	}
+	page10() : ui_view("page10") {}
+	~page10() {}
 };
 
-void create_page10(appdata_s *ad)
+void create_page10()
 {
-	new page10(ad);
+	//Push this view in viewmgr.
+	UI_VIEWMGR->push_view(new page10());
 }

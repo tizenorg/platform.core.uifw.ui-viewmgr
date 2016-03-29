@@ -22,12 +22,18 @@
 namespace efl_viewmgr
 {
 class ui_menu;
+class ui_viewmgr;
 
 class ui_controller: public ui_base_controller
 {
+	friend class ui_viewmgr;
+	friend class ui_view;
+
+protected:
+	virtual void on_menu(ui_menu *menu);
+
 public:
 	virtual ~ui_controller();
-	virtual void on_menu(ui_menu *menu);
 };
 }
 

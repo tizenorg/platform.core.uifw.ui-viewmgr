@@ -31,23 +31,9 @@ namespace efl_viewmgr
  */
 class ui_base_controller: public viewmgr::ui_iface_controller
 {
-public:
-	///Destructor.
-	virtual ~ui_base_controller();
+	friend class ui_base_view;
 
-	/**
-	 *  @brief Return a view which is matched with controller
-	 *
-	 *  @return The view which is matched with controller
-	 *
-	 *  @note User can set a controller 2 ways, 1. send a controller instance when view created,
-	 *        2. call set_view() method with controller instance.
-	 *
-	 *  @see set_view()
-	 */
-
-	ui_base_view *get_view();
-
+protected:
 	/** @brief load callback.
 	 *
 	 *  @note Now, this view is moving onto the screen. Get ready for this view. If this view content is alive, load callback won't be called.
@@ -131,6 +117,22 @@ public:
 	 */
 	virtual bool on_back() { return true; }
 
+public:
+	///Destructor.
+	virtual ~ui_base_controller();
+
+	/**
+	 *  @brief Return a view which is matched with controller
+	 *
+	 *  @return The view which is matched with controller
+	 *
+	 *  @note User can set a controller 2 ways, 1. send a controller instance when view created,
+	 *        2. call set_view() method with controller instance.
+	 *
+	 *  @see set_view()
+	 */
+
+	ui_base_view *get_view();
 };
 }
 
