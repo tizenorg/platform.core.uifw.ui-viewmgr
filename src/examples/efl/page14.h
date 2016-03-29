@@ -27,7 +27,7 @@ protected:
 	void on_load()
 	{
 		//Create a main content.
-		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Page 14<br>zoom transition effect",
+		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Page 14<br>(Zoom Transition)",
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
@@ -42,13 +42,13 @@ protected:
 				},
 				this->ad);
 
-		this->set_transition_style("zoom");
 		this->set_content(content, "Title");
 	}
 
 public:
 	page14(appdata_s *ad) : ui_view("page14"), ad(ad)
 	{
+		this->set_transition_style("zoom");
 		ad->viewmgr->push_view(this);
 	}
 

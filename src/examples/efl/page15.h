@@ -27,7 +27,7 @@ protected:
 	void on_load()
 	{
 		//Create a main content.
-		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Page 15<br>none transition effect",
+		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Page 15<br>(None Transition)",
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
@@ -42,13 +42,13 @@ protected:
 				},
 				this->ad);
 
-		this->set_transition_style("none");
 		this->set_content(content, "Title");
 	}
 
 public:
 	page15(appdata_s *ad) : ui_view("page15"), ad(ad)
 	{
+		this->set_transition_style("none");
 		ad->viewmgr->push_view(this);
 	}
 
