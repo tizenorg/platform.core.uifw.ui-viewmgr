@@ -20,7 +20,6 @@ using namespace efl_viewmgr;
 using namespace viewmgr;
 
 #define MY_CONTROLLER dynamic_cast<ui_base_controller *>(this->get_controller())
-#define MY_VIEWMGR dynamic_cast<ui_base_viewmgr *>(this->get_viewmgr())
 typedef list<ui_base_popup*>::reverse_iterator popup_ritr;
 
 void ui_base_view::connect_popup(ui_base_popup *popup)
@@ -64,7 +63,7 @@ Evas_Object *ui_base_view::unset_content()
 
 Evas_Object *ui_base_view::get_base()
 {
-	ui_base_viewmgr *viewmgr = MY_VIEWMGR;
+	ui_base_viewmgr *viewmgr = UI_BASE_VIEWMGR;
 	if (!viewmgr)
 	{
 		return NULL;
@@ -82,7 +81,7 @@ void ui_base_view::unload_content()
 
 Evas_Object *ui_base_view ::get_parent()
 {
-	ui_base_viewmgr *viewmgr = MY_VIEWMGR;
+	ui_base_viewmgr *viewmgr = UI_BASE_VIEWMGR;
 	if (!viewmgr)
 	{
 		LOGE("Failed to get a viewmgr");
@@ -97,7 +96,12 @@ void ui_base_view::set_indicator(ui_view_indicator indicator)
 
 	ui_iface_view::set_indicator(indicator);
 
-	ui_base_viewmgr *viewmgr = MY_VIEWMGR;
+	ui_base_viewmgr *viewmgr = UI_BASE_VIEWMGR;
+	if (!viewmgr)
+	{
+		LOGE("Failed to get a viewmgr");
+		return;
+	}
 
 	if (!viewmgr->is_activated()) return;
 
@@ -137,7 +141,13 @@ void ui_base_view::on_back()
 			return;
 		}
 	}
-	MY_VIEWMGR->pop_view();
+	ui_base_viewmgr *viewmgr = UI_BASE_VIEWMGR;
+	if (!viewmgr)
+	{
+		LOGE("Failed to get a viewmgr");
+		return;
+	}
+	viewmgr->pop_view();
 }
 
 void ui_base_view::on_rotate(int degree)
@@ -165,7 +175,7 @@ void ui_base_view::set_event_block(bool block)
 
 int ui_base_view::get_degree()
 {
-	ui_base_viewmgr *viewmgr = MY_VIEWMGR;
+	ui_base_viewmgr *viewmgr = UI_BASE_VIEWMGR;
 	if (!viewmgr)
 	{
 		LOGE("Failed to get a viewmgr");

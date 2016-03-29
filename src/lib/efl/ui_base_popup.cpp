@@ -57,7 +57,7 @@ ui_base_popup::~ui_base_popup()
 
 Elm_Win *ui_base_popup::get_window()
 {
-	ui_base_viewmgr *viewmgr = dynamic_cast<ui_base_viewmgr *>(this->view->get_viewmgr());
+	ui_base_viewmgr *viewmgr = UI_BASE_VIEWMGR;
 	if (!viewmgr)
 	{
 		LOGE("Viewmgr is null?? menu(%p)", this);

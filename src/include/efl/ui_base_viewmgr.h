@@ -44,7 +44,7 @@ class ui_base_view;
  *
  *  @warning viewmgr will remove all containing views when it's destroyed.
  */
-class ui_base_viewmgr: public viewmgr::ui_iface_viewmgr
+class ui_base_viewmgr: public singleton<ui_base_viewmgr>, public viewmgr::ui_iface_viewmgr
 {
 	friend class ui_base_view;
 

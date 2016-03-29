@@ -172,12 +172,6 @@ protected:
 	ui_iface_controller* set_controller(ui_iface_controller *controller);
 
 public:
-	//FIXME: This method for support a use case that user make content, view same time.
-	void set_viewmgr(ui_iface_viewmgr *viewmgr)
-	{
-		this->viewmgr = viewmgr;
-	}
-
 	/** @brief This is a constructor for initializing this view resources.
 	 *
 	 *  @param controller view life-cycle controller interface.

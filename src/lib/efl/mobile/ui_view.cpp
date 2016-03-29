@@ -23,7 +23,6 @@
 using namespace efl_viewmgr;
 using namespace viewmgr;
 
-#define MY_VIEWMGR dynamic_cast<ui_viewmgr *>(this->get_viewmgr())
 #define MY_CONTROLLER dynamic_cast<ui_controller *>(this->get_controller())
 
 static void content_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
@@ -86,8 +85,8 @@ bool ui_view::create_layout()
 	}
 
 	//Set software back key, if it's needed
-	ui_viewmgr *viewmgr = MY_VIEWMGR;
-	if (viewmgr->need_soft_key())
+	ui_viewmgr *viewmgr = UI_VIEWMGR;
+	if (viewmgr && viewmgr->need_soft_key())
 	{
 		Elm_Button *prev_btn = elm_button_add(layout);
 
@@ -323,23 +322,32 @@ void ui_view::unload_content()
 	this->destroy_layout();
 }
 
-void ui_view::on_menu()
+bool ui_view::on_menu_pre()
 {
 	if (this->menu && this->menu->is_activated())
 	{
 		this->menu->deactivate();
-		return;
+		return false;
+	}
+	if (!this->menu)
+	{
+		this->menu = new ui_menu(this);
 	}
 
 	if (this->get_controller())
 	{
-		if (!this->menu)
-		{
-			this->menu = new ui_menu(this);
-		}
 		MY_CONTROLLER->on_menu(this->menu);
+		return false;
 	}
+	return true;
+}
 
+void ui_view::on_menu(ui_menu *menu)
+{
+}
+
+void ui_view::on_menu_post()
+{
 	if (this->menu && this->menu->get_content())
 	{
 		this->menu->activate();
@@ -435,4 +443,10 @@ void ui_view::on_landscape()
 	{
 		this->menu->on_landscape();
 	}
+}
+
+Evas_Object *ui_view::get_base()
+{
+	if (!this->layout) this->create_layout();
+	return this->layout;
 }

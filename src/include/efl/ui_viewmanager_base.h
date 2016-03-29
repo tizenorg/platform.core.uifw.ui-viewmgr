@@ -21,8 +21,12 @@
 #endif
 #define LOG_TAG "UI_VIEWMGR"
 
+#include "ui_base_singleton.h"
 #include "ui_base_viewmgr.h"
 #include "ui_base_controller.h"
 #include "ui_base_view.h"
 #include "ui_base_key_listener.h"
 #include "ui_base_popup.h"
+
+
+#define UI_BASE_VIEWMGR efl_viewmgr::ui_base_viewmgr::get_instance()

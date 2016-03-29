@@ -21,24 +21,10 @@
  */
 class page11: public ui_controller
 {
-private:
-	appdata_s *ad;
-
-public:
-	page11(appdata_s *ad)
-			: ad(ad)
-	{
-		ad->viewmgr->push_view(new ui_view(this, "page11"));
-	}
-
-	~page11()
-	{
-	}
-
+protected:
 	void on_load()
 	{
 		ui_view *view = dynamic_cast<ui_view *>(this->get_view());
-
 		this->on_rotate(view->get_degree());
 	}
 
@@ -51,18 +37,15 @@ public:
 		{
 			Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 11<br>(Rotate)",
 					//Prev Button Callback
-			        [](void *data, Evas_Object *obj, void *event_info) -> void
-			        {
-				        appdata_s *ad = static_cast<appdata_s *>(data);
-				        ad->viewmgr->pop_view();
-			        },
-			        //Next Button Callback
-			        [](void *data, Evas_Object *obj, void *event_info) -> void
-			        {
-				        appdata_s *ad = static_cast<appdata_s *>(data);
-				        create_page12(ad);
-			        },
-			        this->ad);
+					[](void *data, Evas_Object *obj, void *event_info) -> void
+					{
+						UI_VIEWMGR->pop_view();
+					},
+					//Next Button Callback
+					[](void *data, Evas_Object *obj, void *event_info) -> void
+					{
+						create_page12();
+					});
 			view->set_content(content, "Title");
 			view->set_indicator(UI_VIEW_INDICATOR_DEFAULT);
 		}
@@ -71,26 +54,29 @@ public:
 		{
 			Evas_Object *content = create_landscape_content(view->get_base(), "ViewMgr Demo<br>Page 11<br>(Rotate)",
 					//Prev Button Callback
-			        [](void *data, Evas_Object *obj, void *event_info) -> void
-			        {
-				        appdata_s *ad = static_cast<appdata_s *>(data);
-				        ad->viewmgr->pop_view();
-			        },
-			        //Next Button Callback
-			        [](void *data, Evas_Object *obj, void *event_info) -> void
-			        {
-				        appdata_s *ad = static_cast<appdata_s *>(data);
-				        create_page12(ad);
-			        },
-			        this->ad);
+					[](void *data, Evas_Object *obj, void *event_info) -> void
+					{
+						UI_VIEWMGR->pop_view();
+					},
+					//Next Button Callback
+					[](void *data, Evas_Object *obj, void *event_info) -> void
+					{
+						create_page12();
+					});
 			view->set_content(content, "Title");
 			view->set_indicator(UI_VIEW_INDICATOR_OPTIMAL);
 		}
 	}
-
+public:
+	page11()
+	{
+		UI_VIEWMGR->push_view(new ui_view(this, "page11"));
+	}
+	~page11() {}
 };
 
-void create_page11(appdata_s *ad)
+void create_page11()
 {
-	new page11(ad);
+	//page 11 controller
+	page11 *controller = new page11();
 }

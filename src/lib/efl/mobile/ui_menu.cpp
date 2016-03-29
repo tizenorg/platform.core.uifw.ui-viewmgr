@@ -84,7 +84,7 @@ ui_menu::~ui_menu()
 
 Elm_Win *ui_menu::get_window()
 {
-	ui_viewmgr *viewmgr = dynamic_cast<ui_viewmgr *>(this->view->get_viewmgr());
+	ui_viewmgr *viewmgr = UI_VIEWMGR;
 	if (!viewmgr)
 	{
 		LOGE("Viewmgr is null?? menu(%p)", this);

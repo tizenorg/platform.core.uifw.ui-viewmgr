@@ -30,13 +30,15 @@ ui_key_listener::ui_key_listener(ui_viewmgr *viewmgr)
 void ui_key_listener::extend_event_proc(ui_base_view *view, Evas_Event_Key_Down *ev)
 {
 	if (strcmp(ev->keyname, KEY_MENU) && strcmp(ev->keyname, KEY_MENU2)) return;
-	dynamic_cast<ui_view *>(view)->on_menu();
+	ui_view *v = dynamic_cast<ui_view *>(view);
+	if (!v->on_menu_pre()) return;
+	v->on_menu((ui_menu*)(v->get_menu()));
+	v->on_menu_post();
 }
 
 bool ui_key_listener::init()
 {
 	if (!ui_base_key_listener::init()) return false;
-
 	if (!evas_object_key_grab(this->key_grabber, KEY_MENU, 0, 0, EINA_FALSE))
 	{
 		LOGE("Failed to grab MENU KEY(%s)\n", KEY_MENU);

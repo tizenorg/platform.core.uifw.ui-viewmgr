@@ -14,8 +14,8 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_BASIC_VIEWMGR_H
-#define UI_BASIC_VIEWMGR_H
+#ifndef UI_VIEWMGR_H
+#define UI_VIEWMGR_H
 
 #include <Elementary.h>
 #include "../ui_viewmanager_base.h"
@@ -24,14 +24,15 @@ namespace efl_viewmgr
 {
 
 class ui_view;
+class ui_viewmgr;
 
 class ui_viewmgr: public ui_base_viewmgr
 {
 	friend class ui_view;
+	friend class ui_controller;
 
 public:
 	ui_viewmgr(const char *pkg);
-
 	virtual ~ui_viewmgr();
 
 };

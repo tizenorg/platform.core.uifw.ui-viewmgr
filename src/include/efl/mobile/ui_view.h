@@ -26,6 +26,7 @@ class ui_view: public ui_base_view
 {
 	friend class ui_menu;
 	friend class ui_key_listener;
+	friend class ui_controller;
 
 private:
 	Elm_Layout *layout;                //Base layout for view
@@ -40,7 +41,9 @@ private:
 protected:
 	virtual void on_load();
 	virtual void on_unload();
-	virtual void on_menu();
+	bool on_menu_pre();
+	void on_menu_post();
+	virtual void on_menu(ui_menu *menu);
 	virtual void unload_content();
 	virtual void set_event_block(bool block);
 	virtual void on_back();
@@ -75,11 +78,7 @@ public:
 	Elm_Button *unset_title_right_btn();
 	Elm_Toolbar *unset_toolbar();
 
-	virtual Evas_Object *get_base()
-	{
-		if (!this->layout)this->create_layout();
-		return this->layout;
-	}
+	virtual Evas_Object *get_base();
 
 	Elm_Button *get_title_left_btn()
 	{

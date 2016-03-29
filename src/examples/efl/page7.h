@@ -20,46 +20,33 @@
  */
 class page7: public ui_view
 {
-private:
-	appdata_s *ad;
-
 public:
-	page7(appdata_s *ad) : ui_view("page7"), ad(ad)
+	page7() : ui_view("page7")
 	{
-		//FIXME: It will be deleted or change to other way :(
-		//       We don't have any way to support it now.
-		this->set_viewmgr(ad->viewmgr);
-
 		//Create a main content.
 		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Page 7<br>(Navigationbar style)",
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					appdata_s *ad = static_cast<appdata_s *>(data);
-					ad->viewmgr->pop_view();
+					UI_VIEWMGR->pop_view();
 				},
 				//Next Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					appdata_s *ad = static_cast<appdata_s *>(data);
-					create_page8(ad);
-				},
-				this->ad);
+					create_page8();
+				});
 
-		//Don't delete view's content when this view poped.
+		//FIXME: Don't delete view's content when this view poped.
 		this->set_removable_content(false);
 		this->set_content(content, "Title with toolbar");
 		Elm_Toolbar *toolbar = create_toolbar(this->get_base(), "navigationbar");
 		this->set_toolbar(toolbar);
-		ad->viewmgr->push_view(this);
 	}
-
-	~page7()
-	{
-	}
+	~page7() {}
 };
 
-void create_page7(appdata_s *ad)
+void create_page7()
 {
-	new page7(ad);
+	//Push this view in viewmgr.
+	UI_VIEWMGR->push_view(new page7());
 }
