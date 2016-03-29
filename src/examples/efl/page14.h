@@ -48,7 +48,7 @@ protected:
 public:
 	page14(appdata_s *ad) : ui_view("page14"), ad(ad)
 	{
-		this->set_transition_style("zoom");
+		this->set_transition_style("blend");
 		ad->viewmgr->push_view(this);
 	}
 
