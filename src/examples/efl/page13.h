@@ -70,9 +70,9 @@ public:
 
 	void create_popup()
 	{
-		ui_popup *view = new ui_popup(this);
+		ui_base_popup *view = new ui_base_popup(this);
 
-		Evas_Object *popup = elm_popup_add(view->get_base());
+		Elm_Popup *popup = elm_popup_add(view->get_base());
 
 		elm_popup_align_set(popup, ELM_NOTIFY_ALIGN_FILL, 1.0);
 		elm_object_text_set(popup, "This popup has only text which is set via desc set function, (This popup gets hidden when user clicks outside) here timeout of 3 sec is set.");
@@ -80,17 +80,15 @@ public:
 		evas_object_smart_callback_add(popup, "block,clicked",
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					evas_object_del(obj);
+					elm_popup_dismiss(obj);
 				},
 				NULL);
 		evas_object_smart_callback_add(popup, "timeout",
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					evas_object_del(obj);
+					elm_popup_dismiss(obj);
 				},
 				NULL);
-		evas_object_show(popup);
-
 		view->set_content(popup);
 		view->activate();
 	}
@@ -98,6 +96,5 @@ public:
 
 void create_page13(appdata_s *ad)
 {
-	/* A example for view class extension instead of using controller class. */
 	new page13("page13", ad);
 }

@@ -25,7 +25,6 @@ namespace efl_viewmgr
 class ui_view: public ui_base_view
 {
 	friend class ui_menu;
-	friend class ui_popup;
 	friend class ui_key_listener;
 
 private:

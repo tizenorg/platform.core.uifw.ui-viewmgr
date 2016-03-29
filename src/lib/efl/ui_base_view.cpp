@@ -21,6 +21,17 @@ using namespace viewmgr;
 
 #define MY_CONTROLLER dynamic_cast<ui_base_controller *>(this->get_controller())
 #define MY_VIEWMGR dynamic_cast<ui_base_viewmgr *>(this->get_viewmgr())
+typedef list<ui_base_popup*>::reverse_iterator popup_ritr;
+
+void ui_base_view::connect_popup(ui_base_popup *popup)
+{
+	this->popup_list.push_back(popup);
+}
+
+void ui_base_view::disconnect_popup(ui_base_popup *popup)
+{
+	this->popup_list.remove(popup);
+}
 
 ui_base_view::ui_base_view(ui_base_controller *controller, const char *name)
 		: ui_iface_view(controller, name)
@@ -95,8 +106,29 @@ void ui_base_view::set_indicator(ui_view_indicator indicator)
 	viewmgr->set_indicator(indicator);
 }
 
+bool ui_base_view::deactivate_popup(bool top_one)
+{
+	for (popup_ritr it = this->popup_list.rbegin(); it != this->popup_list.rend(); it++)
+	{
+		ui_base_popup *popup = *it;
+		if (!popup->is_activated()) continue;
+		popup->on_back();
+		//deactivate only one top one? or all popups?
+		if (top_one) return true;
+	}
+	return false;
+}
+
+void ui_base_view::on_deactivate()
+{
+	deactivate_popup(false);
+}
+
 void ui_base_view::on_back()
 {
+	//If any popup is activated, deactivate the popup first.
+	if (this->deactivate_popup(true)) return;
+
 	if (this->get_controller())
 	{
 		if (!MY_CONTROLLER->on_back())

@@ -18,6 +18,10 @@
 
 using namespace viewmgr;
 
+
+typedef list<ui_iface_view *> ::iterator view_itr;
+typedef list<ui_iface_view*>::reverse_iterator view_ritr;
+
 //FIXME: Read system profile to decide whether support software key or not.
 bool ui_iface_viewmgr::soft_key = true;
 //FIXME: Read system profile to decide whether support event block or not.
@@ -102,7 +106,7 @@ ui_iface_viewmgr::ui_iface_viewmgr()
 ui_iface_viewmgr::~ui_iface_viewmgr()
 {
 	//Terminate views
-	for (typename std::list<ui_iface_view*>::reverse_iterator it = this->view_list.rbegin(); it != this->view_list.rend(); it++)
+	for (view_ritr it = this->view_list.rbegin(); it != this->view_list.rend(); it++)
 	{
 		ui_iface_view *view = *it;
 		view->on_deactivate();
@@ -140,7 +144,7 @@ ui_iface_viewmgr::push_view(ui_iface_view *view)
 		this->set_event_block(pview, true);
 	}
 
-	view_list.push_back(view);
+	this->view_list.push_back(view);
 
 	if (!view->get_content())
 	{
@@ -185,7 +189,7 @@ bool ui_iface_viewmgr::pop_view()
 	//Below object has to be used in child class...
 	//Make this getter method? or define instance?
 	//previous page is to be an active page.
-	auto nx = std::prev(this->view_list.end(), 2);
+	auto nx = prev(this->view_list.end(), 2);
 	ui_iface_view *pview = *nx;
 	pview->on_load();
 	pview->on_deactivate();
@@ -196,7 +200,7 @@ bool ui_iface_viewmgr::pop_view()
 
 bool ui_iface_viewmgr::insert_view_before(ui_iface_view *view, ui_iface_view *before)
 {
-	typename std::list<ui_iface_view*>::iterator it;
+	view_itr it;
 
 	if (!view)
 	{
@@ -232,7 +236,7 @@ bool ui_iface_viewmgr::insert_view_before(ui_iface_view *view, ui_iface_view *be
 
 bool ui_iface_viewmgr::insert_view_after(ui_iface_view *view, ui_iface_view *after)
 {
-	typename std::list<ui_iface_view*>::iterator it;
+	view_itr it;
 
 	if (!view)
 	{
@@ -290,8 +294,8 @@ ui_iface_viewmgr::get_view(unsigned int idx)
 		LOGE("Invalid idx(%d)! =? (idx range: %d ~ %d)", idx, 0, this->view_list.size() - 1);
 		return NULL;
 	}
-	typename std::list<ui_iface_view*>::iterator it = this->view_list.begin();
-	std::advance(it, idx);
+	view_itr it = this->view_list.begin();
+	advance(it, idx);
 	return *it;
 }
 
@@ -299,7 +303,7 @@ int ui_iface_viewmgr::get_view_index(const ui_iface_view *view)
 {
 	int idx = 0;
 
-	for (typename std::list<ui_iface_view*>::iterator it = this->view_list.begin(); it != this->view_list.end(); it++)
+	for (view_itr it = this->view_list.begin(); it != this->view_list.end(); it++)
 	{
 		if (view == *it) return idx;
 		++idx;
