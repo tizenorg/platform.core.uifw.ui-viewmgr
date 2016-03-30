@@ -1168,12 +1168,12 @@ collections {
          }
       }
    }
-   /* Zoom Effect */
-   group { "transition/blend";
+   /* Fade Effect */
+   group { "transition/fade";
       parts {
          rect { "pclipper";
             desc { "default";
-               color: 255 255 255 0;
+               color: 0 0 0 255;
             }
             desc { "invisible";
                inherit: "default";
@@ -1187,7 +1187,7 @@ collections {
                color: 255 255 255 255;
             }
             desc { "invisible";
-               color: 255 255 255 0;
+               color: 0 0 0 255;
             }
             desc { "visible";
                color: 255 255 255 255;
@@ -1212,7 +1212,7 @@ collections {
             action: STATE_SET "default" 0.0;
             target: "clipper";
             target: "pclipper";
-            transition: DECELERATE TRANSITION_TIME;
+            transition: DECELERATE (TRANSITION_TIME * 5);
             after: "push_finished";
          }
          program { "push";
@@ -1231,7 +1231,7 @@ collections {
             action: STATE_SET "default" 0.0;
             target: "pclipper";
             target: "clipper";
-            transition: DECELERATE TRANSITION_TIME;
+            transition: DECELERATE (TRANSITION_TIME * 5);
             after: "pop_finished";
          }
          program { "pop";

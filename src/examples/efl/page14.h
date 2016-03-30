@@ -24,7 +24,7 @@ protected:
 	void on_load()
 	{
 		//Create a main content.
-		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Page 14<br>(Zoom Transition)",
+		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Page 14<br>(Fade Transition)",
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
@@ -42,7 +42,7 @@ protected:
 public:
 	page14() : ui_view("page14")
 	{
-		this->set_transition_style("blend");
+		this->set_transition_style("fade");
 	}
 	~page14() {}
 };
