@@ -3,6 +3,7 @@ SET(EXAM_SRCS
 	  ../../lib/interface/ui_iface_controller.cpp
 	  ../../lib/interface/ui_iface_view.cpp
 	  ../../lib/interface/ui_iface_viewmgr.cpp
+	  ../../lib/efl/ui_base_popup.cpp
 	  ../../lib/efl/ui_base_controller.cpp
 	  ../../lib/efl/ui_base_view.cpp
 	  ../../lib/efl/ui_base_viewmgr.cpp

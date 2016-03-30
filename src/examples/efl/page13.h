@@ -19,6 +19,16 @@
  *  And make a button on right top side of title area to activate popup.
  *  The created popup has view and it will be managed by viewmgr.
  */
+
+static void popup_dismissed_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	//FIXME: remove dismissed callback because this callback is called twice.
+	//It seems this is an efl or popup error, not this ui_popup nor example.
+	evas_object_smart_callback_del(obj, "dismissed", popup_dismissed_cb);
+	ui_base_popup *overlay = static_cast<ui_base_popup *>(data);
+	delete (overlay);
+}
+
 class page13: public ui_view
 {
 private:
@@ -70,36 +80,31 @@ public:
 
 	void create_popup()
 	{
-#if 0
-		ui_popup_view *view = new ui_popup_view(this);
+		//FIXME: is overlay a proper name?
+		ui_base_popup *overlay = new ui_base_popup(this);
 
-		Evas_Object *popup = elm_popup_add(view->get_base());
-
-		elm_popup_align_set(popup, ELM_NOTIFY_ALIGN_FILL, 1.0);
+		Elm_Popup *popup = elm_popup_add(overlay->get_base());
 		elm_object_text_set(popup, "This popup has only text which is set via desc set function, (This popup gets hidden when user clicks outside) here timeout of 3 sec is set.");
 		elm_popup_timeout_set(popup, 3.0);
+		evas_object_smart_callback_add(popup, "dismissed", popup_dismissed_cb, overlay);
 		evas_object_smart_callback_add(popup, "block,clicked",
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					evas_object_del(obj);
+					elm_popup_dismiss(obj);
 				},
 				NULL);
 		evas_object_smart_callback_add(popup, "timeout",
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					evas_object_del(obj);
+					elm_popup_dismiss(obj);
 				},
 				NULL);
-		evas_object_show(popup);
-
-		view->set_content(popup);
-		view->activate();
-#endif
+		overlay->set_content(popup);
+		overlay->activate();
 	}
 };
 
 void create_page13(appdata_s *ad)
 {
-	/* A example for view class extension instead of using controller class. */
 	new page13("page13", ad);
 }
