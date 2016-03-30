@@ -18,7 +18,7 @@
 #define UI_BASE_VIEWMGR_H
 
 #include <Elementary.h>
-#include "../interface/ui_viewmanager_interface.h"
+#include "../interface/ui_iface_viewmanager.h"
 #include "ui_base_key_listener.h"
 #include <map>
 

@@ -17,8 +17,8 @@
 #ifndef UI_MENU_H
 #define UI_MENU_H
 
-#include "../ui_viewmanager_base.h"
-#include "../../interface/ui_viewmanager_interface.h"
+#include "../../interface/ui_iface_viewmanager.h"
+#include "../ui_base_viewmanager.h"
 
 namespace efl_viewmgr
 {

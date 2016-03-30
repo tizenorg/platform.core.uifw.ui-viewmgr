@@ -23,6 +23,8 @@ class page2: public ui_view
 protected:
 	void on_load()
 	{
+		ui_view::on_load();
+
 		//Create a main content.
 		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Title Buttons",
 		//Prev Button Callback

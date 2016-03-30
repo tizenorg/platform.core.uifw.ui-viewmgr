@@ -18,7 +18,7 @@
 #define UI_VIEWMGR_H
 
 #include <Elementary.h>
-#include "../ui_viewmanager_base.h"
+#include "../ui_base_viewmanager.h"
 
 namespace efl_viewmgr
 {

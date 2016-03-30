@@ -17,7 +17,7 @@
 #ifndef UI_KEY_HANDLER_H
 #define UI_KEY_HANDLER_H
 
-#include "../ui_viewmanager_base.h"
+#include "../ui_base_viewmanager.h"
 
 namespace efl_viewmgr
 {

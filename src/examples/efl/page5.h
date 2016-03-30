@@ -23,6 +23,8 @@ class page5: public ui_base_view
 protected:
 	void on_load()
 	{
+		ui_base_view::on_load();
+
 		//Create a main content.
 		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Full View",
 				//Prev Button Callback
