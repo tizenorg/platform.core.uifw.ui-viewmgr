@@ -22,16 +22,8 @@ namespace viewmgr
 class ui_iface_rotatable
 {
 protected:
-	/** @brief This is for calling controller's portrait method.
-	 */
 	virtual void on_portrait() {}
-
-	/** @brief This is for calling controller's landscape method.
-	 */
 	virtual void on_landscape() {}
-
-	/** @brief This is for calling controller's rotate method.
-	 */
 	virtual void on_rotate(int degree) {}
 
 public:

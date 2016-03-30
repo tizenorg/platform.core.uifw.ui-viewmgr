@@ -22,11 +22,13 @@
 namespace efl_viewmgr
 {
 
+class ui_menu;
+class ui_key_listener;
+
 class ui_view: public ui_base_view
 {
 	friend class ui_menu;
 	friend class ui_key_listener;
-	friend class ui_controller;
 
 private:
 	Elm_Layout *layout;                //Base layout for view
@@ -47,21 +49,11 @@ protected:
 	virtual void unload_content();
 	virtual void set_event_block(bool block);
 	virtual void on_back();
-
-	/** @brief This is for calling controller's rotate method.
-	 */
 	virtual void on_rotate(int degree);
-
-	/** @brief This is for calling controller's portrait method.
-	 */
 	virtual void on_portrait();
-
-	/** @brief This is for calling controller's landscape method.
-	 */
 	virtual void on_landscape();
 
 public:
-	ui_view(ui_controller *controller, const char *name = NULL);
 	ui_view(const char *name = NULL);
 	virtual ~ui_view();
 

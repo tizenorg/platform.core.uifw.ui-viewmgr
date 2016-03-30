@@ -26,7 +26,6 @@ typedef void* T;
 namespace viewmgr {
 
 class ui_iface_viewmgr;
-class ui_iface_controller;
 
 /**
  *  @class ui_iface_view
@@ -44,7 +43,6 @@ class ui_iface_controller;
 class ui_iface_view
 {
 	friend class ui_iface_viewmgr;
-	friend class ui_iface_controller;
 
 private:
 	/// View state definition
@@ -59,7 +57,6 @@ private:
 	};
 
 	T content;                              ///< A content instance for a screen as a view.
-	ui_iface_controller *controller;        ///< View life-cycle controller interface.
 	string name;                            ///< View name.
 	string transition_style;                ///< View transition style name.
 	ui_iface_viewmgr *viewmgr;              ///< Viewmgr which this view belongs to.
@@ -83,7 +80,6 @@ protected:
 	 *
 	 *  @note this state will be triggered by ui_iface_viewmgr.
 	 *
-	 *  @see ui_iface_controller for this state in detail.
 	 */
 	virtual void on_load();
 
@@ -91,7 +87,6 @@ protected:
 	 *
 	 *  @note this state will be triggered by ui_iface_viewmgr.
 	 *
-	 *  @see ui_iface_controller for this state in detail.
 	 */
 	virtual void on_unload();
 
@@ -99,7 +94,6 @@ protected:
 	 *
 	 *  @note this state will be triggered by ui_iface_viewmgr.
 	 *
-	 *  @see ui_iface_controller for this state in detail.
 	 */
 	virtual void on_activate();
 
@@ -107,7 +101,6 @@ protected:
 	 *
 	 *  @note this state will be triggered by ui_iface_viewmgr.
 	 *
-	 *  @see ui_iface_controller for this state in detail.
 	 */
 	virtual void on_deactivate();
 
@@ -115,7 +108,6 @@ protected:
 	 *
 	 *  @note this state will be triggered by ui_iface_viewmgr.
 	 *
-	 *  @see ui_iface_controller for this state in detail.
 	 */
 	virtual void on_pause();
 
@@ -123,7 +115,6 @@ protected:
 	 *
 	 *  @note this state will be triggered by ui_iface_viewmgr.
 	 *
-	 *  @see ui_iface_controller for this state in detail.
 	 */
 	virtual void on_resume();
 
@@ -131,7 +122,6 @@ protected:
 	 *
 	 *  @note this state will be triggered by ui_iface_viewmgr.
 	 *
-	 *  @see ui_iface_controller for this state in detail.
 	 */
 	virtual void on_destroy();
 
@@ -147,12 +137,6 @@ protected:
 		return this->event_block;
 	}
 
-	/// Return a controller of this view.
-	ui_iface_controller* get_controller()
-	{
-		return this->controller;
-	}
-
 	/** @brief Return a viewmgr which this view is belonging to.
 	 */
 	ui_iface_viewmgr *get_viewmgr()
@@ -160,29 +144,11 @@ protected:
 		return this->viewmgr;
 	}
 
-	/** @brief This is for replacing or setting a controller of the view.
-	 *
-	 *  @return A previous controller. If it wasn't, the return value will be @c NULL.
-	 *  @note this state will be triggered by ui_iface_viewmgr.
-	 *  @param controller a new controller. It allows @c NULL for canceling the previous controller.
-	 *
-	 *  @warning Be aware deletion of controller passed here will be taken cover by ui_iface_view.
-	 *           If you want to keep the controller for any reasons, please unset it using set_controller() before ui_iface_view is deleted.
-	 */
-	ui_iface_controller* set_controller(ui_iface_controller *controller);
-
 public:
 	/** @brief This is a constructor for initializing this view resources.
 	 *
-	 *  @param controller view life-cycle controller interface.
 	 *  @param name view name.
-	 *
-	 *  @warning Be aware the deletion of controller passed here will be covered by ui_iface_view.
-	 *           If you want to keep it for any reasons, please unset it using set_controller() before ui_iface_view is deleted.
 	 */
-	///Constructor for initializing with controller.
-	ui_iface_view(ui_iface_controller *controller, const char *name = NULL);
-	///Constructor for initializing with name.
 	ui_iface_view(const char *name = NULL);
 
 	///Destructor for terminating view.

@@ -15,68 +15,62 @@
  *
  */
 
-/** This page inherit ui_controller
- *  And implement on_rotate() method to create portarit, landscape content.
- *  This page will be created suitable content in on_rotate() method.
+
+/** This page implement on_menu() method to create ctxpopup when menu HW key clicked.
+ *  This page will be created menu(ctxpopup)items in on_menu() method.
  */
-class page11: public ui_controller
+static void ctxpopup_item_select_cb(void *data, Evas_Object *obj, void *event_info)
+{
+	ui_view *view = static_cast<ui_view *>(data);
+	Elm_Object_Item *it = static_cast<Elm_Object_Item *>(event_info);
+	elm_ctxpopup_dismiss(obj);
+	LOGE("Item (%s) is selected", elm_object_item_text_get(it));
+}
+
+class page11: public ui_view
 {
 protected:
 	void on_load()
 	{
-		ui_view *view = dynamic_cast<ui_view *>(this->get_view());
-		this->on_rotate(view->get_degree());
+		//Create a main content.
+		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Menu Popup",
+				//Prev Button Callback
+				[](void *data, Evas_Object *obj, void *event_info) -> void
+				{
+					UI_VIEWMGR->pop_view();
+				},
+				//Next Button Callback
+				[](void *data, Evas_Object *obj, void *event_info) -> void
+				{
+					create_page12();
+				});
+
+		this->set_content(content, "Page11");
 	}
 
-	void on_rotate(int degree)
+	void on_menu(ui_menu *menu)
 	{
-		ui_view *view = dynamic_cast<ui_view *>(this->get_view());
+		Elm_Ctxpopup *ctxpopup = elm_ctxpopup_add(menu->get_base());
+		elm_ctxpopup_item_append(ctxpopup, "Phone calls", NULL, ctxpopup_item_select_cb, this);
+		elm_ctxpopup_item_append(ctxpopup, "Favorites", NULL, ctxpopup_item_select_cb, this);
+		elm_ctxpopup_item_append(ctxpopup, "Search", NULL, ctxpopup_item_select_cb, this);
+		elm_ctxpopup_item_append(ctxpopup, "Dialer", NULL, ctxpopup_item_select_cb, this);
+		elm_ctxpopup_item_append(ctxpopup, "Add contact", NULL, ctxpopup_item_select_cb, this);
+		elm_ctxpopup_item_append(ctxpopup, "Phone calls", NULL, ctxpopup_item_select_cb, this);
+		elm_ctxpopup_item_append(ctxpopup, "Favorites", NULL, ctxpopup_item_select_cb, this);
+		elm_ctxpopup_item_append(ctxpopup, "Search", NULL, ctxpopup_item_select_cb, this);
+		elm_ctxpopup_item_append(ctxpopup, "Dialer", NULL, ctxpopup_item_select_cb, this);
 
-		//Portrait
-		if (view->get_degree() == 0 || view->get_degree() == 180)
-		{
-			Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 11<br>(Rotate)",
-					//Prev Button Callback
-					[](void *data, Evas_Object *obj, void *event_info) -> void
-					{
-						UI_VIEWMGR->pop_view();
-					},
-					//Next Button Callback
-					[](void *data, Evas_Object *obj, void *event_info) -> void
-					{
-						create_page12();
-					});
-			view->set_content(content, "Title");
-			view->set_indicator(UI_VIEW_INDICATOR_DEFAULT);
-		}
-		//Landscape
-		else
-		{
-			Evas_Object *content = create_landscape_content(view->get_base(), "ViewMgr Demo<br>Page 11<br>(Rotate)",
-					//Prev Button Callback
-					[](void *data, Evas_Object *obj, void *event_info) -> void
-					{
-						UI_VIEWMGR->pop_view();
-					},
-					//Next Button Callback
-					[](void *data, Evas_Object *obj, void *event_info) -> void
-					{
-						create_page12();
-					});
-			view->set_content(content, "Title");
-			view->set_indicator(UI_VIEW_INDICATOR_OPTIMAL);
-		}
+		menu->set_content(ctxpopup);
 	}
+
 public:
-	page11()
-	{
-		UI_VIEWMGR->push_view(new ui_view(this, "page11"));
-	}
+	page11() {}
 	~page11() {}
 };
 
 void create_page11()
 {
-	//page 11 controller
-	page11 *controller = new page11();
+	//Push this view in viewmgr.
+	UI_VIEWMGR->push_view(new page11());
 }

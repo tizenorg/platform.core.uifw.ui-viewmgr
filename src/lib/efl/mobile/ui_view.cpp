@@ -23,8 +23,6 @@
 using namespace efl_viewmgr;
 using namespace viewmgr;
 
-#define MY_CONTROLLER dynamic_cast<ui_controller *>(this->get_controller())
-
 static void content_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
 	ui_view *view = static_cast<ui_view *>(data);
@@ -126,13 +124,8 @@ void ui_view::on_back()
 	ui_base_view ::on_back();
 }
 
-ui_view::ui_view(ui_controller *controller, const char *name)
-		: ui_base_view(controller, name), layout(NULL), menu(NULL)
-{
-}
-
 ui_view::ui_view(const char *name)
-		: ui_view(NULL, name)
+		: ui_base_view(name), layout(NULL), menu(NULL)
 {
 }
 
@@ -332,12 +325,6 @@ bool ui_view::on_menu_pre()
 	if (!this->menu)
 	{
 		this->menu = new ui_menu(this);
-	}
-
-	if (this->get_controller())
-	{
-		MY_CONTROLLER->on_menu(this->menu);
-		return false;
 	}
 	return true;
 }

@@ -29,7 +29,6 @@ class ui_viewmgr;
 class ui_viewmgr: public ui_base_viewmgr
 {
 	friend class ui_view;
-	friend class ui_controller;
 
 public:
 	ui_viewmgr(const char *pkg);

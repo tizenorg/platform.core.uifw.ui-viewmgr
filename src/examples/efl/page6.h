@@ -23,7 +23,7 @@ protected:
 	void on_load()
 	{
 		//Create a main content.
-		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Page 6",
+		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Toolbar",
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
@@ -36,7 +36,7 @@ protected:
 				});
 
 		//Arguments: content, title
-		this->set_content(content, "Title with toolbar");
+		this->set_content(content, "Page6");
 		Elm_Toolbar *toolbar = create_toolbar(this->get_base(), "toolbar_with_title");
 		this->set_toolbar(toolbar);
 	}

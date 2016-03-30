@@ -24,7 +24,7 @@ protected:
 	void on_load()
 	{
 		//Create a main content.
-		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Page 3",
+		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Subtitle",
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
@@ -37,7 +37,7 @@ protected:
 				});
 
 		//Arguments: content, title, subtitle, title left button, title right button
-		this->set_content(content, "Title", "Subtitle", NULL, NULL);
+		this->set_content(content, "Page3", "Subtitle", NULL, NULL);
 	}
 
 public:

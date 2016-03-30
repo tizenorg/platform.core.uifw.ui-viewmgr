@@ -19,7 +19,6 @@
 using namespace efl_viewmgr;
 using namespace viewmgr;
 
-#define MY_CONTROLLER dynamic_cast<ui_base_controller *>(this->get_controller())
 typedef list<ui_base_popup*>::reverse_iterator popup_ritr;
 
 void ui_base_view::connect_popup(ui_base_popup *popup)
@@ -32,13 +31,8 @@ void ui_base_view::disconnect_popup(ui_base_popup *popup)
 	this->popup_list.remove(popup);
 }
 
-ui_base_view::ui_base_view(ui_base_controller *controller, const char *name)
-		: ui_iface_view(controller, name)
-{
-}
-
 ui_base_view::ui_base_view(const char *name)
-		: ui_base_view(NULL, name)
+		: ui_iface_view(name)
 {
 }
 
@@ -134,13 +128,6 @@ void ui_base_view::on_back()
 	//If any popup is activated, deactivate the popup first.
 	if (this->deactivate_popup(true)) return;
 
-	if (this->get_controller())
-	{
-		if (!MY_CONTROLLER->on_back())
-		{
-			return;
-		}
-	}
 	ui_base_viewmgr *viewmgr = UI_BASE_VIEWMGR;
 	if (!viewmgr)
 	{
@@ -152,21 +139,16 @@ void ui_base_view::on_back()
 
 void ui_base_view::on_rotate(int degree)
 {
-	if (!this->get_controller()) return;
-	MY_CONTROLLER->on_rotate(degree);
 }
 
 void ui_base_view::on_portrait()
 {
-	if (!this->get_controller()) return;
-	MY_CONTROLLER->on_portrait();
 }
 
 void ui_base_view::on_landscape()
 {
-	if (!this->get_controller()) return;
-	MY_CONTROLLER->on_landscape();
 }
+
 void ui_base_view::set_event_block(bool block)
 {
 	ui_iface_view::set_event_block(block);

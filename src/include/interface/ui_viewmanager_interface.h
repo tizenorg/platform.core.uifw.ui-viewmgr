@@ -38,6 +38,5 @@ enum ui_view_indicator
 #include "ui_iface_rotatable.h"
 #include "ui_iface_viewmgr.h"
 #include "ui_iface_view.h"
-#include "ui_iface_controller.h"
 
 #endif /* UI_VIEWMANAGER_INTERFACE_H */
