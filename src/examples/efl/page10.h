@@ -15,56 +15,55 @@
  *
  */
 
-/** This page inherit ui_view.
- *  And implement on_portait(), on_landscape() method to create portarit, landscape content.
- *  This page will be created suitable content in on_portrait(), on_landscape() method.
+/** This page inherit ui_controller
+ *  And implement on_rotate() method to create portarit, landscape content.
+ *  This page will be created suitable content in on_rotate() method.
  */
 class page10: public ui_view
 {
 protected:
 	void on_load()
 	{
-		//FIXME: Change below code to more convenient and clear way.
-		if (this->get_degree() == 90 || this->get_degree() == 270)
-			this->on_landscape();
+		this->on_rotate(this->get_degree());
+	}
+
+	void on_rotate(int degree)
+	{
+		//Portrait
+		if (this->get_degree() == 0 || this->get_degree() == 180)
+		{
+			Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Rotation",
+					//Prev Button Callback
+					[](void *data, Evas_Object *obj, void *event_info) -> void
+					{
+						UI_VIEWMGR->pop_view();
+					},
+					//Next Button Callback
+					[](void *data, Evas_Object *obj, void *event_info) -> void
+					{
+						create_page11();
+					});
+			this->set_content(content, "Page 10");
+			this->set_indicator(UI_VIEW_INDICATOR_DEFAULT);
+		}
+		//Landscape
 		else
-			this->on_portrait();
+		{
+			Evas_Object *content = create_landscape_content(this->get_base(), "ViewMgr Demo<br>Rotation",
+					//Prev Button Callback
+					[](void *data, Evas_Object *obj, void *event_info) -> void
+					{
+						UI_VIEWMGR->pop_view();
+					},
+					//Next Button Callback
+					[](void *data, Evas_Object *obj, void *event_info) -> void
+					{
+						create_page11();
+					});
+			this->set_content(content, "Page 10");
+			this->set_indicator(UI_VIEW_INDICATOR_OPTIMAL);
+		}
 	}
-
-	void on_portrait()
-	{
-		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Page 10<br>(Portrait + Landscape)",
-			//Prev Button Callback
-				[](void *data, Evas_Object *obj, void *event_info) -> void
-				{
-					UI_VIEWMGR->pop_view();
-				},
-				//Next Button Callback
-				[](void *data, Evas_Object *obj, void *event_info) -> void
-				{
-					create_page11();
-		        });
-		this->set_content(content, "Title");
-		this->set_indicator(UI_VIEW_INDICATOR_DEFAULT);
-	}
-
-	void on_landscape()
-	{
-		Evas_Object *content = create_landscape_content(this->get_base(), "ViewMgr Demo<br>Page 10<br>(Portrait + Landscape)",
-				//Prev Button Callback
-				[](void *data, Evas_Object *obj, void *event_info) -> void
-				{
-					UI_VIEWMGR->pop_view();
-				},
-				//Next Button Callback
-				[](void *data, Evas_Object *obj, void *event_info) -> void
-				{
-					create_page11();
-				});
-		this->set_content(content, "Title");
-		this->set_indicator(UI_VIEW_INDICATOR_OPTIMAL);
-	}
-
 public:
 	page10() : ui_view("page10") {}
 	~page10() {}

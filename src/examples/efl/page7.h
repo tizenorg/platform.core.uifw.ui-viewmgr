@@ -24,7 +24,7 @@ public:
 	page7() : ui_view("page7")
 	{
 		//Create a main content.
-		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Page 7<br>(Navigationbar style)",
+		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Navigationbar",
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
@@ -38,7 +38,7 @@ public:
 
 		//FIXME: Don't delete view's content when this view poped.
 		this->set_removable_content(false);
-		this->set_content(content, "Title with toolbar");
+		this->set_content(content, "Page7");
 		Elm_Toolbar *toolbar = create_toolbar(this->get_base(), "navigationbar");
 		this->set_toolbar(toolbar);
 	}

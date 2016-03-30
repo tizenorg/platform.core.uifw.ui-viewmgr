@@ -16,39 +16,35 @@
  */
 
 /** This page inherit ui_controller to show view create in controller side.
+ *  And this page create content in controller constructor time.
  */
-class page8: public ui_controller
+class page8: public ui_view
 {
-protected:
-	void on_load()
-	{
-		//Initialize contents.
-		ui_view *view = dynamic_cast<ui_view *>(this->get_view());
-
-		//Create a main content.
-		Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 8<br>(Controller Inheritance)",
-				//Prev Button Callback
-				[](void *data, Evas_Object *obj, void *event_info) -> void
-				{
-					UI_VIEWMGR->pop_view();
-				},
-				//Next Button Callback
-				[](void *data, Evas_Object *obj, void *event_info) -> void
-				{
-					create_page9();
-				});
-
-		view->set_content(content, "Title");
-	}
 public:
-	page8()
+	page8() : ui_view("page8")
 	{
-		UI_VIEWMGR->push_view(new ui_view(this, "page8"));
+		//Create a main content.
+		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Content Preloading",
+			//Prev Button Callback
+			[](void *data, Evas_Object *obj, void *event_info) -> void
+			{
+				UI_VIEWMGR->pop_view();
+			},
+			//Next Button Callback
+			[](void *data, Evas_Object *obj, void *event_info) -> void
+			{
+				create_page9();
+			});
+
+		//Don't delete view's content when this view poped.
+		this->set_removable_content(false);
+		this->set_content(content, "Page 8");
 	}
 	~page8() {}
 };
 
 void create_page8()
 {
-	page8 *controller = new page8();
+	//Push this view in viewmgr.
+	UI_VIEWMGR->push_view(new page8());
 }

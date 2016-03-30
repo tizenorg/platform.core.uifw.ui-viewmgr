@@ -26,9 +26,6 @@ void ui_iface_view::set_event_block(bool block)
 void ui_iface_view::on_load()
 {
 	this->state = UI_VIEW_STATE_LOAD;
-	if (this->content) return;
-	if (!this->controller) return;
-	this->controller->on_load();
 }
 
 void ui_iface_view::on_unload()
@@ -39,78 +36,42 @@ void ui_iface_view::on_unload()
 		this->unload_content();
 		return;
 	}
-	if (!this->content) return;
-	if (!this->controller) return;
-	this->controller->on_unload();
 }
 
 void ui_iface_view::on_activate()
 {
 	this->state = UI_VIEW_STATE_ACTIVATE;
-	if (!this->controller) return;
-	this->controller->on_activate();
 }
 
 void ui_iface_view::on_deactivate()
 {
 	this->state = UI_VIEW_STATE_DEACTIVATE;
-	if (!this->controller) return;
-	this->controller->on_deactivate();
 }
 
 void ui_iface_view::on_pause()
 {
 	this->state = UI_VIEW_STATE_PAUSE;
-	if (!this->content) return;
-	if (state != UI_VIEW_STATE_ACTIVATE) return;
-	if (!this->controller) return;
-	this->controller->on_pause();
 }
 
 void ui_iface_view::on_resume()
 {
 	this->state = UI_VIEW_STATE_ACTIVATE;
-	if (state != UI_VIEW_STATE_PAUSE) return;
-	if (!this->content) return;
-	if (!this->controller) return;
-	this->controller->on_resume();
 }
 
 void ui_iface_view::on_destroy()
 {
-	if (!this->controller) return;
-	this->controller->on_destroy();
-}
-
-ui_iface_view::ui_iface_view(ui_iface_controller *controller, const char *name)
-		: content(NULL), controller(controller), name(string(name ? name : "")), transition_style(string("default")), viewmgr(NULL), state(UI_VIEW_STATE_LOAD),
-		  indicator(UI_VIEW_INDICATOR_DEFAULT), event_block(false), removable_content(true)
-{
-	this->state = UI_VIEW_STATE_UNLOAD;
-
-	if (controller)
-		controller->set_view(this);
 }
 
 ui_iface_view::ui_iface_view(const char *name)
-		: ui_iface_view(NULL, name)
+		: content(NULL), name(string(name ? name : "")), transition_style(string("default")), viewmgr(NULL), state(UI_VIEW_STATE_LOAD),
+		  indicator(UI_VIEW_INDICATOR_DEFAULT), event_block(false), removable_content(true)
 {
-
+	this->state = UI_VIEW_STATE_UNLOAD;
 }
 
 ui_iface_view::~ui_iface_view()
 {
 	this->viewmgr->remove_view(this);
-	if (this->controller) delete (this->controller);
-}
-
-ui_iface_controller* ui_iface_view::set_controller(ui_iface_controller *controller)
-{
-	ui_iface_controller *prev_controller = this->controller;
-	this->controller = controller;
-	if (controller) controller->set_view(this);
-	if (prev_controller) prev_controller->set_view(NULL);
-	return prev_controller;
 }
 
 T ui_iface_view::set_content(T content)

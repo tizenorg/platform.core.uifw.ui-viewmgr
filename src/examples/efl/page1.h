@@ -24,7 +24,7 @@ protected:
 	void on_load()
 	{
 		//Create a main content.
-		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Page 1",
+		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Basic View",
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
@@ -35,7 +35,7 @@ protected:
 				{
 					create_page2();
 				});
-		this->set_content(content, "Title");
+		this->set_content(content, "Page1");
 	}
 
 public:

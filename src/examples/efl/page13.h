@@ -15,27 +15,16 @@
  *
  */
 
-/** This page inherit ui_ui_view
- *  And make a button on right top side of title area to activate popup.
- *  The created popup has view and it will be managed by viewmgr.
+/** This example create a simple view which is inheritance ui_view.
+ *  Then push in viewmgr.
  */
-
-static void popup_dismissed_cb(void *data, Evas_Object *obj, void *event_info)
-{
-	//FIXME: remove dismissed callback because this callback is called twice.
-	//It seems this is an efl or popup error, not this ui_popup nor example.
-	evas_object_smart_callback_del(obj, "dismissed", popup_dismissed_cb);
-	ui_base_popup *overlay = static_cast<ui_base_popup *>(data);
-	delete (overlay);
-}
-
 class page13: public ui_view
 {
 protected:
 	void on_load()
 	{
 		//Create a main content.
-		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Page 13<br>(Popup)",
+		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Fade Transition",
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
@@ -47,49 +36,15 @@ protected:
 					create_page14();
 				});
 
-		this->set_content(content, "Title");
-
-		//Title Right button
-		Elm_Button *right_btn = elm_button_add(this->get_base());
-		elm_object_text_set(right_btn, "popup");
-		evas_object_smart_callback_add(right_btn, "clicked",
-				[](void *data, Evas_Object *obj, void *event_info) -> void
-				{
-					page13 *view = static_cast<page13 *>(data);
-					view->create_popup();
-				},
-				this);
-		this->set_title_right_btn(right_btn);
+		this->set_content(content, "Page13");
 	}
 
 public:
-	page13() : ui_view("page13") {}
-	~page13() {}
-
-	void create_popup()
+	page13() : ui_view("page13")
 	{
-		//FIXME: is overlay a proper name?
-		ui_base_popup *overlay = new ui_base_popup(this);
-
-		Elm_Popup *popup = elm_popup_add(overlay->get_base());
-		elm_object_text_set(popup, "This popup has only text which is set via desc set function, (This popup gets hidden when user clicks outside) here timeout of 3 sec is set.");
-		elm_popup_timeout_set(popup, 3.0);
-		evas_object_smart_callback_add(popup, "dismissed", popup_dismissed_cb, overlay);
-		evas_object_smart_callback_add(popup, "block,clicked",
-				[](void *data, Evas_Object *obj, void *event_info) -> void
-				{
-					elm_popup_dismiss(obj);
-				},
-				NULL);
-		evas_object_smart_callback_add(popup, "timeout",
-				[](void *data, Evas_Object *obj, void *event_info) -> void
-				{
-					elm_popup_dismiss(obj);
-				},
-				NULL);
-		overlay->set_content(popup);
-		overlay->activate();
+		this->set_transition_style("fade");
 	}
+	~page13() {}
 };
 
 void create_page13()
