@@ -43,7 +43,7 @@ private:
 protected:
 	virtual void on_load();
 	virtual void on_unload();
-	bool on_menu_pre();
+	ui_menu *on_menu_pre();
 	void on_menu_post();
 	virtual void on_menu(ui_menu *menu);
 	virtual void unload_content();

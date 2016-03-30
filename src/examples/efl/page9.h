@@ -24,6 +24,8 @@ class page9: public ui_view
 protected:
 	void on_load()
 	{
+		ui_view::on_load();
+
 		//FIXME: Change below code to more convenient and clear way.
 		if (this->get_degree() == 90 || this->get_degree() == 270)
 			this->on_landscape();
@@ -33,6 +35,8 @@ protected:
 
 	void on_portrait()
 	{
+		ui_view::on_portrait();
+
 		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Portrait/Landscape",
 			//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
@@ -50,6 +54,8 @@ protected:
 
 	void on_landscape()
 	{
+		ui_view::on_landscape();
+
 		Evas_Object *content = create_landscape_content(this->get_base(), "ViewMgr Demo<br>Portrait/Landscape",
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void

@@ -23,11 +23,14 @@ class page10: public ui_view
 protected:
 	void on_load()
 	{
+		ui_view::on_load();
 		this->on_rotate(this->get_degree());
 	}
 
 	void on_rotate(int degree)
 	{
+		ui_view::on_rotate(degree);
+
 		//Portrait
 		if (this->get_degree() == 0 || this->get_degree() == 180)
 		{

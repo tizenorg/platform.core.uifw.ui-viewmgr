@@ -31,8 +31,9 @@ void ui_key_listener::extend_event_proc(ui_base_view *view, Evas_Event_Key_Down 
 {
 	if (strcmp(ev->keyname, KEY_MENU) && strcmp(ev->keyname, KEY_MENU2)) return;
 	ui_view *v = dynamic_cast<ui_view *>(view);
-	if (!v->on_menu_pre()) return;
-	v->on_menu((ui_menu*)(v->get_menu()));
+	ui_menu *menu = v->on_menu_pre();
+	if (!menu) return;
+	v->on_menu(menu);
 	v->on_menu_post();
 }
 
