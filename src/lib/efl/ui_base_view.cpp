@@ -14,12 +14,18 @@
  *  limitations under the License.
  *
  */
-#include "../../include/efl/ui_viewmanager_base.h"
+#include "../../include/efl/ui_base_viewmanager.h"
 
 using namespace efl_viewmgr;
 using namespace viewmgr;
 
 typedef list<ui_base_popup*>::reverse_iterator popup_ritr;
+
+static void content_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+	ui_base_view *view = static_cast<ui_base_view *>(data);
+	view->unset_content();
+}
 
 void ui_base_view::connect_popup(ui_base_popup *popup)
 {
@@ -42,17 +48,30 @@ ui_base_view::~ui_base_view()
 
 bool ui_base_view::set_content(Evas_Object *content)
 {
-	T pcontent = this->get_content();
-	if (pcontent) evas_object_del(CONVERT_TO_EO(pcontent));
-	if (content) ui_iface_view::set_content(CONVERT_TO_T(content));
-	else ui_iface_view::set_content(NULL);
+	Evas_Object *pcontent = this->unset_content();
+	if (pcontent)
+	{
+		evas_object_del(pcontent);
+	}
+	if (content)
+	{
+		evas_object_event_callback_add(content, EVAS_CALLBACK_DEL, content_del_cb, this);
+		ui_iface_view::set_content(CONVERT_TO_T(content));
+	}
 	return true;
 }
 
 Evas_Object *ui_base_view::unset_content()
 {
 	T pcontent = ui_iface_view::unset_content();
-	return CONVERT_TO_EO(pcontent);
+	if (pcontent)
+	{
+		Evas_Object *obj = CONVERT_TO_EO(pcontent);
+		evas_object_event_callback_del(obj, EVAS_CALLBACK_DEL, content_del_cb);
+		evas_object_hide(obj);
+		return obj;
+	}
+	return NULL;
 }
 
 Evas_Object *ui_base_view::get_base()

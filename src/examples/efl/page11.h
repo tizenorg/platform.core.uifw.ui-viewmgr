@@ -32,6 +32,8 @@ class page11: public ui_view
 protected:
 	void on_load()
 	{
+		ui_view::on_load();
+
 		//Create a main content.
 		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Menu Popup",
 				//Prev Button Callback
@@ -50,6 +52,8 @@ protected:
 
 	void on_menu(ui_menu *menu)
 	{
+		ui_view::on_menu(menu);
+
 		Elm_Ctxpopup *ctxpopup = elm_ctxpopup_add(menu->get_base());
 		elm_ctxpopup_item_append(ctxpopup, "Phone calls", NULL, ctxpopup_item_select_cb, this);
 		elm_ctxpopup_item_append(ctxpopup, "Favorites", NULL, ctxpopup_item_select_cb, this);

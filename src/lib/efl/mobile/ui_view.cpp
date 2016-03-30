@@ -23,11 +23,11 @@
 using namespace efl_viewmgr;
 using namespace viewmgr;
 
-static void content_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
-{
-	ui_view *view = static_cast<ui_view *>(data);
-	view->unset_content();
-}
+#define LAYOUT_VALIDATE() if (!layout) \
+							{ \
+								LOGE("Layout is invalid! ui_view(%p)", this); \
+								return false; \
+							}
 
 static void title_left_btn_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
@@ -61,12 +61,7 @@ bool ui_view::create_layout()
 	if (this->layout) return false;
 
 	Elm_Layout *layout = elm_layout_add(this->get_parent());
-
-	if (!layout)
-	{
-		LOGE("Failed to create a layout = ui_view(%p)", this);
-		return false;
-	}
+	LAYOUT_VALIDATE();
 
 	if (!elm_layout_file_set(layout, EDJ_PATH, GROUP))
 	{
@@ -121,152 +116,144 @@ void ui_view::on_back()
 			return;
 		}
 	}
-	ui_base_view ::on_back();
+	ui_base_view::on_back();
 }
 
 ui_view::ui_view(const char *name)
-		: ui_base_view(name), layout(NULL), menu(NULL)
+		: ui_base_view(name), layout(NULL), toolbar(NULL), title_left_btn(NULL), title_right_btn(NULL), menu(NULL)
 {
 }
 
 ui_view::~ui_view()
 {
-	if (menu) delete(this->menu);
+	if (menu) delete (this->menu);
 	destroy_layout();
 }
 
 void ui_view::on_load()
 {
-	if (!this->layout) this->create_layout();
 	ui_base_view::on_load();
+
+	Elm_Layout *layout = this->get_base();
+	evas_object_show(layout);
 }
 
 void ui_view::on_unload()
 {
 	ui_base_view::on_unload();
+
+	Elm_Layout *layout = this->get_base();
+	evas_object_hide(layout);
 }
 
 bool ui_view::set_content(Evas_Object *content, const char *title)
 {
 	ui_base_view::set_content(content);
 
-	if (this->layout)
+	Elm_Layout *layout = this->get_base();
+	LAYOUT_VALIDATE();
+
+	elm_object_part_content_set(layout, "elm.swallow.content", content);
+	if (content)
 	{
-		elm_object_part_content_unset(this->layout, "elm.swallow.content");
-		elm_object_part_content_set(this->layout, "elm.swallow.content", content);
-		elm_object_part_text_set(this->layout, "elm.text.title", title);
+		elm_object_signal_emit(layout, "elm.state,elm.swallow.content,show", "elm");
 	}
 	else
 	{
-		LOGE("Layout is not exist!");
-		return false;
+		elm_object_signal_emit(layout, "elm.state,elm.swallow.content,hide", "elm");
 	}
 
-	evas_object_event_callback_add(this->layout, EVAS_CALLBACK_DEL, content_del_cb, this);
+	this->set_title(title);
 
 	return true;
 }
 
 bool ui_view::set_subtitle(const char *text)
 {
-	if (this->layout)
-	{
-		elm_object_part_text_set(this->layout, "elm.text.subtitle", text);
-		if (text) elm_object_signal_emit(this->layout, "elm,state,subtitle,show", "elm");
-		else elm_object_signal_emit(this->layout, "elm,state,subtitle,hide", "elm");
-		return true;
-	}
-	LOGE("Layout is not exist!");
-	return false;
+	Elm_Layout *layout = this->get_base();
+	LAYOUT_VALIDATE();
+
+	elm_object_part_text_set(layout, "elm.text.subtitle", text);
+	if (text) elm_object_signal_emit(layout, "elm,state,subtitle,show", "elm");
+	else elm_object_signal_emit(layout, "elm,state,subtitle,hide", "elm");
+
+	return true;
 }
 
 bool ui_view::set_title_left_btn(Elm_Button *title_left_btn)
 {
-	if (this->layout)
-	{
-		if (title_left_btn)
-		{
-			elm_object_style_set(title_left_btn, "tizen_view/title_left");
-		}
-		elm_object_part_content_set(this->layout, "title_left_btn", title_left_btn);
-		if (title_left_btn) elm_object_signal_emit(this->layout, "elm,state,title_left_btn,show", "elm");
-		else elm_object_signal_emit(this->layout, "elm,state,title_left_btn,hide", "elm");
+	Elm_Layout *layout = this->get_base();
+	LAYOUT_VALIDATE();
 
-		this->title_left_btn = title_left_btn;
+	//FIXME: inside of the unset_title_left_btn, it will send a title_left_btn,hide signal.
+	//But right after it needs to send a show signal again if new title_left_btn is valid.
+	//We don't need to send a hide signal in this case.
+	Elm_Button *pbtn = this->unset_title_left_btn();
+	evas_object_del(pbtn);
 
-		evas_object_event_callback_add(this->title_left_btn, EVAS_CALLBACK_DEL, title_left_btn_del_cb, this);
+	this->title_left_btn = title_left_btn;
+	if (!title_left_btn) return true;
 
-		return true;
-	}
-	LOGE("Layout is not exist!");
-	return false;
+	elm_object_style_set(title_left_btn, "tizen_view/title_left");
+	elm_object_part_content_set(layout, "title_left_btn", title_left_btn);
+	elm_object_signal_emit(layout, "elm,state,title_left_btn,show", "elm");
+	evas_object_event_callback_add(title_left_btn, EVAS_CALLBACK_DEL, title_left_btn_del_cb, this);
+
+	return true;
 }
 
 bool ui_view::set_title_right_btn(Elm_Button *title_right_btn)
 {
-	if (this->layout)
-	{
-		if (title_right_btn)
-		{
-			elm_object_style_set(title_right_btn, "tizen_view/title_right");
-		}
-		elm_object_part_content_set(this->layout, "title_right_btn", title_right_btn);
-		if (title_right_btn) elm_object_signal_emit(this->layout, "elm,state,title_right_btn,show", "elm");
-		else elm_object_signal_emit(this->layout, "elm,state,title_right_btn,hide", "elm");
+	Elm_Layout *layout = this->get_base();
+	LAYOUT_VALIDATE();
 
-		this->title_right_btn = title_right_btn;
+	//FIXME: inside of the unset_title_right_btn, it will send a title_right_btn,hide signal.
+	//But right after it needs to send a show signal again if new title_right_btn is valid.
+	//We don't need to send a hide signal in this case.
+	Elm_Button *pbtn = this->unset_title_right_btn();
+	evas_object_del(pbtn);
 
-		evas_object_event_callback_add(this->title_right_btn, EVAS_CALLBACK_DEL, title_right_btn_del_cb, this);
+	this->title_right_btn = title_right_btn;
+	if (!title_right_btn) return true;
 
-		return true;
-	}
-	LOGE("Layout is not exist!");
-	return false;
+	elm_object_style_set(title_right_btn, "tizen_view/title_right");
+	elm_object_part_content_set(layout, "title_right_btn", title_right_btn);
+	elm_object_signal_emit(layout, "elm,state,title_right_btn,show", "elm");
+	evas_object_event_callback_add(title_right_btn, EVAS_CALLBACK_DEL, title_right_btn_del_cb, this);
+
+	return true;
 }
 
 bool ui_view::set_title_badge(const char *text)
 {
-	if (this->layout)
-	{
-		elm_object_part_text_set(this->layout, "title_badge", text);
-		if (text) elm_object_signal_emit(this->layout, "elm,state,title_badge,show", "elm");
-		else elm_object_signal_emit(this->layout, "elm,state,title_badge,hide", "elm");
-		return true;
-	}
-	LOGE("Layout is not exist!");
-	return false;
+	Elm_Layout *layout = this->get_base();
+	LAYOUT_VALIDATE();
+
+	elm_object_part_text_set(layout, "title_badge", text);
+	if (text) elm_object_signal_emit(layout, "elm,state,title_badge,show", "elm");
+	else elm_object_signal_emit(layout, "elm,state,title_badge,hide", "elm");
+
+	return true;
 }
 
 bool ui_view::set_title(const char *text)
 {
-	if (this->layout)
-	{
-		elm_object_part_text_set(this->layout, "elm.text.title", text);
-		if (text) elm_object_signal_emit(this->layout, "elm,state,title,show", "elm");
-		else elm_object_signal_emit(this->layout, "elm,state,title,hide", "elm");
-		return true;
-	}
-	LOGE("Layout is not exist!");
-	return false;
+	Elm_Layout *layout = this->get_base();
+	LAYOUT_VALIDATE();
+
+	elm_object_part_text_set(layout, "elm.text.title", text);
+	if (text) elm_object_signal_emit(layout, "elm,state,title,show", "elm");
+	else elm_object_signal_emit(layout, "elm,state,title,hide", "elm");
+
+	return true;
 }
 
-bool ui_view::set_content(Evas_Object *content, const char *title, const char *subtitle, Elm_Button *title_left_btn,
-        Elm_Button *title_right_btn)
+bool ui_view::set_content(Evas_Object *content, const char *title, const char *subtitle, Elm_Button *title_left_btn, Elm_Button *title_right_btn)
 {
-	if (!this->set_content(content)) return false;
-
-	if (this->layout)
-	{
-		this->set_title(title);
-		this->set_subtitle(subtitle);
-		this->set_title_left_btn(title_left_btn);
-		this->set_title_right_btn(title_right_btn);
-	}
-	else
-	{
-		LOGE("Layout is not exist!");
-		return false;
-	}
+	if (!this->set_content(content, title)) return false;
+	if (!this->set_subtitle(subtitle)) return false;
+	if (!this->set_title_left_btn(title_left_btn)) return false;
+	if (!this->set_title_right_btn(title_right_btn)) return false;
 
 	return true;
 }
@@ -274,18 +261,22 @@ bool ui_view::set_content(Evas_Object *content, const char *title, const char *s
 bool ui_view::set_toolbar(Elm_Toolbar *toolbar)
 {
 	Elm_Layout *layout = this->get_base();
+	LAYOUT_VALIDATE();
 
-	//FIXME: Keep this toolbar inside of this view then set up when layout is created after.
-	if (!layout)
-	{
-		LOGE("Layout is not exist!");
-		return false;
-	}
+	//FIXME: inside of the unset_toolbar, it will send a toolbar,hide signal.
+	//But right after it needs to send a show signal again if new toolbar is valid.
+	//We don't need to send a hide signal in this case.
+	Elm_Toolbar *ptoolbar = this->unset_toolbar();
+	evas_object_del(ptoolbar);
 
+	this->toolbar = toolbar;
+	if (!toolbar) return true;
+
+	//FIXME: eeeek. check style?? :(
 	if (!strcmp(elm_object_style_get(toolbar), "navigationbar"))
 	{
-		if (elm_toolbar_shrink_mode_get(toolbar) != ELM_TOOLBAR_SHRINK_SCROLL) elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_SCROLL);
-		elm_toolbar_align_set(toolbar, 0.0);
+		elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_SCROLL);
+		elm_toolbar_align_set(toolbar, 0);
 	}
 	else
 	{
@@ -298,35 +289,31 @@ bool ui_view::set_toolbar(Elm_Toolbar *toolbar)
 	elm_toolbar_select_mode_set(toolbar, ELM_OBJECT_SELECT_MODE_ALWAYS);
 
 	elm_object_part_content_set(layout, "toolbar", toolbar);
-	if (toolbar) elm_object_signal_emit(layout, "elm,state,toolbar,show", "elm");
-	else elm_object_signal_emit(layout, "elm,state,toolbar,hide", "elm");
-
-	this->toolbar= toolbar;
-
-	evas_object_event_callback_add(this->toolbar, EVAS_CALLBACK_DEL, toolbar_del_cb, this);
-
+	elm_object_signal_emit(layout, "elm,state,toolbar,show", "elm");
+	evas_object_event_callback_add(toolbar, EVAS_CALLBACK_DEL, toolbar_del_cb, this);
 
 	return true;
 }
 
 void ui_view::unload_content()
 {
-	ui_base_view::set_content(NULL);
-	this->destroy_layout();
+	ui_base_view::set_content (NULL);
 }
 
-bool ui_view::on_menu_pre()
+ui_menu *ui_view::on_menu_pre()
 {
-	if (this->menu && this->menu->is_activated())
-	{
-		this->menu->deactivate();
-		return false;
-	}
 	if (!this->menu)
 	{
 		this->menu = new ui_menu(this);
 	}
-	return true;
+
+	if (this->menu->is_activated())
+	{
+		this->menu->deactivate();
+		return NULL;
+	}
+
+	return this->menu;
 }
 
 void ui_view::on_menu(ui_menu *menu)
@@ -335,10 +322,8 @@ void ui_view::on_menu(ui_menu *menu)
 
 void ui_view::on_menu_post()
 {
-	if (this->menu && this->menu->get_content())
-	{
-		this->menu->activate();
-	}
+	if (!this->menu) return;
+	this->menu->activate();
 }
 
 void ui_view::set_event_block(bool block)
@@ -350,90 +335,115 @@ void ui_view::set_event_block(bool block)
 Evas_Object *ui_view::unset_content()
 {
 	Evas_Object *pcontent = ui_base_view::unset_content();
+	if (!pcontent) return NULL;
 
-	if (!this->get_base()) return pcontent;
-
-	elm_object_part_content_unset(this->get_base(), "elm.swallow.content");
-	evas_object_event_callback_del(pcontent, EVAS_CALLBACK_DEL, content_del_cb);
-	evas_object_hide(pcontent);
+	Elm_Layout *layout = this->get_base();
+	if (!layout)
+	{
+		LOGE("Layout is invalid! ui_view(%p)", this);
+		return pcontent;
+	}
+	elm_object_part_content_unset(layout, "elm.swallow.content");
+	elm_object_signal_emit(layout, "elm.state,elm.swallow.content,hide", "elm");
 
 	return pcontent;
 }
 
 Elm_Button *ui_view::unset_title_left_btn()
 {
-	Elm_Button *title_left_btn;
+	Elm_Button *btn = this->title_left_btn;
+	if (!btn) return NULL;
 
-	if (!this->get_base()) return NULL;
+	Elm_Layout *layout = this->get_base();
+	if (!layout)
+	{
+		LOGE("Layout is invalid! ui_view(%p)", this);
+		return btn;
+	}
 
-	title_left_btn = elm_object_part_content_unset(this->get_base(), "title_left_btn");
-	if (title_left_btn)
-		elm_object_signal_emit(this->get_base(), "elm,state,title_left_btn,hide", "elm");
-	evas_object_event_callback_del(title_left_btn, EVAS_CALLBACK_DEL, title_left_btn_del_cb);
-	evas_object_hide(title_left_btn);
+	elm_object_part_content_unset(layout, "title_left_btn");
+	elm_object_signal_emit(layout, "elm,state,title_left_btn,hide", "elm");
+	evas_object_event_callback_del(btn, EVAS_CALLBACK_DEL, title_left_btn_del_cb);
+	evas_object_hide(btn);
+	this->title_left_btn = NULL;
 
-	return title_left_btn;
+	return btn;
 }
 
 Elm_Button *ui_view::unset_title_right_btn()
 {
-	Elm_Button *title_right_btn;
+	Elm_Button *btn = this->title_right_btn;
+	if (!btn) return NULL;
 
-	if (!this->get_base()) return NULL;
+	Elm_Layout *layout = this->get_base();
+	if (!layout)
+	{
+		LOGE("Layout is invalid! ui_view(%p)", this);
+		return btn;
+	}
 
-	title_right_btn = elm_object_part_content_unset(this->get_base(), "title_right_btn");
-	if (title_right_btn)
-		elm_object_signal_emit(this->get_base(), "elm,state,title_right_btn,hide", "elm");
-	evas_object_event_callback_del(title_right_btn, EVAS_CALLBACK_DEL, title_right_btn_del_cb);
-	evas_object_hide(title_right_btn);
+	elm_object_part_content_unset(layout, "title_right_btn");
+	elm_object_signal_emit(layout, "elm,state,title_right_btn,hide", "elm");
+	evas_object_event_callback_del(btn, EVAS_CALLBACK_DEL, title_right_btn_del_cb);
+	evas_object_hide(btn);
+	this->title_right_btn = NULL;
 
-	return title_right_btn;
+	return btn;
 }
 
 Elm_Toolbar *ui_view::unset_toolbar()
 {
-	Elm_Toolbar *toolbar;
+	Elm_Toolbar *toolbar = this->toolbar;
+	if (!toolbar) return NULL;
 
-	if (!this->get_base()) return NULL;
+	Elm_Layout *layout = this->get_base();
+	if (!layout)
+	{
+		LOGE("Layout is invalid! ui_view(%p)", this);
+		return toolbar;
+	}
 
-	toolbar = elm_object_part_content_unset(this->get_base(), "toolbar");
-	if (toolbar)
-		elm_object_signal_emit(this->get_base(), "elm,state,toolbar,hide", "elm");
+	elm_object_part_content_unset(layout, "toolbar");
+	elm_object_signal_emit(layout, "elm,state,toolbar,hide", "elm");
 	evas_object_event_callback_del(toolbar, EVAS_CALLBACK_DEL, toolbar_del_cb);
 	evas_object_hide(toolbar);
+	this->toolbar = NULL;
 
 	return toolbar;
 }
 
 void ui_view::on_rotate(int degree)
 {
+	//FIXME: see how to handle on_menu()
 	ui_base_view::on_rotate(degree);
-	if (this->menu && this->menu->is_activated())
-	{
-		this->menu->on_rotate(degree);
-	}
+	if (!this->menu) return;
+	if (!this->menu->is_activated()) return;
+	this->menu->on_rotate(degree);
 }
 
 void ui_view::on_portrait()
 {
+	//FIXME: see how to handle on_menu()
 	ui_base_view::on_portrait();
-	if (this->menu && this->menu->is_activated())
-	{
-		this->menu->on_portrait();
-	}
+	if (!this->menu) return;
+	if (!this->menu->is_activated()) return;
+	this->menu->on_portrait();
 }
 
 void ui_view::on_landscape()
 {
+	//FIXME: see how to handle on_menu()
 	ui_base_view::on_landscape();
-	if (this->menu && this->menu->is_activated())
-	{
-		this->menu->on_landscape();
-	}
+	if (!this->menu) return;
+	if (!this->menu->is_activated()) return;
+	this->menu->on_landscape();
 }
 
 Evas_Object *ui_view::get_base()
 {
-	if (!this->layout) this->create_layout();
+	if (!this->layout)
+	{
+		this->create_layout();
+	}
 	return this->layout;
 }

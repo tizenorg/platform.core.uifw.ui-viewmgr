@@ -20,9 +20,11 @@
  */
 class page7: public ui_view
 {
-public:
-	page7() : ui_view("page7")
+protected:
+	void on_load()
 	{
+		ui_view::on_load();
+
 		//Create a main content.
 		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Navigationbar",
 				//Prev Button Callback
@@ -42,6 +44,8 @@ public:
 		Elm_Toolbar *toolbar = create_toolbar(this->get_base(), "navigationbar");
 		this->set_toolbar(toolbar);
 	}
+public:
+	page7() : ui_view("page7") {}
 	~page7() {}
 };
 

@@ -14,7 +14,7 @@
  *  limitations under the License.
  *
  */
-#include "../../include/efl/ui_viewmanager_base.h"
+#include "../../include/efl/ui_base_viewmanager.h"
 
 using namespace efl_viewmgr;
 using namespace viewmgr;
@@ -100,7 +100,8 @@ Elm_Layout *ui_base_viewmgr::set_transition_layout(string transition_style)
 
 void ui_base_viewmgr::activate_top_view()
 {
-	elm_object_part_content_unset(this->get_base(), "content");
+	Evas_Object *pcontent = elm_object_part_content_unset(this->get_base(), "content");
+	evas_object_hide(pcontent);
 
 	ui_base_view *view = this->get_last_view();
 

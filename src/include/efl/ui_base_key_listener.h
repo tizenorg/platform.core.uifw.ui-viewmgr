@@ -18,7 +18,7 @@
 #define UI_BASE_KEY_LISTENER_H
 
 #include <Elementary.h>
-#include "../interface/ui_viewmanager_interface.h"
+#include "../interface/ui_iface_viewmanager.h"
 
 namespace efl_viewmgr
 {
