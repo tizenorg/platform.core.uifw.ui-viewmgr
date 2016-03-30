@@ -25,7 +25,7 @@ protected:
 	void on_load()
 	{
 		//Create a main content.
-		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Page 4",
+		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Title Badge",
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
@@ -38,7 +38,7 @@ protected:
 				});
 
 		//Arguments: content, title
-		this->set_content(content, "TitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitle");
+		this->set_content(content, "Page4. We put a long title here intentionally");
 		this->set_title_badge("999+");
 	}
 

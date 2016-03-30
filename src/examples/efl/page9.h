@@ -15,39 +15,63 @@
  *
  */
 
-/** This page inherit ui_controller to show view create in controller side.
- *  And this page create content in controller constructor time.
+/** This page inherit ui_view.
+ *  And implement on_portait(), on_landscape() method to create portarit, landscape content.
+ *  This page will be created suitable content in on_portrait(), on_landscape() method.
  */
-class page9: public ui_controller
+class page9: public ui_view
 {
-public:
-	page9()
+protected:
+	void on_load()
 	{
-		ui_view *view = new ui_view(this, "page9");
-
-		//Create a main content.
-		Evas_Object *content = create_content(view->get_base(), "ViewMgr Demo<br>Page 9<br>(Controller Inheritance + Content Preloading)",
-			//Prev Button Callback
-			[](void *data, Evas_Object *obj, void *event_info) -> void
-			{
-				UI_VIEWMGR->pop_view();
-			},
-			//Next Button Callback
-			[](void *data, Evas_Object *obj, void *event_info) -> void
-			{
-				create_page10();
-			});
-
-		//Don't delete view's content when this view poped.
-		view->set_removable_content(false);
-		view->set_content(content, "Title");
-
-		UI_VIEWMGR->push_view(view);
+		//FIXME: Change below code to more convenient and clear way.
+		if (this->get_degree() == 90 || this->get_degree() == 270)
+			this->on_landscape();
+		else
+			this->on_portrait();
 	}
+
+	void on_portrait()
+	{
+		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Portrait/Landscape",
+			//Prev Button Callback
+				[](void *data, Evas_Object *obj, void *event_info) -> void
+				{
+					UI_VIEWMGR->pop_view();
+				},
+				//Next Button Callback
+				[](void *data, Evas_Object *obj, void *event_info) -> void
+				{
+					create_page10();
+		        });
+		this->set_content(content, "Page 9");
+		this->set_indicator(UI_VIEW_INDICATOR_DEFAULT);
+	}
+
+	void on_landscape()
+	{
+		Evas_Object *content = create_landscape_content(this->get_base(), "ViewMgr Demo<br>Portrait/Landscape",
+				//Prev Button Callback
+				[](void *data, Evas_Object *obj, void *event_info) -> void
+				{
+					UI_VIEWMGR->pop_view();
+				},
+				//Next Button Callback
+				[](void *data, Evas_Object *obj, void *event_info) -> void
+				{
+					create_page10();
+				});
+		this->set_content(content, "Page 9");
+		this->set_indicator(UI_VIEW_INDICATOR_OPTIMAL);
+	}
+
+public:
+	page9() : ui_view("page9") {}
 	~page9() {}
 };
 
 void create_page9()
 {
-	page9 *controller = new page9();
+	//Push this view in viewmgr.
+	UI_VIEWMGR->push_view(new page9());
 }

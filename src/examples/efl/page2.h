@@ -24,7 +24,7 @@ protected:
 	void on_load()
 	{
 		//Create a main content.
-		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Page 2",
+		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Title Buttons",
 		//Prev Button Callback
 		        [](void *data, Evas_Object *obj, void *event_info) -> void
 		        {
@@ -45,7 +45,7 @@ protected:
 		elm_object_text_set(right_title_btn, "Done");
 
 		//Arguments: content, title, subtitle, title left button, title right button
-		this->set_content(content, "Title Buttons", NULL, left_title_btn, right_title_btn);
+		this->set_content(content, "Page2", NULL, left_title_btn, right_title_btn);
 	}
 
 public:

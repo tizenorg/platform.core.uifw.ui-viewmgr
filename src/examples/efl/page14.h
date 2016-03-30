@@ -24,7 +24,7 @@ protected:
 	void on_load()
 	{
 		//Create a main content.
-		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Page 14<br>(Fade Transition)",
+		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>None Transition",
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
@@ -33,18 +33,18 @@ protected:
 				//Next Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					create_page15();
+					UI_VIEWMGR->deactivate();
 				});
 
-		this->set_content(content, "Title");
+		this->set_content(content, "Page14");
 	}
 
 public:
 	page14() : ui_view("page14")
 	{
-		this->set_transition_style("fade");
+		this->set_transition_style("none");
 	}
-	~page14() {}
+	~page14(){}
 };
 
 void create_page14()

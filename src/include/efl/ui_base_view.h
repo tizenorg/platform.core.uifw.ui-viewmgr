@@ -25,7 +25,6 @@
 
 namespace efl_viewmgr
 {
-class ui_base_controller;
 class ui_base_popup;
 
 /**
@@ -75,29 +74,18 @@ protected:
 	 */
 	virtual void set_event_block(bool block);
 
-	/** @brief This is for calling controller's rotate method.
-	 */
 	virtual void on_rotate(int degree);
-
-	/** @brief This is for calling controller's portrait method.
-	 */
 	virtual void on_portrait();
-
-	/** @brief This is for calling controller's landscape method.
-	 */
 	virtual void on_landscape();
 
 	/** @brief view deactivate state.
 	 *
 	 *  @note this state will be triggered by ui_iface_viewmgr.
 	 *
-	 *  @see ui_iface_controller for this state in detail.
 	 */
 	virtual void on_deactivate();
 
 public:
-	///Constructor.
-	ui_base_view(ui_base_controller *controller, const char *name = NULL);
 	///Constructor.
 	ui_base_view(const char *name = NULL);
 
@@ -122,8 +110,6 @@ public:
 	 */
 	virtual Evas_Object *get_base();
 
-	/** @brief This is for calling controller's back method.
-	 */
 	//FIXME: public?
 	virtual void on_back();
 

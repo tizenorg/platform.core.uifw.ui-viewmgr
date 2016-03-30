@@ -1,13 +1,10 @@
 SET(LIB_SRCS
-     interface/ui_iface_controller.cpp
      interface/ui_iface_view.cpp
      interface/ui_iface_viewmgr.cpp
      efl/ui_base_popup.cpp
-     efl/ui_base_controller.cpp
      efl/ui_base_view.cpp
      efl/ui_base_viewmgr.cpp
      efl/ui_base_key_listener.cpp
-     efl/mobile/ui_controller.cpp
      efl/mobile/ui_menu.cpp
      efl/mobile/ui_view.cpp
      efl/mobile/ui_key_listener.cpp
