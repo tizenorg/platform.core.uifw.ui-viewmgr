@@ -21,11 +21,12 @@
 #endif
 #define LOG_TAG "UI_VIEWMGR"
 
+#define CONVERT_TO_EO(T) static_cast<Evas_Object *>((T))
+#define CONVERT_TO_T(EO) static_cast<T>((EO))
+#define UI_BASE_VIEWMGR efl_viewmgr::ui_base_viewmgr::get_instance()
+
 #include "ui_base_singleton.h"
 #include "ui_base_viewmgr.h"
 #include "ui_base_view.h"
 #include "ui_base_key_listener.h"
 #include "ui_base_popup.h"
-
-
-#define UI_BASE_VIEWMGR efl_viewmgr::ui_base_viewmgr::get_instance()

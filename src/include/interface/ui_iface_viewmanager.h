@@ -14,8 +14,8 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_VIEWMANAGER_INTERFACE_H_
-#define UI_VIEWMANAGER_INTERFACE_H_
+#ifndef UI_IFACE_VIEWMANAGER_H_
+#define UI_IFACE_VIEWMANAGER_H_
 
 #include <app.h>
 #include <dlog.h>
@@ -35,8 +35,11 @@ enum ui_view_indicator
 	UI_VIEW_INDICATOR_LAST
 };
 
+typedef void* T;
+
 #include "ui_iface_rotatable.h"
+#include "ui_iface_overlay.h"
 #include "ui_iface_viewmgr.h"
 #include "ui_iface_view.h"
 
-#endif /* UI_VIEWMANAGER_INTERFACE_H */
+#endif /* UI_IFACE_VIEWMANAGER_H */

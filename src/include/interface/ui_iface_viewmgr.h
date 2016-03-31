@@ -14,8 +14,8 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_VIEWMGR_INTERFACE_H_
-#define UI_VIEWMGR_INTERFACE_H_
+#ifndef UI_IFACE_VIEWMGR_H_
+#define UI_IFACE_VIEWMGR_H_
 
 #include <list>
 
@@ -301,4 +301,4 @@ public:
 
 }
 
-#endif /* UI_VIEWMGR_INTERFACE_H_ */
+#endif /* UI_IFACE_VIEWMGR_H_ */

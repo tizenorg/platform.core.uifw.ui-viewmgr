@@ -69,7 +69,7 @@ static void win_resize_cb(void *data, Evas *e, Evas_Object *obj, void *event_inf
 }
 
 ui_menu::ui_menu(ui_view *view)
-		: view(view), ctxpopup(NULL)
+		: ui_iface_overlay(view)
 {
 	Elm_Win *win = this->get_window();
 	evas_object_event_callback_add(win, EVAS_CALLBACK_RESIZE, win_resize_cb, this);
@@ -106,7 +106,7 @@ bool ui_menu::deactivate()
 		return false;
 	}
 
-	this->view->on_resume();
+	dynamic_cast<ui_view *>(this->get_view())->on_resume();
 
 	return true;
 }
@@ -114,7 +114,7 @@ bool ui_menu::deactivate()
 bool ui_menu::activate()
 {
 	bool ret = update_menu(this);
-	if (ret) this->view->on_pause();
+	if (ret) dynamic_cast<ui_view *>(this->get_view())-->on_pause();
 	return ret;
 }
 
@@ -160,13 +160,7 @@ Elm_Ctxpopup *ui_menu::unset_content()
 
 Evas_Object *ui_menu::get_base()
 {
-	if (!this->view)
-	{
-		LOGE("View is null?? menu(%p)", this);
-		return NULL;
-	}
-
-	return this->get_window();
+	return dynamic_cast<ui_view *>(this->get_view())->get_window();
 }
 
 void ui_menu::on_back()
@@ -176,5 +170,5 @@ void ui_menu::on_back()
 
 int ui_menu::get_degree()
 {
-	return this->view->get_degree();
+	return this->get_view()->get_degree();
 }
