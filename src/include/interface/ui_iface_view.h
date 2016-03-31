@@ -14,14 +14,12 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_VIEW_INTERFACE_H_
-#define UI_VIEW_INTERFACE_H_
+#ifndef UI_IFACE_VIEW_H_
+#define UI_IFACE_VIEW_H_
 
 #include <string>
 
 using namespace std;
-
-typedef void* T;
 
 namespace viewmgr {
 
@@ -265,8 +263,13 @@ public:
 	{
 		return this->indicator;
 	}
+
+	virtual int get_degree()
+	{
+		return 0;
+	}
 };
 
 }
 
-#endif /* UI_VIEW_INTERFACE_H_ */
+#endif /* UI_IFACE_VIEW_H_ */

@@ -14,8 +14,8 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_ROTATABLE_INTERFACE_H_
-#define UI_ROTATABLE_INTERFACE_H_
+#ifndef UI_IFACE_ROTATABLE_H_
+#define UI_IFACE_ROTATABLE_H_
 
 namespace viewmgr
 {
@@ -36,4 +36,4 @@ public:
 
 }
 
-#endif /* UI_ROTATABLE_INTERFACE_H_ */
+#endif /* UI_IFACE_ROTATABLE_H_ */
