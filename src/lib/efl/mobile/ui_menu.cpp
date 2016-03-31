@@ -62,14 +62,12 @@ static bool update_menu(ui_menu *menu)
 static void win_resize_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
 	ui_menu *menu = static_cast<ui_menu *>(data);
-	Elm_Ctxpopup *ctxpopup = menu->get_content();
-	if (!ctxpopup) return;
-	if (!evas_object_visible_get(ctxpopup)) return;
+	if (!menu->is_activated()) return;
 	update_menu(menu);
 }
 
 ui_menu::ui_menu(ui_view *view)
-		: view(view), ctxpopup(NULL)
+		: ui_iface_overlay(view)
 {
 	Elm_Win *win = this->get_window();
 	evas_object_event_callback_add(win, EVAS_CALLBACK_RESIZE, win_resize_cb, this);
@@ -79,7 +77,8 @@ ui_menu::~ui_menu()
 {
 	Elm_Win *win = this->get_window();
 	if (win) evas_object_event_callback_del(win, EVAS_CALLBACK_RESIZE, win_resize_cb);
-	evas_object_del(this->ctxpopup);
+	Elm_Ctxpopup *ctxpopup = this->unset_content();
+	evas_object_del(ctxpopup);
 }
 
 Elm_Win *ui_menu::get_window()
@@ -96,17 +95,15 @@ Elm_Win *ui_menu::get_window()
 
 bool ui_menu::deactivate()
 {
-	if (this->ctxpopup)
-	{
-		elm_ctxpopup_dismiss(this->ctxpopup);
-	}
-	else
+	Elm_Ctxpopup *ctxpopup = this->get_content();
+	if (!ctxpopup)
 	{
 		LOGE("Content is not set! = ui_menu(%p)", this);
 		return false;
 	}
 
-	this->view->on_resume();
+	elm_ctxpopup_dismiss(ctxpopup);
+	dynamic_cast<ui_view *>(this->get_view())->on_resume();
 
 	return true;
 }
@@ -114,13 +111,16 @@ bool ui_menu::deactivate()
 bool ui_menu::activate()
 {
 	bool ret = update_menu(this);
-	if (ret) this->view->on_pause();
+	if (ret) dynamic_cast<ui_view *>(this->get_view())->on_pause();
 	return ret;
 }
 
 bool ui_menu::set_content(Elm_Ctxpopup *ctxpopup)
 {
-	evas_object_del(this->ctxpopup);
+	Elm_Ctxpopup *prev = this->unset_content();
+	evas_object_del(prev);
+
+	if (!ctxpopup) return true;
 
 	//validation!
 	//FIXME: isa ?
@@ -136,45 +136,35 @@ bool ui_menu::set_content(Elm_Ctxpopup *ctxpopup)
 	evas_object_smart_callback_add(ctxpopup, "dismissed", ctxpopup_dismissed_cb, NULL);
 	evas_object_event_callback_add(ctxpopup, EVAS_CALLBACK_DEL, ctxpopup_del_cb, this);
 
-	this->ctxpopup = ctxpopup;
+	ui_iface_overlay::set_content(ctxpopup);
 
 	return true;
 }
 
 bool ui_menu::is_activated()
 {
-	if (!this->ctxpopup) return false;
-	return evas_object_visible_get(this->ctxpopup);
+	Elm_Ctxpopup *ctxpopup = this->get_content();
+	if (!ctxpopup) return false;
+	return evas_object_visible_get(ctxpopup);
 }
 
 Elm_Ctxpopup *ui_menu::unset_content()
 {
-	if (!this->ctxpopup) return NULL;
+	Elm_Ctxpopup *ctxpopup = ui_iface_overlay::unset_content();
+	if (!ctxpopup) return NULL;
 
-	Elm_Ctxpopup *prev = this->ctxpopup;
-	this->ctxpopup = NULL;
-	evas_object_smart_callback_del(prev, "dismissed", ctxpopup_dismissed_cb);
-	evas_object_event_callback_del(prev, EVAS_CALLBACK_DEL, ctxpopup_del_cb);
-	return prev;
+	evas_object_smart_callback_del(ctxpopup, "dismissed", ctxpopup_dismissed_cb);
+	evas_object_event_callback_del(ctxpopup, EVAS_CALLBACK_DEL, ctxpopup_del_cb);
+
+	return ctxpopup;
 }
 
 Evas_Object *ui_menu::get_base()
 {
-	if (!this->view)
-	{
-		LOGE("View is null?? menu(%p)", this);
-		return NULL;
-	}
-
 	return this->get_window();
-}
-
-void ui_menu::on_back()
-{
-	this->deactivate();
 }
 
 int ui_menu::get_degree()
 {
-	return this->view->get_degree();
+	return this->get_view()->get_degree();
 }

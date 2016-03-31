@@ -24,13 +24,10 @@ namespace efl_viewmgr
 {
 class ui_view;
 
-class ui_menu: public viewmgr::ui_iface_rotatable
+class ui_menu: public viewmgr::ui_iface_overlay<Elm_Ctxpopup *>
 {
 	friend class ui_view;
 private:
-	ui_view *view;
-	Elm_Ctxpopup *ctxpopup;
-
 	ui_menu(ui_view *view);
 	virtual ~ui_menu();
 
@@ -41,15 +38,10 @@ public:
 	virtual bool deactivate();
 	virtual bool set_content(Elm_Ctxpopup* ctxpopup);
 	virtual Elm_Ctxpopup *unset_content();
-	virtual void on_back();
 	virtual bool is_activated();
 
 	virtual Evas_Object *get_base();
 	virtual int get_degree();
-	virtual Elm_Ctxpopup *get_content()
-	{
-		return this->ctxpopup;
-	}
 };
 
 }

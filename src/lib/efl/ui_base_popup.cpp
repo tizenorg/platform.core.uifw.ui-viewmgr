@@ -43,16 +43,16 @@ static void popup_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 }
 
 ui_base_popup::ui_base_popup(ui_base_view *view)
-		: view(view), popup(NULL)
+		: ui_iface_overlay(view)
 {
 	view->connect_popup(this);
 }
 
 ui_base_popup::~ui_base_popup()
 {
-	this->view->disconnect_popup(this);
-	this->unset_content();
-	evas_object_del(this->popup);
+	dynamic_cast<ui_base_view *>(this->get_view())->disconnect_popup(this);
+	Elm_Popup *popup = this->unset_content();
+	evas_object_del(popup);
 }
 
 Elm_Win *ui_base_popup::get_window()
@@ -68,14 +68,15 @@ Elm_Win *ui_base_popup::get_window()
 
 bool ui_base_popup::deactivate()
 {
-	if (!this->popup)
+	Elm_Popup *popup = this->get_content();
+	if (!popup)
 	{
 		LOGE("Content is not set! = ui_base_popup(%p)", this);
 		return false;
 	}
 
-	elm_popup_dismiss(this->popup);
-	this->view->on_resume();
+	elm_popup_dismiss(popup);
+	dynamic_cast<ui_base_view*>(this->get_view())->on_resume();
 
 	return true;
 }
@@ -83,13 +84,16 @@ bool ui_base_popup::deactivate()
 bool ui_base_popup::activate()
 {
 	bool ret = update_popup(this);
-	if (ret) this->view->on_pause();
+	if (ret) dynamic_cast<ui_base_view*>(this->get_view())->on_pause();
 	return ret;
 }
 
 bool ui_base_popup::set_content(Elm_Popup *popup)
 {
-	evas_object_del(this->popup);
+	Elm_Popup *prev = this->unset_content();
+	evas_object_del(prev);
+
+	if (!popup) return true;
 
 	//validation!
 	//FIXME: isa ?
@@ -105,45 +109,35 @@ bool ui_base_popup::set_content(Elm_Popup *popup)
 	evas_object_event_callback_add(popup, EVAS_CALLBACK_DEL, popup_del_cb, this);
 	evas_object_smart_callback_add(popup, "dismissed", popup_dismissed_cb, this);
 
-	this->popup = popup;
+	ui_iface_overlay::set_content(popup);
 
 	return true;
 }
 
 bool ui_base_popup::is_activated()
 {
-	if (!this->popup) return false;
-	return evas_object_visible_get(this->popup);
+	Elm_Popup *popup = this->get_content();
+	if (!popup) return false;
+	return evas_object_visible_get(popup);
 }
 
 Elm_Popup *ui_base_popup::unset_content()
 {
-	if (!this->popup) return NULL;
+	Elm_Popup *popup = ui_iface_overlay::unset_content();
+	if (!popup) return NULL;
 
-	Elm_Popup *prev = this->popup;
-	this->popup = NULL;
-	evas_object_event_callback_del(prev, EVAS_CALLBACK_DEL, popup_del_cb);
-	evas_object_smart_callback_del(prev, "dismissed", popup_dismissed_cb);
-	return prev;
+	evas_object_event_callback_del(popup, EVAS_CALLBACK_DEL, popup_del_cb);
+	evas_object_smart_callback_del(popup, "dismissed", popup_dismissed_cb);
+
+	return popup;
 }
 
 Evas_Object *ui_base_popup::get_base()
 {
-	if (!this->view)
-	{
-		LOGE("View is null?? menu(%p)", this);
-		return NULL;
-	}
-
 	return this->get_window();
-}
-
-void ui_base_popup::on_back()
-{
-	this->deactivate();
 }
 
 int ui_base_popup::get_degree()
 {
-	return this->view->get_degree();
+	return this->get_view()->get_degree();
 }
