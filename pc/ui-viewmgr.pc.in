@@ -1,10 +1,9 @@
 prefix=@PREFIX@
-exec_prefix=@EXEC_DIR@
 libdir=@LIBDIR@
 includedir=@INCDIR@
 
-Name: UI VIEW MANAGER
-Description: An UI VIEW MANAGER library
+Name: UI View Manager
+Description: Tizen UI View Manager library
 Version: @VERSION@
 Requires:
 Libs: -L${libdir} -lui-viewmgr

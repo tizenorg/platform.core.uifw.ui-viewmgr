@@ -1,6 +1,6 @@
 Name:       ui-viewmgr
 Summary:    UI VIEW MANAGER library
-Version:    0.1.1
+Version:    0.1.0
 Release:    1
 Group:      System/Libraries
 License:    Apache License, Version 2.0
@@ -15,18 +15,16 @@ BuildRequires:  efl-extension-devel
 BuildRequires:  cmake
 BuildRequires:  edje-bin
 BuildRequires:  gettext-tools
-Requires(post): /sbin/ldconfig
-Requires(postun): /sbin/ldconfig
 
 %description
 UI VIEW MANAGER library
 
-%package example
-Summary:    UI VIEW MANAGER Example Application
+%package ui.viewmgr.demo
+Summary:    UI VIEW MANAGER Demo Application
 Group:      Development/Applications
 
-%description example
-UI VIEW MANAGER Example Application
+%description ui.viewmgr.demo
+UI VIEW MANAGER Demo Application
 
 %package devel
 Summary:    UI VIEW MANAGER library (devel)
@@ -51,21 +49,19 @@ rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/license
 cp %{_builddir}/%{buildsubdir}/LICENSE %{buildroot}/usr/share/license/%{name}
 
-%post -p /sbin/ldconfig
-
-%postun -p /sbin/ldconfig
-
 %files
 %defattr(-,root,root,-)
 %{_libdir}/libui-viewmgr.so.*
-%manifest %{name}.manifest
-%{_datadir}/ui-viewmgr/images/*
+%manifest ui-viewmgr.manifest
 /usr/share/license/%{name}
 /usr/share/edje/ui-viewmgr/ui-viewmgr.edj
 
-%files example
+%files ui.viewmgr.demo
 %defattr(-,root,root,-)
-/opt/usr/apps/ui-viewmgr/bin/*
+%{_datadir}/packages/ui.viewmgr.demo.xml
+%manifest ui.viewmgr.demo.manifest
+/opt/usr/apps/ui.viewmgr.demo/bin/*
+/opt/usr/apps/ui.viewmgr.demo/data/images/*
 
 %files devel
 %defattr(-,root,root,-)

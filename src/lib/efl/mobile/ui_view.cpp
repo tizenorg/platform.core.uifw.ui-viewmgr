@@ -16,9 +16,7 @@
  */
 #include "../../../include/efl/mobile/ui_viewmanager.h"
 
-//FIXME: is it correct to define here?
-#define EDJ_PATH "/usr/share/edje/ui-viewmgr/ui-viewmgr.edj"
-#define GROUP "tizen_view/default"
+#define DEFAULT_GROUP "tizen_view/default"
 
 using namespace efl_viewmgr;
 using namespace viewmgr;
@@ -88,9 +86,12 @@ bool ui_view::create_layout()
 	Elm_Layout *layout = elm_layout_add(this->get_parent());
 	LAYOUT_VALIDATE();
 
-	if (!elm_layout_file_set(layout, EDJ_PATH, GROUP))
+	char buf[PATH_MAX];
+	snprintf(buf, sizeof(buf), "%s/ui-viewmgr.edj", EDJ_PATH);
+
+	if (!elm_layout_file_set(layout, buf, DEFAULT_GROUP))
 	{
-		LOGE("Failed to set file = ui_view(%p), path(%s), group(%s)", this, EDJ_PATH, GROUP);
+		LOGE("Failed to set file = ui_view(%p), path(%s), group(%s)", this, buf, DEFAULT_GROUP);
 		evas_object_del(layout);
 		return false;
 	}

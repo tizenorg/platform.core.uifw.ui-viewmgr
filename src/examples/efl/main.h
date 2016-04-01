@@ -14,8 +14,8 @@
  *  limitations under the License.
  *
  */
-#include <Elementary.h>
-//#include <system_settings.h>
+#include <app.h>
+#include <system_settings.h>
 #include <dlog.h>
 #include "ui_viewmanager.h"
 
@@ -36,7 +36,6 @@
 using namespace efl_viewmgr;
 
 typedef struct appdata {
-	ui_viewmgr *viewmgr;
 } appdata_s;
 
 Evas_Object *create_landscape_content(Evas_Object *parent, const char *text, Evas_Smart_Cb prev_btn_clicked_cb, Evas_Smart_Cb next_btn_clicked_cb);
