@@ -60,7 +60,6 @@ ui_iface_overlay<T>::~ui_iface_overlay()
 template<typename T>
 bool ui_iface_overlay<T>::set_content(T content)
 {
-	T prev = this->content;
 	this->content = content;
 	return true;
 }

@@ -1,24 +1,5 @@
 <manifest>
-    <define>
-		<domain name="ui-viewmgr"/>
-		<request>
-		    <smack request="xorg" type="wx"/>
-			<smack request="system::homedir" type="rwx"/>
-			<smack request="isf" type="rx"/>
-			<smack request="tizen::vconf::public::r::platform::rw" type="rl"/>
-			<smack request="tizen::vconf::setting" type="rl"/>
-			<smack request="device::sys_logging" type="rw"/>
-			<smack request="tizen::vconf::camcorder" type="rl"/>
-			<smack request="tizen::vconf::setting::admin" type="rl"/>
-			<smack request="device::app_logging" type="rwx"/>
-			<smack request="pulseaudio" type="w"/>
-			<smack request="sdbd" type="rw"/>
-			<smack request="dbus" type="w"/>
-			<smack request="pkgmgr::db" type="rwl"/>
-		</request>
-		<permit>
-		    <smack permit="xorg" type="rwx"/>
-		    <smack permit="_" type="rw"/>
-		</permit>
-	</define>
+	<request>
+		<domain name="_"/>
+	</request>
 </manifest>
