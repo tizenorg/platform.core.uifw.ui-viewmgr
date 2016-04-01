@@ -328,8 +328,6 @@ bool ui_iface_viewmgr<T>::insert_view_after(ui_iface_view<T> *view, ui_iface_vie
 		return false;
 	}
 
-	ui_iface_view<T> *bview;
-
 	if (this->view_list.size() > 0)
 	{
 		for (it = this->view_list.begin(); it != this->view_list.end(); it++)

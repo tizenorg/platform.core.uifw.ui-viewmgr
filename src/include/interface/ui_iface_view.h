@@ -315,7 +315,6 @@ ui_iface_view<T>::~ui_iface_view()
 template<typename T>
 bool ui_iface_view<T>::set_content(T content)
 {
-	T prev = this->content;
 	this->content = content;
 	return true;
 }
