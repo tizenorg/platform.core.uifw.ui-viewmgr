@@ -1,0 +1,13 @@
+<manifest>
+	<define>
+		<domain name="ui.viewmgr.demo"/>
+			<request>
+				<smack request="ui-viewmgr" type="rx"/>
+				<smack request="org.tizen.indicator" type="rwx"/>
+				<smack request="system::homedir" type="rwx"/>
+				<smack request="pulseaudio" type="rwx"/>
+				<smack request="pkgmgr::db" type="rw"/>
+				<smack request="xorg" type="w"/>
+			</request>
+	</define>
+</manifest>
