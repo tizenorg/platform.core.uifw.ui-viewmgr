@@ -21,12 +21,12 @@ Requires(postun): /sbin/ldconfig
 %description
 UI VIEW MANAGER library
 
-%package example
+%package demo
 Summary:    UI VIEW MANAGER Example Application
 Group:      Development/Applications
 
-%description example
-UI VIEW MANAGER Example Application
+%description demo
+UI VIEW MANAGER Demo Application
 
 %package devel
 Summary:    UI VIEW MANAGER library (devel)
@@ -63,9 +63,10 @@ cp %{_builddir}/%{buildsubdir}/LICENSE %{buildroot}/usr/share/license/%{name}
 /usr/share/license/%{name}
 /usr/share/edje/ui-viewmgr/ui-viewmgr.edj
 
-%files example
+%files demo
 %defattr(-,root,root,-)
-/opt/usr/apps/ui-viewmgr/bin/*
+/opt/usr/apps/ui-viewmgr-demo/bin/*
+%{_datadir}/packages/ui-viewmgr-demo.xml
 
 %files devel
 %defattr(-,root,root,-)
