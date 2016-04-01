@@ -1,7 +1,5 @@
 SET(EXAM_NAME viewmgr_demo)
 SET(EXAM_SRCS
-	  ../../lib/interface/ui_iface_view.cpp
-	  ../../lib/interface/ui_iface_viewmgr.cpp
 	  ../../lib/efl/ui_base_view.cpp
 	  ../../lib/efl/ui_base_viewmgr.cpp
 	  ../../lib/efl/ui_base_key_listener.cpp

@@ -35,11 +35,19 @@ enum ui_view_indicator
 	UI_VIEW_INDICATOR_LAST
 };
 
-typedef void* T;
+enum ui_view_state
+{
+	UI_VIEW_STATE_LOAD = 0,        ///< Load state
+	UI_VIEW_STATE_UNLOAD,          ///< Unload state
+	UI_VIEW_STATE_ACTIVATE,        ///< Activate state
+	UI_VIEW_STATE_DEACTIVATE,      ///< Deactivate state
+	UI_VIEW_STATE_PAUSE,           ///< Pause state
+	UI_VIEW_STATE_LAST
+};
 
 #include "ui_iface_rotatable.h"
 #include "ui_iface_overlay.h"
-#include "ui_iface_viewmgr.h"
 #include "ui_iface_view.h"
+#include "ui_iface_viewmgr.h"
 
 #endif /* UI_IFACE_VIEWMANAGER_H */
