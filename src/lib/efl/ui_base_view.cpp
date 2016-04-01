@@ -70,14 +70,6 @@ Evas_Object *ui_base_view::get_base()
 	return viewmgr->get_base();
 }
 
-//FIXME: seems it could be replaced with set_content(NULL);
-void ui_base_view::unload_content()
-{
-	Evas_Object *pcontent = this->get_content();
-	if (pcontent) evas_object_del(pcontent);
-	this->set_content(NULL);
-}
-
 Evas_Object *ui_base_view ::get_parent()
 {
 	ui_base_viewmgr *viewmgr = UI_BASE_VIEWMGR;
@@ -107,17 +99,6 @@ void ui_base_view::set_indicator(ui_view_indicator indicator)
 	if (dynamic_cast<ui_base_view *>(viewmgr->get_last_view()) != this) return;
 
 	viewmgr->set_indicator(indicator);
-}
-
-void ui_base_view::on_back()
-{
-	ui_base_viewmgr *viewmgr = UI_BASE_VIEWMGR;
-	if (!viewmgr)
-	{
-		LOGE("Failed to get a viewmgr");
-		return;
-	}
-	viewmgr->pop_view();
 }
 
 void ui_base_view::on_rotate(int degree)

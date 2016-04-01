@@ -387,16 +387,12 @@ ui_base_view * ui_base_viewmgr::push_view(ui_base_view *view)
 
 bool ui_base_viewmgr::insert_view_before(ui_base_view *view, ui_base_view *before)
 {
-	ui_iface_viewmgr::insert_view_before(view, before);
-
-	return true;
+	return ui_iface_viewmgr::insert_view_before(view, before);
 }
 
 bool ui_base_viewmgr::insert_view_after(ui_base_view *view, ui_base_view *after)
 {
-	ui_iface_viewmgr::insert_view_after(view, after);
-
-	return true;
+	return ui_iface_viewmgr::insert_view_after(view, after);
 }
 
 ui_base_view *ui_base_viewmgr::get_view(unsigned int idx)

@@ -329,11 +329,6 @@ bool ui_view::set_toolbar(Elm_Toolbar *toolbar)
 	return true;
 }
 
-void ui_view::unload_content()
-{
-	ui_base_view::set_content (NULL);
-}
-
 ui_menu *ui_view::on_menu_pre()
 {
 	if (!this->menu)
@@ -362,7 +357,7 @@ void ui_view::on_menu_post()
 
 void ui_view::set_event_block(bool block)
 {
-	ui_iface_view::set_event_block(block);
+	ui_base_view::set_event_block(block);
 	evas_object_freeze_events_set(this->get_base(), block);
 }
 
