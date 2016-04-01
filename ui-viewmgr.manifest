@@ -1,4 +1,10 @@
 <manifest>
+	<request>
+		<domain name="_"/>
+	</request>
+</manifest>
+<!--
+<manifest>
     <define>
 		<domain name="ui-viewmgr"/>
 		<request>
@@ -22,3 +28,4 @@
 		</permit>
 	</define>
 </manifest>
+-->

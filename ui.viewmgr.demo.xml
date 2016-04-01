@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://tizen.org/ns/packages" api-version="2.4" package="ui.viewmgr.demo" version="0.1.0" install-location="internal-only">
+   <ui-application appid="ui.viewmgr.demo" exec="/opt/usr/apps/ui.viewmgr.demo/bin/ui.viewmgr.demo" nodisplay="false" multiple="false" type="capp" taskmanage="true">
+      <label>ui.viewmgr.demo</label>
+      <icon>ui.viewmgr.demo.png</icon>
+   </ui-application>
+   <privileges>
+     <privilege>http://tizen.org/privilege/appmanager.launch</privilege>
+     <privilege>http://tizen.org/privilege/appmanager.kill.bgapp</privilege>
+   </privileges>
+</manifest>
