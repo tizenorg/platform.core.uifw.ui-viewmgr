@@ -20,23 +20,24 @@
 namespace viewmgr
 {
 
+template<typename T>
 class ui_iface_view;
 
 template<typename T>
 class ui_iface_overlay: public ui_iface_rotatable
 {
 private:
-	ui_iface_view *view;
+	ui_iface_view<T> *view;
 	T content;
 
 protected:
-	ui_iface_overlay(ui_iface_view *view);
+	ui_iface_overlay(ui_iface_view<T> *view);
 	virtual ~ui_iface_overlay();
-	virtual bool set_content(T content);
-	virtual T unset_content();
 
 public:
-	ui_iface_view *get_view();
+	virtual bool set_content(T content);
+	virtual T unset_content();
+	ui_iface_view<T> *get_view();
 	virtual T get_content();
 	virtual void on_back();
 	virtual bool activate() = 0;
@@ -46,7 +47,7 @@ public:
 
 
 template<typename T>
-ui_iface_overlay<T>::ui_iface_overlay(ui_iface_view *view)
+ui_iface_overlay<T>::ui_iface_overlay(ui_iface_view<T> *view)
 		: view(view), content(NULL)
 {
 }
@@ -79,7 +80,7 @@ T ui_iface_overlay<T>::get_content()
 }
 
 template<typename T>
-ui_iface_view *ui_iface_overlay<T>::get_view()
+ui_iface_view<T> *ui_iface_overlay<T>::get_view()
 {
 	return this->view;
 }

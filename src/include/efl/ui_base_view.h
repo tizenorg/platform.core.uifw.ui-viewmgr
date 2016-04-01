@@ -35,17 +35,11 @@ namespace efl_viewmgr
  *  @warning When the transitions are finished, the view must to call ui_iface_viewmgr :: _push_finished(), ui_iface_viewmgr :: _pop_finished() in order that
  *           The ui_iface_viewmgr keeps the view states exactly.
  */
-class ui_base_view: public viewmgr::ui_iface_view, public viewmgr::ui_iface_rotatable
+class ui_base_view: public viewmgr::ui_iface_view<Evas_Object *>
 {
 	friend class ui_base_viewmgr;
 
 protected:
-	/** @brief Unload current view's content
-	 *
-	 *  @note Make this view's content as NULL, then destroy content.
-	 */
-	virtual void unload_content();
-
 	/** @brief Get a parent object of view.
 	 *
 	 *  @note This is calling viewmgr get_base() method internally.
@@ -90,9 +84,6 @@ public:
 	/**  @brief Get a base layout of viewmgr.
 	 */
 	virtual Evas_Object *get_base();
-
-	//FIXME: public?
-	virtual void on_back();
 
 	/** @brief Set the indicator mode.
 	 *

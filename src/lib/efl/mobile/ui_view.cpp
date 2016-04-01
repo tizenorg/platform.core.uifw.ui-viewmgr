@@ -99,7 +99,7 @@ bool ui_view::create_layout()
 
 	if (this->get_content())
 	{
-		elm_object_part_content_set(layout, "elm.swallow.content", CONVERT_TO_EO(this->get_content()));
+		elm_object_part_content_set(layout, "elm.swallow.content", this->get_content());
 	}
 
 	//Set software back key, if it's needed

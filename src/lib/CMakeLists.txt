@@ -1,6 +1,4 @@
 SET(LIB_SRCS
-     interface/ui_iface_view.cpp
-     interface/ui_iface_viewmgr.cpp
      efl/ui_base_view.cpp
      efl/ui_base_viewmgr.cpp
      efl/ui_base_key_listener.cpp

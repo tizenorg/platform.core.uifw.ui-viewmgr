@@ -44,22 +44,20 @@ bool ui_base_view::set_content(Evas_Object *content)
 	if (content)
 	{
 		evas_object_event_callback_add(content, EVAS_CALLBACK_DEL, content_del_cb, this);
-		ui_iface_view::set_content(CONVERT_TO_T(content));
+		ui_iface_view::set_content(content);
 	}
 	return true;
 }
 
 Evas_Object *ui_base_view::unset_content()
 {
-	T pcontent = ui_iface_view::unset_content();
-	if (pcontent)
+	Evas_Object *obj = ui_iface_view::unset_content();
+	if (obj)
 	{
-		Evas_Object *obj = CONVERT_TO_EO(pcontent);
 		evas_object_event_callback_del(obj, EVAS_CALLBACK_DEL, content_del_cb);
 		evas_object_hide(obj);
-		return obj;
 	}
-	return NULL;
+	return obj;
 }
 
 Evas_Object *ui_base_view::get_base()
@@ -75,8 +73,8 @@ Evas_Object *ui_base_view::get_base()
 //FIXME: seems it could be replaced with set_content(NULL);
 void ui_base_view::unload_content()
 {
-	T pcontent = this->get_content();
-	if (pcontent) evas_object_del(CONVERT_TO_EO(pcontent));
+	Evas_Object *pcontent = this->get_content();
+	if (pcontent) evas_object_del(pcontent);
 	this->set_content(NULL);
 }
 
@@ -137,7 +135,7 @@ void ui_base_view::on_landscape()
 void ui_base_view::set_event_block(bool block)
 {
 	ui_iface_view::set_event_block(block);
-	evas_object_freeze_events_set(CONVERT_TO_EO(this->get_content()), block);
+	evas_object_freeze_events_set(this->get_content(), block);
 }
 
 int ui_base_view::get_degree()

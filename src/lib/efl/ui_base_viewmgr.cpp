@@ -109,11 +109,11 @@ void ui_base_viewmgr::activate_top_view()
 	Evas_Object *content;
 	if (view->get_base() == this->get_base())
 	{
-		content = CONVERT_TO_EO(view->get_content());
+		content = view->get_content();
 	}
 	else
 	{
-		content = CONVERT_TO_EO(view->get_base());
+		content = view->get_base();
 	}
 
 	elm_object_part_content_set(this->get_base(), "content", content);
@@ -325,10 +325,10 @@ bool ui_base_viewmgr::pop_view()
 	}
 
 	//Trigger Effects.
-	Evas_Object *prv = CONVERT_TO_EO(this->get_base() == pview->get_base() ? pview->get_content() : pview->get_base());
+	Evas_Object *prv = this->get_base() == pview->get_base() ? pview->get_content() : pview->get_base();
 	elm_layout_content_set(effect, "content", prv);
 
-	Evas_Object *cur = CONVERT_TO_EO(this->get_base() == view->get_base() ? view->get_content() : view->get_base());
+	Evas_Object *cur = this->get_base() == view->get_base() ? view->get_content() : view->get_base();
 	elm_layout_content_set(effect, "pcontent", cur);
 
 	elm_layout_signal_emit(effect, "view,pop", "viewmgr");
@@ -372,10 +372,10 @@ ui_base_view * ui_base_viewmgr::push_view(ui_base_view *view)
 	}
 
 	//Trigger Effects.
-	Evas_Object *prv = CONVERT_TO_EO(this->get_base() == pview->get_base() ? pview->get_content() : pview->get_base());
+	Evas_Object *prv = this->get_base() == pview->get_base() ? pview->get_content() : pview->get_base();
 	elm_layout_content_set(effect, "pcontent", prv);
 
-	Evas_Object *cur = CONVERT_TO_EO(this->get_base() == view->get_base() ? view->get_content() : view->get_base());
+	Evas_Object *cur = this->get_base() == view->get_base() ? view->get_content() : view->get_base();
 	elm_layout_content_set(effect, "content", cur);
 
 	elm_layout_signal_emit(effect, "view,push", "viewmgr");

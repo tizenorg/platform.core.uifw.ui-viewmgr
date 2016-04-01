@@ -53,7 +53,6 @@ protected:
 	ui_menu *on_menu_pre();
 	void on_menu_post();
 	virtual void on_menu(ui_menu *menu);
-	virtual void unload_content();
 	virtual void set_event_block(bool block);
 	virtual void on_back();
 	virtual void on_rotate(int degree);
