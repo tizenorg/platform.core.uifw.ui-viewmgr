@@ -22,7 +22,6 @@
 
 namespace efl_viewmgr
 {
-class ui_base_popup;
 
 /**
  *  @class ui_base_view
@@ -39,14 +38,6 @@ class ui_base_popup;
 class ui_base_view: public viewmgr::ui_iface_view, public viewmgr::ui_iface_rotatable
 {
 	friend class ui_base_viewmgr;
-	friend class ui_base_popup;
-
-private:
-	list<ui_base_popup *> popup_list;
-
-	void connect_popup(ui_base_popup *popup);
-	void disconnect_popup(ui_base_popup *popup);
-	bool deactivate_popup(bool top_one);
 
 protected:
 	/** @brief Unload current view's content
@@ -74,13 +65,6 @@ protected:
 	virtual void on_rotate(int degree);
 	virtual void on_portrait();
 	virtual void on_landscape();
-
-	/** @brief view deactivate state.
-	 *
-	 *  @note this state will be triggered by ui_iface_viewmgr.
-	 *
-	 */
-	virtual void on_deactivate();
 
 public:
 	///Constructor.

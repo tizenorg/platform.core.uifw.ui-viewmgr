@@ -23,11 +23,13 @@ namespace efl_viewmgr
 {
 
 class ui_menu;
+class ui_popup;
 class ui_key_listener;
 
 class ui_view: public ui_base_view
 {
 	friend class ui_menu;
+	friend class ui_popup;
 	friend class ui_key_listener;
 
 private:
@@ -36,6 +38,11 @@ private:
 	Elm_Button *title_left_btn;        //Title left button
 	Elm_Button *title_right_btn;       //Title right button
 	ui_menu *menu;                     //Menu
+	list<ui_popup *> popup_list;
+
+	void connect_popup(ui_popup *popup);
+	void disconnect_popup(ui_popup *popup);
+	bool deactivate_popup(bool top_one);
 
 	bool create_layout();
 	bool destroy_layout();
@@ -52,6 +59,14 @@ protected:
 	virtual void on_rotate(int degree);
 	virtual void on_portrait();
 	virtual void on_landscape();
+
+	/** @brief view deactivate state.
+	 *
+	 *  @note this state will be triggered by ui_iface_viewmgr.
+	 *
+	 */
+	virtual void on_deactivate();
+
 
 public:
 	ui_view(const char *name = NULL);

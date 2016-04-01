@@ -14,11 +14,11 @@
  *  limitations under the License.
  *
  */
-#include "../../include/efl/ui_base_viewmanager.h"
+#include "../../../include/efl/mobile/ui_viewmanager.h"
 
 using namespace efl_viewmgr;
 
-static bool update_popup(ui_base_popup *popup)
+static bool update_popup(ui_popup *popup)
 {
 	Elm_Win *win = popup->get_base();
 	if (!win) return false;
@@ -38,26 +38,26 @@ static void popup_dismissed_cb(void *data, Evas_Object *obj, void *event_info)
 
 static void popup_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
-	ui_base_popup *popup = static_cast<ui_base_popup *>(data);
+	ui_popup *popup = static_cast<ui_popup *>(data);
 	popup->unset_content();
 }
 
-ui_base_popup::ui_base_popup(ui_base_view *view)
+ui_popup::ui_popup(ui_view *view)
 		: ui_iface_overlay(view)
 {
 	view->connect_popup(this);
 }
 
-ui_base_popup::~ui_base_popup()
+ui_popup::~ui_popup()
 {
-	dynamic_cast<ui_base_view *>(this->get_view())->disconnect_popup(this);
+	dynamic_cast<ui_view *>(this->get_view())->disconnect_popup(this);
 	Elm_Popup *popup = this->unset_content();
 	evas_object_del(popup);
 }
 
-Elm_Win *ui_base_popup::get_window()
+Elm_Win *ui_popup::get_window()
 {
-	ui_base_viewmgr *viewmgr = UI_BASE_VIEWMGR;
+	ui_viewmgr *viewmgr = UI_VIEWMGR;
 	if (!viewmgr)
 	{
 		LOGE("Viewmgr is null?? menu(%p)", this);
@@ -66,29 +66,29 @@ Elm_Win *ui_base_popup::get_window()
 	return viewmgr->get_window();
 }
 
-bool ui_base_popup::deactivate()
+bool ui_popup::deactivate()
 {
 	Elm_Popup *popup = this->get_content();
 	if (!popup)
 	{
-		LOGE("Content is not set! = ui_base_popup(%p)", this);
+		LOGE("Content is not set! = ui_popup(%p)", this);
 		return false;
 	}
 
 	elm_popup_dismiss(popup);
-	dynamic_cast<ui_base_view*>(this->get_view())->on_resume();
+	dynamic_cast<ui_view*>(this->get_view())->on_resume();
 
 	return true;
 }
 
-bool ui_base_popup::activate()
+bool ui_popup::activate()
 {
 	bool ret = update_popup(this);
-	if (ret) dynamic_cast<ui_base_view*>(this->get_view())->on_pause();
+	if (ret) dynamic_cast<ui_view*>(this->get_view())->on_pause();
 	return ret;
 }
 
-bool ui_base_popup::set_content(Elm_Popup *popup)
+bool ui_popup::set_content(Elm_Popup *popup)
 {
 	Elm_Popup *prev = this->unset_content();
 	evas_object_del(prev);
@@ -114,14 +114,14 @@ bool ui_base_popup::set_content(Elm_Popup *popup)
 	return true;
 }
 
-bool ui_base_popup::is_activated()
+bool ui_popup::is_activated()
 {
 	Elm_Popup *popup = this->get_content();
 	if (!popup) return false;
 	return evas_object_visible_get(popup);
 }
 
-Elm_Popup *ui_base_popup::unset_content()
+Elm_Popup *ui_popup::unset_content()
 {
 	Elm_Popup *popup = ui_iface_overlay::unset_content();
 	if (!popup) return NULL;
@@ -132,12 +132,12 @@ Elm_Popup *ui_base_popup::unset_content()
 	return popup;
 }
 
-Evas_Object *ui_base_popup::get_base()
+Evas_Object *ui_popup::get_base()
 {
 	return this->get_window();
 }
 
-int ui_base_popup::get_degree()
+int ui_popup::get_degree()
 {
 	return this->get_view()->get_degree();
 }

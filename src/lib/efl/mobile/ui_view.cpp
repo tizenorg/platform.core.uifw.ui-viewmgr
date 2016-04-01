@@ -23,6 +23,8 @@
 using namespace efl_viewmgr;
 using namespace viewmgr;
 
+typedef list<ui_popup*>::reverse_iterator popup_ritr;
+
 #define LAYOUT_VALIDATE() if (!layout) \
 							{ \
 								LOGE("Layout is invalid! ui_view(%p)", this); \
@@ -45,6 +47,29 @@ static void toolbar_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_in
 {
 	ui_view *view = static_cast<ui_view *>(data);
 	view->unset_toolbar();
+}
+
+void ui_view::connect_popup(ui_popup *popup)
+{
+	this->popup_list.push_back(popup);
+}
+
+void ui_view::disconnect_popup(ui_popup *popup)
+{
+	this->popup_list.remove(popup);
+}
+
+bool ui_view::deactivate_popup(bool top_one)
+{
+	for (popup_ritr it = this->popup_list.rbegin(); it != this->popup_list.rend(); it++)
+	{
+		ui_popup *popup = *it;
+		if (!popup->is_activated()) continue;
+		popup->on_back();
+		//deactivate only one top one? or all popups?
+		if (top_one) return true;
+	}
+	return false;
 }
 
 bool ui_view::destroy_layout()
@@ -106,8 +131,17 @@ bool ui_view::create_layout()
 	return true;
 }
 
+void ui_view::on_deactivate()
+{
+	deactivate_popup(false);
+	ui_base_view::on_deactivate();
+}
+
 void ui_view::on_back()
 {
+	//If any popup is activated, deactivate the popup first.
+	if (this->deactivate_popup(true)) return;
+
 	if (this->menu)
 	{
 		if (this->menu->is_activated())

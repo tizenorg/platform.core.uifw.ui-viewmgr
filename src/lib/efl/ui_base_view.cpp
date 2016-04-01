@@ -19,22 +19,10 @@
 using namespace efl_viewmgr;
 using namespace viewmgr;
 
-typedef list<ui_base_popup*>::reverse_iterator popup_ritr;
-
 static void content_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
 	ui_base_view *view = static_cast<ui_base_view *>(data);
 	view->unset_content();
-}
-
-void ui_base_view::connect_popup(ui_base_popup *popup)
-{
-	this->popup_list.push_back(popup);
-}
-
-void ui_base_view::disconnect_popup(ui_base_popup *popup)
-{
-	this->popup_list.remove(popup);
 }
 
 ui_base_view::ui_base_view(const char *name)
@@ -123,30 +111,8 @@ void ui_base_view::set_indicator(ui_view_indicator indicator)
 	viewmgr->set_indicator(indicator);
 }
 
-bool ui_base_view::deactivate_popup(bool top_one)
-{
-	for (popup_ritr it = this->popup_list.rbegin(); it != this->popup_list.rend(); it++)
-	{
-		ui_base_popup *popup = *it;
-		if (!popup->is_activated()) continue;
-		popup->on_back();
-		//deactivate only one top one? or all popups?
-		if (top_one) return true;
-	}
-	return false;
-}
-
-void ui_base_view::on_deactivate()
-{
-	deactivate_popup(false);
-	ui_iface_view::on_deactivate();
-}
-
 void ui_base_view::on_back()
 {
-	//If any popup is activated, deactivate the popup first.
-	if (this->deactivate_popup(true)) return;
-
 	ui_base_viewmgr *viewmgr = UI_BASE_VIEWMGR;
 	if (!viewmgr)
 	{

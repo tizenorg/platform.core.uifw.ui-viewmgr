@@ -14,21 +14,21 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_BASE_POPUP_H
-#define UI_BASE_POPUP_H
+#ifndef UI_POPUP_H
+#define UI_POPUP_H
 
-#include "../interface/ui_iface_viewmanager.h"
+#include "../../interface/ui_iface_viewmanager.h"
 
 namespace efl_viewmgr
 {
-class ui_base_popup : public viewmgr::ui_iface_overlay<Elm_Popup *>
+class ui_popup : public viewmgr::ui_iface_overlay<Elm_Popup *>
 {
 private:
 	Elm_Win *get_window();
 
 public:
-	ui_base_popup(ui_base_view *view);
-	virtual ~ui_base_popup();
+	ui_popup(ui_view *view);
+	virtual ~ui_popup();
 
 	virtual bool activate();
 	virtual bool deactivate();
@@ -42,4 +42,4 @@ public:
 
 }
 
-#endif /* UI_BASE_POPUP_H */
+#endif /* UI_POPUP_H */

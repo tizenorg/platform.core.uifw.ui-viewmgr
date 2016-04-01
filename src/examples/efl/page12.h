@@ -25,8 +25,8 @@ static void popup_dismissed_cb(void *data, Evas_Object *obj, void *event_info)
 	//FIXME: remove dismissed callback because this callback is called twice.
 	//It seems this is an efl or popup error, not this ui_popup nor example.
 	evas_object_smart_callback_del(obj, "dismissed", popup_dismissed_cb);
-	ui_base_popup *overlay = static_cast<ui_base_popup *>(data);
-	delete (overlay);
+	ui_popup *popup = static_cast<ui_popup *>(data);
+	delete (popup);
 }
 
 class page12: public ui_view
@@ -71,26 +71,26 @@ public:
 	void create_popup()
 	{
 		//FIXME: is overlay a proper name?
-		ui_base_popup *overlay = new ui_base_popup(this);
+		ui_popup *popup = new ui_popup(this);
 
-		Elm_Popup *popup = elm_popup_add(overlay->get_base());
-		elm_object_text_set(popup, "This popup has only text which is set via desc set function, (This popup gets hidden when user clicks outside) here timeout of 3 sec is set.");
-		elm_popup_timeout_set(popup, 3.0);
-		evas_object_smart_callback_add(popup, "dismissed", popup_dismissed_cb, overlay);
-		evas_object_smart_callback_add(popup, "block,clicked",
+		Elm_Popup *obj = elm_popup_add(popup->get_base());
+		elm_object_text_set(obj, "This popup has only text which is set via desc set function, (This popup gets hidden when user clicks outside) here timeout of 3 sec is set.");
+		elm_popup_timeout_set(obj, 3.0);
+		evas_object_smart_callback_add(obj, "dismissed", popup_dismissed_cb, popup);
+		evas_object_smart_callback_add(obj, "block,clicked",
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
 					elm_popup_dismiss(obj);
 				},
 				NULL);
-		evas_object_smart_callback_add(popup, "timeout",
+		evas_object_smart_callback_add(obj, "timeout",
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
 					elm_popup_dismiss(obj);
 				},
 				NULL);
-		overlay->set_content(popup);
-		overlay->activate();
+		popup->set_content(obj);
+		popup->activate();
 	}
 };
 

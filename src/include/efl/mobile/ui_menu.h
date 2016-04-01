@@ -18,7 +18,6 @@
 #define UI_MENU_H
 
 #include "../../interface/ui_iface_viewmanager.h"
-#include "../ui_base_viewmanager.h"
 
 namespace efl_viewmgr
 {
