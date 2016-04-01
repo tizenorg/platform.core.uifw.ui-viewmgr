@@ -19,19 +19,17 @@
 using namespace efl_viewmgr;
 using namespace viewmgr;
 
-//FIXME: is it correct to define here?
-#define EDJ_PATH "/usr/share/edje/ui-viewmgr/ui-viewmgr.edj"
-
 bool ui_base_viewmgr::create_base_layout(Elm_Conformant *conform, const char *style)
 {
-	char buf[128];
+	char edj_path[PATH_MAX];
+	char group_name[128];
+
 	Elm_Layout *layout = elm_layout_add(conform);
 	if (!layout) return false;
 
-	//FIXME: Is it C programming style? need to change?
-	snprintf(buf, sizeof(buf), "transition/%s", style);
-	//default transition layout
-	elm_layout_file_set(layout, EDJ_PATH, buf);
+	snprintf(group_name, sizeof(group_name), "transition/%s", style);
+	snprintf(edj_path, sizeof(edj_path), "%s/ui-viewmgr.edj", EDJ_PATH);
+	elm_layout_file_set(layout, edj_path, group_name);
 	elm_object_content_set(conform, layout);
 
 	//Push Finished Event

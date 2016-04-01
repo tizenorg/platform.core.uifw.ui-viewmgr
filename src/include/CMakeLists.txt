@@ -1,5 +1,5 @@
 INSTALL(
-        DIRECTORY ./ DESTINATION include/${LIB_NAME}
+        DIRECTORY ./ DESTINATION include/${LIBNAME}
         FILES_MATCHING
         PATTERN "interface/*.h"
         PATTERN "efl/*.h"
