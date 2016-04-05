@@ -156,7 +156,7 @@ protected:
 	 *  @see deactivate()
 	 *  @see push_view()
 	 */
-	bool pop_view();
+	virtual bool pop_view();
 
 	/**
 	 *  @brief Insert a view in this viewmgr view list. Specifically, insert a given @p view right before of the given view, @before.
