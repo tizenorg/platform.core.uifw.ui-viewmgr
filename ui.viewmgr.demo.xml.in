@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns="http://tizen.org/ns/packages" api-version="2.4" package="@BINNAME@" version="0.1.0" install-location="internal-only">
    <ui-application appid="@BINNAME@" exec="@BINDIR@/bin/@BINNAME@" nodisplay="false" multiple="false" type="capp" taskmanage="true">
-      <label>ui.viewmgr.demo</label>
+      <label>ViewMgr Demo</label>
+      <icon>ui.viewmgr.demo.png</icon>
    </ui-application>
    <privileges>
      <privilege>http://tizen.org/privilege/appmanager.launch</privilege>

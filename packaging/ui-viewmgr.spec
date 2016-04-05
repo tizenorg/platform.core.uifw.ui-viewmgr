@@ -62,6 +62,7 @@ cp %{_builddir}/%{buildsubdir}/LICENSE %{buildroot}/usr/share/license/%{name}
 %manifest ui.viewmgr.demo.manifest
 /opt/usr/apps/ui.viewmgr.demo/bin/*
 /opt/usr/apps/ui.viewmgr.demo/data/images/*
+/opt/usr/apps/ui.viewmgr.demo/shared/res/*
 
 %files devel
 %defattr(-,root,root,-)
