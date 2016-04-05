@@ -20,24 +20,24 @@
 namespace viewmgr
 {
 
-template<typename T>
+template<typename T, typename T2>
 class ui_iface_view;
 
-template<typename T>
+template<typename T, typename T2>
 class ui_iface_overlay: public ui_iface_rotatable
 {
 private:
-	ui_iface_view<T> *view;
+	ui_iface_view<T, T2> *view;
 	T content;
 
 protected:
-	ui_iface_overlay(ui_iface_view<T> *view);
+	ui_iface_overlay(ui_iface_view<T, T2> *view);
 	virtual ~ui_iface_overlay();
 
 public:
 	virtual bool set_content(T content);
 	virtual T unset_content();
-	ui_iface_view<T> *get_view();
+	ui_iface_view<T, T2> *get_view();
 	virtual T get_content();
 	virtual void on_back();
 	virtual bool activate() = 0;
@@ -46,46 +46,46 @@ public:
 };
 
 
-template<typename T>
-ui_iface_overlay<T>::ui_iface_overlay(ui_iface_view<T> *view)
+template<typename T, typename T2>
+ui_iface_overlay<T, T2>::ui_iface_overlay(ui_iface_view<T, T2> *view)
 		: view(view), content(NULL)
 {
 }
 
-template<typename T>
-ui_iface_overlay<T>::~ui_iface_overlay()
+template<typename T, typename T2>
+ui_iface_overlay<T, T2>::~ui_iface_overlay()
 {
 }
 
-template<typename T>
-bool ui_iface_overlay<T>::set_content(T content)
+template<typename T, typename T2>
+bool ui_iface_overlay<T, T2>::set_content(T content)
 {
 	this->content = content;
 	return true;
 }
 
-template<typename T>
-T ui_iface_overlay<T>::unset_content()
+template<typename T, typename T2>
+T ui_iface_overlay<T, T2>::unset_content()
 {
 	T prev = this->content;
 	this->content = NULL;
 	return prev;
 }
 
-template<typename T>
-T ui_iface_overlay<T>::get_content()
+template<typename T, typename T2>
+T ui_iface_overlay<T, T2>::get_content()
 {
 	return this->content;
 }
 
-template<typename T>
-ui_iface_view<T> *ui_iface_overlay<T>::get_view()
+template<typename T, typename T2>
+ui_iface_view<T, T2> *ui_iface_overlay<T, T2>::get_view()
 {
 	return this->view;
 }
 
-template<typename T>
-void ui_iface_overlay<T>::on_back()
+template<typename T, typename T2>
+void ui_iface_overlay<T, T2>::on_back()
 {
 	this->deactivate();
 }

@@ -23,7 +23,7 @@
 
 #define UI_BASE_VIEWMGR efl_viewmgr::ui_base_viewmgr::get_instance()
 
-#include "ui_base_singleton.h"
+#include "ui_base_overlay.h"
 #include "ui_base_viewmgr.h"
 #include "ui_base_view.h"
 #include "ui_base_key_listener.h"

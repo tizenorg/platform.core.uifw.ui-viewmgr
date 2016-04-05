@@ -169,7 +169,7 @@ bool ui_base_viewmgr::create_conformant(Elm_Win *win)
 }
 
 ui_base_viewmgr::ui_base_viewmgr(const char *pkg, ui_base_key_listener *key_listener)
-		: singleton(), ui_iface_viewmgr(), key_listener(key_listener), transition_style("default")
+		: ui_iface_viewmgr(), key_listener(key_listener), transition_style("default")
 {
 	if (!pkg)
 	{

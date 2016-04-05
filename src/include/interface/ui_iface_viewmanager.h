@@ -45,6 +45,7 @@ enum ui_view_state
 	UI_VIEW_STATE_LAST
 };
 
+#include "ui_iface_singleton.h"
 #include "ui_iface_rotatable.h"
 #include "ui_iface_overlay.h"
 #include "ui_iface_view.h"
