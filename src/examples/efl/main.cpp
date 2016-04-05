@@ -217,6 +217,7 @@ static void app_pause(void *data)
 
 static void app_resume(void *data)
 {
+	UI_VIEWMGR->activate();
 }
 
 static void app_terminate(void *data)
