@@ -129,3 +129,14 @@ int ui_base_view::get_degree()
 	}
 	return elm_win_rotation_get(viewmgr->get_window());
 }
+
+void ui_base_view::on_back()
+{
+	ui_base_viewmgr *viewmgr = UI_BASE_VIEWMGR;
+	if (!viewmgr)
+	{
+		LOGE("Failed to get a viewmgr, view =%p", this);
+		return;
+	}
+	viewmgr->pop_view();
+}

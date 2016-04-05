@@ -96,6 +96,11 @@ public:
 	 *  @return Current rotation degree, -1 if it fails to get degree information.
 	 */
 	virtual int get_degree();
+
+	/** @brief This is for calling on_back method.
+	 *
+	 */
+	virtual void on_back();
 };
 
 }

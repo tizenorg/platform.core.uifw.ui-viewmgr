@@ -229,8 +229,6 @@ public:
 	 *  @return indicator state of view.
 	 */
 	ui_view_indicator get_indicator();
-
-	void on_back();
 };
 
 
@@ -389,18 +387,6 @@ template<typename T>
 ui_view_indicator ui_iface_view<T>::get_indicator()
 {
 	return this->indicator;
-}
-
-template<typename T>
-void ui_iface_view<T>::on_back()
-{
-	ui_iface_viewmgr<T> *viewmgr = this->get_viewmgr();
-	if (!viewmgr)
-	{
-		LOGE("Failed to get a viewmgr, view =%p", this);
-		return;
-	}
-	viewmgr->pop_view();
 }
 
 }
