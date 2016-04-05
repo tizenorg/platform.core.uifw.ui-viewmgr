@@ -67,7 +67,7 @@ static void win_resize_cb(void *data, Evas *e, Evas_Object *obj, void *event_inf
 }
 
 ui_menu::ui_menu(ui_view *view)
-		: ui_iface_overlay(view)
+		: ui_base_overlay(view)
 {
 	Elm_Win *win = this->get_window();
 	evas_object_event_callback_add(win, EVAS_CALLBACK_RESIZE, win_resize_cb, this);
@@ -136,7 +136,7 @@ bool ui_menu::set_content(Elm_Ctxpopup *ctxpopup)
 	evas_object_smart_callback_add(ctxpopup, "dismissed", ctxpopup_dismissed_cb, NULL);
 	evas_object_event_callback_add(ctxpopup, EVAS_CALLBACK_DEL, ctxpopup_del_cb, this);
 
-	ui_iface_overlay::set_content(ctxpopup);
+	ui_base_overlay::set_content(ctxpopup);
 
 	return true;
 }
@@ -150,7 +150,7 @@ bool ui_menu::is_activated()
 
 Elm_Ctxpopup *ui_menu::unset_content()
 {
-	Elm_Ctxpopup *ctxpopup = ui_iface_overlay::unset_content();
+	Elm_Ctxpopup *ctxpopup = ui_base_overlay::unset_content();
 	if (!ctxpopup) return NULL;
 
 	evas_object_smart_callback_del(ctxpopup, "dismissed", ctxpopup_dismissed_cb);

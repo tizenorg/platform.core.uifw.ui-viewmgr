@@ -24,7 +24,7 @@ using namespace std;
 namespace viewmgr {
 
 
-template<typename T>
+template<typename T, typename T2>
 class ui_iface_viewmgr;
 
 /**
@@ -40,16 +40,16 @@ class ui_iface_viewmgr;
  *  @warning When the transitions are finished, the view must to call ui_iface_viewmgr :: _push_finished(), ui_iface_viewmgr :: _pop_finished() in order that
  *           The ui_iface_viewmgr keeps the view states exactly.
  */
-template<typename T>
+template<typename T, typename T2>
 class ui_iface_view : public ui_iface_rotatable
 {
-	friend class ui_iface_viewmgr<T>;
+	friend class ui_iface_viewmgr<T, T2>;
 
 private:
 	T content;                              ///< A content instance for a screen as a view.
 	string name;                            ///< View name.
 	string transition_style;                ///< View transition style name.
-	ui_iface_viewmgr<T> *viewmgr;           ///< Viewmgr which this view belongs to.
+	ui_iface_viewmgr<T, T2> *viewmgr;           ///< Viewmgr which this view belongs to.
 	ui_view_state state;                    ///< View state.
 	ui_view_indicator indicator;            ///< View indicator mode.
 	bool event_block;                       ///< State of event block.
@@ -124,7 +124,7 @@ protected:
 	/** @brief Return a viewmgr which this view is belonging to.
 	 */
 	//FIXME: Is it necessary?
-	ui_iface_viewmgr<T> *get_viewmgr();
+	ui_iface_viewmgr<T, T2> *get_viewmgr();
 
 	/** @brief This is for replacing or setting a content of the view.
 	 *
@@ -234,32 +234,32 @@ public:
 };
 
 
-template<typename T>
-bool ui_iface_view<T>::get_event_block()
+template<typename T, typename T2>
+bool ui_iface_view<T, T2>::get_event_block()
 {
 	return this->event_block;
 }
 
-template<typename T>
-ui_iface_viewmgr<T> *ui_iface_view<T>::get_viewmgr()
+template<typename T, typename T2>
+ui_iface_viewmgr<T, T2> *ui_iface_view<T, T2>::get_viewmgr()
 {
 	return this->viewmgr;
 }
 
-template<typename T>
-void ui_iface_view<T>::set_event_block(bool block)
+template<typename T, typename T2>
+void ui_iface_view<T, T2>::set_event_block(bool block)
 {
 	this->event_block = block;
 }
 
-template<typename T>
-void ui_iface_view<T>::on_load()
+template<typename T, typename T2>
+void ui_iface_view<T, T2>::on_load()
 {
 	this->state = UI_VIEW_STATE_LOAD;
 }
 
-template<typename T>
-void ui_iface_view<T>::on_unload()
+template<typename T, typename T2>
+void ui_iface_view<T, T2>::on_unload()
 {
 	this->state = UI_VIEW_STATE_UNLOAD;
 	if (this->get_removable_content())
@@ -269,132 +269,132 @@ void ui_iface_view<T>::on_unload()
 	}
 }
 
-template<typename T>
-void ui_iface_view<T>::on_activate()
+template<typename T, typename T2>
+void ui_iface_view<T, T2>::on_activate()
 {
 	this->state = UI_VIEW_STATE_ACTIVATE;
 }
 
-template<typename T>
-void ui_iface_view<T>::on_deactivate()
+template<typename T, typename T2>
+void ui_iface_view<T, T2>::on_deactivate()
 {
 	this->state = UI_VIEW_STATE_DEACTIVATE;
 }
 
-template<typename T>
-void ui_iface_view<T>::on_pause()
+template<typename T, typename T2>
+void ui_iface_view<T, T2>::on_pause()
 {
 	this->state = UI_VIEW_STATE_PAUSE;
 }
 
-template<typename T>
-void ui_iface_view<T>::on_resume()
+template<typename T, typename T2>
+void ui_iface_view<T, T2>::on_resume()
 {
 	this->state = UI_VIEW_STATE_ACTIVATE;
 }
 
-template<typename T>
-void ui_iface_view<T>::on_destroy()
+template<typename T, typename T2>
+void ui_iface_view<T, T2>::on_destroy()
 {
 }
 
-template<typename T>
-ui_iface_view<T>::ui_iface_view(const char *name)
+template<typename T, typename T2>
+ui_iface_view<T, T2>::ui_iface_view(const char *name)
 		: content(NULL), name(string(name ? name : "")), transition_style(string("default")), viewmgr(NULL), state(UI_VIEW_STATE_LOAD),
 		  indicator(UI_VIEW_INDICATOR_DEFAULT), event_block(false), removable_content(true)
 {
 	this->state = UI_VIEW_STATE_UNLOAD;
 }
 
-template<typename T>
-ui_iface_view<T>::~ui_iface_view()
+template<typename T, typename T2>
+ui_iface_view<T, T2>::~ui_iface_view()
 {
 	this->viewmgr->remove_view(this);
 }
 
-template<typename T>
-bool ui_iface_view<T>::set_content(T content)
+template<typename T, typename T2>
+bool ui_iface_view<T, T2>::set_content(T content)
 {
 	this->content = content;
 	return true;
 }
 
-template<typename T>
-T ui_iface_view<T>::unset_content()
+template<typename T, typename T2>
+T ui_iface_view<T, T2>::unset_content()
 {
 	T prev = this->content;
 	this->content = NULL;
 	return prev;
 }
 
-template<typename T>
-bool ui_iface_view<T>::set_transition_style(const char *style)
+template<typename T, typename T2>
+bool ui_iface_view<T, T2>::set_transition_style(const char *style)
 {
 	this->transition_style.assign(style);
 	return true;
 }
 
-template<typename T>
-bool ui_iface_view<T>::set_name(const char *name)
+template<typename T, typename T2>
+bool ui_iface_view<T, T2>::set_name(const char *name)
 {
 	this->name.assign(name);
 	return true;
 }
 
-template<typename T>
-void ui_iface_view<T>::set_removable_content(bool removable)
+template<typename T, typename T2>
+void ui_iface_view<T, T2>::set_removable_content(bool removable)
 {
 	this->removable_content = removable;
 
 	//FIXME: If this api is called on unload state? should we remove content right now?
 }
 
-template<typename T>
-void ui_iface_view<T>::set_indicator(ui_view_indicator indicator)
+template<typename T, typename T2>
+void ui_iface_view<T, T2>::set_indicator(ui_view_indicator indicator)
 {
 	this->indicator = indicator;
 }
 
-template<typename T>
-const char *ui_iface_view<T>::get_transition_style()
+template<typename T, typename T2>
+const char *ui_iface_view<T, T2>::get_transition_style()
 {
 	return this->transition_style.c_str();
 }
 
-template<typename T>
-const char *ui_iface_view<T>::get_name()
+template<typename T, typename T2>
+const char *ui_iface_view<T, T2>::get_name()
 {
 	return this->name.c_str();
 }
 
-template<typename T>
-T ui_iface_view<T>::get_content()
+template<typename T, typename T2>
+T ui_iface_view<T, T2>::get_content()
 {
 	return this->content;
 }
 
-template<typename T>
-ui_view_state ui_iface_view<T>::get_state()
+template<typename T, typename T2>
+ui_view_state ui_iface_view<T, T2>::get_state()
 {
 	return this->state;
 }
 
-template<typename T>
-bool ui_iface_view<T>::get_removable_content()
+template<typename T, typename T2>
+bool ui_iface_view<T, T2>::get_removable_content()
 {
 	return this->removable_content;
 }
 
-template<typename T>
-ui_view_indicator ui_iface_view<T>::get_indicator()
+template<typename T, typename T2>
+ui_view_indicator ui_iface_view<T, T2>::get_indicator()
 {
 	return this->indicator;
 }
 
-template<typename T>
-void ui_iface_view<T>::on_back()
+template<typename T, typename T2>
+void ui_iface_view<T, T2>::on_back()
 {
-	ui_iface_viewmgr<T> *viewmgr = this->get_viewmgr();
+	ui_iface_viewmgr<T, T2> *viewmgr = this->get_viewmgr();
 	if (!viewmgr)
 	{
 		LOGE("Failed to get a viewmgr, view =%p", this);

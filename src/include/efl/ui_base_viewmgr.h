@@ -17,10 +17,10 @@
 #ifndef UI_BASE_VIEWMGR_H
 #define UI_BASE_VIEWMGR_H
 
+#include <map>
 #include <Elementary.h>
 #include "../interface/ui_iface_viewmanager.h"
 #include "ui_base_key_listener.h"
-#include <map>
 
 
 //FIXME: ??
@@ -44,7 +44,7 @@ class ui_base_view;
  *
  *  @warning viewmgr will remove all containing views when it's destroyed.
  */
-class ui_base_viewmgr: public singleton<ui_base_viewmgr>, public viewmgr::ui_iface_viewmgr<Evas_Object *>
+class ui_base_viewmgr: public viewmgr::ui_iface_viewmgr<Evas_Object *, ui_base_viewmgr>
 {
 	friend class ui_base_view;
 

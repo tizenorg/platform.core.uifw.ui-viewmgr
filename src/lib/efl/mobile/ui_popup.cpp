@@ -43,7 +43,7 @@ static void popup_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 }
 
 ui_popup::ui_popup(ui_view *view)
-		: ui_iface_overlay(view)
+		: ui_base_overlay(view)
 {
 	view->connect_popup(this);
 }
@@ -109,7 +109,7 @@ bool ui_popup::set_content(Elm_Popup *popup)
 	evas_object_event_callback_add(popup, EVAS_CALLBACK_DEL, popup_del_cb, this);
 	evas_object_smart_callback_add(popup, "dismissed", popup_dismissed_cb, this);
 
-	ui_iface_overlay::set_content(popup);
+	ui_base_overlay::set_content(popup);
 
 	return true;
 }
@@ -123,7 +123,7 @@ bool ui_popup::is_activated()
 
 Elm_Popup *ui_popup::unset_content()
 {
-	Elm_Popup *popup = ui_iface_overlay::unset_content();
+	Elm_Popup *popup = ui_base_overlay::unset_content();
 	if (!popup) return NULL;
 
 	evas_object_event_callback_del(popup, EVAS_CALLBACK_DEL, popup_del_cb);

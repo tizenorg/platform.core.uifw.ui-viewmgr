@@ -1,11 +1,11 @@
-#ifndef UI_SINGLETON_UTIL_H
-#define UI_SINGLETON_UTIL_H
+#ifndef UI_IFACE_SINGLETON_H
+#define UI_IFACE_SINGLETON_H
 
 #include <cassert>
 
 using namespace std;
 
-namespace efl_viewmgr
+namespace viewmgr
 {
 
 template<typename T>
@@ -31,7 +31,7 @@ singleton<T>::singleton()
 
 	//Derived Class - Singleton class
 	int offset = reinterpret_cast<int>(pT) - reinterpret_cast<int>(reinterpret_cast<singleton<T>*>(pT));
-    singleton::inst = reinterpret_cast<T*>((reinterpret_cast<int>(this) + offset));
+	singleton::inst = reinterpret_cast<T*>((reinterpret_cast<int>(this) + offset));
 }
 
 template<typename T>
@@ -45,9 +45,9 @@ template<typename T>
 T* singleton<T>::get_instance()
 {
 	assert(singleton::inst);
-    return singleton::inst;
+	return singleton::inst;
 }
 
 }
 
-#endif /* UI_SINGLETON_UTIL_H_ */
+#endif /* UI_IFACE_SINGLETON_H_ */

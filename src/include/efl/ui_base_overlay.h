@@ -14,35 +14,25 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_MENU_H
-#define UI_MENU_H
+#ifndef UI_BASE_OVERLAY_H
+#define UI_BASE_OVERLAY_H
 
-#include "../ui_base_viewmanager.h"
+#include <Elementary.h>
+#include "../interface/ui_iface_viewmanager.h"
 
 namespace efl_viewmgr
 {
-class ui_view;
 
-class ui_menu: public ui_base_overlay
+class ui_base_viewmgr;
+class ui_base_view;
+
+class ui_base_overlay: public viewmgr::ui_iface_overlay<Evas_Object *, ui_base_viewmgr>
 {
-	friend class ui_view;
-private:
-	ui_menu(ui_view *view);
-	virtual ~ui_menu();
-
-	Elm_Win *get_window();
-
-public:
-	virtual bool activate();
-	virtual bool deactivate();
-	virtual bool set_content(Elm_Ctxpopup* ctxpopup);
-	virtual Elm_Ctxpopup *unset_content();
-	virtual bool is_activated();
-
-	virtual Evas_Object *get_base();
-	virtual int get_degree();
+protected:
+	ui_base_overlay(ui_base_view *view);
+	virtual ~ui_base_overlay();
 };
 
 }
 
-#endif /* UI_MENU_H */
+#endif /* UI_BASE_OVERLAY_H */

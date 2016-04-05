@@ -17,11 +17,11 @@
 #ifndef UI_POPUP_H
 #define UI_POPUP_H
 
-#include "../../interface/ui_iface_viewmanager.h"
+#include "../ui_base_viewmanager.h"
 
 namespace efl_viewmgr
 {
-class ui_popup : public viewmgr::ui_iface_overlay<Elm_Popup *>
+class ui_popup : public ui_base_overlay
 {
 private:
 	Elm_Win *get_window();
