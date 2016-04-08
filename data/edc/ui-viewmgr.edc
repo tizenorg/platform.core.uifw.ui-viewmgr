@@ -825,19 +825,19 @@ collections {
       programs {
          program { "visible";
             signal: "elm,state,visible";
-            source: "elm";
+            source: "viewmgr";
             action: STATE_SET "default" 0.0;
             target: "clipper";
          }
          program { "invisible";
             signal: "elm,state,invisible";
-            source: "elm";
+            source: "viewmgr";
             action: STATE_SET "hidden" 0.0;
             target: "clipper";
          }
          program { "title_show";
             signal: "elm,state,title,show";
-            source: "elm";
+            source: "viewmgr";
             script {
                set_state(PART:"title_bg", "default", 0.0);
                set_state(PART:"title_clipper", "default", 0.0);
@@ -873,7 +873,7 @@ collections {
          }
          program { "title_hide";
             signal: "elm,state,title,hide";
-            source: "elm";
+            source: "viewmgr";
             script {
                set_state(PART:"title_bg", "hidden", 0.0);
                set_state(PART:"title_clipper", "hidden", 0.0);
@@ -895,7 +895,7 @@ collections {
          }
          program { "toolbar_show";
             signal: "elm,state,toolbar,show";
-            source: "elm";
+            source: "viewmgr";
             script {
                set_state(PART:"toolbar", "visible", 0.0);
                set_state(PART:"toolbar_top_divider", "visible", 0.0);
@@ -905,7 +905,7 @@ collections {
          }
          program { "toolbar_hide";
             signal: "elm,state,toolbar,hide";
-            source: "elm";
+            source: "viewmgr";
             script {
                set_state(PART:"toolbar", "default", 0.0);
                set_state(PART:"toolbar_top_divider", "default", 0.0);
@@ -915,21 +915,21 @@ collections {
          }
          program { "subtitle_show";
             signal: "elm,state,subtitle,show";
-            source: "elm";
+            source: "viewmgr";
             script {
                set_state(PART:"elm.text.title", "subtitle_visible", 0.0);
             }
          }
          program { "subtitle_hide";
             signal: "elm,state,subtitle,hide";
-            source: "elm";
+            source: "viewmgr";
             script {
                set_state(PART:"elm.text.title", "default", 0.0);
             }
          }
          program { "prev_btn_show";
             signal: "elm,state,prev_btn,show";
-            source: "elm";
+            source: "viewmgr";
             script {
                set_int(prev_btn_visible, 1);
                if (get_int(title_left_btn_visible) == 0) {
@@ -941,7 +941,7 @@ collections {
          }
          program { "prev_btn_hide";
             signal: "elm,state,prev_btn,hide";
-            source: "elm";
+            source: "viewmgr";
             script {
                set_state(PART:"elm.swallow.prev_btn", "hidden", 0.0);
                set_state(PART:"title_text_left_padding", "default", 0.0);
@@ -951,7 +951,7 @@ collections {
          }
          program { "title_left_btn_show";
             signal: "elm,state,title_left_btn,show";
-            source: "elm";
+            source: "viewmgr";
             script {
                set_state(PART:"title_left_padding", "hidden", 0.0);
                set_state(PART:"title_left_btn_bg", "visible", 0.0);
@@ -966,7 +966,7 @@ collections {
          }
          program { "title_left_btn_hide";
             signal: "elm,state,title_left_btn,hide";
-            source: "elm";
+            source: "viewmgr";
             script {
                set_state(PART:"title_left_padding", "default", 0.0);
                set_state(PART:"title_left_btn_bg", "default", 0.0);
@@ -983,7 +983,7 @@ collections {
          }
          program { "title_right_btn_show";
             signal: "elm,state,title_right_btn,show";
-            source: "elm";
+            source: "viewmgr";
             script {
                set_state(PART:"title_right_padding", "hidden", 0.0);
                set_state(PART:"title_right_btn_bg", "visible", 0.0);
@@ -999,7 +999,7 @@ collections {
          }
          program { "title_right_btn_hide";
             signal: "elm,state,title_right_btn,hide";
-            source: "elm";
+            source: "viewmgr";
             script {
                set_state(PART:"title_right_padding", "default", 0.0);
                set_state(PART:"title_right_btn_bg", "default", 0.0);
@@ -1015,7 +1015,7 @@ collections {
          }
          program { "title_badge_show";
             signal: "elm,state,title_badge,show";
-            source: "elm";
+            source: "viewmgr";
             script {
                new buf[128];
                set_state(PART:"badge_text_left_padding", "visible", 0.0);
@@ -1031,7 +1031,7 @@ collections {
          }
          program { "title_badge_hide";
             signal: "elm,state,title_badge,hide";
-            source: "elm";
+            source: "viewmgr";
             script {
                set_state(PART:"badge_text_left_padding", "default", 0.0);
                set_state(PART:"badge_text_right_padding", "default", 0.0);
