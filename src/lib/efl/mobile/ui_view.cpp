@@ -178,6 +178,7 @@ void ui_view::on_unload()
 	ui_base_view::on_unload();
 
 	Elm_Layout *layout = this->get_base();
+
 	evas_object_hide(layout);
 }
 
