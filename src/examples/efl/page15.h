@@ -18,7 +18,7 @@
 /** This example create a simple view which is inheritance ui_view.
  *  Then push in viewmgr.
  */
-class page14: public ui_view
+class page15: public ui_view
 {
 protected:
 	void on_load()
@@ -26,31 +26,25 @@ protected:
 		ui_view::on_load();
 
 		//Create a main content.
-		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>None Transition",
-				//Prev Button Callback
+		Evas_Object *content = create_scrolling_content(this->get_base());
+
+		this->set_content(content, "Page15 Scroller In Viewmgr");
+
+		//Title Right button
+		Elm_Button *right_btn = elm_button_add(this->get_base());
+		elm_object_text_set(right_btn, "Next");
+		evas_object_smart_callback_add(right_btn, "clicked",
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					UI_VIEWMGR->pop_view();
+					UI_VIEWMGR->deactivate();
 				},
-				//Next Button Callback
-				[](void *data, Evas_Object *obj, void *event_info) -> void
-				{
-					create_page15();
-				});
-
-		this->set_content(content, "Page14");
+				this);
+		this->set_title_right_btn(right_btn);
 	}
-
-public:
-	page14() : ui_view("page14")
-	{
-		this->set_transition_style("none");
-	}
-	~page14(){}
 };
 
-void create_page14()
+void create_page15()
 {
 	//Push this view in viewmgr.
-	UI_VIEWMGR->push_view(new page14());
+	UI_VIEWMGR->push_view(new page15());
 }

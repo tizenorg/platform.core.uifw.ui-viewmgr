@@ -15,6 +15,7 @@
  *
  */
 #include "main.h"
+#include "page15.h"
 #include "page14.h"
 #include "page13.h"
 #include "page12.h"
@@ -50,6 +51,21 @@ create_toolbar(Evas_Object *parent, const char *style)
 	elm_toolbar_item_append(toolbar, NULL, "Tab4", NULL, NULL);
 
 	return toolbar;
+}
+
+Evas_Object*
+create_scrolling_content(Evas_Object *parent)
+{
+	Elm_Image *image;
+
+	/* Image */
+	image = elm_image_add(parent);
+	snprintf(buf, sizeof(buf), "%s/data/images/bg.png", BINDIR);
+	elm_image_file_set(image, buf, NULL);
+	elm_image_resizable_set(image, EINA_FALSE, EINA_FALSE);
+	evas_object_show(image);
+
+	return image;
 }
 
 Evas_Object*
