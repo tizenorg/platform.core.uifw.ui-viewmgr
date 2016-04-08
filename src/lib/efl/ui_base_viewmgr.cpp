@@ -66,9 +66,11 @@ bool ui_base_viewmgr::create_base_layout(Elm_Scroller *scroller, const char *sty
 Elm_Layout *ui_base_viewmgr::set_transition_layout(string transition_style)
 {
 	Elm_Layout *effect_layout = NULL;
+	Elm_Layout *pcontent;
 
-	evas_object_hide(elm_object_part_content_unset(this->get_base(), "pcontent"));
-	evas_object_hide(elm_object_part_content_unset(this->get_base(), "content"));
+	pcontent = elm_object_part_content_unset(this->get_base(), "pcontent");
+	if (pcontent) evas_object_hide(pcontent);
+	elm_object_part_content_unset(this->get_base(), "content");
 
 	if (transition_style.compare(this->transition_style) == 0) return this->layout;
 
@@ -101,7 +103,7 @@ Elm_Layout *ui_base_viewmgr::set_transition_layout(string transition_style)
 void ui_base_viewmgr::activate_top_view()
 {
 	Evas_Object *pcontent = elm_object_part_content_unset(this->get_base(), "content");
-	evas_object_hide(pcontent);
+	if (pcontent) evas_object_hide(pcontent);
 
 	ui_base_view *view = this->get_last_view();
 
