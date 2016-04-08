@@ -40,4 +40,5 @@ typedef struct appdata {
 
 Evas_Object *create_landscape_content(Evas_Object *parent, const char *text, Evas_Smart_Cb prev_btn_clicked_cb, Evas_Smart_Cb next_btn_clicked_cb);
 Evas_Object *create_content(Evas_Object *parent, const char *text, Evas_Smart_Cb prev_btn_clicked_cb, Evas_Smart_Cb next_btn_clicked_cb);
+Evas_Object *create_scrolling_content(Evas_Object *parent);
 Elm_Toolbar *create_toolbar(Evas_Object *parent, const char *style);
