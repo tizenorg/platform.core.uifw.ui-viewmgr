@@ -56,6 +56,7 @@ create_toolbar(Evas_Object *parent, const char *style)
 Evas_Object*
 create_scrolling_content(Evas_Object *parent)
 {
+	char buf[PATH_MAX];
 	Elm_Image *image;
 
 	/* Image */
