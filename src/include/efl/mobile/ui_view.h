@@ -79,6 +79,8 @@ public:
 	bool set_title_right_btn(Elm_Button *title_right_btn);
 	bool set_title(const char *text);
 	bool set_toolbar(Elm_Toolbar *toolbar);
+	void show_title(bool anim);
+	void hide_title(bool anim);
 	Evas_Object *unset_content();
 	Elm_Button *unset_title_left_btn();
 	Elm_Button *unset_title_right_btn();
