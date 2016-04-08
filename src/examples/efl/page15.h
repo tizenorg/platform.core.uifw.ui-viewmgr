@@ -18,7 +18,7 @@
 /** This example create a simple view which is inheritance ui_view.
  *  Then push in viewmgr.
  */
-class page14: public ui_view
+class page15: public ui_view
 {
 protected:
 	void on_load()
@@ -26,7 +26,7 @@ protected:
 		ui_view::on_load();
 
 		//Create a main content.
-		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>None Transition",
+		Evas_Object *content = create_title_handle_content(this->get_base(),
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
@@ -35,22 +35,43 @@ protected:
 				//Next Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					create_page15();
-				});
+					UI_VIEWMGR->deactivate();
+				},
+				//Title Show Button Callback
+				[](void *data, Evas_Object *obj, void *event_info) -> void
+				{
+					ui_view *view = static_cast<ui_view *>(data);
+					view->set_title_visible(true, false);
+				},
+				//Title Hide Button Callback
+				[](void *data, Evas_Object *obj, void *event_info) -> void
+				{
+					ui_view *view = static_cast<ui_view *>(data);
+					view->set_title_visible(false, false);
+				},
+				//Title Show Anim Button Callback
+				[](void *data, Evas_Object *obj, void *event_info) -> void
+				{
+					ui_view *view = static_cast<ui_view *>(data);
+					view->set_title_visible(true, true);
+				},
+				//Title Hide Anim Button Callback
+				[](void *data, Evas_Object *obj, void *event_info) -> void
+				{
+					ui_view *view = static_cast<ui_view *>(data);
+					view->set_title_visible(false, true);
+				}, this);
 
-		this->set_content(content, "Page14");
+		this->set_content(content, "Page15");
 	}
 
 public:
-	page14() : ui_view("page14")
-	{
-		this->set_transition_style("none");
-	}
-	~page14(){}
+	page15() : ui_view("page15") {}
+	~page15() {}
 };
 
-void create_page14()
+void create_page15()
 {
 	//Push this view in viewmgr.
-	UI_VIEWMGR->push_view(new page14());
+	UI_VIEWMGR->push_view(new page15());
 }

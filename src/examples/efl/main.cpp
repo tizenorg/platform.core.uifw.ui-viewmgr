@@ -15,6 +15,7 @@
  *
  */
 #include "main.h"
+#include "page15.h"
 #include "page14.h"
 #include "page13.h"
 #include "page12.h"
@@ -118,6 +119,104 @@ create_landscape_content(Evas_Object *parent, const char *text, Evas_Smart_Cb pr
 	elm_object_content_set(scroller, grid);
 
 	return scroller;
+}
+
+Evas_Object*
+create_title_handle_content(Evas_Object *parent, Evas_Smart_Cb prev_btn_clicked_cb, Evas_Smart_Cb next_btn_clicked_cb,
+				Evas_Smart_Cb title_show_btn_clicked_cb, Evas_Smart_Cb title_hide_btn_clicked_cb,
+				Evas_Smart_Cb title_show_anim_btn_clicked_cb, Evas_Smart_Cb title_hide_anim_btn_clicked_cb, ui_view *view)
+{
+	Elm_Grid *grid;
+	Elm_Box *box;
+	Elm_Layout *layout;
+	Elm_Button *btn;
+
+	/* Grid */
+	grid = elm_grid_add(parent);
+	evas_object_size_hint_weight_set(grid, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(grid, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	evas_object_show(grid);
+
+	/* NoContent Layout */
+	layout = elm_layout_add(grid);
+	elm_layout_theme_set(layout, "layout", "nocontents", "default");
+	elm_object_part_text_set(layout, "elm.text", NULL);
+	evas_object_show(layout);
+	elm_grid_pack(grid, layout, 0, 0, 100, 100);
+
+	/* Box */
+	box = elm_box_add(grid);
+	//elm_box_horizontal_set(box, EINA_TRUE);
+	evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(box, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	//elm_box_padding_set(box, ELM_SCALE_SIZE(50), 0);
+	evas_object_show(box);
+	elm_grid_pack(grid, box, 25, 15, 50, 50);
+
+	/* Title Show Button */
+	btn = elm_button_add(grid);
+	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(btn, EVAS_HINT_FILL, 1.0);
+	elm_object_text_set(btn, "Title Show");
+	evas_object_smart_callback_add(btn, "clicked", title_show_btn_clicked_cb, view);
+	evas_object_show(btn);
+	elm_box_pack_end(box, btn);
+
+	/* Title Hide Button */
+	btn = elm_button_add(grid);
+	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(btn, EVAS_HINT_FILL, 1.0);
+	elm_object_text_set(btn, "Title Hide");
+	evas_object_smart_callback_add(btn, "clicked", title_hide_btn_clicked_cb, view);
+	evas_object_show(btn);
+	elm_box_pack_end(box, btn);
+
+	/* Title Show Anim Button */
+	btn = elm_button_add(grid);
+	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(btn, EVAS_HINT_FILL, 1.0);
+	elm_object_text_set(btn, "Title Show Anim");
+	evas_object_smart_callback_add(btn, "clicked", title_show_anim_btn_clicked_cb, view);
+	evas_object_show(btn);
+	elm_box_pack_end(box, btn);
+
+	/* Title Hide Anim Button */
+	btn = elm_button_add(grid);
+	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(btn, EVAS_HINT_FILL, 1.0);
+	elm_object_text_set(btn, "Title Hide Anim");
+	evas_object_smart_callback_add(btn, "clicked", title_hide_anim_btn_clicked_cb, view);
+	evas_object_show(btn);
+	elm_box_pack_end(box, btn);
+
+	/* Box */
+	box = elm_box_add(grid);
+	elm_box_horizontal_set(box, EINA_TRUE);
+	evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(box, EVAS_HINT_FILL, 1.0);
+	elm_box_padding_set(box, ELM_SCALE_SIZE(50), 0);
+	evas_object_show(box);
+	elm_grid_pack(grid, box, 0, 0, 100, 100);
+
+	/* Previous Page Button */
+	btn = elm_button_add(grid);
+	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(btn, EVAS_HINT_FILL, 1.0);
+	elm_object_text_set(btn, "Prev");
+	evas_object_smart_callback_add(btn, "clicked", prev_btn_clicked_cb, NULL);
+	evas_object_show(btn);
+	elm_box_pack_end(box, btn);
+
+	/* Next Page Button */
+	btn = elm_button_add(grid);
+	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(btn, EVAS_HINT_FILL, 1.0);
+	elm_object_text_set(btn, "Next");
+	evas_object_smart_callback_add(btn, "clicked", next_btn_clicked_cb, NULL);
+	evas_object_show(btn);
+	elm_box_pack_end(box, btn);
+
+	return grid;
 }
 
 Evas_Object*
