@@ -835,6 +835,19 @@ collections {
             action: STATE_SET "hidden" 0.0;
             target: "clipper";
          }
+         program { "title_show_title_default";
+            action: STATE_SET "default" 0.0;
+            target: "title_bg";
+            target: "title_clipper";
+            transition: DECELERATE TRANSITION_TIME;
+         }
+         program { "title_show_anim";
+            signal: "elm,state,title,show,anim";
+            source: "viewmgr";
+            script {
+               run_program(PROGRAM:"title_show_title_default");
+            }
+         }
          program { "title_show";
             signal: "elm,state,title,show";
             source: "viewmgr";
@@ -859,7 +872,7 @@ collections {
                   set_state(PART:"title_right_btn", "visible", 0.0);
                   set_state(PART:"title_left_btn_bg", "visible", 0.0);
                   set_state(PART:"title_left_padding", "hidden", 0.0);
-                  if (get_int(prev_btn_visible) == 1){
+                  if (get_int(prev_btn_visible)) {
                      set_state(PART:"title_text_left_padding", "default", 0.0);
                      set_state(PART:"title_text_right_padding", "default", 0.0);
                   }
@@ -869,6 +882,20 @@ collections {
                   set_state(PART:"toolbar_top_divider", "visible", 0.0);
                   set_state(PART:"elm.swallow.content", "toolbar", 0.0);
                }
+            }
+         }
+         program { "title_hide_title_hidden";
+            action: STATE_SET "hidden" 0.0;
+            target: "title_bg";
+            target: "title_clipper";
+            target: "elm.swallow.prev_btn";
+            transition: DECELERATE TRANSITION_TIME;
+         }
+         program { "title_hide_anim";
+            signal: "elm,state,title,hide,anim";
+            source: "viewmgr";
+            script {
+               run_program(PROGRAM:"title_hide_title_hidden");
             }
          }
          program { "title_hide";
@@ -884,7 +911,7 @@ collections {
                set_state(PART:"title_right_padding", "default", 0.0);
                set_state(PART:"title_right_btn", "default", 0.0);
                set_state(PART:"elm.swallow.prev_btn", "hidden", 0.0);
-               if (get_int(prev_btn_visible) == 1){
+               if (get_int(prev_btn_visible)){
                   set_state(PART:"title_text_left_padding", "prev_btn_visible", 0.0);
                   set_state(PART:"title_text_right_padding", "prev_btn_visible", 0.0);
                }
