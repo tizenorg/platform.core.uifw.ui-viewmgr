@@ -477,3 +477,26 @@ Evas_Object *ui_view::get_base()
 	}
 	return this->layout;
 }
+
+bool ui_view::set_title_visible(bool visible, bool anim)
+{
+	Elm_Layout *layout = this->get_base();
+	if (!layout)
+	{
+		LOGE("Layout is invalid! ui_view(%p)", this);
+		return false;
+	}
+
+	if (visible)
+	{
+		if (anim) elm_object_signal_emit(layout, "elm,state,title,show,anim", "viewmgr");
+		else elm_object_signal_emit(layout, "elm,state,title,show", "viewmgr");
+	}
+	else
+	{
+		if (anim) elm_object_signal_emit(layout, "elm,state,title,hide,anim", "viewmgr");
+		else elm_object_signal_emit(layout, "elm,state,title,hide", "viewmgr");
+	}
+
+	return true;
+}
