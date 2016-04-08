@@ -123,7 +123,7 @@ bool ui_view::create_layout()
 
 			elm_object_style_set(prev_btn, "tizen_view/prev_btn");
 			elm_object_part_content_set(layout, "elm.swallow.prev_btn", prev_btn);
-			elm_object_signal_emit(layout, "elm,state,prev_btn,show", "elm");
+			elm_object_signal_emit(layout, "elm,state,prev_btn,show", "viewmgr");
 		}
 	}
 
@@ -191,11 +191,11 @@ bool ui_view::set_content(Evas_Object *content, const char *title)
 	elm_object_part_content_set(layout, "elm.swallow.content", content);
 	if (content)
 	{
-		elm_object_signal_emit(layout, "elm.state,elm.swallow.content,show", "elm");
+		elm_object_signal_emit(layout, "elm.state,elm.swallow.content,show", "viewmgr");
 	}
 	else
 	{
-		elm_object_signal_emit(layout, "elm.state,elm.swallow.content,hide", "elm");
+		elm_object_signal_emit(layout, "elm.state,elm.swallow.content,hide", "viewmgr");
 	}
 
 	this->set_title(title);
@@ -209,8 +209,8 @@ bool ui_view::set_subtitle(const char *text)
 	LAYOUT_VALIDATE();
 
 	elm_object_part_text_set(layout, "elm.text.subtitle", text);
-	if (text) elm_object_signal_emit(layout, "elm,state,subtitle,show", "elm");
-	else elm_object_signal_emit(layout, "elm,state,subtitle,hide", "elm");
+	if (text) elm_object_signal_emit(layout, "elm,state,subtitle,show", "viewmgr");
+	else elm_object_signal_emit(layout, "elm,state,subtitle,hide", "viewmgr");
 
 	return true;
 }
@@ -231,7 +231,7 @@ bool ui_view::set_title_left_btn(Elm_Button *title_left_btn)
 
 	elm_object_style_set(title_left_btn, "tizen_view/title_left");
 	elm_object_part_content_set(layout, "title_left_btn", title_left_btn);
-	elm_object_signal_emit(layout, "elm,state,title_left_btn,show", "elm");
+	elm_object_signal_emit(layout, "elm,state,title_left_btn,show", "viewmgr");
 	evas_object_event_callback_add(title_left_btn, EVAS_CALLBACK_DEL, title_left_btn_del_cb, this);
 
 	return true;
@@ -253,7 +253,7 @@ bool ui_view::set_title_right_btn(Elm_Button *title_right_btn)
 
 	elm_object_style_set(title_right_btn, "tizen_view/title_right");
 	elm_object_part_content_set(layout, "title_right_btn", title_right_btn);
-	elm_object_signal_emit(layout, "elm,state,title_right_btn,show", "elm");
+	elm_object_signal_emit(layout, "elm,state,title_right_btn,show", "viewmgr");
 	evas_object_event_callback_add(title_right_btn, EVAS_CALLBACK_DEL, title_right_btn_del_cb, this);
 
 	return true;
@@ -265,8 +265,8 @@ bool ui_view::set_title_badge(const char *text)
 	LAYOUT_VALIDATE();
 
 	elm_object_part_text_set(layout, "title_badge", text);
-	if (text) elm_object_signal_emit(layout, "elm,state,title_badge,show", "elm");
-	else elm_object_signal_emit(layout, "elm,state,title_badge,hide", "elm");
+	if (text) elm_object_signal_emit(layout, "elm,state,title_badge,show", "viewmgr");
+	else elm_object_signal_emit(layout, "elm,state,title_badge,hide", "viewmgr");
 
 	return true;
 }
@@ -277,8 +277,8 @@ bool ui_view::set_title(const char *text)
 	LAYOUT_VALIDATE();
 
 	elm_object_part_text_set(layout, "elm.text.title", text);
-	if (text) elm_object_signal_emit(layout, "elm,state,title,show", "elm");
-	else elm_object_signal_emit(layout, "elm,state,title,hide", "elm");
+	if (text) elm_object_signal_emit(layout, "elm,state,title,show", "viewmgr");
+	else elm_object_signal_emit(layout, "elm,state,title,hide", "viewmgr");
 
 	return true;
 }
@@ -324,7 +324,7 @@ bool ui_view::set_toolbar(Elm_Toolbar *toolbar)
 	elm_toolbar_select_mode_set(toolbar, ELM_OBJECT_SELECT_MODE_ALWAYS);
 
 	elm_object_part_content_set(layout, "toolbar", toolbar);
-	elm_object_signal_emit(layout, "elm,state,toolbar,show", "elm");
+	elm_object_signal_emit(layout, "elm,state,toolbar,show", "viewmgr");
 	evas_object_event_callback_add(toolbar, EVAS_CALLBACK_DEL, toolbar_del_cb, this);
 
 	return true;
@@ -374,7 +374,7 @@ Evas_Object *ui_view::unset_content()
 		return pcontent;
 	}
 	elm_object_part_content_unset(layout, "elm.swallow.content");
-	elm_object_signal_emit(layout, "elm.state,elm.swallow.content,hide", "elm");
+	elm_object_signal_emit(layout, "elm.state,elm.swallow.content,hide", "viewmgr");
 
 	return pcontent;
 }
@@ -392,7 +392,7 @@ Elm_Button *ui_view::unset_title_left_btn()
 	}
 
 	elm_object_part_content_unset(layout, "title_left_btn");
-	elm_object_signal_emit(layout, "elm,state,title_left_btn,hide", "elm");
+	elm_object_signal_emit(layout, "elm,state,title_left_btn,hide", "viewmgr");
 	evas_object_event_callback_del(btn, EVAS_CALLBACK_DEL, title_left_btn_del_cb);
 	evas_object_hide(btn);
 	this->title_left_btn = NULL;
@@ -413,7 +413,7 @@ Elm_Button *ui_view::unset_title_right_btn()
 	}
 
 	elm_object_part_content_unset(layout, "title_right_btn");
-	elm_object_signal_emit(layout, "elm,state,title_right_btn,hide", "elm");
+	elm_object_signal_emit(layout, "elm,state,title_right_btn,hide", "viewmgr");
 	evas_object_event_callback_del(btn, EVAS_CALLBACK_DEL, title_right_btn_del_cb);
 	evas_object_hide(btn);
 	this->title_right_btn = NULL;
@@ -434,7 +434,7 @@ Elm_Toolbar *ui_view::unset_toolbar()
 	}
 
 	elm_object_part_content_unset(layout, "toolbar");
-	elm_object_signal_emit(layout, "elm,state,toolbar,hide", "elm");
+	elm_object_signal_emit(layout, "elm,state,toolbar,hide", "viewmgr");
 	evas_object_event_callback_del(toolbar, EVAS_CALLBACK_DEL, toolbar_del_cb);
 	evas_object_hide(toolbar);
 	this->toolbar = NULL;
