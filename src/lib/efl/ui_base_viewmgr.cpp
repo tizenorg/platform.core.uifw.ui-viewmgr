@@ -67,8 +67,8 @@ Elm_Layout *ui_base_viewmgr::set_transition_layout(string transition_style)
 {
 	Elm_Layout *effect_layout = NULL;
 
-	elm_object_part_content_unset(this->get_base(), "pcontent");
-	elm_object_part_content_unset(this->get_base(), "content");
+	evas_object_hide(elm_object_part_content_unset(this->get_base(), "pcontent"));
+	evas_object_hide(elm_object_part_content_unset(this->get_base(), "content"));
 
 	if (transition_style.compare(this->transition_style) == 0) return this->layout;
 
