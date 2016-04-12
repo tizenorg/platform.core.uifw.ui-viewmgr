@@ -168,6 +168,22 @@ bool ui_base_viewmgr::create_conformant(Elm_Win *win)
 	return true;
 }
 
+static Evas_Event_Flags
+flick_end(void *data, void *event_info)
+{
+	Elm_Gesture_Line_Info *p = (Elm_Gesture_Line_Info *) event_info;
+
+	//Detecting for gesture direction.
+	if (p->momentum.mx > 0)
+	{
+		ui_base_viewmgr *viewmgr = static_cast<ui_base_viewmgr *>(data);
+		viewmgr->pop_view();
+	}
+
+	return EVAS_EVENT_FLAG_ON_HOLD;
+}
+
+
 ui_base_viewmgr::ui_base_viewmgr(const char *pkg, ui_base_key_listener *key_listener)
 		: ui_iface_viewmgr(), key_listener(key_listener), transition_style("default")
 {
@@ -239,6 +255,13 @@ ui_base_viewmgr::ui_base_viewmgr(const char *pkg, ui_base_key_listener *key_list
 	elm_win_autodel_set(this->win, EINA_TRUE);
 
 	key_listener->init();
+
+	//FIXME: Make this configurable?
+	this->gesture_layer = elm_gesture_layer_add(this->conform);
+	elm_gesture_layer_attach(this->gesture_layer, this->conform);
+
+	elm_gesture_layer_cb_set(this->gesture_layer, ELM_GESTURE_N_FLICKS, ELM_GESTURE_STATE_END,
+					flick_end, this);
 }
 
 ui_base_viewmgr::ui_base_viewmgr(const char *pkg)

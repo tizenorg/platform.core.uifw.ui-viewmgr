@@ -52,6 +52,7 @@ private:
 	Elm_Win *win;             		           //This is acting like a base object of viewmgr.
 	Elm_Conformant *conform;                   //Conformant for viewmgr.
 	Elm_Layout *layout;                        //Viewmgr's base layout.
+	Evas_Object *gesture_layer;                 //Viewmgr's Gesture detector.
 	ui_base_key_listener *key_listener;        //HW Key Handler such as "BACK" key...
 	ui_view_indicator indicator;               //Mode of indicator.
 	string transition_style;                   //Current transiton effect style name
