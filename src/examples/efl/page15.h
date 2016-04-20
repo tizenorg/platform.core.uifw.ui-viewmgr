@@ -36,7 +36,7 @@ protected:
 		evas_object_smart_callback_add(right_btn, "clicked",
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					UI_VIEWMGR->deactivate();
+					create_page16();
 				},
 				this);
 		this->set_title_right_btn(right_btn);
