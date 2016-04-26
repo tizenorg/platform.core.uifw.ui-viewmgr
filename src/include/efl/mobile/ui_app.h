@@ -24,7 +24,7 @@ namespace efl_viewmgr
 
 class ui_viewmgr;
 
-class ui_app
+class ui_app : public viewmgr::singleton<ui_app>
 {
 private:
 	ui_viewmgr *viewmgr;

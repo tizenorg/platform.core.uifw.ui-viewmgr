@@ -109,8 +109,6 @@ void ui_app::on_orient_changed(app_event_info_h event_info)
 
 bool ui_app::on_create()
 {
-	LOGE("create!!");
-
 	//FIXME: this scale value should be configurable.
 	elm_app_base_scale_set(2.6);
 
