@@ -1,4 +1,5 @@
 SET(SRCS
+      contents.cpp
       main.cpp
    )
 
