@@ -3,6 +3,7 @@ SET(SRCS
      efl/ui_base_viewmgr.cpp
      efl/ui_base_key_listener.cpp
      efl/ui_base_overlay.cpp
+     efl/mobile/ui_app.cpp
      efl/mobile/ui_menu.cpp
      efl/mobile/ui_popup.cpp
      efl/mobile/ui_view.cpp

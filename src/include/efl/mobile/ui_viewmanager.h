@@ -15,6 +15,7 @@
  *
  */
 #include <dlog.h>
+#include <system_settings.h>
 
 #ifdef  LOG_TAG
 #undef  LOG_TAG
@@ -26,5 +27,6 @@
 #include "ui_viewmgr.h"
 #include "ui_menu.h"
 #include "ui_popup.h"
+#include "ui_app.h"
 
 #define UI_VIEWMGR dynamic_cast<ui_viewmgr *>(efl_viewmgr::ui_base_viewmgr::get_instance())
