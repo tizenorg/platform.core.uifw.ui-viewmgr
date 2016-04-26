@@ -14,18 +14,35 @@
  *  limitations under the License.
  *
  */
-#include <dlog.h>
+#ifndef UI_APP_H
+#define UI_APP_H
 
-#ifdef  LOG_TAG
-#undef  LOG_TAG
-#endif
-#define LOG_TAG "UI_VIEWMGR"
+#include "../ui_base_viewmanager.h"
 
-#include "ui_view.h"
-#include "ui_key_listener.h"
-#include "ui_viewmgr.h"
-#include "ui_menu.h"
-#include "ui_popup.h"
-#include "ui_app.h"
+namespace efl_viewmgr
+{
 
-#define UI_VIEWMGR dynamic_cast<ui_viewmgr *>(efl_viewmgr::ui_base_viewmgr::get_instance())
+class ui_viewmgr;
+
+class ui_app
+{
+private:
+	ui_viewmgr *viewmgr;
+	Eina_Stringshare *pkg;
+	Eina_Stringshare *locale_dir;
+
+public:
+	ui_app(const char *pkg, const char *locale_dir);
+	virtual ~ui_app();
+
+	virtual int start(int argc, char **argv);
+	virtual bool on_create();
+	virtual void on_terminate();
+	virtual void on_pause();
+	virtual void on_resume();
+	virtual void on_control(app_control_h app_control);
+};
+
+}
+
+#endif /* UI_APP_H */

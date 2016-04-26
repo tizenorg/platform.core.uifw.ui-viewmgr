@@ -24,7 +24,6 @@ namespace efl_viewmgr
 {
 
 class ui_view;
-class ui_viewmgr;
 
 class ui_viewmgr: public ui_base_viewmgr
 {
