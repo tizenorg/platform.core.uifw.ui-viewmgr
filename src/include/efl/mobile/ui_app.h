@@ -35,7 +35,7 @@ public:
 	ui_app(const char *pkg, const char *locale_dir);
 	virtual ~ui_app();
 
-	virtual int start(int argc, char **argv);
+	virtual int run(int argc, char **argv);
 	virtual bool on_create();
 	virtual void on_terminate();
 	virtual void on_pause();

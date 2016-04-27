@@ -36,15 +36,9 @@ protected:
 		evas_object_smart_callback_add(right_btn, "clicked",
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					create_page16();
+			UI_VIEWMGR->push_view(new page16());
 				},
 				this);
 		this->set_title_right_btn(right_btn);
 	}
 };
-
-void create_page15()
-{
-	//Push this view in viewmgr.
-	UI_VIEWMGR->push_view(new page15());
-}

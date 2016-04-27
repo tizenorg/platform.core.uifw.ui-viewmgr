@@ -32,7 +32,7 @@ public:
 
 	virtual bool activate();
 	virtual bool deactivate();
-	virtual bool set_content(Elm_Popup* ctxpopup);
+	virtual bool set_content(Elm_Popup* popup);
 	virtual Elm_Popup *unset_content();
 	virtual bool is_activated();
 

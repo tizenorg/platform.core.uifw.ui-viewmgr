@@ -43,7 +43,7 @@ protected:
 					//Next Button Callback
 					[](void *data, Evas_Object *obj, void *event_info) -> void
 					{
-						create_page11();
+						UI_VIEWMGR->push_view(new page11());
 					});
 			this->set_content(content, "Page 10");
 			this->set_indicator(UI_VIEW_INDICATOR_DEFAULT);
@@ -60,7 +60,7 @@ protected:
 					//Next Button Callback
 					[](void *data, Evas_Object *obj, void *event_info) -> void
 					{
-						create_page11();
+						UI_VIEWMGR->push_view(new page11());
 					});
 			this->set_content(content, "Page 10");
 			this->set_indicator(UI_VIEW_INDICATOR_OPTIMAL);
@@ -70,9 +70,3 @@ public:
 	page10() : ui_view("page10") {}
 	~page10() {}
 };
-
-void create_page10()
-{
-	//Push this view in viewmgr.
-	UI_VIEWMGR->push_view(new page10());
-}

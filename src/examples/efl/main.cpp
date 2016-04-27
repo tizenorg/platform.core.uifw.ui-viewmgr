@@ -50,7 +50,8 @@ public:
 			return false;
 		}
 
-		create_page1();
+		//Push first view in viewmgr.
+		UI_VIEWMGR->push_view(new page1());
 
 		return true;
 	}
@@ -59,5 +60,5 @@ public:
 int main(int argc, char *argv[])
 {
 	sample_app app(PACKAGE, LOCALE_DIR);
-	return app.start(argc, argv);
+	return app.run(argc, argv);
 }

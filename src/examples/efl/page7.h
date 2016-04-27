@@ -35,7 +35,7 @@ protected:
 				//Next Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					create_page8();
+					UI_VIEWMGR->push_view(new page8());
 				});
 
 		//FIXME: Don't delete view's content when this view poped.
@@ -48,9 +48,3 @@ public:
 	page7() : ui_view("page7") {}
 	~page7() {}
 };
-
-void create_page7()
-{
-	//Push this view in viewmgr.
-	UI_VIEWMGR->push_view(new page7());
-}

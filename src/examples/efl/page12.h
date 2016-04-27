@@ -46,7 +46,7 @@ protected:
 				//Next Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					create_page13();
+					UI_VIEWMGR->push_view(new page13());
 				});
 
 		this->set_content(content, "Page12");
@@ -93,9 +93,3 @@ public:
 		popup->activate();
 	}
 };
-
-void create_page12()
-{
-	//Push this view in viewmgr.
-	UI_VIEWMGR->push_view(new page12());
-}

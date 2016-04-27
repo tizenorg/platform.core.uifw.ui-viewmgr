@@ -69,9 +69,3 @@ public:
 	page16() : ui_view("page16") {}
 	~page16() {}
 };
-
-void create_page16()
-{
-	//Push this view in viewmgr.
-	UI_VIEWMGR->push_view(new page16());
-}

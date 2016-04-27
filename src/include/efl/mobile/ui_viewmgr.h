@@ -35,7 +35,6 @@ protected:
 	ui_viewmgr(const char *pkg);
 	ui_viewmgr(const ui_viewmgr& viewmgr);
 	virtual ~ui_viewmgr();
-
 };
 }
 

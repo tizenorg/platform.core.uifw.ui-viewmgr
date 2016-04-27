@@ -134,6 +134,7 @@ void ui_app::on_pause()
 
 void ui_app::on_resume()
 {
+	this->viewmgr->activate();
 }
 
 void ui_app::on_control(app_control_h app_control)
@@ -153,7 +154,7 @@ ui_app::ui_app(const char *pkg, const char *locale_dir)
 	locale_dir = eina_stringshare_add(locale_dir);
 }
 
-int ui_app::start(int argc, char **argv)
+int ui_app::run(int argc, char **argv)
 {
 	ui_app_lifecycle_callback_s event_callback = { 0, };
 	app_event_handler_h handlers[5] = { NULL, };
@@ -182,8 +183,9 @@ int ui_app::start(int argc, char **argv)
 
 ui_app::~ui_app()
 {
-	eina_stringshare_del(this->pkg);
 	delete (this->viewmgr);
+	eina_stringshare_del(this->pkg);
+	eina_stringshare_del(this->locale_dir);
 }
 
 ui_viewmgr *ui_app::get_viewmgr()
