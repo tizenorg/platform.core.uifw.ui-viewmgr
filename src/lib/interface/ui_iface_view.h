@@ -49,7 +49,7 @@ private:
 	T content;                              ///< A content instance for a screen as a view.
 	string name;                            ///< View name.
 	string transition_style;                ///< View transition style name.
-	ui_iface_viewmgr<T, T2> *viewmgr;           ///< Viewmgr which this view belongs to.
+	ui_iface_viewmgr<T, T2> *viewmgr;       ///< Viewmgr which this view belongs to.
 	ui_view_state state;                    ///< View state.
 	ui_view_indicator indicator;            ///< View indicator mode.
 	bool event_block;                       ///< State of event block.

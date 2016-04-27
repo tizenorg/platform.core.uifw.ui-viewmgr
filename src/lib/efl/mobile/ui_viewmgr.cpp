@@ -14,10 +14,7 @@
  *  limitations under the License.
  *
  */
-#include "../../../include/efl/mobile/ui_viewmanager.h"
-
-using namespace efl_viewmgr;
-using namespace viewmgr;
+#include "ui_viewmanager.h"
 
 ui_viewmgr::ui_viewmgr(const char *pkg)
 		: ui_base_viewmgr(pkg, new ui_key_listener(this))
