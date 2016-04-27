@@ -14,26 +14,29 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_POPUP_H
-#define UI_POPUP_H
+#ifndef UI_MENU_H
+#define UI_MENU_H
 
 #include "../ui_base_viewmanager.h"
 
 namespace efl_viewmgr
 {
-class ui_popup : public ui_base_overlay
+class ui_impl_view;
+
+class ui_menu: public ui_base_overlay
 {
+	friend class ui_impl_view;
 private:
+	ui_menu(ui_impl_view *view);
+	virtual ~ui_menu();
+
 	Elm_Win *get_window();
 
 public:
-	ui_popup(ui_view *view);
-	virtual ~ui_popup();
-
 	virtual bool activate();
 	virtual bool deactivate();
-	virtual bool set_content(Elm_Popup* popup);
-	virtual Elm_Popup *unset_content();
+	virtual bool set_content(Elm_Ctxpopup* ctxpopup);
+	virtual Elm_Ctxpopup *unset_content();
 	virtual bool is_activated();
 
 	virtual Evas_Object *get_base();
@@ -42,4 +45,4 @@ public:
 
 }
 
-#endif /* UI_POPUP_H */
+#endif /* UI_MENU_H */

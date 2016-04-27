@@ -14,9 +14,7 @@
  *  limitations under the License.
  *
  */
-#include "../../../include/efl/mobile/ui_viewmanager.h"
-
-using namespace efl_viewmgr;
+#include "ui_viewmanager.h"
 
 static bool update_popup(ui_popup *popup)
 {
@@ -42,7 +40,7 @@ static void popup_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 	popup->unset_content();
 }
 
-ui_popup::ui_popup(ui_view *view)
+ui_popup::ui_popup(ui_impl_view *view)
 		: ui_base_overlay(view)
 {
 	view->connect_popup(this);
@@ -50,7 +48,7 @@ ui_popup::ui_popup(ui_view *view)
 
 ui_popup::~ui_popup()
 {
-	dynamic_cast<ui_view *>(this->get_view())->disconnect_popup(this);
+	dynamic_cast<ui_impl_view *>(this->get_view())->disconnect_popup(this);
 	Elm_Popup *popup = this->unset_content();
 	evas_object_del(popup);
 }
@@ -76,7 +74,7 @@ bool ui_popup::deactivate()
 	}
 
 	elm_popup_dismiss(popup);
-	dynamic_cast<ui_view*>(this->get_view())->on_resume();
+	dynamic_cast<ui_impl_view*>(this->get_view())->on_resume();
 
 	return true;
 }
@@ -84,7 +82,7 @@ bool ui_popup::deactivate()
 bool ui_popup::activate()
 {
 	bool ret = update_popup(this);
-	if (ret) dynamic_cast<ui_view*>(this->get_view())->on_pause();
+	if (ret) dynamic_cast<ui_impl_view*>(this->get_view())->on_pause();
 	return ret;
 }
 

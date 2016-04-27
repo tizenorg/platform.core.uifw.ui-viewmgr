@@ -14,19 +14,17 @@
  *  limitations under the License.
  *
  */
-#include "ui_viewmanager.h"
+#include <Elementary.h>
+#include <dlog.h>
 
-ui_viewmgr::ui_viewmgr(const char *pkg)
-		: ui_base_viewmgr(pkg, new ui_key_listener(this))
-{
-}
+#ifdef  LOG_TAG
+#undef  LOG_TAG
+#endif
+#define LOG_TAG "UI_VIEWMGR"
 
-ui_viewmgr::~ui_viewmgr()
-{
-}
+#define UI_BASE_VIEWMGR efl_viewmgr::ui_base_viewmgr::get_instance()
 
-ui_viewmgr::ui_viewmgr(const ui_viewmgr& viewmgr)
-		: ui_base_viewmgr(viewmgr)
-{
-
-}
+#include "ui_base_overlay.h"
+#include "ui_base_viewmgr.h"
+#include "ui_base_view.h"
+#include "ui_base_key_listener.h"

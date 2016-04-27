@@ -14,50 +14,51 @@
  *  limitations under the License.
  *
  */
-#include "../../../include/efl/mobile/ui_viewmanager.h"
+#include "ui_viewmanager.h"
 
 #define DEFAULT_GROUP "tizen_view/default"
-
-using namespace efl_viewmgr;
-using namespace viewmgr;
 
 typedef list<ui_popup*>::reverse_iterator popup_ritr;
 
 #define LAYOUT_VALIDATE() if (!layout) \
 							{ \
-								LOGE("Layout is invalid! ui_view(%p)", this); \
+								LOGE("Layout is invalid! ui_impl_view(%p)", this); \
 								return false; \
 							}
 
+/****************************************************************************/
+/* Internal class implementation                                            */
+/****************************************************************************/
+
 static void title_left_btn_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
-	ui_view *view = static_cast<ui_view *>(data);
+	ui_impl_view *view = static_cast<ui_impl_view *>(data);
 	view->unset_title_left_btn();
 }
 
 static void title_right_btn_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
-	ui_view *view = static_cast<ui_view *>(data);
+	ui_impl_view *view = static_cast<ui_impl_view *>(data);
 	view->unset_title_right_btn();
 }
 
 static void toolbar_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
-	ui_view *view = static_cast<ui_view *>(data);
+	ui_impl_view *view = static_cast<ui_impl_view *>(data);
 	view->unset_toolbar();
 }
 
-void ui_view::connect_popup(ui_popup *popup)
+void ui_impl_view::connect_popup(ui_popup *popup)
 {
 	this->popup_list.push_back(popup);
 }
 
-void ui_view::disconnect_popup(ui_popup *popup)
+void ui_impl_view::disconnect_popup(ui_popup *popup)
 {
 	this->popup_list.remove(popup);
 }
 
-bool ui_view::deactivate_popup(bool top_one)
+bool ui_impl_view::deactivate_popup(bool top_one)
 {
 	for (popup_ritr it = this->popup_list.rbegin(); it != this->popup_list.rend(); it++)
 	{
@@ -70,7 +71,7 @@ bool ui_view::deactivate_popup(bool top_one)
 	return false;
 }
 
-bool ui_view::destroy_layout()
+bool ui_impl_view::destroy_layout()
 {
 	if (!this->layout) return false;
 	evas_object_del(this->layout);
@@ -79,7 +80,7 @@ bool ui_view::destroy_layout()
 	return true;
 }
 
-bool ui_view::create_layout()
+bool ui_impl_view::create_layout()
 {
 	if (this->layout) return false;
 
@@ -91,7 +92,7 @@ bool ui_view::create_layout()
 
 	if (!elm_layout_file_set(layout, buf, DEFAULT_GROUP))
 	{
-		LOGE("Failed to set file = ui_view(%p), path(%s), group(%s)", this, buf, DEFAULT_GROUP);
+		LOGE("Failed to set file = ui_impl_view(%p), path(%s), group(%s)", this, buf, DEFAULT_GROUP);
 		evas_object_del(layout);
 		return false;
 	}
@@ -111,7 +112,7 @@ bool ui_view::create_layout()
 
 		if (!prev_btn)
 		{
-			LOGE("Failed to create a button = ui_view(%p)", this);
+			LOGE("Failed to create a button = ui_impl_view(%p)", this);
 		}
 		else
 		{
@@ -132,13 +133,23 @@ bool ui_view::create_layout()
 	return true;
 }
 
-void ui_view::on_deactivate()
+void ui_impl_view::on_deactivate()
+{
+	this->view->on_deactivate();
+}
+
+void ui_impl_view::on_deactivate_internal()
 {
 	deactivate_popup(false);
 	ui_base_view::on_deactivate();
 }
 
-void ui_view::on_back()
+void ui_impl_view::on_back()
+{
+	this->view->on_back();
+}
+
+void ui_impl_view::on_back_internal()
 {
 	//If any popup is activated, deactivate the popup first.
 	if (this->deactivate_popup(true)) return;
@@ -154,18 +165,18 @@ void ui_view::on_back()
 	ui_base_view::on_back();
 }
 
-ui_view::ui_view(const char *name)
-		: ui_base_view(name), layout(NULL), toolbar(NULL), title_left_btn(NULL), title_right_btn(NULL), menu(NULL)
+ui_impl_view::ui_impl_view(ui_view *view, const char *name)
+		: ui_base_view(name), view(view), layout(NULL), toolbar(NULL), title_left_btn(NULL), title_right_btn(NULL), menu(NULL)
 {
 }
 
-ui_view::~ui_view()
+ui_impl_view::~ui_impl_view()
 {
 	if (menu) delete (this->menu);
 	destroy_layout();
 }
 
-void ui_view::on_load()
+void ui_impl_view::on_load_internal()
 {
 	ui_base_view::on_load();
 
@@ -173,7 +184,12 @@ void ui_view::on_load()
 	evas_object_show(layout);
 }
 
-void ui_view::on_unload()
+void ui_impl_view::on_load()
+{
+	this->view->on_load();
+}
+
+void ui_impl_view::on_unload_internal()
 {
 	ui_base_view::on_unload();
 
@@ -181,7 +197,12 @@ void ui_view::on_unload()
 	evas_object_hide(layout);
 }
 
-bool ui_view::set_content(Evas_Object *content, const char *title)
+void ui_impl_view::on_unload()
+{
+	this->view->on_unload();
+}
+
+bool ui_impl_view::set_content(Evas_Object *content, const char *title)
 {
 	ui_base_view::set_content(content);
 
@@ -203,7 +224,7 @@ bool ui_view::set_content(Evas_Object *content, const char *title)
 	return true;
 }
 
-bool ui_view::set_subtitle(const char *text)
+bool ui_impl_view::set_subtitle(const char *text)
 {
 	Elm_Layout *layout = this->get_base();
 	LAYOUT_VALIDATE();
@@ -215,7 +236,7 @@ bool ui_view::set_subtitle(const char *text)
 	return true;
 }
 
-bool ui_view::set_title_left_btn(Elm_Button *title_left_btn)
+bool ui_impl_view::set_title_left_btn(Elm_Button *title_left_btn)
 {
 	Elm_Layout *layout = this->get_base();
 	LAYOUT_VALIDATE();
@@ -237,7 +258,7 @@ bool ui_view::set_title_left_btn(Elm_Button *title_left_btn)
 	return true;
 }
 
-bool ui_view::set_title_right_btn(Elm_Button *title_right_btn)
+bool ui_impl_view::set_title_right_btn(Elm_Button *title_right_btn)
 {
 	Elm_Layout *layout = this->get_base();
 	LAYOUT_VALIDATE();
@@ -259,7 +280,7 @@ bool ui_view::set_title_right_btn(Elm_Button *title_right_btn)
 	return true;
 }
 
-bool ui_view::set_title_badge(const char *text)
+bool ui_impl_view::set_title_badge(const char *text)
 {
 	Elm_Layout *layout = this->get_base();
 	LAYOUT_VALIDATE();
@@ -271,7 +292,7 @@ bool ui_view::set_title_badge(const char *text)
 	return true;
 }
 
-bool ui_view::set_title(const char *text)
+bool ui_impl_view::set_title(const char *text)
 {
 	Elm_Layout *layout = this->get_base();
 	LAYOUT_VALIDATE();
@@ -283,7 +304,7 @@ bool ui_view::set_title(const char *text)
 	return true;
 }
 
-bool ui_view::set_content(Evas_Object *content, const char *title, const char *subtitle, Elm_Button *title_left_btn, Elm_Button *title_right_btn)
+bool ui_impl_view::set_content(Evas_Object *content, const char *title, const char *subtitle, Elm_Button *title_left_btn, Elm_Button *title_right_btn)
 {
 	if (!this->set_content(content, title)) return false;
 	if (!this->set_subtitle(subtitle)) return false;
@@ -293,7 +314,7 @@ bool ui_view::set_content(Evas_Object *content, const char *title, const char *s
 	return true;
 }
 
-bool ui_view::set_toolbar(Elm_Toolbar *toolbar)
+bool ui_impl_view::set_toolbar(Elm_Toolbar *toolbar)
 {
 	Elm_Layout *layout = this->get_base();
 	LAYOUT_VALIDATE();
@@ -330,7 +351,12 @@ bool ui_view::set_toolbar(Elm_Toolbar *toolbar)
 	return true;
 }
 
-ui_menu *ui_view::on_menu_pre()
+ui_menu *ui_impl_view::on_menu_pre()
+{
+	return this->view->on_menu_pre();
+}
+
+ui_menu *ui_impl_view::on_menu_pre_internal()
 {
 	if (!this->menu)
 	{
@@ -346,23 +372,38 @@ ui_menu *ui_view::on_menu_pre()
 	return this->menu;
 }
 
-void ui_view::on_menu(ui_menu *menu)
+void ui_impl_view::on_menu_internal(ui_menu *menu)
 {
 }
 
-void ui_view::on_menu_post()
+void ui_impl_view::on_menu(ui_menu *menu)
+{
+	this->view->on_menu(menu);
+}
+
+void ui_impl_view::on_menu_post()
+{
+	this->view->on_menu_post();
+}
+
+void ui_impl_view::on_menu_post_internal()
 {
 	if (!this->menu) return;
 	this->menu->activate();
 }
 
-void ui_view::set_event_block(bool block)
+void ui_impl_view::set_event_block(bool block)
+{
+	this->view->set_event_block(block);
+}
+
+void ui_impl_view::set_event_block_internal(bool block)
 {
 	ui_base_view::set_event_block(block);
 	evas_object_freeze_events_set(this->get_base(), block);
 }
 
-Evas_Object *ui_view::unset_content()
+Evas_Object *ui_impl_view::unset_content()
 {
 	Evas_Object *pcontent = ui_base_view::unset_content();
 	if (!pcontent) return NULL;
@@ -370,7 +411,7 @@ Evas_Object *ui_view::unset_content()
 	Elm_Layout *layout = this->get_base();
 	if (!layout)
 	{
-		LOGE("Layout is invalid! ui_view(%p)", this);
+		LOGE("Layout is invalid! ui_impl_view(%p)", this);
 		return pcontent;
 	}
 	elm_object_part_content_unset(layout, "elm.swallow.content");
@@ -379,7 +420,7 @@ Evas_Object *ui_view::unset_content()
 	return pcontent;
 }
 
-Elm_Button *ui_view::unset_title_left_btn()
+Elm_Button *ui_impl_view::unset_title_left_btn()
 {
 	Elm_Button *btn = this->title_left_btn;
 	if (!btn) return NULL;
@@ -387,7 +428,7 @@ Elm_Button *ui_view::unset_title_left_btn()
 	Elm_Layout *layout = this->get_base();
 	if (!layout)
 	{
-		LOGE("Layout is invalid! ui_view(%p)", this);
+		LOGE("Layout is invalid! ui_impl_view(%p)", this);
 		return btn;
 	}
 
@@ -400,7 +441,7 @@ Elm_Button *ui_view::unset_title_left_btn()
 	return btn;
 }
 
-Elm_Button *ui_view::unset_title_right_btn()
+Elm_Button *ui_impl_view::unset_title_right_btn()
 {
 	Elm_Button *btn = this->title_right_btn;
 	if (!btn) return NULL;
@@ -408,7 +449,7 @@ Elm_Button *ui_view::unset_title_right_btn()
 	Elm_Layout *layout = this->get_base();
 	if (!layout)
 	{
-		LOGE("Layout is invalid! ui_view(%p)", this);
+		LOGE("Layout is invalid! ui_impl_view(%p)", this);
 		return btn;
 	}
 
@@ -421,7 +462,7 @@ Elm_Button *ui_view::unset_title_right_btn()
 	return btn;
 }
 
-Elm_Toolbar *ui_view::unset_toolbar()
+Elm_Toolbar *ui_impl_view::unset_toolbar()
 {
 	Elm_Toolbar *toolbar = this->toolbar;
 	if (!toolbar) return NULL;
@@ -429,7 +470,7 @@ Elm_Toolbar *ui_view::unset_toolbar()
 	Elm_Layout *layout = this->get_base();
 	if (!layout)
 	{
-		LOGE("Layout is invalid! ui_view(%p)", this);
+		LOGE("Layout is invalid! ui_impl_view(%p)", this);
 		return toolbar;
 	}
 
@@ -442,7 +483,12 @@ Elm_Toolbar *ui_view::unset_toolbar()
 	return toolbar;
 }
 
-void ui_view::on_rotate(int degree)
+void ui_impl_view::on_rotate(int degree)
+{
+	this->view->on_rotate(degree);
+}
+
+void ui_impl_view::on_rotate_internal(int degree)
 {
 	//FIXME: see how to handle on_menu()
 	ui_base_view::on_rotate(degree);
@@ -451,7 +497,12 @@ void ui_view::on_rotate(int degree)
 	this->menu->on_rotate(degree);
 }
 
-void ui_view::on_portrait()
+void ui_impl_view::on_portrait()
+{
+	this->view->on_portrait();
+}
+
+void ui_impl_view::on_portrait_internal()
 {
 	//FIXME: see how to handle on_menu()
 	ui_base_view::on_portrait();
@@ -460,7 +511,12 @@ void ui_view::on_portrait()
 	this->menu->on_portrait();
 }
 
-void ui_view::on_landscape()
+void ui_impl_view::on_landscape()
+{
+	this->view->on_landscape();
+}
+
+void ui_impl_view::on_landscape_internal()
 {
 	//FIXME: see how to handle on_menu()
 	ui_base_view::on_landscape();
@@ -469,7 +525,7 @@ void ui_view::on_landscape()
 	this->menu->on_landscape();
 }
 
-Evas_Object *ui_view::get_base()
+Evas_Object *ui_impl_view::get_base()
 {
 	if (!this->layout)
 	{
@@ -478,13 +534,13 @@ Evas_Object *ui_view::get_base()
 	return this->layout;
 }
 
-bool ui_view::set_title_visible(bool visible, bool anim)
+bool ui_impl_view::set_title_visible(bool visible, bool anim)
 {
 	//FIXME: save visible, anim value. they can be used in layout created time.
 	Elm_Layout *layout = this->get_base();
 	if (!layout)
 	{
-		LOGE("Layout is invalid! ui_view(%p)", this);
+		LOGE("Layout is invalid! ui_impl_view(%p)", this);
 		return false;
 	}
 
@@ -500,4 +556,163 @@ bool ui_view::set_title_visible(bool visible, bool anim)
 	}
 
 	return true;
+}
+
+/****************************************************************************/
+/* External class implementation                                            */
+/****************************************************************************/
+
+ui_view::ui_view(const char *name)
+{
+	this->impl = new ui_impl_view(this, name);
+}
+
+ui_view::~ui_view()
+{
+	delete(this->impl);
+}
+
+bool ui_view::set_content(Evas_Object *content, const char *title)
+{
+	return this->impl->set_content(content, title);
+}
+
+bool ui_view::set_content(Evas_Object *content, const char *title, const char *subtitle, Elm_Button *title_left_btn, Elm_Button *title_right_btn)
+{
+	return this->impl->set_content(content, title, subtitle, title_left_btn, title_right_btn);
+}
+
+bool ui_view::set_title_badge(const char *text)
+{
+	return this->impl->set_title_badge(text);
+}
+
+bool ui_view::set_subtitle(const char *text)
+{
+	return this->impl->set_subtitle(text);
+}
+
+bool ui_view::set_title_left_btn(Elm_Button *title_left_btn)
+{
+	return this->impl->set_title_left_btn(title_left_btn);
+}
+
+bool ui_view::set_title_right_btn(Elm_Button *title_right_btn)
+{
+	return this->impl->set_title_right_btn(title_right_btn);
+}
+
+bool ui_view::set_title(const char *text)
+{
+	return this->impl->set_title(text);
+}
+
+bool ui_view::set_toolbar(Elm_Toolbar *toolbar)
+{
+	return this->impl->set_toolbar(toolbar);
+}
+
+bool ui_view::set_title_visible(bool visible, bool anim)
+{
+	return this->impl->set_title_visible(visible, anim);
+}
+
+Evas_Object *ui_view::unset_content()
+{
+	return this->impl->unset_content();
+}
+
+Elm_Button *ui_view::unset_title_left_btn()
+{
+	return this->impl->unset_title_left_btn();
+}
+
+Elm_Button *ui_view::unset_title_right_btn()
+{
+	return this->impl->unset_title_right_btn();
+}
+
+Elm_Toolbar *ui_view::unset_toolbar()
+{
+	return this->impl->unset_toolbar();
+}
+
+Evas_Object *ui_view::get_base()
+{
+	return this->impl->get_base();
+}
+
+Elm_Button *ui_view::get_title_left_btn()
+{
+	return this->impl->get_title_left_btn();
+}
+
+Elm_Button *ui_view::get_title_right_btn()
+{
+	return this->impl->get_title_right_btn();
+}
+
+Elm_Toolbar *ui_view::get_toolbar()
+{
+	return this->impl->get_toolbar();
+}
+
+const ui_menu *ui_view::get_menu()
+{
+	return this->impl->get_menu();
+}
+
+void ui_view::on_load()
+{
+	this->impl->on_load_internal();
+}
+
+void ui_view::on_unload()
+{
+	this->impl->on_unload_internal();
+}
+
+ui_menu *ui_view::on_menu_pre()
+{
+	return this->impl->on_menu_pre_internal();
+}
+
+void ui_view::on_menu_post()
+{
+	this->impl->on_menu_post_internal();
+}
+
+void ui_view::on_menu(ui_menu *menu)
+{
+	this->impl->on_menu_internal(menu);
+}
+
+void ui_view::set_event_block(bool block)
+{
+	this->impl->set_event_block_internal(block);
+}
+
+void ui_view::on_back()
+{
+	this->impl->on_back_internal();
+}
+
+void ui_view::on_rotate(int degree)
+{
+	this->impl->on_rotate_internal(degree);
+}
+
+void ui_view::on_portrait()
+{
+	this->impl->on_portrait_internal();
+}
+
+void ui_view::on_landscape()
+{
+	this->impl->on_landscape_internal();
+}
+
+void ui_view::on_deactivate()
+{
+	this->impl->on_deactivate_internal();
 }

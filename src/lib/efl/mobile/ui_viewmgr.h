@@ -17,18 +17,17 @@
 #ifndef UI_VIEWMGR_H
 #define UI_VIEWMGR_H
 
-#include <Elementary.h>
 #include "../ui_base_viewmanager.h"
 
 namespace efl_viewmgr
 {
 
-class ui_view;
+class ui_impl_view;
 
 class ui_viewmgr: public ui_base_viewmgr
 {
-	friend class ui_view;
-	friend class ui_app;
+	friend class ui_impl_view;
+	friend class ui_impl_app;
 
 protected:
 	//Don't allow to create ui_viewmgr instance

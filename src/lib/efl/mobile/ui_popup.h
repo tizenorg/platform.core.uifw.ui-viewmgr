@@ -14,16 +14,32 @@
  *  limitations under the License.
  *
  */
-#include <dlog.h>
+#ifndef UI_POPUP_H
+#define UI_POPUP_H
 
-#ifdef  LOG_TAG
-#undef  LOG_TAG
-#endif
-#define LOG_TAG "UI_VIEWMGR"
+#include "../ui_base_viewmanager.h"
 
-#define UI_BASE_VIEWMGR efl_viewmgr::ui_base_viewmgr::get_instance()
+namespace efl_viewmgr
+{
+class ui_popup : public ui_base_overlay
+{
+private:
+	Elm_Win *get_window();
 
-#include "ui_base_overlay.h"
-#include "ui_base_viewmgr.h"
-#include "ui_base_view.h"
-#include "ui_base_key_listener.h"
+public:
+	ui_popup(ui_impl_view *view);
+	virtual ~ui_popup();
+
+	virtual bool activate();
+	virtual bool deactivate();
+	virtual bool set_content(Elm_Popup* popup);
+	virtual Elm_Popup *unset_content();
+	virtual bool is_activated();
+
+	virtual Evas_Object *get_base();
+	virtual int get_degree();
+};
+
+}
+
+#endif /* UI_POPUP_H */

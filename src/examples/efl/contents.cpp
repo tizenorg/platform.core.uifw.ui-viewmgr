@@ -109,7 +109,7 @@ create_landscape_content(Evas_Object *parent, const char *text, Evas_Smart_Cb pr
 Evas_Object*
 create_title_handle_content(Evas_Object *parent, Evas_Smart_Cb prev_btn_clicked_cb, Evas_Smart_Cb next_btn_clicked_cb,
 				Evas_Smart_Cb title_show_btn_clicked_cb, Evas_Smart_Cb title_hide_btn_clicked_cb,
-				Evas_Smart_Cb title_show_anim_btn_clicked_cb, Evas_Smart_Cb title_hide_anim_btn_clicked_cb, ui_view *view)
+				Evas_Smart_Cb title_show_anim_btn_clicked_cb, Evas_Smart_Cb title_hide_anim_btn_clicked_cb, ui_impl_view *view)
 {
 	Elm_Grid *grid;
 	Elm_Box *box;

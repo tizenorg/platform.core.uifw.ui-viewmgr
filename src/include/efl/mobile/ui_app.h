@@ -14,28 +14,24 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_APP_H
-#define UI_APP_H
-
-#include "../ui_base_viewmanager.h"
+#ifndef _UI_APP_H_
+#define _UI_APP_H_
 
 namespace efl_viewmgr
 {
-
 class ui_viewmgr;
 
-class ui_app : public viewmgr::singleton<ui_app>
+class ui_app
 {
-private:
-	ui_viewmgr *viewmgr;
-	Eina_Stringshare *pkg;
-	Eina_Stringshare *locale_dir;
-
 public:
+	static ui_viewmgr *get_viewmgr();
+
 	ui_app(const char *pkg, const char *locale_dir);
 	virtual ~ui_app();
 
 	virtual int run(int argc, char **argv);
+
+protected:
 	virtual bool on_create();
 	virtual void on_terminate();
 	virtual void on_pause();
@@ -48,9 +44,11 @@ public:
 	virtual void on_orient_changed(app_event_info_h event_info);
 	virtual void on_lang_changed(app_event_info_h event_info);
 
-	ui_viewmgr *get_viewmgr();
+private:
+	_UI_DECLARE_PRIVATE_IMPL(app);
+	_UI_DISABLE_COPY_AND_ASSIGN(app);
 };
 
 }
 
-#endif /* UI_APP_H */
+#endif /* _UI_APP_H_ */

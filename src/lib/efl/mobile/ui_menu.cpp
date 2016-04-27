@@ -14,9 +14,7 @@
  *  limitations under the License.
  *
  */
-#include "../../../include/efl/mobile/ui_viewmanager.h"
-
-using namespace efl_viewmgr;
+#include "ui_viewmanager.h"
 
 static void ctxpopup_dismissed_cb(void *data, Evas_Object *obj, void *event_info)
 {
@@ -66,7 +64,7 @@ static void win_resize_cb(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	update_menu(menu);
 }
 
-ui_menu::ui_menu(ui_view *view)
+ui_menu::ui_menu(ui_impl_view *view)
 		: ui_base_overlay(view)
 {
 	Elm_Win *win = this->get_window();
@@ -103,7 +101,7 @@ bool ui_menu::deactivate()
 	}
 
 	elm_ctxpopup_dismiss(ctxpopup);
-	dynamic_cast<ui_view *>(this->get_view())->on_resume();
+	dynamic_cast<ui_impl_view *>(this->get_view())->on_resume();
 
 	return true;
 }
@@ -111,7 +109,7 @@ bool ui_menu::deactivate()
 bool ui_menu::activate()
 {
 	bool ret = update_menu(this);
-	if (ret) dynamic_cast<ui_view *>(this->get_view())->on_pause();
+	if (ret) dynamic_cast<ui_impl_view *>(this->get_view())->on_pause();
 	return ret;
 }
 

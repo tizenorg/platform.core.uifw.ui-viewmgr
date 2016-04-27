@@ -14,10 +14,7 @@
  *  limitations under the License.
  *
  */
-#include "../../../include/efl/mobile/ui_viewmanager.h"
-
-using namespace efl_viewmgr;
-using namespace viewmgr;
+#include "ui_viewmanager.h"
 
 static const char *KEY_MENU = "XF86Menu";
 static const char *KEY_MENU2 = "XF86Send";
@@ -30,7 +27,7 @@ ui_key_listener::ui_key_listener(ui_viewmgr *viewmgr)
 void ui_key_listener::extend_event_proc(ui_base_view *view, Evas_Event_Key_Down *ev)
 {
 	if (strcmp(ev->keyname, KEY_MENU) && strcmp(ev->keyname, KEY_MENU2)) return;
-	ui_view *v = dynamic_cast<ui_view *>(view);
+	ui_impl_view *v = dynamic_cast<ui_impl_view *>(view);
 	ui_menu *menu = v->on_menu_pre();
 	if (!menu) return;
 	v->on_menu(menu);
