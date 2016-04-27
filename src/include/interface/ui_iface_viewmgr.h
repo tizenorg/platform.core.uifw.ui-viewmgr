@@ -240,13 +240,14 @@ protected:
 	 */
 	int get_view_index(const ui_iface_view<T, T2> *view);
 
-public:
 	///Constructor.
 	ui_iface_viewmgr();
+	ui_iface_viewmgr(const ui_iface_viewmgr& viewmgr);
 
 	///Destructor.
 	virtual ~ui_iface_viewmgr();
 
+public:
 	/**
 	 *  @brief Activate this view manager.
 	 *
@@ -428,6 +429,12 @@ bool ui_iface_viewmgr<T, T2>::pop_view_finished(ui_iface_view<T, T2> *view)
 	this->set_event_block(view, false);
 
 	return true;
+}
+
+template<typename T, typename T2>
+ui_iface_viewmgr<T, T2>::ui_iface_viewmgr(const ui_iface_viewmgr<T, T2>& viewmgr)
+{
+
 }
 
 template<typename T, typename T2>

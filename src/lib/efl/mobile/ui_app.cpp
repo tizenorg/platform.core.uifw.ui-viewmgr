@@ -185,3 +185,8 @@ ui_app::~ui_app()
 	eina_stringshare_del(this->pkg);
 	delete (this->viewmgr);
 }
+
+ui_viewmgr *ui_app::get_viewmgr()
+{
+	return this->viewmgr;
+}

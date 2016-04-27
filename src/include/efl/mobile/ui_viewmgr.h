@@ -28,9 +28,12 @@ class ui_view;
 class ui_viewmgr: public ui_base_viewmgr
 {
 	friend class ui_view;
+	friend class ui_app;
 
-public:
+protected:
+	//Don't allow to create ui_viewmgr instance
 	ui_viewmgr(const char *pkg);
+	ui_viewmgr(const ui_viewmgr& viewmgr);
 	virtual ~ui_viewmgr();
 
 };
