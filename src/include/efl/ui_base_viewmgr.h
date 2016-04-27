@@ -105,6 +105,12 @@ private:
 protected:
 	ui_base_viewmgr(const char *pkg, ui_base_key_listener *key_listener);
 
+	///Constructor.
+	ui_base_viewmgr(const char *pkg);
+	ui_base_viewmgr(const ui_base_viewmgr& viewmgr);
+	///Destructor.
+	virtual ~ui_base_viewmgr();
+
 	/** @brief Get a base layout of viewmgr.
 	 */
 	Evas_Object *get_base()
@@ -112,11 +118,8 @@ protected:
 		return this->layout;
 	}
 
+
 public:
-	///Constructor.
-	ui_base_viewmgr(const char *pkg);
-	///Destructor.
-	virtual ~ui_base_viewmgr();
 
 	/**
 	 *  @brief Activate this view manager.

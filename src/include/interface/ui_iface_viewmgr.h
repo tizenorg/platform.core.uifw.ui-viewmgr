@@ -240,13 +240,14 @@ protected:
 	 */
 	int get_view_index(const ui_iface_view<T, T2> *view);
 
-public:
 	///Constructor.
 	ui_iface_viewmgr();
+	ui_iface_viewmgr(const ui_iface_viewmgr& viewmgr);
 
 	///Destructor.
 	virtual ~ui_iface_viewmgr();
 
+public:
 	/**
 	 *  @brief Activate this view manager.
 	 *

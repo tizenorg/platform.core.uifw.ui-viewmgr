@@ -1,10 +1,6 @@
 #ifndef UI_IFACE_SINGLETON_H
 #define UI_IFACE_SINGLETON_H
 
-#include <cassert>
-
-using namespace std;
-
 namespace viewmgr
 {
 
@@ -25,8 +21,6 @@ template<typename T> T* singleton<T>::inst = NULL;
 template<typename T>
 singleton<T>::singleton()
 {
-	assert(!singleton::inst);
-
 	T* pT = reinterpret_cast<T*>(1);
 
 	//Derived Class - Singleton class
@@ -37,14 +31,12 @@ singleton<T>::singleton()
 template<typename T>
 singleton<T>::~singleton()
 {
-	assert(singleton::inst);
 	singleton::inst = NULL;
 }
 
 template<typename T>
 T* singleton<T>::get_instance()
 {
-	assert(singleton::inst);
 	return singleton::inst;
 }
 

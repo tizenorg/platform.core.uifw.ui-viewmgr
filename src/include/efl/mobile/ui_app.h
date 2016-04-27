@@ -47,6 +47,8 @@ public:
 	virtual void on_region_changed(app_event_info_h event_info);
 	virtual void on_orient_changed(app_event_info_h event_info);
 	virtual void on_lang_changed(app_event_info_h event_info);
+
+	ui_viewmgr *get_viewmgr();
 };
 
 }

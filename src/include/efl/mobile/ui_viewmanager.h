@@ -29,4 +29,4 @@
 #include "ui_popup.h"
 #include "ui_app.h"
 
-#define UI_VIEWMGR dynamic_cast<ui_viewmgr *>(efl_viewmgr::ui_base_viewmgr::get_instance())
+#define UI_VIEWMGR efl_viewmgr::ui_app::get_instance()->get_viewmgr()
