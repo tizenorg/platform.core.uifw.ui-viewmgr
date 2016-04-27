@@ -14,11 +14,54 @@
  *  limitations under the License.
  *
  */
+#include "ui_viewmanager.h"
 #include "../../../include/efl/mobile/ui_viewmanager.h"
 
-using namespace efl_viewmgr;
-using namespace viewmgr;
+/****************************************************************************/
+/* Internal class implementation                                            */
+/****************************************************************************/
+ui_app_impl::~ui_app_impl()
+{
+	delete (this->viewmgr);
+	eina_stringshare_del(this->pkg);
+	eina_stringshare_del(this->locale_dir);
+}
 
+ui_app_impl::ui_app_impl(const char *pkg, const char *locale_dir)
+{
+	pkg = eina_stringshare_add(pkg);
+	locale_dir = eina_stringshare_add(locale_dir);
+}
+
+bool ui_app_impl::initialize()
+{
+	//FIXME: this scale value should be configurable.
+	elm_app_base_scale_set(2.6);
+
+	/* Bind package locale file */
+	bindtextdomain(this->pkg, this->locale_dir);
+	textdomain(this->pkg);
+
+	/* Default View Manager */
+	this->viewmgr = new ui_viewmgr(this->pkg);
+
+	if (!this->viewmgr)
+	{
+		LOGE("Failed to create a viewmgr(%s)", this->pkg);
+		return false;
+	}
+
+	return true;
+}
+
+ui_viewmgr *ui_app_impl::get_viewmgr()
+{
+	return this->viewmgr;
+}
+
+/****************************************************************************/
+/* External class implementation                                            */
+/****************************************************************************/
 static bool app_create(void *data)
 {
 	ui_app *app = static_cast<ui_app *>(data);
@@ -109,38 +152,23 @@ void ui_app::on_orient_changed(app_event_info_h event_info)
 
 bool ui_app::on_create()
 {
-	//FIXME: this scale value should be configurable.
-	elm_app_base_scale_set(2.6);
-
-	/* Bind package locale file */
-	bindtextdomain(this->pkg, this->locale_dir);
-	textdomain(this->pkg);
-
-	/* Default View Manager */
-	this->viewmgr = new ui_viewmgr(this->pkg);
-
-	if (!this->viewmgr)
-	{
-		LOGE("Failed to create a viewmgr(%s)", this->pkg);
-		return false;
-	}
-	return true;
+	return this->impl->initialize();
 }
 
 void ui_app::on_pause()
 {
-	this->viewmgr->deactivate();
+	UI_VIEWMGR->deactivate();
 }
 
 void ui_app::on_resume()
 {
-	this->viewmgr->activate();
+	UI_VIEWMGR->activate();
 }
 
 void ui_app::on_control(app_control_h app_control)
 {
 	/* Handle the launch request. */
-	this->viewmgr->activate();
+	UI_VIEWMGR->activate();
 }
 
 void ui_app::on_terminate()
@@ -148,10 +176,8 @@ void ui_app::on_terminate()
 }
 
 ui_app::ui_app(const char *pkg, const char *locale_dir)
-		: viewmgr(NULL)
 {
-	pkg = eina_stringshare_add(pkg);
-	locale_dir = eina_stringshare_add(locale_dir);
+	this->impl = new ui_app_impl(pkg, locale_dir);
 }
 
 int ui_app::run(int argc, char **argv)
@@ -183,12 +209,10 @@ int ui_app::run(int argc, char **argv)
 
 ui_app::~ui_app()
 {
-	delete (this->viewmgr);
-	eina_stringshare_del(this->pkg);
-	eina_stringshare_del(this->locale_dir);
+	delete(this->impl);
 }
 
 ui_viewmgr *ui_app::get_viewmgr()
 {
-	return this->viewmgr;
+	return UI_VIEWMGR;
 }

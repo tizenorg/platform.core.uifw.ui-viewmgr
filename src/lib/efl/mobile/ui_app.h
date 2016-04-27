@@ -14,22 +14,30 @@
  *  limitations under the License.
  *
  */
-#include <app.h>
+#ifndef UI_APP_H
+#define UI_APP_H
 
-#if 0
-#include "ui_view.h"
-#include "ui_key_listener.h"
-#include "ui_viewmgr.h"
-#include "ui_menu.h"
-#include "ui_popup.h"
-#endif
+#include "../ui_base_viewmanager.h"
 
-#define _UI_DECLARE_PRIVATE_IMPL(A) \
-		class A##_impl* impl; \
-		friend class A##_impl
+namespace efl_viewmgr
+{
 
-#define _UI_DISABLE_COPY_AND_ASSIGN(A) \
-		A(const A&) = delete; \
-		const A& operator=(const A&) = delete
+class ui_viewmgr;
 
-#include "ui_app.h"
+class ui_app_impl : public viewmgr::singleton<ui_app_impl>
+{
+public:
+	ui_viewmgr *viewmgr;
+	Eina_Stringshare *pkg;
+	Eina_Stringshare *locale_dir;
+
+	ui_app_impl(const char *pkg, const char *locale_dir);
+	virtual ~ui_app_impl();
+
+	bool initialize();
+	ui_viewmgr *get_viewmgr();
+};
+
+}
+
+#endif /* UI_APP_H */

@@ -35,7 +35,7 @@ protected:
 				//Next Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					UI_VIEWMGR->push_view(new page2());
+				//	UI_VIEWMGR->push_view(new page2());
 				});
 		this->set_content(content, "Page1");
 	}

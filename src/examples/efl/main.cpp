@@ -15,6 +15,7 @@
  *
  */
 #include "main.h"
+#if 0
 #include "page16.h"
 #include "page15.h"
 #include "page14.h"
@@ -30,6 +31,7 @@
 #include "page4.h"
 #include "page3.h"
 #include "page2.h"
+#endif
 #include "page1.h"
 
 class sample_app : public ui_app
