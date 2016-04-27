@@ -15,6 +15,7 @@
  *
  */
 #include <dlog.h>
+#include <Elementary.h>
 #include "ui_viewmanager.h"
 
 //uncomment if you want debug
@@ -32,6 +33,8 @@
 #endif
 
 using namespace efl_viewmgr;
+
+#define UI_VIEWMGR efl_viewmgr::ui_app::get_instance()->get_viewmgr()
 
 Evas_Object *create_landscape_content(Evas_Object *parent, const char *text, Evas_Smart_Cb prev_btn_clicked_cb, Evas_Smart_Cb next_btn_clicked_cb);
 Evas_Object *create_content(Evas_Object *parent, const char *text, Evas_Smart_Cb prev_btn_clicked_cb, Evas_Smart_Cb next_btn_clicked_cb);
