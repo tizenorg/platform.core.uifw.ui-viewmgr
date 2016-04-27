@@ -14,9 +14,7 @@
  *  limitations under the License.
  *
  */
-#include "../../../include/efl/mobile/ui_viewmanager.h"
-
-using namespace efl_viewmgr;
+#include "ui_viewmanager.h"
 
 static void ctxpopup_dismissed_cb(void *data, Evas_Object *obj, void *event_info)
 {

@@ -14,19 +14,20 @@
  *  limitations under the License.
  *
  */
-#include <dlog.h>
-#include <system_settings.h>
-
-#ifdef  LOG_TAG
-#undef  LOG_TAG
-#endif
-#define LOG_TAG "UI_VIEWMGR"
-
-#include "ui_view.h"
+#if 0
 #include "ui_key_listener.h"
 #include "ui_viewmgr.h"
 #include "ui_menu.h"
 #include "ui_popup.h"
-#include "ui_app.h"
+#endif
 
-#define UI_VIEWMGR efl_viewmgr::ui_app::get_instance()->get_viewmgr()
+#define _UI_DECLARE_PRIVATE_IMPL(A) \
+		class ui_impl_##A* impl; \
+		friend class ui_impl_##A
+
+#define _UI_DISABLE_COPY_AND_ASSIGN(A) \
+		ui_##A(const ui_##A&) = delete; \
+		const ui_##A& operator=(const ui_##A&) = delete
+
+#include "ui_view.h"
+#include "ui_app.h"

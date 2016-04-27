@@ -66,9 +66,7 @@ cp %{_builddir}/%{buildsubdir}/LICENSE %{buildroot}/usr/share/license/%{name}
 
 %files devel
 %defattr(-,root,root,-)
-%{_includedir}/ui-viewmgr/interface/*.h
-%{_includedir}/ui-viewmgr/efl/*.h
 %{_includedir}/ui-viewmgr/efl/mobile/*.h
-%{_includedir}/ui-viewmgr/*.h
+%{_includedir}/ui-viewmgr/efl/*.h
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/ui-viewmgr.pc

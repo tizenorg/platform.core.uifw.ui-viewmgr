@@ -14,28 +14,20 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_VIEWMGR_H
-#define UI_VIEWMGR_H
+#include <app.h>
+#include <system_settings.h>
 
-#include <Elementary.h>
 #include "../ui_base_viewmanager.h"
+#include "../../../include/efl/mobile/ui_viewmanager.h"
 
-namespace efl_viewmgr
-{
+#include "ui_view.h"
+#include "ui_key_listener.h"
+#include "ui_viewmgr.h"
+#include "ui_menu.h"
+#include "ui_popup.h"
+#include "ui_impl_app.h"
 
-class ui_view;
+using namespace efl_viewmgr;
+using namespace viewmgr;
 
-class ui_viewmgr: public ui_base_viewmgr
-{
-	friend class ui_view;
-	friend class ui_app;
-
-protected:
-	//Don't allow to create ui_viewmgr instance
-	ui_viewmgr(const char *pkg);
-	ui_viewmgr(const ui_viewmgr& viewmgr);
-	virtual ~ui_viewmgr();
-};
-}
-
-#endif /* UI_VIEWMGR_H */
+#define UI_VIEWMGR ui_impl_app::get_instance()->get_viewmgr()
