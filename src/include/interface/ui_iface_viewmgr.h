@@ -14,14 +14,14 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_IFACE_VIEWMGR_H_
-#define UI_IFACE_VIEWMGR_H_
+#ifndef _UI_IFACE_VIEWMGR_H_
+#define _UI_IFACE_VIEWMGR_H_
 
 #include <list>
 
 using namespace std;
 
-namespace viewmgr {
+namespace ui_viewmanager {
 
 template<typename T, typename T2>
 class ui_iface_view;
@@ -661,4 +661,4 @@ unsigned int ui_iface_viewmgr<T, T2>::get_view_count()
 
 }
 
-#endif /* UI_IFACE_VIEWMGR_H_ */
+#endif /* _UI_IFACE_VIEWMGR_H_ */

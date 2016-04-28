@@ -14,12 +14,10 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_POPUP_H
-#define UI_POPUP_H
+#ifndef _UI_POPUP_H_
+#define _UI_POPUP_H_
 
-#include "../ui_base_viewmanager.h"
-
-namespace efl_viewmgr
+namespace efl_viewmanager
 {
 class ui_popup : public ui_base_overlay
 {
@@ -42,4 +40,4 @@ public:
 
 }
 
-#endif /* UI_POPUP_H */
+#endif /* _UI_POPUP_H_ */

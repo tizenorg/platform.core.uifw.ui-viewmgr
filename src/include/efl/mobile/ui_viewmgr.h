@@ -14,13 +14,10 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_VIEWMGR_H
-#define UI_VIEWMGR_H
+#ifndef _UI_VIEWMGR_H_
+#define _UI_VIEWMGR_H_
 
-#include <Elementary.h>
-#include "../ui_base_viewmanager.h"
-
-namespace efl_viewmgr
+namespace efl_viewmanager
 {
 
 class ui_view;
@@ -38,4 +35,4 @@ protected:
 };
 }
 
-#endif /* UI_VIEWMGR_H */
+#endif /* _UI_VIEWMGR_H_ */

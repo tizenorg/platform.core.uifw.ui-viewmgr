@@ -14,12 +14,9 @@
  *  limitations under the License.
  *
  */
-#include "../../../include/efl/mobile/ui_viewmanager.h"
+#include "../../../include/efl/mobile/ui_mobile_viewmanager.h"
 
 #define DEFAULT_GROUP "tizen_view/default"
-
-using namespace efl_viewmgr;
-using namespace viewmgr;
 
 typedef list<ui_popup*>::reverse_iterator popup_ritr;
 

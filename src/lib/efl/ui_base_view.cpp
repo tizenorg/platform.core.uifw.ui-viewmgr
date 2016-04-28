@@ -16,9 +16,6 @@
  */
 #include "../../include/efl/ui_base_viewmanager.h"
 
-using namespace efl_viewmgr;
-using namespace viewmgr;
-
 static void content_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
 	ui_base_view *view = static_cast<ui_base_view *>(data);

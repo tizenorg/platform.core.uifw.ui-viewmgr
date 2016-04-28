@@ -14,13 +14,10 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_BASE_VIEW_H
-#define UI_BASE_VIEW_H
+#ifndef _UI_BASE_VIEW_H_
+#define _UI_BASE_VIEW_H_
 
-#include <Elementary.h>
-#include "../interface/ui_iface_viewmanager.h"
-
-namespace efl_viewmgr
+namespace efl_viewmanager
 {
 
 /**
@@ -35,7 +32,7 @@ namespace efl_viewmgr
  *  @warning When the transitions are finished, the view must to call ui_iface_viewmgr :: _push_finished(), ui_iface_viewmgr :: _pop_finished() in order that
  *           The ui_iface_viewmgr keeps the view states exactly.
  */
-class ui_base_view: public viewmgr::ui_iface_view<Evas_Object *, ui_base_viewmgr>
+class ui_base_view: public ui_iface_view<Evas_Object *, ui_base_viewmgr>
 {
 	friend class ui_base_viewmgr;
 
@@ -100,4 +97,4 @@ public:
 
 }
 
-#endif /* UI_BASE_VIEW_H */
+#endif /* _UI_BASE_VIEW_H_ */

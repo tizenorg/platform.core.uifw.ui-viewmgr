@@ -14,10 +14,7 @@
  *  limitations under the License.
  *
  */
-#include "../../../include/efl/mobile/ui_viewmanager.h"
-
-using namespace efl_viewmgr;
-using namespace viewmgr;
+#include "../../../include/efl/mobile/ui_mobile_viewmanager.h"
 
 static const char *KEY_MENU = "XF86Menu";
 static const char *KEY_MENU2 = "XF86Send";

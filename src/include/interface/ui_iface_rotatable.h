@@ -14,10 +14,10 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_IFACE_ROTATABLE_H_
-#define UI_IFACE_ROTATABLE_H_
+#ifndef _UI_IFACE_ROTATABLE_H_
+#define _UI_IFACE_ROTATABLE_H_
 
-namespace viewmgr
+namespace ui_viewmanager
 {
 class ui_iface_rotatable
 {
@@ -36,4 +36,4 @@ public:
 
 }
 
-#endif /* UI_IFACE_ROTATABLE_H_ */
+#endif /* _UI_IFACE_ROTATABLE_H_ */

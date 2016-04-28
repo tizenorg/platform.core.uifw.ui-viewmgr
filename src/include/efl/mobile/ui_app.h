@@ -14,17 +14,15 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_APP_H
-#define UI_APP_H
+#ifndef _UI_APP_H_
+#define _UI_APP_H_
 
-#include "../ui_base_viewmanager.h"
-
-namespace efl_viewmgr
+namespace efl_viewmanager
 {
 
 class ui_viewmgr;
 
-class ui_app : public viewmgr::singleton<ui_app>
+class ui_app : public singleton<ui_app>
 {
 private:
 	ui_viewmgr *viewmgr;
@@ -53,4 +51,4 @@ public:
 
 }
 
-#endif /* UI_APP_H */
+#endif /* _UI_APP_H_ */

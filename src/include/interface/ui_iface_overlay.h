@@ -14,10 +14,10 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_IFACE_OVERLAY_H
-#define UI_IFACE_OVERLAY_H
+#ifndef _UI_IFACE_OVERLAY_H_
+#define _UI_IFACE_OVERLAY_H_
 
-namespace viewmgr
+namespace ui_viewmanager
 {
 
 template<typename T, typename T2>
@@ -92,4 +92,4 @@ void ui_iface_overlay<T, T2>::on_back()
 
 }
 
-#endif /* UI_IFACE_OVERLAY_H */
+#endif /* _UI_IFACE_OVERLAY_H_ */

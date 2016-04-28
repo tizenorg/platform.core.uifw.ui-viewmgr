@@ -14,13 +14,10 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_BASE_KEY_LISTENER_H
-#define UI_BASE_KEY_LISTENER_H
+#ifndef _UI_BASE_KEY_LISTENER_H_
+#define _UI_BASE_KEY_LISTENER_H_
 
-#include <Elementary.h>
-#include "../interface/ui_iface_viewmanager.h"
-
-namespace efl_viewmgr
+namespace efl_viewmanager
 {
 class ui_base_viewmgr;
 class ui_base_view;
@@ -44,4 +41,4 @@ public:
 
 }
 
-#endif /* UI_BASE_KEY_LISTENER_H */
+#endif /* _UI_BASE_KEY_LISTENER_H_ */

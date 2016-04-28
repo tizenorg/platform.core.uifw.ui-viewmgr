@@ -14,14 +14,12 @@
  *  limitations under the License.
  *
  */
-#include <dlog.h>
+#ifndef _UI_MOBILE_VIEWMANAGER_H_
+#define _UI_MOBILE_VIEWMANAGER_H_
+
 #include <system_settings.h>
 
-#ifdef  LOG_TAG
-#undef  LOG_TAG
-#endif
-#define LOG_TAG "UI_VIEWMGR"
-
+#include "../ui_base_viewmanager.h"
 #include "ui_view.h"
 #include "ui_key_listener.h"
 #include "ui_viewmgr.h"
@@ -29,4 +27,7 @@
 #include "ui_popup.h"
 #include "ui_app.h"
 
-#define UI_VIEWMGR efl_viewmgr::ui_app::get_instance()->get_viewmgr()
+#define UI_VIEWMGR ui_app::get_instance()->get_viewmgr()
+
+
+#endif /* UI_MOBILE_VIEWMANAGER_H */

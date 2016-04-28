@@ -15,7 +15,7 @@
  *
  */
 #include <dlog.h>
-#include "ui_viewmanager.h"
+#include <ui_viewmanager.h>
 
 //uncomment if you want debug
 #ifndef TIZEN_ENGINEER_MODE
@@ -30,8 +30,6 @@
 #if !defined(PACKAGE)
 #define PACKAGE "ui-viewmgr"
 #endif
-
-using namespace efl_viewmgr;
 
 Evas_Object *create_landscape_content(Evas_Object *parent, const char *text, Evas_Smart_Cb prev_btn_clicked_cb, Evas_Smart_Cb next_btn_clicked_cb);
 Evas_Object *create_content(Evas_Object *parent, const char *text, Evas_Smart_Cb prev_btn_clicked_cb, Evas_Smart_Cb next_btn_clicked_cb);

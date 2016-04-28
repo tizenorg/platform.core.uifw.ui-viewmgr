@@ -16,9 +16,6 @@
  */
 #include "../../include/efl/ui_base_viewmanager.h"
 
-using namespace efl_viewmgr;
-using namespace viewmgr;
-
 ui_base_overlay::ui_base_overlay(ui_base_view *view)
 		: ui_iface_overlay(view)
 {
