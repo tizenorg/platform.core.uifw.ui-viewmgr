@@ -16,9 +16,6 @@
  */
 #include "../../include/efl/ui_base_viewmanager.h"
 
-using namespace efl_viewmgr;
-using namespace viewmgr;
-
 bool ui_base_viewmgr::create_base_layout(Elm_Scroller *scroller, const char *style)
 {
 	char edj_path[PATH_MAX];

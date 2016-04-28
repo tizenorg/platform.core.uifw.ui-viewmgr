@@ -14,15 +14,14 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_IFACE_VIEW_H_
-#define UI_IFACE_VIEW_H_
+#ifndef _UI_IFACE_VIEW_H_
+#define _UI_IFACE_VIEW_H_
 
 #include <string>
 
 using namespace std;
 
-namespace viewmgr {
-
+namespace ui_viewmanager {
 
 template<typename T, typename T2>
 class ui_iface_viewmgr;
@@ -405,4 +404,4 @@ void ui_iface_view<T, T2>::on_back()
 
 }
 
-#endif /* UI_IFACE_VIEW_H_ */
+#endif /* _UI_IFACE_VIEW_H_ */

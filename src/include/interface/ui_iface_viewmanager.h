@@ -14,8 +14,8 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_IFACE_VIEWMANAGER_H_
-#define UI_IFACE_VIEWMANAGER_H_
+#ifndef _UI_IFACE_VIEWMANAGER_H_
+#define _UI_IFACE_VIEWMANAGER_H_
 
 #include <app.h>
 #include <dlog.h>
@@ -50,5 +50,7 @@ enum ui_view_state
 #include "ui_iface_overlay.h"
 #include "ui_iface_view.h"
 #include "ui_iface_viewmgr.h"
+
+using namespace ui_viewmanager;
 
 #endif /* UI_IFACE_VIEWMANAGER_H */

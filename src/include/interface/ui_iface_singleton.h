@@ -1,7 +1,7 @@
-#ifndef UI_IFACE_SINGLETON_H
-#define UI_IFACE_SINGLETON_H
+#ifndef _UI_IFACE_SINGLETON_H_
+#define _UI_IFACE_SINGLETON_H_
 
-namespace viewmgr
+namespace ui_viewmanager
 {
 
 template<typename T>
@@ -42,4 +42,4 @@ T* singleton<T>::get_instance()
 
 }
 
-#endif /* UI_IFACE_SINGLETON_H_ */
+#endif /* _UI_IFACE_SINGLETON_H_ */

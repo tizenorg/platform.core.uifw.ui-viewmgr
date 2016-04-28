@@ -14,12 +14,10 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_VIEW
-#define UI_VIEW
+#ifndef _UI_VIEW_H_
+#define _UI_VIEW_H_
 
-#include "../ui_base_viewmanager.h"
-
-namespace efl_viewmgr
+namespace efl_viewmanager
 {
 
 class ui_menu;
@@ -110,4 +108,4 @@ public:
 
 }
 
-#endif /* UI_VIEW */
+#endif /* _UI_VIEW_H_ */

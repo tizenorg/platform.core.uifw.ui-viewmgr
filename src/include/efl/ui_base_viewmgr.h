@@ -14,21 +14,17 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_BASE_VIEWMGR_H
-#define UI_BASE_VIEWMGR_H
+#ifndef _UI_BASE_VIEWMGR_H_
+#define _UI_BASE_VIEWMGR_H_
 
 #include <map>
-#include <Elementary.h>
-#include "../interface/ui_iface_viewmanager.h"
-#include "ui_base_key_listener.h"
-
 
 //FIXME: ??
 #ifndef Elm_Conformant
 #define Elm_Conformant Evas_Object
 #endif
 
-namespace efl_viewmgr
+namespace efl_viewmanager
 {
 
 class ui_base_view;
@@ -44,7 +40,7 @@ class ui_base_view;
  *
  *  @warning viewmgr will remove all containing views when it's destroyed.
  */
-class ui_base_viewmgr: public viewmgr::ui_iface_viewmgr<Evas_Object *, ui_base_viewmgr>
+class ui_base_viewmgr: public ui_iface_viewmgr<Evas_Object *, ui_base_viewmgr>
 {
 	friend class ui_base_view;
 
@@ -239,4 +235,4 @@ public:
 };
 }
 
-#endif /* UI_BASE_VIEWMGR_H */
+#endif /* _UI_BASE_VIEWMGR_H_ */

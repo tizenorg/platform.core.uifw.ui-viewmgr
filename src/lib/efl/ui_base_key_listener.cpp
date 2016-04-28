@@ -16,9 +16,6 @@
  */
 #include "../../include/efl/ui_base_viewmanager.h"
 
-using namespace efl_viewmgr;
-using namespace viewmgr;
-
 static const char *KEY_BACK = "XF86Back";
 static const char *KEY_BACK2 = "XF86Stop";
 

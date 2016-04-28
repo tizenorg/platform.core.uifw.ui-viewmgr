@@ -14,19 +14,16 @@
  *  limitations under the License.
  *
  */
-#ifndef UI_BASE_OVERLAY_H
-#define UI_BASE_OVERLAY_H
+#ifndef _UI_BASE_OVERLAY_H_
+#define _UI_BASE_OVERLAY_H_
 
-#include <Elementary.h>
-#include "../interface/ui_iface_viewmanager.h"
-
-namespace efl_viewmgr
+namespace efl_viewmanager
 {
 
 class ui_base_viewmgr;
 class ui_base_view;
 
-class ui_base_overlay: public viewmgr::ui_iface_overlay<Evas_Object *, ui_base_viewmgr>
+class ui_base_overlay: public ui_iface_overlay<Evas_Object *, ui_base_viewmgr>
 {
 protected:
 	ui_base_overlay(ui_base_view *view);
@@ -35,4 +32,4 @@ protected:
 
 }
 
-#endif /* UI_BASE_OVERLAY_H */
+#endif /* _UI_BASE_OVERLAY_H_ */
