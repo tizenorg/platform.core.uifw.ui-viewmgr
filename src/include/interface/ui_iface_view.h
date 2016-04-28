@@ -264,7 +264,8 @@ void ui_iface_view<T, T2>::on_unload()
 	this->state = UI_VIEW_STATE_UNLOAD;
 	if (this->get_removable_content())
 	{
-		this->set_content(NULL);
+		//FIXME: If content unset here, we can't support scroll page featrue.
+		//this->set_content(NULL);
 		return;
 	}
 }

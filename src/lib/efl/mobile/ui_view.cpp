@@ -178,7 +178,8 @@ void ui_view::on_unload()
 	ui_base_view::on_unload();
 
 	Elm_Layout *layout = this->get_base();
-	evas_object_hide(layout);
+	ui_viewmgr *viewmgr = UI_VIEWMGR;
+	if (!viewmgr->get_page_scroller()) evas_object_hide(layout);
 }
 
 bool ui_view::set_content(Evas_Object *content, const char *title)
@@ -475,6 +476,7 @@ Evas_Object *ui_view::get_base()
 	{
 		this->create_layout();
 	}
+
 	return this->layout;
 }
 

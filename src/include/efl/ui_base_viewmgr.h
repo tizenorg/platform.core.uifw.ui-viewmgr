@@ -57,6 +57,11 @@ private:
 	ui_view_indicator indicator;               //Mode of indicator.
 	string transition_style;                   //Current transiton effect style name
 	map<string, Elm_Layout *> effect_map;      //Map for effect layouts.
+	Elm_Scroller *page_scroller;
+	Elm_Box *page_box;
+	Evas_Object *pcontent;
+	Elm_Table *table;
+	bool page_changed_flag;
 
 	Elm_Layout *set_transition_layout(string transition_style);
 
@@ -83,6 +88,8 @@ private:
 	 *  @return @c true success or @c false not.
 	 */
 
+	bool create_page_scroller(Elm_Layout *layout);
+
 	bool create_scroller(Elm_Conformant *conform);
 	/**
 	 *  @brief Create a base layout.
@@ -102,6 +109,9 @@ private:
 
 	void activate_top_view();
 
+	void page_box_content_set(Elm_Layout *parent, Evas_Object *content, ui_base_view *view, bool pack_start, bool set_content);
+
+	Elm_Table *view_content_min_set(Evas_Object *obj, Evas_Object *parent, Evas_Coord w, Evas_Coord h);
 protected:
 	ui_base_viewmgr(const char *pkg, ui_base_key_listener *key_listener);
 
@@ -213,6 +223,38 @@ public:
 	{
 		return this->conform;
 	}
+
+	Elm_Scroller *get_page_scroller()
+	{
+		return this->page_scroller;
+	}
+
+	Elm_Box *get_page_box()
+	{
+		return this->page_box;
+	}
+
+	Evas_Object *get_pcontent()
+	{
+		return this->pcontent;
+	}
+
+	Elm_Table *get_table()
+	{
+		return this->table;
+	}
+
+	void set_page_changed_flag(bool changed)
+	{
+		this->page_changed_flag = changed;
+	}
+
+	bool get_page_changed_flag()
+	{
+		return this->page_changed_flag;
+	}
+
+	void set_pcontent_to_page_scroller();
 
 	/** @brief Get a last view of current view stack.
 	 */

@@ -101,6 +101,14 @@ void ui_base_view::set_indicator(ui_view_indicator indicator)
 	viewmgr->set_indicator(indicator);
 }
 
+void ui_base_view::on_activate()
+{
+	ui_iface_view::on_activate();
+
+	ui_base_viewmgr *viewmgr = UI_BASE_VIEWMGR;
+	viewmgr->set_pcontent_to_page_scroller();
+}
+
 void ui_base_view::on_rotate(int degree)
 {
 }

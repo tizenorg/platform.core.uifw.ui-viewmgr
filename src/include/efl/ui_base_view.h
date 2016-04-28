@@ -56,6 +56,7 @@ protected:
 	 */
 	virtual void set_event_block(bool block);
 
+	virtual void on_activate();
 	virtual void on_rotate(int degree);
 	virtual void on_portrait();
 	virtual void on_landscape();
