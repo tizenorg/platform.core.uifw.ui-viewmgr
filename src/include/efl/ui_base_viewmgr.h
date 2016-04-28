@@ -40,7 +40,7 @@ class ui_base_view;
  *
  *  @warning viewmgr will remove all containing views when it's destroyed.
  */
-class ui_base_viewmgr: public ui_iface_viewmgr<Evas_Object *, ui_base_viewmgr>
+class ui_base_viewmgr: public ui_iface_viewmgr<Evas_Object *>
 {
 	friend class ui_base_view;
 

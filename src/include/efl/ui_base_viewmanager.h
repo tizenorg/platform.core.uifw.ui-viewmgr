@@ -24,7 +24,7 @@
 #include "ui_base_viewmgr.h"
 #include "ui_base_view.h"
 
-#define UI_BASE_VIEWMGR ui_base_viewmgr::get_instance()
+#define UI_BASE_VIEWMGR dynamic_cast<ui_base_viewmgr *>(ui_iface_viewmgr<Evas_Object *>::get_instance())
 
 using namespace efl_viewmanager;
 
