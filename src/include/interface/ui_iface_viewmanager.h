@@ -40,7 +40,6 @@ enum ui_view_state
 	UI_VIEW_STATE_LAST
 };
 
-
 #define UI_EFL 1
 
 #if UI_EFL

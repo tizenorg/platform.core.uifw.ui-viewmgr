@@ -24,14 +24,6 @@ class ui_iface_view;
 
 class ui_iface_overlay: public ui_iface_rotatable
 {
-private:
-	ui_iface_view *view;
-	T content;
-
-protected:
-	ui_iface_overlay(ui_iface_view *view);
-	virtual ~ui_iface_overlay();
-
 public:
 	virtual bool set_content(T content);
 	virtual T unset_content();
@@ -41,6 +33,14 @@ public:
 	virtual bool activate() = 0;
 	virtual bool deactivate() = 0;
 	virtual bool is_activated() = 0;
+
+protected:
+	ui_iface_overlay(ui_iface_view *view);
+	virtual ~ui_iface_overlay();
+
+private:
+	ui_iface_view *view;
+	T content;
 };
 
 }
