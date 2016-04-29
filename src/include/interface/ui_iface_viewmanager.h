@@ -45,6 +45,9 @@ enum ui_view_state
 	UI_VIEW_STATE_LAST
 };
 
+#include <Elementary.h>
+#define T Evas_Object*
+
 #include "ui_iface_singleton.h"
 #include "ui_iface_rotatable.h"
 #include "ui_iface_overlay.h"
@@ -52,5 +55,14 @@ enum ui_view_state
 #include "ui_iface_viewmgr.h"
 
 using namespace ui_viewmanager;
+
+#define _UI_DECLARE_PRIVATE_IMPL(A) \
+	class A_##impl *impl; \
+	friend class A_##impl
+
+#define _UI_DISABLE_COPY_AND_ASSIGN(A) \
+	A_##impl(const A_##impl&) = delete; \
+	const A_##impl& operator=(const A_##impl&) = delete
+
 
 #endif /* UI_IFACE_VIEWMANAGER_H */

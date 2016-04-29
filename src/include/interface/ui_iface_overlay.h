@@ -20,75 +20,28 @@
 namespace ui_viewmanager
 {
 
-template<typename T>
 class ui_iface_view;
 
-template<typename T>
 class ui_iface_overlay: public ui_iface_rotatable
 {
 private:
-	ui_iface_view<T> *view;
+	ui_iface_view *view;
 	T content;
 
 protected:
-	ui_iface_overlay(ui_iface_view<T> *view);
+	ui_iface_overlay(ui_iface_view *view);
 	virtual ~ui_iface_overlay();
 
 public:
 	virtual bool set_content(T content);
 	virtual T unset_content();
-	ui_iface_view<T> *get_view();
+	ui_iface_view *get_view();
 	virtual T get_content();
 	virtual void on_back();
 	virtual bool activate() = 0;
 	virtual bool deactivate() = 0;
 	virtual bool is_activated() = 0;
 };
-
-
-template<typename T>
-ui_iface_overlay<T>::ui_iface_overlay(ui_iface_view<T> *view)
-		: view(view), content(NULL)
-{
-}
-
-template<typename T>
-ui_iface_overlay<T>::~ui_iface_overlay()
-{
-}
-
-template<typename T>
-bool ui_iface_overlay<T>::set_content(T content)
-{
-	this->content = content;
-	return true;
-}
-
-template<typename T>
-T ui_iface_overlay<T>::unset_content()
-{
-	T prev = this->content;
-	this->content = NULL;
-	return prev;
-}
-
-template<typename T>
-T ui_iface_overlay<T>::get_content()
-{
-	return this->content;
-}
-
-template<typename T>
-ui_iface_view<T> *ui_iface_overlay<T>::get_view()
-{
-	return this->view;
-}
-
-template<typename T>
-void ui_iface_overlay<T>::on_back()
-{
-	this->deactivate();
-}
 
 }
 

@@ -23,7 +23,7 @@ namespace efl_viewmanager
 class ui_base_viewmgr;
 class ui_base_view;
 
-class ui_base_overlay: public ui_iface_overlay<Evas_Object *>
+class ui_base_overlay: public ui_iface_overlay
 {
 protected:
 	ui_base_overlay(ui_base_view *view);

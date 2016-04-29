@@ -14,18 +14,42 @@
  *  limitations under the License.
  *
  */
-#ifndef _UI_BASE_VIEWMANAGER_H_
-#define _UI_BASE_VIEWMANAGER_H_
 
-#include <Elementary.h>
-#include "../interface/ui_iface_viewmanager.h"
-#include "ui_base_overlay.h"
-#include "ui_base_key_listener.h"
-#include "ui_base_viewmgr.h"
-#include "ui_base_view.h"
+#include "../../include/interface/ui_iface_viewmanager.h"
 
-#define UI_BASE_VIEWMGR dynamic_cast<ui_base_viewmgr *>(ui_iface_viewmgr::get_instance())
+ui_iface_overlay::ui_iface_overlay(ui_iface_view *view)
+		: view(view), content(NULL)
+{
+}
 
-using namespace efl_viewmanager;
+ui_iface_overlay::~ui_iface_overlay()
+{
+}
 
-#endif /* UI_BASE_VIEWMANAGER_H */
+bool ui_iface_overlay::set_content(T content)
+{
+	this->content = content;
+	return true;
+}
+
+T ui_iface_overlay::unset_content()
+{
+	T prev = this->content;
+	this->content = NULL;
+	return prev;
+}
+
+T ui_iface_overlay::get_content()
+{
+	return this->content;
+}
+
+ui_iface_view *ui_iface_overlay::get_view()
+{
+	return this->view;
+}
+
+void ui_iface_overlay::on_back()
+{
+	this->deactivate();
+}

@@ -23,7 +23,6 @@ using namespace std;
 
 namespace ui_viewmanager {
 
-template<typename T>
 class ui_iface_view;
 
 /**
@@ -38,16 +37,15 @@ class ui_iface_view;
  *
  *  @warning viewmgr will remove all containing views when it's destroyed.
  */
-template<typename T>
 class ui_iface_viewmgr
 {
-	friend class ui_iface_view<T>;
+	friend class ui_iface_view;
 
 private:
-	static ui_iface_viewmgr<T> *inst;
+	static ui_iface_viewmgr *inst;
 	static bool soft_key;                      //If system doesn't support HW back key, then this value is @c true.
 	static bool event_block;                   //Event block on view transition. This value should be configurable by system.
-	list<ui_iface_view<T> *> view_list;        //View list.
+	list<ui_iface_view *> view_list;            //View list.
 	bool activated;                            //Activated status of this viewmgr.
 
 	/**
@@ -60,7 +58,7 @@ private:
 	 *  @warning If the given view is already connected to a viewmgr, this call will be failed.
 	 *  @see disconnect_view()
 	 */
-	bool connect_view(ui_iface_view<T> *view);
+	bool connect_view(ui_iface_view *view);
 
 	/**
 	 *  @brief Disconnect a given view from this viewmgr.
@@ -71,7 +69,7 @@ private:
 	 *
 	 *  @see connect_view()
 	 */
-	bool disconnect_view(ui_iface_view<T> *view);
+	bool disconnect_view(ui_iface_view *view);
 
 	/**
 	 *  @brief Toggle event blocking to the given view.
@@ -83,7 +81,7 @@ private:
 	 *  @param view A view to toggle event blocking.
 	 *  @param block @c true is blocking event, otherwise @c false.
 	 */
-	void set_event_block(ui_iface_view<T> *view, bool block);
+	void set_event_block(ui_iface_view *view, bool block);
 
 protected:
 	/**
@@ -95,7 +93,7 @@ protected:
 	 *
 	 *  @warning This function must be called when push transition is finished.
 	 */
-	bool push_view_finished(ui_iface_view<T> *view);
+	bool push_view_finished(ui_iface_view *view);
 
 	/**
 	 *  @brief This function is designed for finishing process for pop transition.
@@ -108,7 +106,7 @@ protected:
 	 *
 	 *  @warning This function must be called when push transition is finished.
 	 */
-	bool pop_view_finished(ui_iface_view<T> *view);
+	bool pop_view_finished(ui_iface_view *view);
 
 	/**
 	 *  @brief Push a new view into this viewmgr. This function is used for when application switches a current view to a new one.
@@ -127,7 +125,7 @@ protected:
 	 *  @see insert_view_after()
 	 *  @see pop_view()
 	 */
-	ui_iface_view<T> *push_view(ui_iface_view<T> *view);
+	ui_iface_view *push_view(ui_iface_view *view);
 
 	/**
 	 *  @brief Pop the top(last) view from this viewmgr view list.
@@ -152,7 +150,7 @@ protected:
 	 *
 	 *  @return @c true on success or @c false otherwise.
 	 */
-	bool insert_view_before(ui_iface_view<T> *view, ui_iface_view<T> *before);
+	bool insert_view_before(ui_iface_view *view, ui_iface_view *before);
 
 	/**
 	 *  @brief Insert a view in this viewmgr view list. Specifically, insert a given @p view right after of the given view, @after.
@@ -162,7 +160,7 @@ protected:
 	 *
 	 *  @return @c true on success or @c false otherwise.
 	 */
-	bool insert_view_after(ui_iface_view<T> *view, ui_iface_view<T> *after);
+	bool insert_view_after(ui_iface_view *view, ui_iface_view *after);
 
 	/**
 	 *  @brief Remove the given view from this viewmgr view list.
@@ -175,7 +173,7 @@ protected:
 	 *  @see insert_view_after()
 	 *  @see push_view()
 	 */
-	bool remove_view(ui_iface_view<T> *view);
+	bool remove_view(ui_iface_view *view);
 
 	/**
 	 *  @brief Return a view which is matched with the index @p idx.
@@ -191,7 +189,7 @@ protected:
 	 *  @see get_view_index()
 	 *  @see get_view_count()
 	 */
-	ui_iface_view<T>* get_view(unsigned int idx);
+	ui_iface_view* get_view(unsigned int idx);
 
 	/**
 	 *  @brief Return a view which is matched with the @p name.
@@ -205,14 +203,14 @@ protected:
 	 *
 	 *  @see ui_iface_view::set_name()
 	 */
-	ui_iface_view<T> *get_view(const char *name);
+	ui_iface_view *get_view(const char *name);
 
 	/**
 	 *  @brief Return a last(top) view.
 	 *
 	 *  @return The view which is last view of the viewmgr view list.
 	 */
-	ui_iface_view<T> *get_last_view();
+	ui_iface_view *get_last_view();
 
 	/**
 	 *  @brief Return a view index(page) number of the given view.
@@ -224,7 +222,7 @@ protected:
 	 *
 	 *  @warning The index number of views are variable since the view list is variable.
 	 */
-	int get_view_index(const ui_iface_view<T> *view);
+	int get_view_index(const ui_iface_view *view);
 
 	///Constructor.
 	ui_iface_viewmgr();
@@ -286,375 +284,8 @@ public:
 	 *  @return @c true if soft key is required, @c false otherwise.
 	 */
 	static bool need_soft_key();
-	static ui_iface_viewmgr<T>* get_instance();
+	static ui_iface_viewmgr* get_instance();
 };
-
-
-template<typename T> ui_iface_viewmgr<T> *ui_iface_viewmgr<T>::inst = NULL;
-
-#define VIEW_ITR typename list<ui_iface_view<T> *>::iterator
-#define VIEW_RITR typename list<ui_iface_view<T> *>::reverse_iterator
-
-//FIXME: Read system profile to decide whether support software key or not.
-template<typename T> bool ui_iface_viewmgr<T>::soft_key = true;
-//FIXME: Read system profile to decide whether support event block or not.
-template<typename T> bool ui_iface_viewmgr<T>::event_block = true;
-
-
-template<typename T>
-bool ui_iface_viewmgr<T>::insert_view_after(ui_iface_view<T> *view, ui_iface_view<T> *after)
-{
-	VIEW_ITR it;
-
-	if (!view)
-	{
-		LOGE("invalid view argument. view(NULL)");
-		return false;
-	}
-
-	if (!this->connect_view(view))
-	{
-		LOGE("connect view failed");
-		return false;
-	}
-
-	if (this->view_list.size() > 0)
-	{
-		for (it = this->view_list.begin(); it != this->view_list.end(); it++)
-		{
-			if (after == *it)
-			{
-				//If the after is a last item of list.
-				//view has to push now.
-				if (it == this->view_list.end())
-					this->push_view(view);
-				else
-					this->view_list.insert(++it, view);
-
-				return true;
-			}
-		}
-	}
-
-	//If there is no matching after view with current list.
-	//also in case of after is NULL.
-	this->push_view(view);
-
-	return true;
-}
-
-template<typename T>
-bool ui_iface_viewmgr<T>::need_soft_key()
-{
-	return ui_iface_viewmgr<T>::soft_key;
-}
-
-template<typename T>
-bool ui_iface_viewmgr<T>::connect_view(ui_iface_view<T> *view)
-{
-	//FIXME: If user call a set_viewmgr() before, It should not return false.
-	/*
-	if (view->viewmgr)
-	{
-		LOGE("view(%p) has already connected to viewmgr(%p)", view, this);
-		return false;
-	}
-	*/
-
-	view->viewmgr = this;
-	return true;
-}
-
-template<typename T>
-bool ui_iface_viewmgr<T>::disconnect_view(ui_iface_view<T> *view)
-{
-	if (!view->viewmgr) return false;
-	view->viewmgr = NULL;
-	return true;
-}
-
-template<typename T>
-void ui_iface_viewmgr<T>::set_event_block(ui_iface_view<T> *view, bool block)
-{
-	if (!ui_iface_viewmgr::event_block) return;
-	view->set_event_block(block);
-}
-
-template<typename T>
-bool ui_iface_viewmgr<T>::push_view_finished(ui_iface_view<T> *view)
-{
-	ui_iface_view<T> *last = this->view_list.back();
-
-	//The previous view has been pushed. This should be unload.
-	if (last != view)
-	{
-		view->on_unload();
-		return true;
-	}
-
-	//A new view has been pushed. This should be activate.
-	view->on_activate();
-	this->set_event_block(view, false);
-
-	return true;
-}
-
-template<typename T>
-bool ui_iface_viewmgr<T>::pop_view_finished(ui_iface_view<T> *view)
-{
-	ui_iface_view<T> *last = this->view_list.back();
-
-	//This view has been popped. It should be destroyed.
-	if (last == view)
-	{
-		view->on_unload();
-		view->on_destroy();
-		delete (view);
-		return true;
-	}
-
-	//The previous view has been popped. It should become activate.
-	view->on_activate();
-	this->set_event_block(view, false);
-
-	return true;
-}
-
-template<typename T>
-ui_iface_viewmgr<T>::ui_iface_viewmgr(const ui_iface_viewmgr<T>& viewmgr)
-{
-}
-
-template<typename T>
-ui_iface_viewmgr<T>::ui_iface_viewmgr()
-		: activated(false)
-{
-	ui_iface_viewmgr<T>::inst = this;
-}
-
-template<typename T>
-ui_iface_viewmgr<T>::~ui_iface_viewmgr()
-{
-	//Terminate views
-	for (VIEW_RITR it = this->view_list.rbegin(); it != this->view_list.rend(); it++)
-	{
-		ui_iface_view<T> *view = *it;
-		view->on_deactivate();
-		view->on_unload();
-		view->on_destroy();
-		delete (view);
-	}
-
-	//FIXME: Window is destroyed. Terminate Application!
-	ui_app_exit();
-
-	ui_iface_viewmgr::inst = NULL;
-}
-
-template<typename T>
-ui_iface_view<T> *ui_iface_viewmgr<T>::push_view(ui_iface_view<T> *view)
-{
-	if (!view)
-	{
-		LOGE("invalid view argument. view(NULL)");
-		return NULL;
-	}
-
-	if (!this->connect_view(view))
-	{
-		LOGE("connect view failed");
-		return NULL;
-	}
-
-	ui_iface_view<T> *pview;
-
-	//Previous view
-	if (this->view_list.size() > 0)
-	{
-		pview = this->view_list.back();
-		pview->on_deactivate();
-		this->set_event_block(pview, true);
-	}
-
-	this->view_list.push_back(view);
-
-	if (!view->get_content())
-	{
-		view->on_load();
-	}
-
-	view->on_deactivate();
-
-	if (this->view_list.size() != 1)
-	{
-		this->set_event_block(view, true);
-	}
-
-	return view;
-}
-
-template<typename T>
-bool ui_iface_viewmgr<T>::pop_view()
-{
-	//FIXME: No more view?
-	if (this->get_view_count() == 0)
-	{
-		LOGE("No Views. Can't pop anymore!");
-		return false;
-	}
-
-	//This is the last page.
-	if (this->get_view_count() == 1)
-	{
-		//destroy viewmgr?
-		ui_iface_view<T>*view = this->view_list.back();
-		view->on_deactivate();
-		view->on_unload();
-		view->on_destroy();
-		delete(view);
-
-		return true;
-	}
-
-	//last page to be popped.
-	ui_iface_view<T>*view = this->view_list.back();
-	view->on_deactivate();
-	this->set_event_block(view, true);
-
-	//Below object has to be used in child class...
-	//Make this getter method? or define instance?
-	//previous page is to be an active page.
-	auto nx = prev(this->view_list.end(), 2);
-	ui_iface_view<T>*pview = *nx;
-	pview->on_load();
-	pview->on_deactivate();
-	this->set_event_block(pview, true);
-
-	return true;
-}
-
-template<typename T>
-bool ui_iface_viewmgr<T>::insert_view_before(ui_iface_view<T> *view, ui_iface_view<T> *before)
-{
-	VIEW_ITR it;
-
-	if (!view)
-	{
-		LOGE("invalid view argument. view(NULL)");
-		return false;
-	}
-
-	if (!this->connect_view(view))
-	{
-		LOGE("connect view failed");
-		return false;
-	}
-
-	if (this->view_list.size() > 0)
-	{
-		for (it = this->view_list.begin(); it != this->view_list.end(); it++)
-		{
-			if (before == *it)
-			{
-				this->view_list.insert(it, view);
-
-				return true;
-			}
-		}
-	}
-
-	//If there is no matching before view with current list.
-	//also in case of before is NULL.
-	this->push_view(view);
-
-	return true;
-}
-
-template<typename T>
-bool ui_iface_viewmgr<T>::remove_view(ui_iface_view<T> *view)
-{
-	this->view_list.remove(view);
-	this->disconnect_view(view);
-
-	//TODO: If this view is the top on the stack ?
-	return true;
-}
-
-template<typename T>
-ui_iface_view<T> *ui_iface_viewmgr<T>::get_view(unsigned int idx)
-{
-	if (idx < 0 || idx >= this->view_list.size())
-	{
-		LOGE("Invalid idx(%d)! =? (idx range: %d ~ %d)", idx, 0, this->view_list.size() - 1);
-		return NULL;
-	}
-	VIEW_ITR it = this->view_list.begin();
-	advance(it, idx);
-	return *it;
-}
-
-template<typename T>
-int ui_iface_viewmgr<T>::get_view_index(const ui_iface_view<T> *view)
-{
-	int idx = 0;
-
-	for (VIEW_ITR it = this->view_list.begin(); it != this->view_list.end(); it++)
-	{
-		if (view == *it) return idx;
-		++idx;
-	}
-
-	return -1;
-}
-
-template<typename T>
-ui_iface_view<T> *ui_iface_viewmgr<T>::get_last_view()
-{
-	int cnt = this->get_view_count();
-	return this->get_view(cnt - 1);
-}
-
-template<typename T>
-bool ui_iface_viewmgr<T>::activate()
-{
-	if (this->activated) return false;
-	if (this->get_view_count() == 0) return false;
-	this->activated = true;
-	return true;
-}
-
-template<typename T>
-bool ui_iface_viewmgr<T>::deactivate()
-{
-	if (!this->activated) return false;
-	this->activated = false;
-	return true;
-}
-
-template<typename T>
-ui_iface_view<T> *ui_iface_viewmgr<T>::get_view(const char *name)
-{
-	//FIXME: ...
-	return NULL;
-}
-
-template<typename T>
-bool ui_iface_viewmgr<T>::is_activated()
-{
-	return this->activated;
-}
-
-template<typename T>
-unsigned int ui_iface_viewmgr<T>::get_view_count()
-{
-	return this->view_list.size();
-}
-
-template<typename T>
-ui_iface_viewmgr<T>* ui_iface_viewmgr<T>::get_instance()
-{
-	return ui_iface_viewmgr::inst;
-}
 
 }
 

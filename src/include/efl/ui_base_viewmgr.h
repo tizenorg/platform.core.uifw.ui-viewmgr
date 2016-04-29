@@ -40,7 +40,7 @@ class ui_base_view;
  *
  *  @warning viewmgr will remove all containing views when it's destroyed.
  */
-class ui_base_viewmgr: public ui_iface_viewmgr<Evas_Object *>
+class ui_base_viewmgr: public ui_iface_viewmgr
 {
 	friend class ui_base_view;
 
@@ -51,7 +51,7 @@ private:
 	Elm_Layout *layout;                        //Viewmgr's base layout.
 	ui_base_key_listener *key_listener;        //HW Key Handler such as "BACK" key...
 	ui_view_indicator indicator;               //Mode of indicator.
-	string transition_style;                   //Current transiton effect style name
+	string transition_style;                   //Current transition effect style name
 	map<string, Elm_Layout *> effect_map;      //Map for effect layouts.
 
 	Elm_Layout *set_transition_layout(string transition_style);
