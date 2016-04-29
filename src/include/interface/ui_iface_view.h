@@ -17,10 +17,6 @@
 #ifndef _UI_IFACE_VIEW_H_
 #define _UI_IFACE_VIEW_H_
 
-#include <string>
-
-using namespace std;
-
 namespace ui_viewmanager {
 
 class ui_iface_viewmgr;
@@ -40,106 +36,6 @@ class ui_iface_viewmgr;
  */
 class ui_iface_view : public ui_iface_rotatable
 {
-	friend class ui_iface_viewmgr;
-
-private:
-	T content;                              ///< A content instance for a screen as a view.
-	string name;                            ///< View name.
-	string transition_style;                ///< View transition style name.
-	ui_iface_viewmgr *viewmgr	;           ///< Viewmgr which this view belongs to.
-	ui_view_state state;                    ///< View state.
-	ui_view_indicator indicator;            ///< View indicator mode.
-	bool event_block;                       ///< State of event block.
-	bool removable_content;                 ///< When this value is true, view removes it's content internally on unload state.
-
-protected:
-
-	/** @brief toggle event block.
-	 *
-	 *  @note This interface is designed for toggling touch event on view transition.
-	 *        ui_iface_viewmgr will call this interface for notifying event blocking toggling on transition time.
-	 *
-	 *  @param block @c true, when blocking is enabled, otherwise @c false.
-	 */
-	virtual void set_event_block(bool block);
-
-	/** @brief view load state.
-	 *
-	 *  @note this state will be triggered by ui_iface_viewmgr.
-	 *
-	 */
-	virtual void on_load();
-
-	/** @brief view unload state.
-	 *
-	 *  @note this state will be triggered by ui_iface_viewmgr.
-	 *
-	 */
-	virtual void on_unload();
-
-	/** @brief view activate state.
-	 *
-	 *  @note this state will be triggered by ui_iface_viewmgr.
-	 *
-	 */
-	virtual void on_activate();
-
-	/** @brief view deactivate state.
-	 *
-	 *  @note this state will be triggered by ui_iface_viewmgr.
-	 *
-	 */
-	virtual void on_deactivate();
-
-	/** @brief view pause state.
-	 *
-	 *  @note this state will be triggered by ui_iface_viewmgr.
-	 *
-	 */
-	virtual void on_pause();
-
-	/** @brief view resume state.
-	 *
-	 *  @note this state will be triggered by ui_iface_viewmgr.
-	 *
-	 */
-	virtual void on_resume();
-
-	/** @brief view destroy state.
-	 *
-	 *  @note this state will be triggered by ui_iface_viewmgr.
-	 *
-	 */
-	virtual void on_destroy();
-
-	/** @brief Return the state of event block.
-	 *
-	 *  @see set_event_block()
-	 */
-	bool get_event_block();
-
-	/** @brief Return a viewmgr which this view is belonging to.
-	 */
-	//FIXME: Is it necessary?
-	ui_iface_viewmgr *get_viewmgr();
-
-	/** @brief This is for replacing or setting a content of the view.
-	 *
-	 *  @note @p content is a logical object that represents a view in your framework. The actual type of the content could be translated to any certain types.
-	 *        For instance, the type could be Evas_Object * in EFL and Layer * in Dali.
-	 *
-	 *  @param content a new content. It allows @c NULL for canceling the previous content.
-	 *
-	 *  @return true if it succeed, false otherwise.
-	 */
-	virtual bool set_content(T content);
-
-	/** @brief This is for unsetting a content of the view.
-	 *
-	 *  @return A previous content. If it wasn't, return value will be @c NULL.
-	 */
-	virtual T unset_content();
-
 public:
 	/** @brief This is a constructor for initializing this view resources.
 	 *
@@ -209,6 +105,23 @@ public:
 	 */
 	T get_content();
 
+	/** @brief This is for replacing or setting a content of the view.
+	 *
+	 *  @note @p content is a logical object that represents a view in your framework. The actual type of the content could be translated to any certain types.
+	 *        For instance, the type could be Evas_Object * in EFL and Layer * in Dali.
+	 *
+	 *  @param content a new content. It allows @c NULL for canceling the previous content.
+	 *
+	 *  @return true if it succeed, false otherwise.
+	 */
+	virtual bool set_content(T content);
+
+	/** @brief This is for unsetting a content of the view.
+	 *
+	 *  @return A previous content. If it wasn't, return value will be @c NULL.
+	 */
+	virtual T unset_content();
+
 	/** @brief Return a state of this view.
 	 *
 	 *  #return current state of view.
@@ -228,6 +141,80 @@ public:
 	ui_view_indicator get_indicator();
 
 	void on_back();
+
+protected:
+
+	/** @brief toggle event block.
+	 *
+	 *  @note This interface is designed for toggling touch event on view transition.
+	 *        ui_iface_viewmgr will call this interface for notifying event blocking toggling on transition time.
+	 *
+	 *  @param block @c true, when blocking is enabled, otherwise @c false.
+	 */
+	virtual void set_event_block(bool block);
+
+	/** @brief view load state.
+	 *
+	 *  @note this state will be triggered by ui_iface_viewmgr.
+	 *
+	 */
+	virtual void on_load();
+
+	/** @brief view unload state.
+	 *
+	 *  @note this state will be triggered by ui_iface_viewmgr.
+	 *
+	 */
+	virtual void on_unload();
+
+	/** @brief view activate state.
+	 *
+	 *  @note this state will be triggered by ui_iface_viewmgr.
+	 *
+	 */
+	virtual void on_activate();
+
+	/** @brief view deactivate state.
+	 *
+	 *  @note this state will be triggered by ui_iface_viewmgr.
+	 *
+	 */
+	virtual void on_deactivate();
+
+	/** @brief view pause state.
+	 *
+	 *  @note this state will be triggered by ui_iface_viewmgr.
+	 *
+	 */
+	virtual void on_pause();
+
+	/** @brief view resume state.
+	 *
+	 *  @note this state will be triggered by ui_iface_viewmgr.
+	 *
+	 */
+	virtual void on_resume();
+
+	/** @brief view destroy state.
+	 *
+	 *  @note this state will be triggered by ui_iface_viewmgr.
+	 *
+	 */
+	virtual void on_destroy();
+
+	/** @brief Return the state of event block.
+	 *
+	 *  @see set_event_block()
+	 */
+	bool get_event_block();
+
+private:
+	bool set_viewmgr(ui_iface_viewmgr *viewmgr);
+	ui_iface_viewmgr *get_viewmgr();
+
+	_UI_DECLARE_PRIVATE_IMPL(ui_iface_view);
+	_UI_DISABLE_COPY_AND_ASSIGN(ui_iface_view);
+	_UI_DECLARE_FRIENDS(ui_iface_viewmgr);
 };
 
 }

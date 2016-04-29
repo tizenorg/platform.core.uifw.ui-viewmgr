@@ -24,9 +24,3 @@ ui_viewmgr::ui_viewmgr(const char *pkg)
 ui_viewmgr::~ui_viewmgr()
 {
 }
-
-ui_viewmgr::ui_viewmgr(const ui_viewmgr& viewmgr)
-		: ui_base_viewmgr(viewmgr)
-{
-
-}

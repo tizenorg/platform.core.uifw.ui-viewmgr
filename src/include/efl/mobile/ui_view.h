@@ -17,6 +17,10 @@
 #ifndef _UI_VIEW_H_
 #define _UI_VIEW_H_
 
+#include <list>
+
+using namespace std;
+
 namespace efl_viewmanager
 {
 

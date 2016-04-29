@@ -18,6 +18,9 @@
 #define _UI_BASE_VIEWMGR_H_
 
 #include <map>
+#include <string>
+
+using namespace std;
 
 //FIXME: ??
 #ifndef Elm_Conformant
@@ -103,7 +106,6 @@ protected:
 
 	///Constructor.
 	ui_base_viewmgr(const char *pkg);
-	ui_base_viewmgr(const ui_base_viewmgr& viewmgr);
 	///Destructor.
 	virtual ~ui_base_viewmgr();
 

@@ -20,19 +20,6 @@
 #include <app.h>
 #include <dlog.h>
 
-#define UI_EFL 1
-
-#if UI_EFL
-	#include <Elementary.h>
-	typedef Evas_Object* T;
-#else if UI_DALI
-#endif
-
-#ifdef  LOG_TAG
-#undef  LOG_TAG
-#endif
-#define LOG_TAG "UI_VIEWMGR"
-
 enum ui_view_indicator
 {
 	UI_VIEW_INDICATOR_DEFAULT = 0,
@@ -53,6 +40,31 @@ enum ui_view_state
 	UI_VIEW_STATE_LAST
 };
 
+
+#define UI_EFL 1
+
+#if UI_EFL
+	#include <Elementary.h>
+	typedef Evas_Object* T;
+#elif UI_DALI
+#endif
+
+#ifdef  LOG_TAG
+#undef  LOG_TAG
+#endif
+#define LOG_TAG "UI_VIEWMGR"
+
+#define _UI_DECLARE_FRIENDS(A) \
+	friend class A##_impl
+
+#define _UI_DECLARE_PRIVATE_IMPL(A) \
+	class A##_impl *impl; \
+	friend class A##_impl
+
+#define _UI_DISABLE_COPY_AND_ASSIGN(A) \
+	A(const A&) = delete; \
+	const A& operator=(const A&) = delete
+
 #include "ui_iface_singleton.h"
 #include "ui_iface_rotatable.h"
 #include "ui_iface_overlay.h"
@@ -60,14 +72,6 @@ enum ui_view_state
 #include "ui_iface_viewmgr.h"
 
 using namespace ui_viewmanager;
-
-#define _UI_DECLARE_PRIVATE_IMPL(A) \
-	class A_##impl *impl; \
-	friend class A_##impl
-
-#define _UI_DISABLE_COPY_AND_ASSIGN(A) \
-	A_##impl(const A_##impl&) = delete; \
-	const A_##impl& operator=(const A_##impl&) = delete
 
 
 #endif /* UI_IFACE_VIEWMANAGER_H */
