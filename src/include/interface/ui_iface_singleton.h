@@ -4,38 +4,38 @@
 namespace ui_viewmanager
 {
 
-template<typename T>
+template<typename XX>
 class singleton
 {
 private:
-	static T* inst;
+	static XX* inst;
 
 public:
 	singleton();
 	virtual ~singleton();
-	inline static T* get_instance();
+	inline static XX* get_instance();
 };
 
-template<typename T> T* singleton<T>::inst = NULL;
+template<typename XX> XX* singleton<XX>::inst = NULL;
 
-template<typename T>
-singleton<T>::singleton()
+template<typename XX>
+singleton<XX>::singleton()
 {
-	T* pT = reinterpret_cast<T*>(1);
+	XX* pT = reinterpret_cast<XX*>(1);
 
 	//Derived Class - Singleton class
-	int offset = reinterpret_cast<int>(pT) - reinterpret_cast<int>(reinterpret_cast<singleton<T>*>(pT));
-	singleton::inst = reinterpret_cast<T*>((reinterpret_cast<int>(this) + offset));
+	int offset = reinterpret_cast<int>(pT) - reinterpret_cast<int>(reinterpret_cast<singleton<XX>*>(pT));
+	singleton::inst = reinterpret_cast<XX*>((reinterpret_cast<int>(this) + offset));
 }
 
-template<typename T>
-singleton<T>::~singleton()
+template<typename XX>
+singleton<XX>::~singleton()
 {
 	singleton::inst = NULL;
 }
 
-template<typename T>
-T* singleton<T>::get_instance()
+template<typename XX>
+XX* singleton<XX>::get_instance()
 {
 	return singleton::inst;
 }

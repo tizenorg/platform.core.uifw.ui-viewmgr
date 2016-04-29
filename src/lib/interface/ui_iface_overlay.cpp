@@ -14,22 +14,42 @@
  *  limitations under the License.
  *
  */
-#ifndef _UI_BASE_OVERLAY_H_
-#define _UI_BASE_OVERLAY_H_
 
-namespace efl_viewmanager
+#include "../../include/interface/ui_iface_viewmanager.h"
+
+ui_iface_overlay::ui_iface_overlay(ui_iface_view *view)
+		: view(view), content(NULL)
 {
-
-class ui_base_viewmgr;
-class ui_base_view;
-
-class ui_base_overlay: public ui_iface_overlay
-{
-protected:
-	ui_base_overlay(ui_base_view *view);
-	virtual ~ui_base_overlay();
-};
-
 }
 
-#endif /* _UI_BASE_OVERLAY_H_ */
+ui_iface_overlay::~ui_iface_overlay()
+{
+}
+
+bool ui_iface_overlay::set_content(T content)
+{
+	this->content = content;
+	return true;
+}
+
+T ui_iface_overlay::unset_content()
+{
+	T prev = this->content;
+	this->content = NULL;
+	return prev;
+}
+
+T ui_iface_overlay::get_content()
+{
+	return this->content;
+}
+
+ui_iface_view *ui_iface_overlay::get_view()
+{
+	return this->view;
+}
+
+void ui_iface_overlay::on_back()
+{
+	this->deactivate();
+}

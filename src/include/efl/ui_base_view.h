@@ -32,7 +32,7 @@ namespace efl_viewmanager
  *  @warning When the transitions are finished, the view must to call ui_iface_viewmgr :: _push_finished(), ui_iface_viewmgr :: _pop_finished() in order that
  *           The ui_iface_viewmgr keeps the view states exactly.
  */
-class ui_base_view: public ui_iface_view<Evas_Object *>
+class ui_base_view: public ui_iface_view
 {
 	friend class ui_base_viewmgr;
 

@@ -17,14 +17,13 @@
 #ifndef _UI_BASE_VIEWMANAGER_H_
 #define _UI_BASE_VIEWMANAGER_H_
 
-#include <Elementary.h>
 #include "../interface/ui_iface_viewmanager.h"
 #include "ui_base_overlay.h"
 #include "ui_base_key_listener.h"
 #include "ui_base_viewmgr.h"
 #include "ui_base_view.h"
 
-#define UI_BASE_VIEWMGR dynamic_cast<ui_base_viewmgr *>(ui_iface_viewmgr<Evas_Object *>::get_instance())
+#define UI_BASE_VIEWMGR dynamic_cast<ui_base_viewmgr *>(ui_iface_viewmgr::get_instance())
 
 using namespace efl_viewmanager;
 

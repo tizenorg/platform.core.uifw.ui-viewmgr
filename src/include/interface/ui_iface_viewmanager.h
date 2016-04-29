@@ -20,6 +20,14 @@
 #include <app.h>
 #include <dlog.h>
 
+#define UI_EFL 1
+
+#if UI_EFL
+	#include <Elementary.h>
+	typedef Evas_Object* T;
+#else if UI_DALI
+#endif
+
 #ifdef  LOG_TAG
 #undef  LOG_TAG
 #endif
@@ -52,5 +60,14 @@ enum ui_view_state
 #include "ui_iface_viewmgr.h"
 
 using namespace ui_viewmanager;
+
+#define _UI_DECLARE_PRIVATE_IMPL(A) \
+	class A_##impl *impl; \
+	friend class A_##impl
+
+#define _UI_DISABLE_COPY_AND_ASSIGN(A) \
+	A_##impl(const A_##impl&) = delete; \
+	const A_##impl& operator=(const A_##impl&) = delete
+
 
 #endif /* UI_IFACE_VIEWMANAGER_H */
