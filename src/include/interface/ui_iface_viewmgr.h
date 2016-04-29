@@ -23,6 +23,7 @@ using namespace std;
 
 namespace ui_viewmanager {
 
+
 class ui_iface_view;
 
 /**
@@ -39,49 +40,61 @@ class ui_iface_view;
  */
 class ui_iface_viewmgr
 {
-	friend class ui_iface_view;
-
-private:
-	static ui_iface_viewmgr *inst;
-	static bool soft_key;                      //If system doesn't support HW back key, then this value is @c true.
-	static bool event_block;                   //Event block on view transition. This value should be configurable by system.
-	list<ui_iface_view *> view_list;            //View list.
-	bool activated;                            //Activated status of this viewmgr.
-
+public:
 	/**
-	 *  @brief Connect a given view to this viewmgr.
+	 *  @brief Activate this view manager.
 	 *
-	 *  @param view A view to connect to this viewmgr which means the @p view is to belong to this viewmgr.
-	 *
-	 *  @return @c true success or @c false not.
-	 *
-	 *  @warning If the given view is already connected to a viewmgr, this call will be failed.
-	 *  @see disconnect_view()
-	 */
-	bool connect_view(ui_iface_view *view);
-
-	/**
-	 *  @brief Disconnect a given view from this viewmgr.
-	 *
-	 *  @param view A view to disconnect from this viewmgr.
+	 *  @note viewmgr window and views will be shown once activate() is called. Usually this activate() should be called after applications set their all views
+	 *        on initialization time.
 	 *
 	 *  @return @c true on success or @c false otherwise.
 	 *
-	 *  @see connect_view()
+	 *  @see deactivate()
 	 */
-	bool disconnect_view(ui_iface_view *view);
+	bool activate();
 
 	/**
-	 *  @brief Toggle event blocking to the given view.
+	 *  @brief Deactivate this view manager.
 	 *
-	 *  @note If the event is blocked, product users won't be able to enter any inputs to this @p view. These inputs are mouse clicks, key press,
-	 *        screen touches, etc. Event if this function is called, @p view will be event-blocked only when system requires event blocking.
-	 *        Most of the times, This function should be used on transition. @see also push_view(), push_view_finished(), pop_view(), pop_view_finished().
+	 *  @note viewmgr window and views will be hidden once deactivate() is called. deactivate() behavior is up ui system, but usually it hides(unmap)
+	 *        current window in order that application go background.
 	 *
-	 *  @param view A view to toggle event blocking.
-	 *  @param block @c true is blocking event, otherwise @c false.
+	 *  @return @c true success or @c false not.
+	 *
+	 *  @see activate()
 	 */
-	void set_event_block(ui_iface_view *view, bool block);
+	bool deactivate();
+
+	/**
+	 *  @brief Return the active status of viewmgr.
+	 *
+	 *  @return @c true if viewmgr is activated, @c false otherwise.
+	 *
+	 *  @see activate()
+	 *  @see deactivate()
+	 */
+	bool is_activated();
+
+	/**
+	 *  @brief Return the number of views which this viewmgr has.
+	 *
+	 *  @return the number of view
+	 */
+	unsigned int get_view_count();
+
+	/**
+	 *  @brief Return whether soft key is required or not.
+	 *
+	 *  @note Soft key is kind of like the software back button. It's used for product users to change current view to a previous view (pop).
+	 *        If a device doesn't have any hardware back buttons, Soft back key is necessary which means this function will return @c true.
+	 *        Some devices may needs software back key as well as hardware back key at the same time. That decision is up to product design.
+	 *        And soft_key initial value should read from the system configuration.
+	 *
+	 *  @return @c true if soft key is required, @c false otherwise.
+	 */
+	static bool need_soft_key();
+
+	static ui_iface_viewmgr* get_instance();
 
 protected:
 	/**
@@ -226,65 +239,16 @@ protected:
 
 	///Constructor.
 	ui_iface_viewmgr();
-	ui_iface_viewmgr(const ui_iface_viewmgr& viewmgr);
 
 	///Destructor.
 	virtual ~ui_iface_viewmgr();
 
-public:
-	/**
-	 *  @brief Activate this view manager.
-	 *
-	 *  @note viewmgr window and views will be shown once activate() is called. Usually this activate() should be called after applications set their all views
-	 *        on initialization time.
-	 *
-	 *  @return @c true on success or @c false otherwise.
-	 *
-	 *  @see deactivate()
-	 */
-	bool activate();
+private:
+	//FIXME: Remove?
+	friend class ui_iface_view;
 
-	/**
-	 *  @brief Deactivate this view manager.
-	 *
-	 *  @note viewmgr window and views will be hidden once deactivate() is called. deactivate() behavior is up ui system, but usually it hides(unmap)
-	 *        current window in order that application go background.
-	 *
-	 *  @return @c true success or @c false not.
-	 *
-	 *  @see activate()
-	 */
-	bool deactivate();
-
-	/**
-	 *  @brief Return the active status of viewmgr.
-	 *
-	 *  @return @c true if viewmgr is activated, @c false otherwise.
-	 *
-	 *  @see activate()
-	 *  @see deactivate()
-	 */
-	bool is_activated();
-
-	/**
-	 *  @brief Return the number of views which this viewmgr has.
-	 *
-	 *  @return the number of view
-	 */
-	unsigned int get_view_count();
-
-	/**
-	 *  @brief Return whether soft key is required or not.
-	 *
-	 *  @note Soft key is kind of like the software back button. It's used for product users to change current view to a previous view (pop).
-	 *        If a device doesn't have any hardware back buttons, Soft back key is necessary which means this function will return @c true.
-	 *        Some devices may needs software back key as well as hardware back key at the same time. That decision is up to product design.
-	 *        And soft_key initial value should read from the system configuration.
-	 *
-	 *  @return @c true if soft key is required, @c false otherwise.
-	 */
-	static bool need_soft_key();
-	static ui_iface_viewmgr* get_instance();
+	_UI_DECLARE_PRIVATE_IMPL(ui_iface_viewmgr);
+	_UI_DISABLE_COPY_AND_ASSIGN(ui_iface_viewmgr);
 };
 
 }

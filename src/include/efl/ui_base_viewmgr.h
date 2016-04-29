@@ -103,7 +103,6 @@ protected:
 
 	///Constructor.
 	ui_base_viewmgr(const char *pkg);
-	ui_base_viewmgr(const ui_base_viewmgr& viewmgr);
 	///Destructor.
 	virtual ~ui_base_viewmgr();
 

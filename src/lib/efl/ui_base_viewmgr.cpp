@@ -269,11 +269,6 @@ ui_base_viewmgr::ui_base_viewmgr(const char *pkg)
 {
 }
 
-ui_base_viewmgr::ui_base_viewmgr(const ui_base_viewmgr& viewmgr)
-		: ui_iface_viewmgr(viewmgr)
-{
-}
-
 ui_base_viewmgr::~ui_base_viewmgr()
 {
 	this->key_listener->term();

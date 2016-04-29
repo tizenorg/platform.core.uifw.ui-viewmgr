@@ -15,19 +15,67 @@
  *
  */
 
+#include <list>
 #include "../../include/interface/ui_iface_viewmanager.h"
 
-ui_iface_viewmgr *ui_iface_viewmgr::inst = NULL;
+using namespace std;
+
+/***********************************************************************************************/
+/* Internal class Implementation                                                               */
+/***********************************************************************************************/
+namespace ui_viewmanager {
+
+class ui_iface_viewmgr_impl
+{
+	friend class ui_iface_view;
+
+private:
+	static ui_iface_viewmgr *inst;
+	static bool soft_key;                      //If system doesn't support HW back key, then this value is @c true.
+	static bool event_block;                   //Event block on view transition. This value should be configurable by system.
+	list<ui_iface_view *> view_list;           //View list.
+	bool activated;                            //Activated status of this viewmgr.
+
+public:
+	bool connect_view(ui_iface_view *view);
+	bool disconnect_view(ui_iface_view *view);
+	void set_event_block(ui_iface_view *view, bool block);
+
+	bool push_view_finished(ui_iface_view *view);
+	bool pop_view_finished(ui_iface_view *view);
+	ui_iface_view *push_view(ui_iface_view *view);
+	virtual bool pop_view();
+	bool insert_view_before(ui_iface_view *view, ui_iface_view *before);
+	bool insert_view_after(ui_iface_view *view, ui_iface_view *after);
+	bool remove_view(ui_iface_view *view);
+	ui_iface_view* get_view(unsigned int idx);
+	ui_iface_view *get_view(const char *name);
+	ui_iface_view *get_last_view();
+	int get_view_index(const ui_iface_view *view);
+
+	ui_iface_viewmgr_impl(ui_iface_viewmgr *viewmgr);
+	virtual ~ui_iface_viewmgr_impl();
+
+	bool activate();
+	bool deactivate();
+	bool is_activated();
+	unsigned int get_view_count();
+	static bool need_soft_key();
+	static ui_iface_viewmgr* get_instance();
+};
+
+}
+
+ui_iface_viewmgr* ui_iface_viewmgr_impl::inst = NULL;
+//FIXME: Read system profile to decide whether support software key or not.
+bool ui_iface_viewmgr_impl::soft_key = true;
+//FIXME: Read system profile to decide whether support event block or not.
+bool ui_iface_viewmgr_impl::event_block = true;
 
 #define VIEW_ITR list<ui_iface_view *>::iterator
 #define VIEW_RITR list<ui_iface_view *>::reverse_iterator
 
-//FIXME: Read system profile to decide whether support software key or not.
-bool ui_iface_viewmgr::soft_key = true;
-//FIXME: Read system profile to decide whether support event block or not.
-bool ui_iface_viewmgr::event_block = true;
-
-bool ui_iface_viewmgr::insert_view_after(ui_iface_view *view, ui_iface_view *after)
+bool ui_iface_viewmgr_impl::insert_view_after(ui_iface_view *view, ui_iface_view *after)
 {
 	VIEW_ITR it;
 
@@ -68,12 +116,12 @@ bool ui_iface_viewmgr::insert_view_after(ui_iface_view *view, ui_iface_view *aft
 	return true;
 }
 
-bool ui_iface_viewmgr::need_soft_key()
+bool ui_iface_viewmgr_impl::need_soft_key()
 {
-	return ui_iface_viewmgr::soft_key;
+	return ui_iface_viewmgr_impl::soft_key;
 }
 
-bool ui_iface_viewmgr::connect_view(ui_iface_view *view)
+bool ui_iface_viewmgr_impl::connect_view(ui_iface_view *view)
 {
 	//FIXME: If user call a set_viewmgr() before, It should not return false.
 	/*
@@ -84,24 +132,24 @@ bool ui_iface_viewmgr::connect_view(ui_iface_view *view)
 	}
 	*/
 
-	view->viewmgr = this;
+	view->viewmgr = this->get_instance();
 	return true;
 }
 
-bool ui_iface_viewmgr::disconnect_view(ui_iface_view *view)
+bool ui_iface_viewmgr_impl::disconnect_view(ui_iface_view *view)
 {
 	if (!view->viewmgr) return false;
 	view->viewmgr = NULL;
 	return true;
 }
 
-void ui_iface_viewmgr::set_event_block(ui_iface_view *view, bool block)
+void ui_iface_viewmgr_impl::set_event_block(ui_iface_view *view, bool block)
 {
-	if (!ui_iface_viewmgr::event_block) return;
+	if (!ui_iface_viewmgr_impl::event_block) return;
 	view->set_event_block(block);
 }
 
-bool ui_iface_viewmgr::push_view_finished(ui_iface_view *view)
+bool ui_iface_viewmgr_impl::push_view_finished(ui_iface_view *view)
 {
 	ui_iface_view *last = this->view_list.back();
 
@@ -119,7 +167,7 @@ bool ui_iface_viewmgr::push_view_finished(ui_iface_view *view)
 	return true;
 }
 
-bool ui_iface_viewmgr::pop_view_finished(ui_iface_view *view)
+bool ui_iface_viewmgr_impl::pop_view_finished(ui_iface_view *view)
 {
 	ui_iface_view *last = this->view_list.back();
 
@@ -139,17 +187,13 @@ bool ui_iface_viewmgr::pop_view_finished(ui_iface_view *view)
 	return true;
 }
 
-ui_iface_viewmgr::ui_iface_viewmgr(const ui_iface_viewmgr& viewmgr)
-{
-}
-
-ui_iface_viewmgr::ui_iface_viewmgr()
+ui_iface_viewmgr_impl::ui_iface_viewmgr_impl(ui_iface_viewmgr* viewmgr)
 		: activated(false)
 {
-	ui_iface_viewmgr::inst = this;
+	ui_iface_viewmgr_impl::inst = viewmgr;
 }
 
-ui_iface_viewmgr::~ui_iface_viewmgr()
+ui_iface_viewmgr_impl::~ui_iface_viewmgr_impl()
 {
 	//Terminate views
 	for (VIEW_RITR it = this->view_list.rbegin(); it != this->view_list.rend(); it++)
@@ -164,10 +208,10 @@ ui_iface_viewmgr::~ui_iface_viewmgr()
 	//FIXME: Window is destroyed. Terminate Application!
 	ui_app_exit();
 
-	ui_iface_viewmgr::inst = NULL;
+	ui_iface_viewmgr_impl::inst = NULL;
 }
 
-ui_iface_view *ui_iface_viewmgr::push_view(ui_iface_view *view)
+ui_iface_view *ui_iface_viewmgr_impl::push_view(ui_iface_view *view)
 {
 	if (!view)
 	{
@@ -208,7 +252,7 @@ ui_iface_view *ui_iface_viewmgr::push_view(ui_iface_view *view)
 	return view;
 }
 
-bool ui_iface_viewmgr::pop_view()
+bool ui_iface_viewmgr_impl::pop_view()
 {
 	//FIXME: No more view?
 	if (this->get_view_count() == 0)
@@ -247,7 +291,7 @@ bool ui_iface_viewmgr::pop_view()
 	return true;
 }
 
-bool ui_iface_viewmgr::insert_view_before(ui_iface_view *view, ui_iface_view *before)
+bool ui_iface_viewmgr_impl::insert_view_before(ui_iface_view *view, ui_iface_view *before)
 {
 	VIEW_ITR it;
 
@@ -283,7 +327,7 @@ bool ui_iface_viewmgr::insert_view_before(ui_iface_view *view, ui_iface_view *be
 	return true;
 }
 
-bool ui_iface_viewmgr::remove_view(ui_iface_view *view)
+bool ui_iface_viewmgr_impl::remove_view(ui_iface_view *view)
 {
 	this->view_list.remove(view);
 	this->disconnect_view(view);
@@ -292,7 +336,7 @@ bool ui_iface_viewmgr::remove_view(ui_iface_view *view)
 	return true;
 }
 
-ui_iface_view *ui_iface_viewmgr::get_view(unsigned int idx)
+ui_iface_view *ui_iface_viewmgr_impl::get_view(unsigned int idx)
 {
 	if (idx < 0 || idx >= this->view_list.size())
 	{
@@ -304,7 +348,7 @@ ui_iface_view *ui_iface_viewmgr::get_view(unsigned int idx)
 	return *it;
 }
 
-int ui_iface_viewmgr::get_view_index(const ui_iface_view *view)
+int ui_iface_viewmgr_impl::get_view_index(const ui_iface_view *view)
 {
 	int idx = 0;
 
@@ -317,13 +361,13 @@ int ui_iface_viewmgr::get_view_index(const ui_iface_view *view)
 	return -1;
 }
 
-ui_iface_view *ui_iface_viewmgr::get_last_view()
+ui_iface_view *ui_iface_viewmgr_impl::get_last_view()
 {
 	int cnt = this->get_view_count();
 	return this->get_view(cnt - 1);
 }
 
-bool ui_iface_viewmgr::activate()
+bool ui_iface_viewmgr_impl::activate()
 {
 	if (this->activated) return false;
 	if (this->get_view_count() == 0) return false;
@@ -331,30 +375,128 @@ bool ui_iface_viewmgr::activate()
 	return true;
 }
 
-bool ui_iface_viewmgr::deactivate()
+bool ui_iface_viewmgr_impl::deactivate()
 {
 	if (!this->activated) return false;
 	this->activated = false;
 	return true;
 }
 
-ui_iface_view *ui_iface_viewmgr::get_view(const char *name)
+ui_iface_view *ui_iface_viewmgr_impl::get_view(const char *name)
 {
 	//FIXME: ...
 	return NULL;
 }
 
-bool ui_iface_viewmgr::is_activated()
+bool ui_iface_viewmgr_impl::is_activated()
 {
 	return this->activated;
 }
 
-unsigned int ui_iface_viewmgr::get_view_count()
+unsigned int ui_iface_viewmgr_impl::get_view_count()
 {
 	return this->view_list.size();
 }
 
+ui_iface_viewmgr* ui_iface_viewmgr_impl::get_instance()
+{
+	return ui_iface_viewmgr_impl::inst;
+}
+
+/***********************************************************************************************/
+/* External class Implementation                                                               */
+/***********************************************************************************************/
+bool ui_iface_viewmgr::insert_view_after(ui_iface_view *view, ui_iface_view *after)
+{
+	return this->impl->insert_view_after(view, after);
+}
+
+bool ui_iface_viewmgr::need_soft_key()
+{
+	return ui_iface_viewmgr_impl::need_soft_key();
+}
+
+bool ui_iface_viewmgr::push_view_finished(ui_iface_view *view)
+{
+	return this->impl->push_view_finished(view);
+}
+
+bool ui_iface_viewmgr::pop_view_finished(ui_iface_view *view)
+{
+	return this->impl->pop_view_finished(view);
+}
+
+ui_iface_viewmgr::ui_iface_viewmgr()
+{
+	this->impl = new ui_iface_viewmgr_impl(this);
+}
+
+ui_iface_viewmgr::~ui_iface_viewmgr()
+{
+	delete(this->impl);
+}
+
+ui_iface_view *ui_iface_viewmgr::push_view(ui_iface_view *view)
+{
+	return this->impl->push_view(view);
+}
+
+bool ui_iface_viewmgr::pop_view()
+{
+	return this->impl->pop_view();
+}
+
+bool ui_iface_viewmgr::insert_view_before(ui_iface_view *view, ui_iface_view *before)
+{
+	return this->impl->insert_view_before(view, before);
+}
+
+bool ui_iface_viewmgr::remove_view(ui_iface_view *view)
+{
+	return this->impl->remove_view(view);
+}
+
+ui_iface_view *ui_iface_viewmgr::get_view(unsigned int idx)
+{
+	return this->impl->get_view(idx);
+}
+
+int ui_iface_viewmgr::get_view_index(const ui_iface_view *view)
+{
+	return this->get_view_index(view);
+}
+
+ui_iface_view *ui_iface_viewmgr::get_last_view()
+{
+	return this->impl->get_last_view();
+}
+
+bool ui_iface_viewmgr::activate()
+{
+	return this->impl->activate();
+}
+
+bool ui_iface_viewmgr::deactivate()
+{
+	return this->impl->deactivate();
+}
+
+ui_iface_view *ui_iface_viewmgr::get_view(const char *name)
+{
+	return this->impl->get_view(name);
+}
+
+bool ui_iface_viewmgr::is_activated()
+{
+	return this->impl->is_activated();
+}
+
+unsigned int ui_iface_viewmgr::get_view_count()
+{
+	return this->impl->get_view_count();
+}
+
 ui_iface_viewmgr* ui_iface_viewmgr::get_instance()
 {
-	return ui_iface_viewmgr::inst;
+	return ui_iface_viewmgr_impl::get_instance();
 }
