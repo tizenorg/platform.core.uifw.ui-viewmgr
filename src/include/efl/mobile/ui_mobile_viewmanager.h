@@ -21,13 +21,13 @@
 
 #include "../ui_base_viewmanager.h"
 #include "ui_view.h"
+#include "ui_standard_view.h"
 #include "ui_key_listener.h"
 #include "ui_viewmgr.h"
 #include "ui_menu.h"
 #include "ui_popup.h"
 #include "ui_app.h"
 
-#define UI_VIEWMGR ui_app::get_instance()->get_viewmgr()
-
+#define UI_VIEWMGR dynamic_cast<ui_viewmgr *>(ui_iface_viewmgr::get_instance())
 
 #endif /* UI_MOBILE_VIEWMANAGER_H */

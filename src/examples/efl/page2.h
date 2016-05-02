@@ -15,15 +15,15 @@
  *
  */
 
-/** This example create a simple view which is inheritance ui_view.
+/** This example create a simple view which is inheritance ui_standard_view.
  *  And add two buttons in view title area. hen push in viewmgr.
  */
-class page2: public ui_view
+class page2: public ui_standard_view
 {
 protected:
 	void on_load()
 	{
-		ui_view::on_load();
+		ui_standard_view::on_load();
 
 		//Create a main content.
 		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Title Buttons",
@@ -51,6 +51,6 @@ protected:
 	}
 
 public:
-	page2() : ui_view("page2") {}
+	page2() : ui_standard_view("page2") {}
 	~page2() {}
 };

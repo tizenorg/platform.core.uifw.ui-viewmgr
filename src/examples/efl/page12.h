@@ -15,7 +15,7 @@
  *
  */
 
-/** This page inherit ui_ui_view
+/** This page inherit ui_ui_standard_view
  *  And make a button on right top side of title area to activate popup.
  *  The created popup has view and it will be managed by viewmgr.
  */
@@ -29,12 +29,12 @@ static void popup_dismissed_cb(void *data, Evas_Object *obj, void *event_info)
 	delete (popup);
 }
 
-class page12: public ui_view
+class page12: public ui_standard_view
 {
 protected:
 	void on_load()
 	{
-		ui_view::on_load();
+		ui_standard_view::on_load();
 
 		//Create a main content.
 		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Popup",
@@ -65,7 +65,7 @@ protected:
 	}
 
 public:
-	page12() : ui_view("page12") {}
+	page12() : ui_standard_view("page12") {}
 	~page12() {}
 
 	void create_popup()

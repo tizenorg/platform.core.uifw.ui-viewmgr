@@ -15,15 +15,15 @@
  *
  */
 
-/** This page inherit ui_view to show title with toolbar sample.
+/** This page inherit ui_standard_view to show title with toolbar sample.
  *  And this page make a content in page constructor time.
  */
-class page7: public ui_view
+class page7: public ui_standard_view
 {
 protected:
 	void on_load()
 	{
-		ui_view::on_load();
+		ui_standard_view::on_load();
 
 		//Create a main content.
 		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Navigationbar",
@@ -45,6 +45,6 @@ protected:
 		this->set_toolbar(toolbar);
 	}
 public:
-	page7() : ui_view("page7") {}
+	page7() : ui_standard_view("page7") {}
 	~page7() {}
 };

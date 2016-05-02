@@ -26,12 +26,12 @@ static void ctxpopup_item_select_cb(void *data, Evas_Object *obj, void *event_in
 	LOGE("Item (%s) is selected", elm_object_item_text_get(it));
 }
 
-class page11: public ui_view
+class page11: public ui_standard_view
 {
 protected:
 	void on_load()
 	{
-		ui_view::on_load();
+		ui_standard_view::on_load();
 
 		//Create a main content.
 		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Menu Popup",
@@ -51,7 +51,7 @@ protected:
 
 	void on_menu(ui_menu *menu)
 	{
-		ui_view::on_menu(menu);
+		ui_standard_view::on_menu(menu);
 
 		Elm_Ctxpopup *ctxpopup = elm_ctxpopup_add(menu->get_base());
 		elm_ctxpopup_item_append(ctxpopup, "Phone calls", NULL, ctxpopup_item_select_cb, this);

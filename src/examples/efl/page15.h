@@ -15,15 +15,15 @@
  *
  */
 
-/** This example create a simple view which is inheritance ui_view.
+/** This example create a simple view which is inheritance ui_standard_view.
  *  Then push in viewmgr.
  */
-class page15: public ui_view
+class page15: public ui_standard_view
 {
 protected:
 	void on_load()
 	{
-		ui_view::on_load();
+		ui_standard_view::on_load();
 
 		//Create a main content.
 		Evas_Object *content = create_scrolling_content(this->get_base());

@@ -18,18 +18,18 @@
 /** This page implements on_rotate() method to create portarit, landscape content.
  *  This page will be created suitable content in on_rotate() method.
  */
-class page10: public ui_view
+class page10: public ui_standard_view
 {
 protected:
 	void on_load()
 	{
-		ui_view::on_load();
+		ui_standard_view::on_load();
 		this->on_rotate(this->get_degree());
 	}
 
 	void on_rotate(int degree)
 	{
-		ui_view::on_rotate(degree);
+		ui_standard_view::on_rotate(degree);
 
 		//Portrait
 		if (this->get_degree() == 0 || this->get_degree() == 180)
@@ -67,6 +67,6 @@ protected:
 		}
 	}
 public:
-	page10() : ui_view("page10") {}
+	page10() : ui_standard_view("page10") {}
 	~page10() {}
 };

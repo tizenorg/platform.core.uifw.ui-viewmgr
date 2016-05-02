@@ -17,10 +17,10 @@
 
 /** This page shows how to create a view content in advance.
  */
-class page8: public ui_view
+class page8: public ui_standard_view
 {
 public:
-	page8() : ui_view("page8")
+	page8() : ui_standard_view("page8")
 	{
 		//Create a main content.
 		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Content Preloading",

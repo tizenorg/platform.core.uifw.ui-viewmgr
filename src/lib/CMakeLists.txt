@@ -10,6 +10,7 @@ SET(SRCS
      efl/mobile/ui_menu.cpp
      efl/mobile/ui_popup.cpp
      efl/mobile/ui_view.cpp
+     efl/mobile/ui_standard_view.cpp
      efl/mobile/ui_key_listener.cpp
      efl/mobile/ui_viewmgr.cpp
     )
