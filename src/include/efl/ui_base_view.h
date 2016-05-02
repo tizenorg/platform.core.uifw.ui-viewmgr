@@ -34,7 +34,7 @@ namespace efl_viewmanager
  */
 class ui_base_view: public ui_iface_view
 {
-	friend class ui_base_viewmgr;
+	_UI_DECLARE_FRIENDS(ui_base_viewmgr);
 
 protected:
 	/** @brief Get a parent object of view.

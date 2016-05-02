@@ -23,7 +23,8 @@ using namespace std;
 /***********************************************************************************************/
 /* Internal class Implementation                                                               */
 /***********************************************************************************************/
-namespace ui_viewmanager {
+namespace ui_viewmanager
+{
 
 class ui_iface_viewmgr_impl
 {

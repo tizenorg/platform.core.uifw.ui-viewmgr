@@ -14,9 +14,72 @@
  *  limitations under the License.
  *
  */
+
+#include <map>
+#include <string>
 #include "../../include/efl/ui_base_viewmanager.h"
 
-bool ui_base_viewmgr::create_base_layout(Elm_Scroller *scroller, const char *style)
+using namespace std;
+
+/***********************************************************************************************/
+/* Internal class Implementation                                                               */
+/***********************************************************************************************/
+namespace efl_viewmanager
+{
+
+class ui_base_viewmgr_impl
+{
+	friend class ui_base_viewmgr;
+
+private:
+	ui_base_viewmgr *viewmgr;
+	Elm_Win *win;             		           //This is acting like a base object of viewmgr.
+	Elm_Conformant *conform;                   //Conformant for viewmgr.
+	Elm_Scroller *scroller;                    //Scroller for viewmgr.
+	Elm_Layout *layout;                        //Viewmgr's base layout.
+	ui_base_key_listener *key_listener;        //HW Key Handler such as "BACK" key...
+	ui_view_indicator indicator;               //Mode of indicator.
+	string transition_style;                   //Current transition effect style name
+	map<string, Elm_Layout *> effect_map;      //Map for effect layouts.
+
+	Elm_Layout *set_transition_layout(string transition_style);
+
+	bool create_conformant(Elm_Win *win);
+	bool create_scroller(Elm_Conformant *conform);
+	bool create_base_layout(Elm_Scroller *scroller, const char *style);
+	bool set_indicator(ui_view_indicator indicator);
+	void activate_top_view();
+	bool init();
+	bool term();
+
+public:
+	ui_base_viewmgr_impl(ui_base_viewmgr *viewmgr, const char *pkg, ui_base_key_listener *key_listener);
+	~ui_base_viewmgr_impl();
+
+	bool activate();
+	bool deactivate();
+	ui_base_view *push_view(ui_base_view *view);
+	bool pop_view();
+	bool insert_view_before(ui_base_view *view, ui_base_view *before);
+	bool insert_view_after(ui_base_view *view, ui_base_view *after);
+
+	Evas_Object *get_base()
+	{
+		return this->layout;
+	}
+	Elm_Win *get_window()
+	{
+		return this->win;
+	}
+	Elm_Conformant *get_conformant()
+	{
+		return this->conform;
+	}
+};
+
+}
+
+bool ui_base_viewmgr_impl::create_base_layout(Elm_Scroller *scroller, const char *style)
 {
 	char edj_path[PATH_MAX];
 	char group_name[128];
@@ -41,7 +104,7 @@ bool ui_base_viewmgr::create_base_layout(Elm_Scroller *scroller, const char *sty
 				if (pview) viewmgr->push_view_finished(pview);
 				if (view) viewmgr->push_view_finished(view);
 			},
-			this);
+			this->viewmgr);
 
 	//Pop Finished Event
 	elm_layout_signal_callback_add(layout, "pop,finished", "viewmgr",
@@ -53,14 +116,14 @@ bool ui_base_viewmgr::create_base_layout(Elm_Scroller *scroller, const char *sty
 				if (pview) viewmgr->pop_view_finished(pview);
 				if (view) viewmgr->pop_view_finished(view);
 			},
-			this);
+			this->viewmgr);
 
 	this->layout = layout;
 
 	return true;
 }
 
-Elm_Layout *ui_base_viewmgr::set_transition_layout(string transition_style)
+Elm_Layout *ui_base_viewmgr_impl::set_transition_layout(string transition_style)
 {
 	Elm_Layout *effect_layout = NULL;
 	Elm_Layout *pcontent;
@@ -97,12 +160,12 @@ Elm_Layout *ui_base_viewmgr::set_transition_layout(string transition_style)
 	return this->layout;
 }
 
-void ui_base_viewmgr::activate_top_view()
+void ui_base_viewmgr_impl::activate_top_view()
 {
 	Evas_Object *pcontent = elm_object_part_content_unset(this->get_base(), "content");
 	if (pcontent) evas_object_hide(pcontent);
 
-	ui_base_view *view = this->get_last_view();
+	ui_base_view *view = this->viewmgr->get_last_view();
 
 	//In case of ui_base_view, it doesn't have any base form. It uses viewmgr base instead.
 	Evas_Object *content;
@@ -122,7 +185,7 @@ void ui_base_viewmgr::activate_top_view()
 
 //FIXME: How to deal with indicator in other UI framework? Dali? Volt?
 //Is it possible make this interface common?
-bool ui_base_viewmgr::set_indicator(ui_view_indicator indicator)
+bool ui_base_viewmgr_impl::set_indicator(ui_view_indicator indicator)
 {
 	if (this->indicator == indicator) return false;
 	this->indicator = indicator;
@@ -154,7 +217,7 @@ bool ui_base_viewmgr::set_indicator(ui_view_indicator indicator)
 	return true;
 }
 
-bool ui_base_viewmgr::create_conformant(Elm_Win *win)
+bool ui_base_viewmgr_impl::create_conformant(Elm_Win *win)
 {
 	Elm_Conformant *conform = elm_conformant_add(win);
 	if (!conform) return false;
@@ -169,7 +232,7 @@ bool ui_base_viewmgr::create_conformant(Elm_Win *win)
 	return true;
 }
 
-bool ui_base_viewmgr::create_scroller(Elm_Conformant *conform)
+bool ui_base_viewmgr_impl::create_scroller(Elm_Conformant *conform)
 {
 	Elm_Scroller *scroller = elm_scroller_add(conform);
 	if (!scroller) return false;
@@ -185,14 +248,15 @@ bool ui_base_viewmgr::create_scroller(Elm_Conformant *conform)
 	return true;
 }
 
-ui_base_viewmgr::ui_base_viewmgr(const char *pkg, ui_base_key_listener *key_listener)
-		: ui_iface_viewmgr(), key_listener(key_listener), transition_style("default")
+ui_base_viewmgr_impl::ui_base_viewmgr_impl(ui_base_viewmgr *viewmgr, const char *pkg, ui_base_key_listener *key_listener)
+		: viewmgr(viewmgr), key_listener(key_listener), transition_style("default")
 {
 	if (!pkg)
 	{
 		LOGE("Invalid package name");
 		return;
 	}
+
 	//Window
 	this->win = elm_win_util_standard_add(pkg, pkg);
 
@@ -223,8 +287,7 @@ ui_base_viewmgr::ui_base_viewmgr(const char *pkg, ui_base_key_listener *key_list
 				if (rot == 0 || rot == 180) view->on_portrait();
 				else view->on_landscape();
 			}
-			, this);
-
+			, this->viewmgr);
 	//Window is requested to delete.
 	evas_object_smart_callback_add(this->win, "delete,request",
 			[](void *data, Evas_Object *obj, void *event_info) -> void
@@ -234,7 +297,7 @@ ui_base_viewmgr::ui_base_viewmgr(const char *pkg, ui_base_key_listener *key_list
 				//FIXME: Window is destroyed. Terminate Application!
 				//ui_app_exit();
 			},
-			this);
+			this->viewmgr);
 
 	//FIXME: Make conformant configurable?
 	if (!this->create_conformant(this->win))
@@ -260,29 +323,29 @@ ui_base_viewmgr::ui_base_viewmgr(const char *pkg, ui_base_key_listener *key_list
 	elm_win_indicator_opacity_set(this->win, ELM_WIN_INDICATOR_OPAQUE);
 
 	elm_win_autodel_set(this->win, EINA_TRUE);
-
-	key_listener->init();
 }
 
-ui_base_viewmgr::ui_base_viewmgr(const char *pkg)
-		: ui_base_viewmgr(pkg, new ui_base_key_listener(this))
+ui_base_viewmgr_impl::~ui_base_viewmgr_impl()
 {
-}
-
-ui_base_viewmgr::~ui_base_viewmgr()
-{
-	this->key_listener->term();
 	delete(this->key_listener);
 }
 
-bool ui_base_viewmgr::activate()
+bool ui_base_viewmgr_impl::init()
 {
-	if (!ui_iface_viewmgr::activate()) return false;
+	return this->key_listener->init();
+}
 
+bool ui_base_viewmgr_impl::term()
+{
+	return this->key_listener->term();
+}
+
+bool ui_base_viewmgr_impl::activate()
+{
 	this->activate_top_view();
 
 	//FIXME: Necessary??
-	ui_base_view *view = this->get_last_view();
+	ui_base_view *view = this->viewmgr->get_last_view();
 	view->on_activate();
 
 	evas_object_show(this->win);
@@ -290,14 +353,12 @@ bool ui_base_viewmgr::activate()
 	return true;
 }
 
-bool ui_base_viewmgr::deactivate()
+bool ui_base_viewmgr_impl::deactivate()
 {
-	if (!ui_iface_viewmgr::deactivate()) return false;
-
 	//FIXME: based on the profile, we should app to go behind or terminate.
 	if (true)
 	{
-		ui_base_view *view = this->get_last_view();
+		ui_base_view *view = this->viewmgr->get_last_view();
 		if (view) view->on_deactivate();
 		evas_object_lower(this->win);
 	}
@@ -310,27 +371,16 @@ bool ui_base_viewmgr::deactivate()
 	return true;
 }
 
-bool ui_base_viewmgr::pop_view()
+bool ui_base_viewmgr_impl::pop_view()
 {
-	if (this->get_view_count() == 1)
-	{
-		this->deactivate();
-		return true;
-	}
-
-	if(!ui_iface_viewmgr::pop_view())
-	{
-		return false;
-	}
-
-	ui_base_view *pview = this->get_view(this->get_view_count() - 2);
-	ui_base_view *view = this->get_last_view();
+	ui_base_view *pview = this->viewmgr->get_view(this->viewmgr->get_view_count() - 2);
+	ui_base_view *view = this->viewmgr->get_last_view();
 
 	//In case, if view doesn't have transition effect
 	if (!strcmp(view->get_transition_style(), "none"))
 	{
-		this->pop_view_finished(pview);
-		this->pop_view_finished(view);
+		this->viewmgr->pop_view_finished(pview);
+		this->viewmgr->pop_view_finished(view);
 		this->activate_top_view();
 		return true;
 	}
@@ -339,8 +389,8 @@ bool ui_base_viewmgr::pop_view()
 	Elm_Layout *effect = this->set_transition_layout(view->get_transition_style());
 	if (!effect) {
 		LOGE("invalid effect transition style?! = %s", view->get_transition_style());
-		this->pop_view_finished(pview);
-		this->pop_view_finished(view);
+		this->viewmgr->pop_view_finished(pview);
+		this->viewmgr->pop_view_finished(view);
 		this->activate_top_view();
 		return true;
 	}
@@ -359,26 +409,24 @@ bool ui_base_viewmgr::pop_view()
 	return true;
 }
 
-ui_base_view * ui_base_viewmgr::push_view(ui_base_view *view)
+ui_base_view * ui_base_viewmgr_impl::push_view(ui_base_view *view)
 {
-	ui_iface_viewmgr::push_view(view);
-
-	if (!this->is_activated()) return view;
+	if (!this->viewmgr->is_activated()) return view;
 
 	//In case, if viewmgr has one view, we skip effect.
-	if (this->get_view_count() == 1) {
+	if (this->viewmgr->get_view_count() == 1) {
 		this->activate_top_view();
-		this->push_view_finished(view);
+		this->viewmgr->push_view_finished(view);
 		return view;
 	}
 
-	ui_base_view *pview = this->get_view(this->get_view_count() - 2);
+	ui_base_view *pview = this->viewmgr->get_view(this->viewmgr->get_view_count() - 2);
 
 	//In case, if view doesn't have transition effect
 	if (!strcmp(view->get_transition_style(), "none")) {
 		this->activate_top_view();
-		this->push_view_finished(pview);
-		this->push_view_finished(view);
+		this->viewmgr->push_view_finished(pview);
+		this->viewmgr->push_view_finished(view);
 		return view;
 	}
 
@@ -387,8 +435,8 @@ ui_base_view * ui_base_viewmgr::push_view(ui_base_view *view)
 	if (!effect) {
 		LOGE("invalid effect transition style?! = %s", view->get_transition_style());
 		this->activate_top_view();
-		this->push_view_finished(pview);
-		this->push_view_finished(view);
+		this->viewmgr->push_view_finished(pview);
+		this->viewmgr->push_view_finished(view);
 		return view;
 	}
 
@@ -404,6 +452,71 @@ ui_base_view * ui_base_viewmgr::push_view(ui_base_view *view)
 	this->set_indicator(view->get_indicator());
 
 	return view;
+}
+
+/***********************************************************************************************/
+/* External class Implementation                                                               */
+/***********************************************************************************************/
+
+ui_base_viewmgr::ui_base_viewmgr(const char *pkg, ui_base_key_listener *key_listener)
+		: ui_iface_viewmgr()
+{
+	this->impl = new ui_base_viewmgr_impl(this, pkg, key_listener);
+	this->impl->init();
+}
+
+ui_base_viewmgr::ui_base_viewmgr(const char *pkg)
+		: ui_base_viewmgr(pkg, new ui_base_key_listener(this))
+{
+}
+
+ui_base_viewmgr::~ui_base_viewmgr()
+{
+	this->impl->term();
+	delete(this->impl);
+}
+
+bool ui_base_viewmgr::activate()
+{
+	if (!ui_iface_viewmgr::activate()) return false;
+
+	this->impl->activate();
+
+	return true;
+}
+
+bool ui_base_viewmgr::deactivate()
+{
+	if (!ui_iface_viewmgr::deactivate()) return false;
+
+	this->impl->deactivate();
+
+	return true;
+}
+
+bool ui_base_viewmgr::pop_view()
+{
+	if (this->get_view_count() == 1)
+	{
+		this->deactivate();
+		return true;
+	}
+
+	if(!ui_iface_viewmgr::pop_view())
+	{
+		return false;
+	}
+
+	return this->impl->pop_view();
+
+	return true;
+}
+
+ui_base_view * ui_base_viewmgr::push_view(ui_base_view *view)
+{
+	ui_iface_viewmgr::push_view(view);
+
+	return this->impl->push_view(view);
 }
 
 bool ui_base_viewmgr::insert_view_before(ui_base_view *view, ui_base_view *before)
@@ -424,4 +537,22 @@ ui_base_view *ui_base_viewmgr::get_view(unsigned int idx)
 ui_base_view *ui_base_viewmgr::get_last_view()
 {
 	return dynamic_cast<ui_base_view *>(ui_iface_viewmgr::get_last_view());
+}
+
+Evas_Object *ui_base_viewmgr::get_base()
+{
+	return this->impl->get_base();
+}
+Elm_Win *ui_base_viewmgr::get_window()
+{
+	return this->impl->get_window();
+}
+Elm_Conformant *ui_base_viewmgr::get_conformant()
+{
+	return this->impl->get_conformant();
+}
+
+bool ui_base_viewmgr::set_indicator(ui_view_indicator indicator)
+{
+	return this->impl->set_indicator(indicator);
 }

@@ -32,7 +32,7 @@ static void event_proc(ui_base_key_listener *key_listener, Evas_Event_Key_Down *
 	if (!viewmgr->is_activated()) return;
 
 	//Get Top View
-	ui_base_view *view = dynamic_cast<ui_base_view *>(viewmgr->get_last_view());
+	ui_base_view *view = viewmgr->get_last_view();
 	if (!view) return;
 
 	key_listener->extend_event_proc(view, ev);

@@ -27,20 +27,21 @@ class ui_iface_overlay: public ui_iface_rotatable
 public:
 	virtual bool set_content(T content);
 	virtual T unset_content();
+	virtual void on_back();
+	virtual bool activate();
+	virtual bool deactivate();
+	virtual bool is_activated();
+
 	ui_iface_view *get_view();
 	virtual T get_content();
-	virtual void on_back();
-	virtual bool activate() = 0;
-	virtual bool deactivate() = 0;
-	virtual bool is_activated() = 0;
 
 protected:
 	ui_iface_overlay(ui_iface_view *view);
 	virtual ~ui_iface_overlay();
 
 private:
-	ui_iface_view *view;
-	T content;
+	_UI_DECLARE_PRIVATE_IMPL(ui_iface_overlay);
+	_UI_DISABLE_COPY_AND_ASSIGN(ui_iface_overlay);
 };
 
 }
