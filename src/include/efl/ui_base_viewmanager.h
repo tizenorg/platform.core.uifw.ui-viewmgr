@@ -17,6 +17,11 @@
 #ifndef _UI_BASE_VIEWMANAGER_H_
 #define _UI_BASE_VIEWMANAGER_H_
 
+//FIXME: ??
+#ifndef Elm_Conformant
+#define Elm_Conformant Evas_Object
+#endif
+
 #include "../interface/ui_iface_viewmanager.h"
 #include "ui_base_overlay.h"
 #include "ui_base_key_listener.h"

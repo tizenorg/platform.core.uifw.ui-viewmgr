@@ -17,16 +17,6 @@
 #ifndef _UI_BASE_VIEWMGR_H_
 #define _UI_BASE_VIEWMGR_H_
 
-#include <map>
-#include <string>
-
-using namespace std;
-
-//FIXME: ??
-#ifndef Elm_Conformant
-#define Elm_Conformant Evas_Object
-#endif
-
 namespace efl_viewmanager
 {
 
@@ -45,80 +35,7 @@ class ui_base_view;
  */
 class ui_base_viewmgr: public ui_iface_viewmgr
 {
-	friend class ui_base_view;
-
-private:
-	Elm_Win *win;             		           //This is acting like a base object of viewmgr.
-	Elm_Conformant *conform;                   //Conformant for viewmgr.
-	Elm_Scroller *scroller;                    //Scroller for viewmgr.
-	Elm_Layout *layout;                        //Viewmgr's base layout.
-	ui_base_key_listener *key_listener;        //HW Key Handler such as "BACK" key...
-	ui_view_indicator indicator;               //Mode of indicator.
-	string transition_style;                   //Current transition effect style name
-	map<string, Elm_Layout *> effect_map;      //Map for effect layouts.
-
-	Elm_Layout *set_transition_layout(string transition_style);
-
-	/**
-	 *  @brief Create a conformant.
-	 *
-	 *  @param win viewmgr's window object. this will be parent of conformant object.
-	 *
-	 *  @return @c true success or @c false not.
-	 */
-	bool create_conformant(Elm_Win *win);
-
-	/**
-	 *  @brief Create a Scroller.
-	 *
-	 *  @param conform viewmgr's conformant object. this will be parent of layout object.
-	 *
-	 *  @note We add a scroller for an exceptional case. If user view content is larger than window,
-	 *        then the content will be automatically scrollable by this scroller.
-	 *        For instance, if the virtual keypad is enabled in the landscape mode,
-	 *        the content area would be smaller than content minimum size.
-	 *        We could avoid clipping the content by scroller.
-	 *
-	 *  @return @c true success or @c false not.
-	 */
-
-	bool create_scroller(Elm_Conformant *conform);
-	/**
-	 *  @brief Create a base layout.
-	 *
-	 *  @param scroller viewmgr's scroller object. this will be parent of layout object.
-	 *  @param style view's transition effect style.
-	 *
-	 *  @return @c true success or @c false not.
-	 */
-	bool create_base_layout(Elm_Scroller *scroller, const char *style);
-
-	/** @brief Set the indicator mode.
-	 *
-	 *  @param indicator The mode to set, one of #ui_view_indicator.
-	 */
-	bool set_indicator(ui_view_indicator indicator);
-
-	void activate_top_view();
-
-protected:
-	ui_base_viewmgr(const char *pkg, ui_base_key_listener *key_listener);
-
-	///Constructor.
-	ui_base_viewmgr(const char *pkg);
-	///Destructor.
-	virtual ~ui_base_viewmgr();
-
-	/** @brief Get a base layout of viewmgr.
-	 */
-	Evas_Object *get_base()
-	{
-		return this->layout;
-	}
-
-
 public:
-
 	/**
 	 *  @brief Activate this view manager.
 	 *
@@ -203,17 +120,11 @@ public:
 
 	/** @brief Get a window object of viewmgr.
 	 */
-	Elm_Win *get_window()
-	{
-		return this->win;
-	}
+	Elm_Win *get_window();
 
 	/** @brief Get a conformant object of viewmgr.
 	 */
-	Elm_Conformant *get_conformant()
-	{
-		return this->conform;
-	}
+	Elm_Conformant *get_conformant();
 
 	/** @brief Get a last view of current view stack.
 	 */
@@ -234,7 +145,26 @@ public:
 	 *  @see get_view_count()
 	 */
 	ui_base_view *get_view(unsigned int idx);
+
+	/** @brief Get a base layout of viewmgr.
+	 */
+	Evas_Object *get_base();
+
+protected:
+	bool set_indicator(ui_view_indicator indicator);
+
+	///Constructor
+	ui_base_viewmgr(const char *pkg, ui_base_key_listener *key_listener);
+	ui_base_viewmgr(const char *pkg);
+	///Destructor.
+	virtual ~ui_base_viewmgr();
+
+private:
+	_UI_DECLARE_PRIVATE_IMPL(ui_base_viewmgr);
+	_UI_DISABLE_COPY_AND_ASSIGN(ui_base_viewmgr);
+	_UI_DECLARE_FRIENDS(ui_base_view);
 };
+
 }
 
 #endif /* _UI_BASE_VIEWMGR_H_ */

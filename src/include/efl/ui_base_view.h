@@ -34,29 +34,6 @@ namespace efl_viewmanager
  */
 class ui_base_view: public ui_iface_view
 {
-	friend class ui_base_viewmgr;
-
-protected:
-	/** @brief Get a parent object of view.
-	 *
-	 *  @note This is calling viewmgr get_base() method internally.
-	 *
-	 *  @return base layout of viewmgr.
-	 */
-	Evas_Object *get_parent();
-
-	/** @brief toggle event block.
-	 *
-	 *  @note It makes internal conformant event freeze during effect showing.
-	 *
-	 *  @param block @c true, when blocking is enabled, otherwise @c false.
-	 */
-	virtual void set_event_block(bool block);
-
-	virtual void on_rotate(int degree);
-	virtual void on_portrait();
-	virtual void on_landscape();
-
 public:
 	///Constructor.
 	ui_base_view(const char *name = NULL);
@@ -93,6 +70,32 @@ public:
 	 *  @return Current rotation degree, -1 if it fails to get degree information.
 	 */
 	virtual int get_degree();
+
+protected:
+	/** @brief Get a parent object of view.
+	 *
+	 *  @note This is calling viewmgr get_base() method internally.
+	 *
+	 *  @return base layout of viewmgr.
+	 */
+	Evas_Object *get_parent();
+
+	/** @brief toggle event block.
+	 *
+	 *  @note It makes internal conformant event freeze during effect showing.
+	 *
+	 *  @param block @c true, when blocking is enabled, otherwise @c false.
+	 */
+	virtual void set_event_block(bool block);
+
+	virtual void on_rotate(int degree);
+	virtual void on_portrait();
+	virtual void on_landscape();
+
+private:
+	_UI_DECLARE_PRIVATE_IMPL(ui_base_view);
+	_UI_DISABLE_COPY_AND_ASSIGN(ui_base_view);
+	_UI_DECLARE_FRIENDS(ui_base_viewmgr);
 };
 
 }

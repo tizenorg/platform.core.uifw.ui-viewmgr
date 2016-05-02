@@ -16,6 +16,19 @@
  */
 #include "../../include/efl/ui_base_viewmanager.h"
 
+
+/***********************************************************************************************/
+/* Internal class Implementation                                                               */
+/***********************************************************************************************/
+namespace efl_viewmanager
+{
+class ui_base_view_impl;
+}
+
+/***********************************************************************************************/
+/* External class Implementation                                                               */
+/***********************************************************************************************/
+
 static void content_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
 	ui_base_view *view = static_cast<ui_base_view *>(data);
@@ -93,7 +106,7 @@ void ui_base_view::set_indicator(ui_view_indicator indicator)
 
 	if (!viewmgr->is_activated()) return;
 
-	if (dynamic_cast<ui_base_view *>(viewmgr->get_last_view()) != this) return;
+	if (viewmgr->get_last_view() != this) return;
 
 	viewmgr->set_indicator(indicator);
 }
@@ -126,3 +139,4 @@ int ui_base_view::get_degree()
 	}
 	return elm_win_rotation_get(viewmgr->get_window());
 }
+

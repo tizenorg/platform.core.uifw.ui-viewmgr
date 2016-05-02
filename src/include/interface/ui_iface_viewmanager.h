@@ -54,7 +54,8 @@ enum ui_view_state
 #define LOG_TAG "UI_VIEWMGR"
 
 #define _UI_DECLARE_FRIENDS(A) \
-	friend class A##_impl
+	friend class A##_impl; \
+	friend class A
 
 #define _UI_DECLARE_PRIVATE_IMPL(A) \
 	class A##_impl *impl; \

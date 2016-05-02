@@ -19,24 +19,27 @@
 
 namespace efl_viewmanager
 {
+
 class ui_base_viewmgr;
-class ui_base_view;
 
 class ui_base_key_listener
 {
-protected:
-	ui_base_viewmgr *viewmgr;
-	Evas_Object *key_grabber;
-
 public:
 	ui_base_key_listener(ui_base_viewmgr *viewmgr);
-	virtual ~ui_base_key_listener() {}
+	virtual ~ui_base_key_listener();
 
 	virtual bool init();
 	virtual bool term();
 	virtual void extend_event_proc(ui_base_view *view, Evas_Event_Key_Down *ev) {}
 
-	ui_base_viewmgr *get_viewmgr() { return this->viewmgr; }
+	ui_base_viewmgr *get_viewmgr();
+
+protected:
+	Evas_Object *get_keygrab_obj();
+
+private:
+	_UI_DECLARE_PRIVATE_IMPL(ui_base_key_listener);
+	_UI_DISABLE_COPY_AND_ASSIGN(ui_base_key_listener);
 };
 
 }

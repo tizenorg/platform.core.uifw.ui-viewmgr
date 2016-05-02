@@ -140,7 +140,7 @@ public:
 	 */
 	ui_view_indicator get_indicator();
 
-	void on_back();
+	virtual void on_back();
 
 protected:
 

@@ -16,14 +16,31 @@
  */
 #include "../../include/efl/ui_base_viewmanager.h"
 
+/***********************************************************************************************/
+/* Internal class Implementation                                                               */
+/***********************************************************************************************/
+namespace efl_viewmanager
+{
+class ui_base_key_listener_impl
+{
+protected:
+	ui_base_key_listener *key_listener;
+	ui_base_viewmgr *viewmgr;
+	Evas_Object *key_grabber;
+
+public:
+	ui_base_key_listener_impl(ui_base_key_listener *key_listener, ui_base_viewmgr *viewmgr);
+	~ui_base_key_listener_impl() {}
+
+	bool init();
+	bool term();
+	ui_base_viewmgr *get_viewmgr() { return this->viewmgr; }
+	Evas_Object *get_keygrab_obj() { return this->key_grabber; }
+};
+}
+
 static const char *KEY_BACK = "XF86Back";
 static const char *KEY_BACK2 = "XF86Stop";
-
-ui_base_key_listener::ui_base_key_listener(ui_base_viewmgr *viewmgr)
-		: viewmgr(viewmgr), key_grabber(NULL)
-{
-
-}
 
 static void event_proc(ui_base_key_listener *key_listener, Evas_Event_Key_Down *ev)
 {
@@ -32,7 +49,7 @@ static void event_proc(ui_base_key_listener *key_listener, Evas_Event_Key_Down *
 	if (!viewmgr->is_activated()) return;
 
 	//Get Top View
-	ui_base_view *view = dynamic_cast<ui_base_view *>(viewmgr->get_last_view());
+	ui_base_view *view = viewmgr->get_last_view();
 	if (!view) return;
 
 	key_listener->extend_event_proc(view, ev);
@@ -42,13 +59,19 @@ static void event_proc(ui_base_key_listener *key_listener, Evas_Event_Key_Down *
 	view->on_back();
 }
 
-bool ui_base_key_listener::term()
+ui_base_key_listener_impl::ui_base_key_listener_impl(ui_base_key_listener *key_listener, ui_base_viewmgr *viewmgr)
+		: key_listener(key_listener), viewmgr(viewmgr), key_grabber(NULL)
+{
+
+}
+
+bool ui_base_key_listener_impl::term()
 {
 	evas_object_del(this->key_grabber);
 	return true;
 }
 
-bool ui_base_key_listener::init()
+bool ui_base_key_listener_impl::init()
 {
 	if (!this->viewmgr)
 	{
@@ -75,7 +98,7 @@ bool ui_base_key_listener::init()
 		Evas_Event_Key_Down *ev = static_cast<Evas_Event_Key_Down *>(event_info);
 		ui_base_key_listener *key_listener = static_cast<ui_base_key_listener *>(data);
 		event_proc(key_listener, ev);
-	}, this);
+	}, this->key_listener);
 
 	if (!evas_object_key_grab(key_grab_rect, KEY_BACK, 0, 0, EINA_FALSE))
 	{
@@ -94,4 +117,40 @@ bool ui_base_key_listener::init()
 	this->key_grabber = key_grab_rect;
 
 	return true;
+}
+
+
+/***********************************************************************************************/
+/* External class Implementation                                                               */
+/***********************************************************************************************/
+
+ui_base_key_listener::ui_base_key_listener(ui_base_viewmgr *viewmgr)
+{
+	this->impl = new ui_base_key_listener_impl(this, viewmgr);
+}
+
+ui_base_key_listener::~ui_base_key_listener()
+{
+	delete(this->impl);
+}
+
+bool ui_base_key_listener::term()
+{
+	return this->impl->term();
+}
+
+bool ui_base_key_listener::init()
+{
+	return this->impl->init();
+}
+
+Evas_Object *ui_base_key_listener::get_keygrab_obj()
+{
+	return this->impl->get_keygrab_obj();
+}
+
+
+ui_base_viewmgr *ui_base_key_listener::get_viewmgr()
+{
+	return this->impl->get_viewmgr();
 }

@@ -37,13 +37,13 @@ void ui_key_listener::extend_event_proc(ui_base_view *view, Evas_Event_Key_Down 
 bool ui_key_listener::init()
 {
 	if (!ui_base_key_listener::init()) return false;
-	if (!evas_object_key_grab(this->key_grabber, KEY_MENU, 0, 0, EINA_FALSE))
+	if (!evas_object_key_grab(this->get_keygrab_obj(), KEY_MENU, 0, 0, EINA_FALSE))
 	{
 		LOGE("Failed to grab MENU KEY(%s)\n", KEY_MENU);
 		return false;
 	}
 
-	if (!evas_object_key_grab(this->key_grabber, KEY_MENU2, 0, 0, EINA_FALSE))
+	if (!evas_object_key_grab(this->get_keygrab_obj(), KEY_MENU2, 0, 0, EINA_FALSE))
 	{
 		LOGE("Failed to grab MENU KEY(%s)\n", KEY_MENU2);
 		return false;
