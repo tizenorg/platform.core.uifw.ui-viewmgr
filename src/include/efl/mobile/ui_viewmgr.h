@@ -21,16 +21,20 @@ namespace efl_viewmanager
 {
 
 class ui_view;
+class ui_app;
 
 class ui_viewmgr: public ui_base_viewmgr
 {
-	friend class ui_view;
-	friend class ui_app;
-
 protected:
 	//Don't allow to create ui_viewmgr instance
 	ui_viewmgr(const char *pkg);
 	virtual ~ui_viewmgr();
+
+private:
+	_UI_DECLARE_PRIVATE_IMPL(ui_viewmgr);
+	_UI_DISABLE_COPY_AND_ASSIGN(ui_viewmgr);
+	_UI_DECLARE_FRIENDS(ui_view);
+	_UI_DECLARE_FRIENDS(ui_app);
 };
 }
 

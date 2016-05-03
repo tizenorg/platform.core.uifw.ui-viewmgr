@@ -19,11 +19,11 @@
 
 namespace efl_viewmanager
 {
+
+class ui_view;
+
 class ui_popup : public ui_base_overlay
 {
-private:
-	Elm_Win *get_window();
-
 public:
 	ui_popup(ui_view *view);
 	virtual ~ui_popup();
@@ -36,6 +36,10 @@ public:
 
 	virtual Evas_Object *get_base();
 	virtual int get_degree();
+
+private:
+	_UI_DECLARE_PRIVATE_IMPL(ui_popup);
+	_UI_DISABLE_COPY_AND_ASSIGN(ui_popup);
 };
 
 }

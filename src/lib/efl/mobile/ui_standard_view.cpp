@@ -16,6 +16,64 @@
  */
 #include "../../../include/efl/mobile/ui_mobile_viewmanager.h"
 
+/***********************************************************************************************/
+/* Internal class Implementation                                                               */
+/***********************************************************************************************/
+
+namespace efl_viewmanager
+{
+
+class ui_standard_view_impl
+{
+	friend class ui_standard_view;
+
+private:
+	ui_standard_view *view;
+	Elm_Layout *layout;                //Base layout for view
+	Elm_Toolbar *toolbar;              //Toolbar
+	Elm_Button *title_left_btn;        //Title left button
+	Elm_Button *title_right_btn;       //Title right button
+
+	bool create_layout();
+	bool destroy_layout();
+
+public:
+	ui_standard_view_impl(ui_standard_view *view);
+	~ui_standard_view_impl();
+
+	bool set_content(Evas_Object *content, const char *title = NULL);
+	bool set_content(Evas_Object *content, const char *title, const char *subtitle, Elm_Button *title_left_btn, Elm_Button *title_right_btn);
+	bool set_title_badge(const char *text);
+	bool set_subtitle(const char *text);
+	bool set_title_left_btn(Elm_Button *title_left_btn);
+	bool set_title_right_btn(Elm_Button *title_right_btn);
+	bool set_title(const char *text);
+	bool set_toolbar(Elm_Toolbar *toolbar);
+	bool set_title_visible(bool visible, bool anim);
+	void unset_content();
+	Elm_Button *unset_title_left_btn();
+	Elm_Button *unset_title_right_btn();
+	Elm_Toolbar *unset_toolbar();
+	Evas_Object *get_base();
+
+	Elm_Button *get_title_left_btn()
+	{
+		return this->title_left_btn;
+	}
+
+	Elm_Button *get_title_right_btn()
+	{
+		return this->title_right_btn;
+	}
+
+	Elm_Toolbar *get_toolbar()
+	{
+		return this->toolbar;
+	}
+};
+
+}
+
 #define DEFAULT_GROUP "tizen_view/default"
 
 #define LAYOUT_VALIDATE() if (!layout) \
@@ -42,7 +100,7 @@ static void toolbar_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_in
 	view->unset_toolbar();
 }
 
-bool ui_standard_view::destroy_layout()
+bool ui_standard_view_impl::destroy_layout()
 {
 	if (!this->layout) return false;
 	evas_object_del(this->layout);
@@ -51,11 +109,11 @@ bool ui_standard_view::destroy_layout()
 	return true;
 }
 
-bool ui_standard_view::create_layout()
+bool ui_standard_view_impl::create_layout()
 {
 	if (this->layout) return false;
 
-	Elm_Layout *layout = elm_layout_add(this->get_parent());
+	Elm_Layout *layout = elm_layout_add(this->view->get_parent());
 	LAYOUT_VALIDATE();
 
 	char buf[PATH_MAX];
@@ -70,9 +128,9 @@ bool ui_standard_view::create_layout()
 	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(layout, EVAS_HINT_FILL, EVAS_HINT_FILL);
 
-	if (this->get_content())
+	if (this->view->get_content())
 	{
-		elm_object_part_content_set(layout, "elm.swallow.content", this->get_content());
+		elm_object_part_content_set(layout, "elm.swallow.content", this->view->get_content());
 	}
 
 	//Set software back key, if it's needed
@@ -104,36 +162,18 @@ bool ui_standard_view::create_layout()
 	return true;
 }
 
-ui_standard_view::ui_standard_view(const char *name)
-		: ui_view(name), layout(NULL), toolbar(NULL), title_left_btn(NULL), title_right_btn(NULL)
+ui_standard_view_impl::ui_standard_view_impl(ui_standard_view *view)
+		: view(view), layout(NULL), toolbar(NULL), title_left_btn(NULL), title_right_btn(NULL)
 {
 }
 
-ui_standard_view::~ui_standard_view()
+ui_standard_view_impl::~ui_standard_view_impl()
 {
 	destroy_layout();
 }
 
-void ui_standard_view::on_load()
+bool ui_standard_view_impl::set_content(Evas_Object *content, const char *title)
 {
-	ui_view::on_load();
-
-	Elm_Layout *layout = this->get_base();
-	evas_object_show(layout);
-}
-
-void ui_standard_view::on_unload()
-{
-	ui_view::on_unload();
-
-	Elm_Layout *layout = this->get_base();
-	evas_object_hide(layout);
-}
-
-bool ui_standard_view::set_content(Evas_Object *content, const char *title)
-{
-	ui_view::set_content(content);
-
 	Elm_Layout *layout = this->get_base();
 	LAYOUT_VALIDATE();
 
@@ -152,7 +192,7 @@ bool ui_standard_view::set_content(Evas_Object *content, const char *title)
 	return true;
 }
 
-bool ui_standard_view::set_subtitle(const char *text)
+bool ui_standard_view_impl::set_subtitle(const char *text)
 {
 	Elm_Layout *layout = this->get_base();
 	LAYOUT_VALIDATE();
@@ -164,7 +204,7 @@ bool ui_standard_view::set_subtitle(const char *text)
 	return true;
 }
 
-bool ui_standard_view::set_title_left_btn(Elm_Button *title_left_btn)
+bool ui_standard_view_impl::set_title_left_btn(Elm_Button *title_left_btn)
 {
 	Elm_Layout *layout = this->get_base();
 	LAYOUT_VALIDATE();
@@ -181,12 +221,12 @@ bool ui_standard_view::set_title_left_btn(Elm_Button *title_left_btn)
 	elm_object_style_set(title_left_btn, "tizen_view/title_left");
 	elm_object_part_content_set(layout, "title_left_btn", title_left_btn);
 	elm_object_signal_emit(layout, "elm,state,title_left_btn,show", "viewmgr");
-	evas_object_event_callback_add(title_left_btn, EVAS_CALLBACK_DEL, title_left_btn_del_cb, this);
+	evas_object_event_callback_add(title_left_btn, EVAS_CALLBACK_DEL, title_left_btn_del_cb, this->view);
 
 	return true;
 }
 
-bool ui_standard_view::set_title_right_btn(Elm_Button *title_right_btn)
+bool ui_standard_view_impl::set_title_right_btn(Elm_Button *title_right_btn)
 {
 	Elm_Layout *layout = this->get_base();
 	LAYOUT_VALIDATE();
@@ -203,12 +243,12 @@ bool ui_standard_view::set_title_right_btn(Elm_Button *title_right_btn)
 	elm_object_style_set(title_right_btn, "tizen_view/title_right");
 	elm_object_part_content_set(layout, "title_right_btn", title_right_btn);
 	elm_object_signal_emit(layout, "elm,state,title_right_btn,show", "viewmgr");
-	evas_object_event_callback_add(title_right_btn, EVAS_CALLBACK_DEL, title_right_btn_del_cb, this);
+	evas_object_event_callback_add(title_right_btn, EVAS_CALLBACK_DEL, title_right_btn_del_cb, this->view);
 
 	return true;
 }
 
-bool ui_standard_view::set_title_badge(const char *text)
+bool ui_standard_view_impl::set_title_badge(const char *text)
 {
 	Elm_Layout *layout = this->get_base();
 	LAYOUT_VALIDATE();
@@ -220,7 +260,7 @@ bool ui_standard_view::set_title_badge(const char *text)
 	return true;
 }
 
-bool ui_standard_view::set_title(const char *text)
+bool ui_standard_view_impl::set_title(const char *text)
 {
 	Elm_Layout *layout = this->get_base();
 	LAYOUT_VALIDATE();
@@ -232,17 +272,7 @@ bool ui_standard_view::set_title(const char *text)
 	return true;
 }
 
-bool ui_standard_view::set_content(Evas_Object *content, const char *title, const char *subtitle, Elm_Button *title_left_btn, Elm_Button *title_right_btn)
-{
-	if (!this->set_content(content, title)) return false;
-	if (!this->set_subtitle(subtitle)) return false;
-	if (!this->set_title_left_btn(title_left_btn)) return false;
-	if (!this->set_title_right_btn(title_right_btn)) return false;
-
-	return true;
-}
-
-bool ui_standard_view::set_toolbar(Elm_Toolbar *toolbar)
+bool ui_standard_view_impl::set_toolbar(Elm_Toolbar *toolbar)
 {
 	Elm_Layout *layout = this->get_base();
 	LAYOUT_VALIDATE();
@@ -274,35 +304,24 @@ bool ui_standard_view::set_toolbar(Elm_Toolbar *toolbar)
 
 	elm_object_part_content_set(layout, "toolbar", toolbar);
 	elm_object_signal_emit(layout, "elm,state,toolbar,show", "viewmgr");
-	evas_object_event_callback_add(toolbar, EVAS_CALLBACK_DEL, toolbar_del_cb, this);
+	evas_object_event_callback_add(toolbar, EVAS_CALLBACK_DEL, toolbar_del_cb, this->view);
 
 	return true;
 }
 
-void ui_standard_view::set_event_block(bool block)
+void ui_standard_view_impl::unset_content()
 {
-	ui_view::set_event_block(block);
-	evas_object_freeze_events_set(this->get_base(), block);
-}
-
-Evas_Object *ui_standard_view::unset_content()
-{
-	Evas_Object *pcontent = ui_view::unset_content();
-	if (!pcontent) return NULL;
-
 	Elm_Layout *layout = this->get_base();
 	if (!layout)
 	{
 		LOGE("Layout is invalid! ui_standard_view(%p)", this);
-		return pcontent;
+		return;
 	}
 	elm_object_part_content_unset(layout, "elm.swallow.content");
 	elm_object_signal_emit(layout, "elm.state,elm.swallow.content,hide", "viewmgr");
-
-	return pcontent;
 }
 
-Elm_Button *ui_standard_view::unset_title_left_btn()
+Elm_Button *ui_standard_view_impl::unset_title_left_btn()
 {
 	Elm_Button *btn = this->title_left_btn;
 	if (!btn) return NULL;
@@ -323,7 +342,7 @@ Elm_Button *ui_standard_view::unset_title_left_btn()
 	return btn;
 }
 
-Elm_Button *ui_standard_view::unset_title_right_btn()
+Elm_Button *ui_standard_view_impl::unset_title_right_btn()
 {
 	Elm_Button *btn = this->title_right_btn;
 	if (!btn) return NULL;
@@ -344,7 +363,7 @@ Elm_Button *ui_standard_view::unset_title_right_btn()
 	return btn;
 }
 
-Elm_Toolbar *ui_standard_view::unset_toolbar()
+Elm_Toolbar *ui_standard_view_impl::unset_toolbar()
 {
 	Elm_Toolbar *toolbar = this->toolbar;
 	if (!toolbar) return NULL;
@@ -365,7 +384,7 @@ Elm_Toolbar *ui_standard_view::unset_toolbar()
 	return toolbar;
 }
 
-Evas_Object *ui_standard_view::get_base()
+Evas_Object *ui_standard_view_impl::get_base()
 {
 	if (!this->layout)
 	{
@@ -374,7 +393,7 @@ Evas_Object *ui_standard_view::get_base()
 	return this->layout;
 }
 
-bool ui_standard_view::set_title_visible(bool visible, bool anim)
+bool ui_standard_view_impl::set_title_visible(bool visible, bool anim)
 {
 	//FIXME: save visible, anim value. they can be used in layout created time.
 	Elm_Layout *layout = this->get_base();
@@ -396,4 +415,137 @@ bool ui_standard_view::set_title_visible(bool visible, bool anim)
 	}
 
 	return true;
+}
+
+/***********************************************************************************************/
+/* External class Implementation                                                               */
+/***********************************************************************************************/
+
+ui_standard_view::ui_standard_view(const char *name)
+		: ui_view(name)
+{
+	this->impl = new ui_standard_view_impl(this);
+}
+
+ui_standard_view::~ui_standard_view()
+{
+	delete(this->impl);
+}
+
+void ui_standard_view::on_load()
+{
+	ui_view::on_load();
+
+	Elm_Layout *layout = this->get_base();
+	evas_object_show(layout);
+}
+
+void ui_standard_view::on_unload()
+{
+	ui_view::on_unload();
+
+	Elm_Layout *layout = this->get_base();
+	evas_object_hide(layout);
+}
+
+bool ui_standard_view::set_content(Evas_Object *content, const char *title)
+{
+	ui_view::set_content(content);
+	return this->impl->set_content(content, title);
+}
+
+bool ui_standard_view::set_subtitle(const char *text)
+{
+	return this->impl->set_subtitle(text);
+}
+
+bool ui_standard_view::set_title_left_btn(Elm_Button *title_left_btn)
+{
+	return this->impl->set_title_left_btn(title_left_btn);
+}
+
+bool ui_standard_view::set_title_right_btn(Elm_Button *title_right_btn)
+{
+	return this->impl->set_title_right_btn(title_right_btn);
+}
+
+bool ui_standard_view::set_title_badge(const char *text)
+{
+	return this->impl->set_title_badge(text);
+}
+
+bool ui_standard_view::set_title(const char *text)
+{
+	return this->impl->set_title(text);
+}
+
+bool ui_standard_view::set_content(Evas_Object *content, const char *title, const char *subtitle, Elm_Button *title_left_btn, Elm_Button *title_right_btn)
+{
+	if (!this->set_content(content, title)) return false;
+	if (!this->set_subtitle(subtitle)) return false;
+	if (!this->set_title_left_btn(title_left_btn)) return false;
+	if (!this->set_title_right_btn(title_right_btn)) return false;
+
+	return true;
+}
+
+bool ui_standard_view::set_toolbar(Elm_Toolbar *toolbar)
+{
+	return this->impl->set_toolbar(toolbar);
+}
+
+void ui_standard_view::set_event_block(bool block)
+{
+	ui_view::set_event_block(block);
+	evas_object_freeze_events_set(this->get_base(), block);
+}
+
+Evas_Object *ui_standard_view::unset_content()
+{
+	Evas_Object *pcontent = ui_view::unset_content();
+	if (!pcontent) return NULL;
+
+	this->impl->unset_content();
+
+	return pcontent;
+}
+
+Elm_Button *ui_standard_view::unset_title_left_btn()
+{
+	return this->impl->unset_title_left_btn();
+}
+
+Elm_Button *ui_standard_view::unset_title_right_btn()
+{
+	return this->impl->unset_title_right_btn();
+}
+
+Elm_Toolbar *ui_standard_view::unset_toolbar()
+{
+	return this->impl->unset_toolbar();
+}
+
+Evas_Object *ui_standard_view::get_base()
+{
+	return this->impl->get_base();
+}
+
+bool ui_standard_view::set_title_visible(bool visible, bool anim)
+{
+	return this->impl->set_title_visible(visible, anim);
+}
+
+Elm_Button *ui_standard_view::get_title_left_btn()
+{
+	return this->impl->get_title_left_btn();
+}
+
+Elm_Button *ui_standard_view::get_title_right_btn()
+{
+	return this->impl->get_title_right_btn();
+}
+
+Elm_Toolbar *ui_standard_view::get_toolbar()
+{
+	return this->impl->get_toolbar();
 }

@@ -16,6 +16,11 @@
  */
 #include "../../../include/efl/mobile/ui_mobile_viewmanager.h"
 
+namespace efl_viewmanager
+{
+	class ui_popup_impl;
+}
+
 static bool update_popup(ui_popup *popup)
 {
 	Elm_Win *win = popup->get_base();
@@ -51,17 +56,6 @@ ui_popup::~ui_popup()
 	dynamic_cast<ui_view *>(this->get_view())->disconnect_popup(this);
 	Elm_Popup *popup = this->unset_content();
 	evas_object_del(popup);
-}
-
-Elm_Win *ui_popup::get_window()
-{
-	ui_viewmgr *viewmgr = UI_VIEWMGR;
-	if (!viewmgr)
-	{
-		LOGE("Viewmgr is null?? menu(%p)", this);
-		return NULL;
-	}
-	return viewmgr->get_window();
 }
 
 bool ui_popup::deactivate()
@@ -132,7 +126,13 @@ Elm_Popup *ui_popup::unset_content()
 
 Evas_Object *ui_popup::get_base()
 {
-	return this->get_window();
+	ui_viewmgr *viewmgr = UI_VIEWMGR;
+	if (!viewmgr)
+	{
+		LOGE("Viewmgr is null?? menu(%p)", this);
+		return NULL;
+	}
+	return viewmgr->get_window();
 }
 
 int ui_popup::get_degree()
