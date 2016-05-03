@@ -23,8 +23,7 @@ class ui_view;
 
 class ui_menu: public ui_base_overlay
 {
-	friend class ui_view;
-private:
+protected:
 	ui_menu(ui_view *view);
 	virtual ~ui_menu();
 
@@ -39,6 +38,8 @@ public:
 
 	virtual Evas_Object *get_base();
 	virtual int get_degree();
+
+	_UI_DECLARE_FRIENDS(ui_view);
 };
 
 }

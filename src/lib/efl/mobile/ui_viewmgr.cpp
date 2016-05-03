@@ -16,6 +16,20 @@
  */
 #include "../../../include/efl/mobile/ui_mobile_viewmanager.h"
 
+/***********************************************************************************************/
+/* Internal class Implementation                                                               */
+/***********************************************************************************************/
+namespace efl_viewmanager
+{
+
+class ui_viewmgr_impl;
+
+}
+
+/***********************************************************************************************/
+/* External class Implementation                                                               */
+/***********************************************************************************************/
+
 ui_viewmgr::ui_viewmgr(const char *pkg)
 		: ui_base_viewmgr(pkg, new ui_key_listener(this))
 {

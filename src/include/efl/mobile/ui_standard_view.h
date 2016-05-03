@@ -19,23 +19,8 @@
 
 namespace efl_viewmanager
 {
-
 class ui_standard_view: public ui_view
 {
-private:
-	Elm_Layout *layout;                //Base layout for view
-	Elm_Toolbar *toolbar;              //Toolbar
-	Elm_Button *title_left_btn;        //Title left button
-	Elm_Button *title_right_btn;       //Title right button
-
-	bool create_layout();
-	bool destroy_layout();
-
-protected:
-	virtual void on_load();
-	virtual void on_unload();
-	virtual void set_event_block(bool block);
-
 public:
 	ui_standard_view(const char *name = NULL);
 	virtual ~ui_standard_view();
@@ -54,22 +39,20 @@ public:
 	Elm_Button *unset_title_right_btn();
 	Elm_Toolbar *unset_toolbar();
 
+	Elm_Button *get_title_left_btn();
+	Elm_Button *get_title_right_btn();
+	Elm_Toolbar *get_toolbar();
+
 	virtual Evas_Object *get_base();
 
-	Elm_Button *get_title_left_btn()
-	{
-		return this->title_left_btn;
-	}
+protected:
+	virtual void on_load();
+	virtual void on_unload();
+	virtual void set_event_block(bool block);
 
-	Elm_Button *get_title_right_btn()
-	{
-		return this->title_right_btn;
-	}
-
-	Elm_Toolbar *get_toolbar()
-	{
-		return this->toolbar;
-	}
+private:
+	_UI_DECLARE_PRIVATE_IMPL(ui_standard_view);
+	_UI_DISABLE_COPY_AND_ASSIGN(ui_standard_view);
 };
 
 }
