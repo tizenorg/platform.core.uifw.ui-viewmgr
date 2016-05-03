@@ -17,7 +17,6 @@
 #ifndef _UI_IFACE_VIEWMANAGER_H_
 #define _UI_IFACE_VIEWMANAGER_H_
 
-#include <app.h>
 #include <dlog.h>
 
 enum ui_view_indicator

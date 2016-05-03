@@ -15,6 +15,7 @@
  *
  */
 
+#include <app.h>
 #include <list>
 #include "../../include/interface/ui_iface_viewmanager.h"
 

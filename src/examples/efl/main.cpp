@@ -32,7 +32,7 @@
 #include "page2.h"
 #include "page1.h"
 
-class sample_app : public ui_app
+class sample_app: public ui_app
 {
 public:
 	sample_app(const char*pkg, const char *locale_dir)
@@ -43,6 +43,7 @@ public:
 	{
 	}
 
+protected:
 	bool on_create()
 	{
 		if (!ui_app::on_create())

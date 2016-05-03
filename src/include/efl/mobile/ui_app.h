@@ -22,18 +22,18 @@ namespace efl_viewmanager
 
 class ui_viewmgr;
 
-class ui_app : public singleton<ui_app>
+class ui_app
 {
-private:
-	ui_viewmgr *viewmgr;
-	Eina_Stringshare *pkg;
-	Eina_Stringshare *locale_dir;
-
 public:
 	ui_app(const char *pkg, const char *locale_dir);
 	virtual ~ui_app();
 
+	ui_viewmgr *get_viewmgr();
+	static ui_app *get_instance();
+
 	virtual int run(int argc, char **argv);
+
+protected:
 	virtual bool on_create();
 	virtual void on_terminate();
 	virtual void on_pause();
@@ -46,7 +46,9 @@ public:
 	virtual void on_orient_changed(app_event_info_h event_info);
 	virtual void on_lang_changed(app_event_info_h event_info);
 
-	ui_viewmgr *get_viewmgr();
+private:
+	_UI_DECLARE_PRIVATE_IMPL(ui_app);
+	_UI_DISABLE_COPY_AND_ASSIGN(ui_app);
 };
 
 }

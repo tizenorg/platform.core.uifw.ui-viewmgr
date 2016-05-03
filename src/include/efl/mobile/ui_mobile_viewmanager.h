@@ -17,8 +17,7 @@
 #ifndef _UI_MOBILE_VIEWMANAGER_H_
 #define _UI_MOBILE_VIEWMANAGER_H_
 
-#include <system_settings.h>
-
+#include <app.h>
 #include "../ui_base_viewmanager.h"
 #include "ui_view.h"
 #include "ui_standard_view.h"
@@ -28,6 +27,6 @@
 #include "ui_popup.h"
 #include "ui_app.h"
 
-#define UI_VIEWMGR dynamic_cast<ui_viewmgr *>(ui_iface_viewmgr::get_instance())
+#define UI_VIEWMGR (ui_app::get_instance()->get_viewmgr())
 
 #endif /* UI_MOBILE_VIEWMANAGER_H */
