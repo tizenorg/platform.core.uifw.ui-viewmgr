@@ -34,6 +34,7 @@ public:
 
 	bool init();
 	bool term();
+	void event_proc(Evas_Event_Key_Down *ev);
 	ui_base_viewmgr *get_viewmgr() { return this->viewmgr; }
 	Evas_Object *get_keygrab_obj() { return this->key_grabber; }
 };
@@ -42,27 +43,32 @@ public:
 static const char *KEY_BACK = "XF86Back";
 static const char *KEY_BACK2 = "XF86Stop";
 
-static void event_proc(ui_base_key_listener *key_listener, Evas_Event_Key_Down *ev)
+static void key_grab_rect_key_up_cb(ui_base_key_listener_impl *key_listener, Evas_Event_Key_Down *ev)
 {
-	//Only if view manager is activated
-	ui_base_viewmgr *viewmgr = key_listener->get_viewmgr();
-	if (!viewmgr->is_activated()) return;
-
-	//Get Top View
-	ui_base_view *view = viewmgr->get_last_view();
-	if (!view) return;
-
-	key_listener->extend_event_proc(view, ev);
-
-	if (strcmp(ev->keyname, KEY_BACK) && strcmp(ev->keyname, KEY_BACK2)) return;
-
-	view->on_back();
+	key_listener->event_proc(ev);
 }
 
 ui_base_key_listener_impl::ui_base_key_listener_impl(ui_base_key_listener *key_listener, ui_base_viewmgr *viewmgr)
 		: key_listener(key_listener), viewmgr(viewmgr), key_grabber(NULL)
 {
 
+}
+
+void ui_base_key_listener_impl::event_proc(Evas_Event_Key_Down *ev)
+{
+	//Only if view manager is activated
+	ui_base_viewmgr *viewmgr = this->key_listener->get_viewmgr();
+	if (!viewmgr->is_activated()) return;
+
+	//Get Top View
+	ui_base_view *view = viewmgr->get_last_view();
+	if (!view) return;
+
+	this->key_listener->extend_event_proc(view, ev);
+
+	if (strcmp(ev->keyname, KEY_BACK) && strcmp(ev->keyname, KEY_BACK2)) return;
+
+	view->on_back();
 }
 
 bool ui_base_key_listener_impl::term()
@@ -96,9 +102,9 @@ bool ui_base_key_listener_impl::init()
 	evas_object_event_callback_add(key_grab_rect, EVAS_CALLBACK_KEY_UP, [](void *data, Evas *e, Evas_Object *obj, void *event_info) -> void
 	{
 		Evas_Event_Key_Down *ev = static_cast<Evas_Event_Key_Down *>(event_info);
-		ui_base_key_listener *key_listener = static_cast<ui_base_key_listener *>(data);
-		event_proc(key_listener, ev);
-	}, this->key_listener);
+		ui_base_key_listener_impl *key_listener = static_cast<ui_base_key_listener_impl *>(data);
+		key_grab_rect_key_up_cb(key_listener, ev);
+	}, this);
 
 	if (!evas_object_key_grab(key_grab_rect, KEY_BACK, 0, 0, EINA_FALSE))
 	{

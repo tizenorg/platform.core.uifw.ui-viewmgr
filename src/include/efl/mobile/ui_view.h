@@ -17,10 +17,6 @@
 #ifndef _UI_VIEW_H_
 #define _UI_VIEW_H_
 
-#include <list>
-
-using namespace std;
-
 namespace efl_viewmanager
 {
 
@@ -30,21 +26,15 @@ class ui_key_listener;
 
 class ui_view: public ui_base_view
 {
-	friend class ui_menu;
-	friend class ui_popup;
-	friend class ui_key_listener;
+public:
+	ui_view(const char *name = NULL);
+	virtual ~ui_view();
 
-private:
-	ui_menu *menu;                     //Menu
-	list<ui_popup *> popup_list;
-
-	void connect_popup(ui_popup *popup);
-	void disconnect_popup(ui_popup *popup);
-	bool deactivate_popup(bool top_one);
+	const ui_menu *get_menu();
 
 protected:
-	ui_menu *on_menu_pre();
-	void on_menu_post();
+	virtual ui_menu *on_menu_pre();
+	virtual void on_menu_post();
 	virtual void on_menu(ui_menu *menu);
 	virtual void on_back();
 	virtual void on_rotate(int degree);
@@ -58,14 +48,15 @@ protected:
 	 */
 	virtual void on_deactivate();
 
-public:
-	ui_view(const char *name = NULL);
-	virtual ~ui_view();
+private:
+	void connect_popup(ui_popup *popup);
+	void disconnect_popup(ui_popup *popup);
 
-	const ui_menu *get_menu()
-	{
-		return this->menu;
-	}
+	_UI_DECLARE_PRIVATE_IMPL(ui_view);
+	_UI_DISABLE_COPY_AND_ASSIGN(ui_view);
+	_UI_DECLARE_FRIENDS(ui_menu);
+	_UI_DECLARE_FRIENDS(ui_popup);
+	_UI_DECLARE_FRIENDS(ui_key_listener);
 };
 
 }

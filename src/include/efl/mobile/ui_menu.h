@@ -23,13 +23,6 @@ class ui_view;
 
 class ui_menu: public ui_base_overlay
 {
-	friend class ui_view;
-private:
-	ui_menu(ui_view *view);
-	virtual ~ui_menu();
-
-	Elm_Win *get_window();
-
 public:
 	virtual bool activate();
 	virtual bool deactivate();
@@ -39,6 +32,16 @@ public:
 
 	virtual Evas_Object *get_base();
 	virtual int get_degree();
+
+protected:
+	ui_menu(ui_view *view);
+	virtual ~ui_menu();
+	Elm_Win *get_window();
+
+private:
+	_UI_DECLARE_PRIVATE_IMPL(ui_menu);
+	_UI_DISABLE_COPY_AND_ASSIGN(ui_menu);
+	_UI_DECLARE_FRIENDS(ui_view);
 };
 
 }

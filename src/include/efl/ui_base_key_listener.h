@@ -24,7 +24,7 @@ class ui_base_viewmgr;
 
 class ui_base_key_listener
 {
-public:
+protected:
 	ui_base_key_listener(ui_base_viewmgr *viewmgr);
 	virtual ~ui_base_key_listener();
 
@@ -33,13 +33,12 @@ public:
 	virtual void extend_event_proc(ui_base_view *view, Evas_Event_Key_Down *ev) {}
 
 	ui_base_viewmgr *get_viewmgr();
-
-protected:
 	Evas_Object *get_keygrab_obj();
 
 private:
 	_UI_DECLARE_PRIVATE_IMPL(ui_base_key_listener);
 	_UI_DISABLE_COPY_AND_ASSIGN(ui_base_key_listener);
+	_UI_DECLARE_FRIENDS(ui_base_viewmgr);
 };
 
 }
