@@ -270,6 +270,12 @@ bool ui_iface_viewmgr_impl::pop_view()
 
 	//last page to be popped.
 	ui_iface_view*view = this->view_list.back();
+
+	if (view->get_event_block())
+	{
+		return false;
+	}
+
 	view->on_deactivate();
 	this->set_event_block(view, true);
 
