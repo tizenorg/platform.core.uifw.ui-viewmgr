@@ -88,10 +88,10 @@ bool ui_view_impl::on_back()
 {
 	//If any popup is activated, deactivate the popup first.
 	if (this->deactivate_popup(true))
-		{
+	{
 		return false;
+	}
 
-		}
 	if (this->menu)
 	{
 		if (this->menu->is_activated())
