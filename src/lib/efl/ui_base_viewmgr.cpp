@@ -496,6 +496,13 @@ bool ui_base_viewmgr::deactivate()
 
 bool ui_base_viewmgr::pop_view()
 {
+	ui_base_view *view = this->get_last_view();
+
+	if (view->get_event_block())
+	{
+		return false;
+	}
+
 	if (this->get_view_count() == 1)
 	{
 		this->deactivate();
