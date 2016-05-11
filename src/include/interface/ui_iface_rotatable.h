@@ -31,8 +31,36 @@ namespace ui_viewmanager
 class ui_iface_rotatable
 {
 protected:
+	/**
+	 *  @brief view portrait state.
+	 *
+	 *  @note This state will be called when view rotation changed to portrait.
+	 *
+	 *  @see on_landscpae()
+	 *  @see on_rotate()
+	 */
 	virtual void on_portrait() {}
+
+	/**
+	 *  @brief view landscape state.
+	 *
+	 *  @note This state will be called when view rotation changed to landscape.
+	 *
+	 *  @see on_portrait()
+	 *  @see on_rotate()
+	 */
 	virtual void on_landscape() {}
+
+	/**
+	 *  @brief view rotate changed.
+	 *
+	 *  @note This state will be called when view rotation changed.
+	 *
+	 *  @param degree Current view's degree.
+	 *
+	 *  @see on_portrait()
+	 *  @see on_landscpae()
+	 */
 	virtual void on_rotate(int degree) {}
 
 public:

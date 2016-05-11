@@ -88,6 +88,9 @@ public:
 	 */
 	static bool need_soft_key();
 
+	/**
+	 *  @brief Return viewmgr instance.
+	 */
 	static ui_iface_viewmgr* get_instance();
 
 protected:

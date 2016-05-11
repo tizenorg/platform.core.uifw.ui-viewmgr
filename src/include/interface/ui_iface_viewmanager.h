@@ -19,16 +19,22 @@
 
 #include <dlog.h>
 
+/**
+ * Possible values for indicator state.
+ */
 enum ui_view_indicator
 {
-	UI_VIEW_INDICATOR_DEFAULT = 0,
-	UI_VIEW_INDICATOR_OPTIMAL,
-	UI_VIEW_INDICATOR_OVERLAP,
-	UI_VIEW_INDICATOR_HIDE,
-	UI_VIEW_INDICATOR_SHOW,
+	UI_VIEW_INDICATOR_DEFAULT = 0, ///<Opaque indicator
+	UI_VIEW_INDICATOR_OPTIMAL,     ///<Transparent indicator
+	UI_VIEW_INDICATOR_OVERLAP,     ///<Overlap indicator
+	UI_VIEW_INDICATOR_HIDE,        ///<Indicator hide
+	UI_VIEW_INDICATOR_SHOW,        ///<Indicator show
 	UI_VIEW_INDICATOR_LAST
 };
 
+/**
+ * Possible values for view state.
+ */
 enum ui_view_state
 {
 	UI_VIEW_STATE_LOAD = 0,        ///< Load state

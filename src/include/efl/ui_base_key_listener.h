@@ -35,14 +35,49 @@ class ui_base_viewmgr;
 class ui_base_key_listener
 {
 protected:
+	///Constructor.
 	ui_base_key_listener(ui_base_viewmgr *viewmgr);
+
+	///Destructor.
 	virtual ~ui_base_key_listener();
 
+	/**
+	 *  @brief Init H/W key listener to grab key event(back key).
+	 *
+	 *  @note It makes evas_object_rectangle and add key up callback.
+	 *
+	 *  @see term()
+	 */
 	virtual bool init();
+
+	/**
+	 *  @brief Terminate H/W key listener.
+	 *
+	 *  @note Delete key grabber(evas_object_rectangle).
+	 *
+	 *  @see init()
+	 */
 	virtual bool term();
+
+	/**
+	 *  @brief Check the menu key event.
+	 *
+	 *  @note This is checking H/W key is menu or not.
+	 */
 	virtual void extend_event_proc(ui_base_view *view, Evas_Event_Key_Down *ev) {}
 
+	/**
+	 *  @brief Return the viewmgr instance.
+	 *
+	 *  @return ui_base_viewmgr instance.
+	 */
 	ui_base_viewmgr *get_viewmgr();
+
+	/**
+	 *  @brief Return the key grabber(evas_object_rectangle).
+	 *
+	 *  @return key grabber object.
+	 */
 	Evas_Object *get_keygrab_obj();
 
 private:
