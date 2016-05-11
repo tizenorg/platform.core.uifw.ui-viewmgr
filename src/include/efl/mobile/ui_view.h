@@ -27,18 +27,82 @@ class ui_key_listener;
 class ui_view: public ui_base_view
 {
 public:
+	///Constructor.
 	ui_view(const char *name = NULL);
+
+	///Destructor.
 	virtual ~ui_view();
 
+	/**
+	 *  @brief Get menu object.
+	 *
+	 *  @return menu object if any.
+	 */
 	const ui_menu *get_menu();
 
 protected:
+	/**
+	 *  @brief This is making ui_menu instance.
+	 *
+	 *  @note It creates ui_menu instance, if there is no ui_menu instance of this view.
+	 *        It hides menu if there is already menu activated.
+	 *
+	 *  @return menu instance of this view. NULL If the menu already activated.
+	 */
 	virtual ui_menu *on_menu_pre();
+
+	/**
+	 *  @brief Activate menu.
+	 *
+	 *  @note It calls activate() for posting menu. If there is a menu instance.
+	 */
 	virtual void on_menu_post();
+
+	/**
+	 *  @brief H/W back key event occurs on view.
+	 *
+	 *  @param menu menu instance, This is made by key listener when menu key occured.
+	 */
 	virtual void on_menu(ui_menu *menu);
+
+	/**
+	 *  @brief H/W back key event occurs on view.
+	 *
+	 *  @note User can override this function to define application specific action when H/W back key
+	 *        event occurs. otherwise current view will be popped.
+	 */
 	virtual void on_back();
+
+	/**
+	 *  @brief view rotate changed.
+	 *
+	 *  @note This state will be called when view rotation changed.
+	 *
+	 *  @param degree Current view's degree.
+	 *
+	 *  @see on_portrait()
+	 *  @see on_landscpae()
+	 */
 	virtual void on_rotate(int degree);
+
+	/**
+	 *  @brief view portrait state.
+	 *
+	 *  @note This state will be called when view rotation changed to portrait.
+	 *
+	 *  @see on_landscpae()
+	 *  @see on_rotate()
+	 */
 	virtual void on_portrait();
+
+	/**
+	 *  @brief view landscape state.
+	 *
+	 *  @note This state will be called when view rotation changed to landscape.
+	 *
+	 *  @see on_portrait()
+	 *  @see on_rotate()
+	 */
 	virtual void on_landscape();
 
 	/** @brief view deactivate state.
@@ -49,7 +113,18 @@ protected:
 	virtual void on_deactivate();
 
 private:
+	/**
+	 *  @brief Push given popup instance in the internal popup stack.
+	 *
+	 *  @param popup ui_popup instance
+	 */
 	void connect_popup(ui_popup *popup);
+
+	/**
+	 *  @brief pop given popup instance in the internal popup stack.
+	 *
+	 *  @param popup ui_popup instance
+	 */
 	void disconnect_popup(ui_popup *popup);
 
 	_UI_DECLARE_PRIVATE_IMPL(ui_view);

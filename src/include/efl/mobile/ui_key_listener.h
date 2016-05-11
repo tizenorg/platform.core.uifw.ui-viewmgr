@@ -24,9 +24,21 @@ class ui_viewmgr;
 class ui_key_listener : public ui_base_key_listener
 {
 public:
+	///Constructor.
 	ui_key_listener(ui_viewmgr *viewmgr);
 
+	/**
+	 *  @brief Init H/W key listener to grab key event(menu key).
+	 *
+	 *  @note Add menu key to target of key grabber.
+	 */
 	virtual bool init();
+
+	/**
+	 *  @brief Check the menu key event.
+	 *
+	 *  @note This is checking H/W key is menu or not.
+	 */
 	virtual void extend_event_proc(ui_base_view *view, Evas_Event_Key_Down *ev);
 };
 

@@ -25,7 +25,10 @@ class ui_base_view;
 class ui_base_overlay: public ui_iface_overlay
 {
 protected:
+	///Constructor.
 	ui_base_overlay(ui_base_view *view);
+
+	///Destructor.
 	virtual ~ui_base_overlay();
 };
 

@@ -36,18 +36,78 @@ class ui_iface_view;
 class ui_iface_overlay: public ui_iface_rotatable
 {
 public:
+	/** @brief This is for replacing or setting a content of the view.
+	 *
+	 *  @note @p content is a logical object that represents a view in your framework. The actual type of the content could be translated to any certain types.
+	 *        For instance, the type could be Evas_Object * in EFL and Layer * in Dali.
+	 *
+	 *  @param content a new content. It allows @c NULL for canceling the previous content.
+	 *
+	 *  @return true if it succeed, false otherwise.
+	 */
 	virtual bool set_content(T content);
+
+	/** @brief This is for unsetting a content of the view.
+	 *
+	 *  @return A previous content. If it wasn't, return value will be @c NULL.
+	 */
 	virtual T unset_content();
+
+	/** @brief H/W back key event occurs on view.
+	 *
+	 *  @note User can override this function to define application specific action when H/W back key
+	 *        event occurs. otherwise current view will be popped.
+	 */
 	virtual void on_back();
+
+	/** @brief Overlay activate.
+	 *
+	 *  @note It makes overlay state as show.
+	 *
+	 *  @return true if it succeed, false otherwise.
+	 *
+	 *  @see deactivate()
+	 */
 	virtual bool activate();
+
+	/** @brief Overlay deactivate.
+	 *
+	 *  @note It makes overlay state as hide.
+	 *
+	 *  @return true if it succeed, false otherwise.
+	 *
+	 *  @see activate()
+	 */
 	virtual bool deactivate();
+
+	/**
+	 *  @brief Return the active status of overlay.
+	 *
+	 *  @return @c true if overlay is activated, @c false otherwise.
+	 *
+	 *  @see activate()
+	 *  @see deactivate()
+	 */
 	virtual bool is_activated();
 
+	/**
+	 *  @brief Return a view which is matched with the overlay.
+	 *
+	 *  @return The view which is matched with overlay.
+	 */
 	ui_iface_view *get_view();
+
+	/** @brief Return a content instance of this overlay.
+	 *
+	 *  @return content of overlay.
+	 */
 	virtual T get_content();
 
 protected:
+	///Constructor.
 	ui_iface_overlay(ui_iface_view *view);
+
+	///Destructor.
 	virtual ~ui_iface_overlay();
 
 private:
