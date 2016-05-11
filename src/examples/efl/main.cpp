@@ -35,7 +35,7 @@
 class sample_app: public ui_app
 {
 public:
-	sample_app()
+	sample_app(const char *pkg, const char *locale_dir)
 			: ui_app(PACKAGE, LOCALE_DIR)
 	{
 	}
