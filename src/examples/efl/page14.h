@@ -15,8 +15,10 @@
  *
  */
 
-/** This example create a simple view which is inheritance ui_standard_view.
- *  Then push in viewmgr.
+/** This page inherit ui_ui_standard_view
+ *  And make a view transition style as none.
+ *  There will be no effect when view appear or disappear.
+ *  The default of transition style of view was slide in/out.
  */
 class page14: public ui_standard_view
 {

@@ -15,7 +15,7 @@
  *
  */
 
-/** This page implements on_rotate() method to create portarit, landscape content.
+/** This page implements on_rotate() method to create portrait, landscape content.
  *  This page will be created suitable content in on_rotate() method.
  */
 class page10: public ui_standard_view
@@ -45,6 +45,7 @@ protected:
 					{
 						UI_VIEWMGR->push_view(new page11());
 					});
+
 			this->set_content(content, "Page 10");
 			this->set_indicator(UI_VIEW_INDICATOR_DEFAULT);
 		}
@@ -62,6 +63,7 @@ protected:
 					{
 						UI_VIEWMGR->push_view(new page11());
 					});
+
 			this->set_content(content, "Page 10");
 			this->set_indicator(UI_VIEW_INDICATOR_OPTIMAL);
 		}

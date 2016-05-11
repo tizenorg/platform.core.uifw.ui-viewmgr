@@ -61,6 +61,7 @@ protected:
 					view->create_popup();
 				},
 				this);
+
 		this->set_title_right_btn(right_btn);
 	}
 
@@ -89,6 +90,7 @@ public:
 					elm_popup_dismiss(obj);
 				},
 				NULL);
+
 		popup->set_content(obj);
 		popup->activate();
 	}

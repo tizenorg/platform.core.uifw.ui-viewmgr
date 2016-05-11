@@ -15,8 +15,8 @@
  *
  */
 
-/** This example create a simple view which is inheritance ui_standard_view.
- *  Then push in viewmgr.
+/** This page inherit ui_ui_standard_view
+ *  This view create a lot of buttons to show how to handle title area visible state with animation or no effect.
  */
 class page16: public ui_standard_view
 {

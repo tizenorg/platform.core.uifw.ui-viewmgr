@@ -15,7 +15,7 @@
  *
  */
 
-/** This page inherit ui_standard_view to show title with toolbar sample.
+/** This page inherit ui_standard_view to show title with toolbar(toolbar_with_title) example.
  */
 class page6: public ui_standard_view
 {

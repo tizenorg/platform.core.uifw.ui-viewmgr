@@ -15,8 +15,7 @@
  *
  */
 
-/** This page inherit ui_standard_view to show title with toolbar sample.
- *  And this page make a content in page constructor time.
+/** This page inherit ui_standard_view to show title with toolbar(navigationbar) example.
  */
 class page7: public ui_standard_view
 {
@@ -38,8 +37,7 @@ protected:
 					UI_VIEWMGR->push_view(new page8());
 				});
 
-		//FIXME: Don't delete view's content when this view poped.
-		this->set_removable_content(false);
+		//Arguments: content, title
 		this->set_content(content, "Page7");
 		Elm_Toolbar *toolbar = create_toolbar(this->get_base(), "navigationbar");
 		this->set_toolbar(toolbar);
