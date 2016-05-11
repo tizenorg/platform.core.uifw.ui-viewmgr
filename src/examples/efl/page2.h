@@ -16,7 +16,7 @@
  */
 
 /** This example create a simple view which is inheritance ui_standard_view.
- *  And add two buttons in view title area. hen push in viewmgr.
+ *  And add two buttons in view title area. then push in viewmgr.
  */
 class page2: public ui_standard_view
 {

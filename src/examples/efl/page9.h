@@ -16,7 +16,7 @@
  */
 
 /** This page inherit ui_standard_view.
- *  And implement on_portait(), on_landscape() method to create portarit, landscape content.
+ *  And implement on_portait(), on_landscape() method to create portrait, landscape content.
  *  This page will be created suitable content in on_portrait(), on_landscape() method.
  */
 class page9: public ui_standard_view
@@ -48,6 +48,7 @@ protected:
 				{
 					UI_VIEWMGR->push_view(new page10());
 		        });
+
 		this->set_content(content, "Page 9");
 		this->set_indicator(UI_VIEW_INDICATOR_DEFAULT);
 	}
@@ -67,6 +68,7 @@ protected:
 				{
 					UI_VIEWMGR->push_view(new page10());
 				});
+
 		this->set_content(content, "Page 9");
 		this->set_indicator(UI_VIEW_INDICATOR_OPTIMAL);
 	}
