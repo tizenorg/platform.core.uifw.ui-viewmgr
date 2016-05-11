@@ -25,11 +25,11 @@ class ui_base_view;
 /**
  *  @class ui_base_viewmgr
  *
- *  @ingroup viewmgr
+ *  @ingroup efl_viewmanager
  *
- *  @brief This is a class of viewmgr. One viewmgr represents a window which contains multiple views.
- *         A viewmgr manages not only views life-cycle but constructs basic infrastructures such as key events handling, transition effects, transient views.
- *         This interface guide you a basic policy of a view manager.
+ *  @brief This is a base class of viewmgr. One viewmgr represents a class which contains multiple views.
+ *         A viewmgr manages not only views life-cycle but constructs basic infrastructures such as key events handling, transition effects, transient views,
+ *         etc. This interface guides you a basic policy and behaviors of a view manager. Basically, View manager must have a default window internally.
  *
  *  @warning viewmgr will remove all containing views when it's destroyed.
  */

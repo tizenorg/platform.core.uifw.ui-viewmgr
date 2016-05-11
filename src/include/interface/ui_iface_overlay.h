@@ -22,6 +22,17 @@ namespace ui_viewmanager
 
 class ui_iface_view;
 
+/**
+ *  @class ui_iface_overlay
+ *
+ *  @internal
+ *  @ingroup ui_viewmanager
+ *
+ *  @brief This is a base class to support overlay view which could be active on other ui_iface_view. So an overlay should be a subordinates of a ui_iface_view.
+ *         The specific behaviors are totally depended on the derived class but it must be communicated with ui_iface_view to work cooperatively. Fundamentally,
+ *         overlay view provides simpler interfaces than ui_iface_view since most of the overlay views are active temporarily. This class is inherited to
+ *         ui_iface_rotatable class to handle view's rotation state.
+ */
 class ui_iface_overlay: public ui_iface_rotatable
 {
 public:

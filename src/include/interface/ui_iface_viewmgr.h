@@ -25,11 +25,11 @@ class ui_iface_view;
  *  @class ui_iface_viewmgr
  *
  *  @internal
- *  @ingroup viewmgr
+ *  @ingroup ui_viewmanager
  *
- *  @brief This is a interface class of viewmgr. One viewmgr represents a window which contains multiple views.
- *         A viewmgr manages not only views life-cycle but constructs basic infrastructures such as key events handling, transition effects, transient views.
- *         This interface guide you a basic policy of a view manager.
+ *  @brief This is a base class of viewmgr. One viewmgr represents a class which contains multiple views.
+ *         A viewmgr manages not only views life-cycle but constructs basic infrastructures such as key events handling, transition effects, transient views,
+ *         etc. This interface guides you a basic policy and behaviors of a view manager. Basically, View manager must have a default window internally.
  *
  *  @warning viewmgr will remove all containing views when it's destroyed.
  */
@@ -73,7 +73,7 @@ public:
 	/**
 	 *  @brief Return the number of views which this viewmgr has.
 	 *
-	 *  @return the number of view
+	 *  @return the count of views
 	 */
 	unsigned int get_view_count();
 
@@ -122,6 +122,7 @@ protected:
 	 *  @note Normally, the current view will be hidden by a new view. In default, when user calls this API, view will be switched to @p view instantly,
 	 *        only when viewmgr state is activated. Otherwise, the @p view will be shown later when viewmgr is activated. push_view() is designed for providing
 	 *        view transition effect. If you want push view instantly without any transition, you could use insert_view_before() or insert_view_after().
+	 *        or use the view transition style function.
 	 *        If you want to pop the current view, the please use pop_view().
 	 *
 	 *  @param view A view to insert at the end of viewmgr view list.
@@ -132,16 +133,17 @@ protected:
 	 *  @see insert_view_before()
 	 *  @see insert_view_after()
 	 *  @see pop_view()
+	 *  @see ui_iface_view::set_transition_style()
 	 */
 	ui_iface_view *push_view(ui_iface_view *view);
 
 	/**
 	 *  @brief Pop the top(last) view from this viewmgr view list.
-	 *         This function is used for application switches the current view back to the previous view.
+	 *         This function is used when application switches the current view back to the previous view.
 	 *         The top view will be removed from the view stack and then it will be deleted by the viewmgr.
 	 *
-	 *  @note If the view is just one left, then viewmgr would be deactivated since the ui application might be invalid anymore. Otherwise, the application will
-	 *        be terminated. It's up to system configuration.
+	 *  @note If the view is just one left, then viewmgr would be deactivated automatically since the ui application might be invalid anymore. Otherwise,
+	 *        the application will be terminated. It's up to system configuration.
 	 *
 	 *  @return @c true on success or @c false otherwise.
 	 *
@@ -226,7 +228,7 @@ protected:
 	 *
 	 *  @param view A view to query the index.
 	 *
-	 *  @return An index of the give @p view on success, otherwise, -1.
+	 *  @return An index of the given @p view on success, otherwise, -1.
 	 *
 	 *  @warning The index number of views are variable since the view list is variable.
 	 */

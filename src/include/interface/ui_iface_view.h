@@ -25,11 +25,15 @@ class ui_iface_viewmgr;
  *  @class ui_iface_view
  *
  *  @internal
- *  @ingroup viewmgr
+ *  @ingroup ui_viewmanager
  *
- *  @brief UI View Base Class. This is the base class of view. A view must have one content instance which represents a view for a current screen.
- *         UI View may have it's own show/hide transition styles. That means, it's available that views have different show/hide effects on demands.
- *         It's not mandatory but view should describe the transitions in this class.
+ *  @brief This is the base class of view. A view must have one actual view content instance which represents a view for a current screen.
+ *         The content type could be any types with regards to UI systems (ie, Eo*, Layer, Window...) A derived class must implement the view body based on the
+ *         actual content in its UI system. This view will be belongs to a ui_iface_viewmgr instance and dominated its state by ui_iface_viewmgr. Basically,
+ *         a view communicates with ui_iface_viewmgr to active cooperatively. This class is inherited to ui_iface_rotatable class to handle view's rotation
+ *         state. Also, user can handle a view's life-cycle events with these -load, unload, activate, deactivate, pause, resume, destroy-. A view may have
+ *         it's own show/hide transition styles. That means, it's available that views have different show/hide effects on demands. It's not mandatory but view
+ *         should describe the transitions in this class. Please be full aware of view life-cycle to understand view's behavior.
  *
  *  @warning When the transitions are finished, the view must to call ui_iface_viewmgr :: _push_finished(), ui_iface_viewmgr :: _pop_finished() in order that
  *           The ui_iface_viewmgr keeps the view states exactly.

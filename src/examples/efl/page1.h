@@ -21,6 +21,7 @@
 class page1: public ui_standard_view
 {
 protected:
+	//on_load() will be called when this page1 is requested to be shown.
 	void on_load()
 	{
 		ui_standard_view::on_load();

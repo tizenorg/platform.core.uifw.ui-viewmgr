@@ -23,7 +23,7 @@ namespace efl_viewmanager
 /**
  *  @class ui_base_view
  *
- *  @ingroup viewmgr
+ *  @ingroup efl_viewmanager
  *
  *  @brief UI View Class. This is the class of view. A view must have one content instance which represents a view for a current screen.
  *         UI View may have it's own show/hide transition styles. That means, it's available that views have different show/hide effects on demands.
