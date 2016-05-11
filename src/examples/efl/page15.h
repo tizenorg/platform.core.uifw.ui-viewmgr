@@ -15,8 +15,9 @@
  *
  */
 
-/** This example create a simple view which is inheritance ui_standard_view.
- *  Then push in viewmgr.
+/** This page inherit ui_ui_standard_view
+ *  This create a content that has same size of screen.
+ *  When this view has rotated viewmgr's internal scroller will be enabled automatically.
  */
 class page15: public ui_standard_view
 {
@@ -39,6 +40,7 @@ protected:
 			UI_VIEWMGR->push_view(new page16());
 				},
 				this);
+
 		this->set_title_right_btn(right_btn);
 	}
 };
