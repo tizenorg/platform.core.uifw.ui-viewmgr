@@ -158,49 +158,55 @@ protected:
 
 	/** @brief view load state.
 	 *
-	 *  @note this state will be triggered by ui_iface_viewmgr.
-	 *
+	 *  @note Now, this view is moving onto the screen. Get ready for this view. Generally, you could prepare this view's content here and set them to this
+	 *        view. In the most cases, this on_load() will be triggered with this step. load -> deactivated -> activated.
 	 */
 	virtual void on_load();
 
 	/** @brief view unload state.
 	 *
-	 *  @note this state will be triggered by ui_iface_viewmgr.
-	 *
+     *  @note Remove resources(contents) with regards to this view for saving memory. Otherwise, you could keep those resources(contents) for later usage.
+     *        It might be better in point of performance view. It's up to your scenario. on_unload() will be triggered just right before when the view is going
+     *        to be deleted by popping or deleted. Also, on_unload() will be triggered when this view is piled under other views.
 	 */
 	virtual void on_unload();
 
 	/** @brief view activate state.
-	 *
-	 *  @note this state will be triggered by ui_iface_viewmgr.
-	 *
+     *
+     *  @note Generally, View will be on activate state after show transition is finished. From whatever its state, if the view comes on the screen,
+     *        on_activate() will be triggered. In the most cases, on_activate() will be triggered with this step. load -> deactivate -> activate
 	 */
 	virtual void on_activate();
 
 	/** @brief view deactivate state.
 	 *
-	 *  @note this state will be triggered by ui_iface_viewmgr.
-	 *
+	 *  @note View is on deactivate state. Get ready for unload. Hide transition may be triggered at this point. Deactivate state is triggered on this scenario
+	 *        that if this view is still visible but it shouldn't be interactive with users. In the most cases, when view is going to be popped or destroyed,
+	 *        on_deactivate() will be triggered. Also, when a view is pushed on more depth deeper (so it's not hideen by other views), on_deactivate() will be
+	 *        triggered also. Some UI controls such as a Popup or a Menu popup usually blocks views. For those scenario, this view would be deactivated again,
+	 *        But it would be still visible in someway (with transparency).
 	 */
 	virtual void on_deactivate();
 
 	/** @brief view pause state.
 	 *
-	 *  @note this state will be triggered by ui_iface_viewmgr.
-	 *
+	 *  @note When the system blocks the application running in cases such as phone call, system notification, switching applications, etc, this on_pause()
+	 *        will be triggered. Other than that, when the window turns to deactivate (@see ui_iface_viewmgr::deactivate()), on_pause() will be called also.
+	 *        If a view is deactivated or under the unload state, the pause won't be called.
 	 */
 	virtual void on_pause();
 
 	/** @brief view resume state.
 	 *
-	 *  @note this state will be triggered by ui_iface_viewmgr.
-	 *
+	 *  @note When the view is turning back to the activate state again from pause state, this on_resume() will be called. Other than that, when the system
+	 *        allows the application turns to activate or when the window turns to activate (@see ui_iface_viewmgr::activate()), on_resume() will be triggered
+	 *        for the paused views.
 	 */
 	virtual void on_resume();
 
 	/** @brief view destroy state.
 	 *
-	 *  @note this state will be triggered by ui_iface_viewmgr.
+	 *  @note When this view is on destroyed by popping or deleting, on_destroy() will be triggered.
 	 *
 	 */
 	virtual void on_destroy();
