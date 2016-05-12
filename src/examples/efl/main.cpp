@@ -60,6 +60,6 @@ protected:
 
 int main(int argc, char *argv[])
 {
-	sample_app app(PACKAGE, LOCALE_DIR);
+	sample_app app();
 	return app.run(argc, argv);
 }
