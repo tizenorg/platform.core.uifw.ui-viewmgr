@@ -24,10 +24,9 @@ class ui_iface_viewmgr;
 /**
  *  @class ui_iface_view
  *
- *  @internal
  *  @ingroup ui_viewmanager
  *
- *  @brief This is the base class of view. A view must have one actual view content instance which represents a view for a current screen.
+ *  @brief This is a base class of view. A view must have one actual view content instance which represents a view for a current screen.
  *         The content type could be any types with regards to UI systems (ie, Eo*, Layer, Window...) A derived class must implement the view body based on the
  *         actual content in its UI system. This view will be belongs to a ui_iface_viewmgr instance and dominated its state by ui_iface_viewmgr. Basically,
  *         a view communicates with ui_iface_viewmgr to active cooperatively. This class is inherited to ui_iface_rotatable class to handle view's rotation

@@ -23,7 +23,6 @@ namespace ui_viewmanager
 /**
  *  @class ui_iface_rotatable
  *
- *  @internal
  *  @ingroup ui_viewmanager
  *
  *  @brief This is an interface class to support rotation behavior of views (or overlay). This class just defines status such as rotate, portrait, landscape

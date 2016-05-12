@@ -22,6 +22,19 @@ namespace efl_viewmanager
 
 class ui_view;
 
+/**
+ *  @class ui_popup
+ *
+ *  @ingroup efl_viewmanager
+ *
+ *  @brief ui_popup is to support EFL popup UI which could be active on one ui_view. A popup is used for traditional popping context information to give
+ *         an option or information in its view context. Elm_Popup widget could be set as this ui_popup content for mobile profile. ui_popup will set up all
+ *         Elm_Popup decorating options instead of users for their convenient. A ui_popup is designed to be one subordinate of one ui_view in order to share
+ *         events and contexts each other to work nicely. One of differ points of ui_popup with ui_menu is, multiple popup could be active at the same time.
+ *         That means, a new ui_popup will be overlaid on the previous ui_popup on the demands. It's up to user's scenario.
+ *
+ *  @warning ui_popup and its content, Elm_Popup will be deleted by its owned ui_view on the proper time. So you can just leave its instance to it.
+ */
 class ui_popup : public ui_base_overlay
 {
 public:

@@ -24,7 +24,6 @@ class ui_iface_view;
 /**
  *  @class ui_iface_viewmgr
  *
- *  @internal
  *  @ingroup ui_viewmanager
  *
  *  @brief This is a base class of viewmgr. One viewmgr represents a class which contains multiple views.

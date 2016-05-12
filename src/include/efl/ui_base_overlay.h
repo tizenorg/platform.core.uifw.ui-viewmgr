@@ -22,6 +22,16 @@ namespace efl_viewmanager
 
 class ui_base_view;
 
+/**
+ *  @class ui_base_overlay
+ *
+ *  @internal
+ *  @ingroup efl_viewmanager
+ *
+ *  @brief This is a base class to support EFL overlay view which could be active on other ui_base_view. An overlay is designed to be one subordinate of one
+ *         ui_base_view. ui_base_overlay is nothing more than ui_iface_overlay in behavior perspective. It just comes out with renaming class for adapting with
+ *         other EFL base classes.
+ */
 class ui_base_overlay: public ui_iface_overlay
 {
 protected:

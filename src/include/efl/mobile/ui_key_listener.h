@@ -21,6 +21,14 @@ namespace efl_viewmanager
 {
 class ui_viewmgr;
 
+/**
+ *  @class ui_key_listener
+ *
+ *  @ingroup efl_viewmanager
+ *
+ *  @brief This class extends to ui_base_key_listener to support an additional HW Menu key for mobile profile. Basically, HW Menu key will be propagated to
+ *         the top view and ui_view::on_menu() will be triggered.
+  */
 class ui_key_listener : public ui_base_key_listener
 {
 public:

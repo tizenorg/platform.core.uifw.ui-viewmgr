@@ -21,6 +21,18 @@ namespace efl_viewmanager
 {
 class ui_view;
 
+/**
+ *  @class ui_menu
+ *
+ *  @ingroup efl_viewmanager
+ *
+ *  @brief ui_menu is to support EFL menu UI which could be active on one ui_view. A menu is used for traditional contextual popup to give an option in its
+ *         view context. Elm_Ctxpopup widget could be set as this ui_menu content for mobile profile. ui_menu will set up all Elm_Ctxpopup decorating
+ *         options instead of users for their convenient. A ui_menu is designed to be one subordinate of one ui_view in order to share events and contexts
+ *         each other to work nicely. Only one menu could be active on a ui_view. That means the previous menu will be removed by ui_view when a new menu comes.
+ *
+ *  @warning ui_menu and its content, Elm_Ctxpopup will be deleted by its owned ui_view on the proper time. So you can just leave its instance to it.
+ */
 class ui_menu: public ui_base_overlay
 {
 public:

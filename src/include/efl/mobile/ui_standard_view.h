@@ -19,6 +19,20 @@
 
 namespace efl_viewmanager
 {
+
+/**
+ *  @class ui_view
+ *
+ *  @ingroup efl_viewmanager
+ *
+  *  @brief This is a mobile standard view. This view extends ui_view and implements mobile specific behaviors for EFL view in mobile profile.
+ *          Basically, ui_standard_view implements standard UI form for mobile application view. It internally constructs a layout which builds a basic form
+ *          view that is consisted of title, tool and content parts. The title part locally has a left, right button parts as well as title and sub title text
+ *          parts. The tool part is designed for an additional tools feature in a view. Elm_Toolbar widget could be used for this part and ui_standard_view will
+ *          set up all Elm_Toolbar decorating options for users convenient. Lastly, the content part is used for main content for ui_standard_view. According
+ *          to the system profile, when this view is pushed into a ui_viewmgr, it will internally create a software back key that triggers popping the view.
+ *
+ */
 class ui_standard_view: public ui_view
 {
 public:

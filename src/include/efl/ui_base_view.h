@@ -25,12 +25,8 @@ namespace efl_viewmanager
  *
  *  @ingroup efl_viewmanager
  *
- *  @brief UI View Class. This is the class of view. A view must have one content instance which represents a view for a current screen.
- *         UI View may have it's own show/hide transition styles. That means, it's available that views have different show/hide effects on demands.
- *         It's not mandatory but view should describe the transitions in this class.
- *
- *  @warning When the transitions are finished, the view must to call ui_iface_viewmgr :: _push_finished(), ui_iface_viewmgr :: _pop_finished() in order that
- *           The ui_iface_viewmgr keeps the view states exactly.
+ *  @brief This is a base class of EFL view. Typically, this view extends ui_iface_view and implements basic behaviors for EFL view in all profiles.
+ *         A view must have one Evas_Object content instance which represents a view for a current screen.
  */
 class ui_base_view: public ui_iface_view
 {

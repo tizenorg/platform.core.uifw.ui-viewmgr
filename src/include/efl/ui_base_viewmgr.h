@@ -27,11 +27,13 @@ class ui_base_view;
  *
  *  @ingroup efl_viewmanager
  *
- *  @brief This is a base class of viewmgr. One viewmgr represents a class which contains multiple views.
- *         A viewmgr manages not only views life-cycle but constructs basic infrastructures such as key events handling, transition effects, transient views,
- *         etc. This interface guides you a basic policy and behaviors of a view manager. Basically, View manager must have a default window internally.
+ *  @brief This is a base class of EFL view manager. Typically, this view manager extends ui_iface_viewmgr and implement basic behaviors for
+ *         EFL view manager in all profiles. Basically, this view manager has one default window to display several logic views as well as this has
+ *         a conformant and default application layout to display indicator, application layout and virtual keypad properly. This base view manager implements
+ *         view transition effects. Of course, those could be customized for each profile. Also, it implements events blocking for views during views going
+ *         back and forth. But the behavior will be turned on/off based on the system profile.
  *
- *  @warning viewmgr will remove all containing views when it's destroyed.
+ *  @warning viewmgr will remove its window, conformant and default layout when it's destroyed.
  */
 class ui_base_viewmgr: public ui_iface_viewmgr
 {

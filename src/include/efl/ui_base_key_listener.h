@@ -22,6 +22,16 @@ namespace efl_viewmanager
 
 class ui_base_viewmgr;
 
+/**
+ *  @class ui_base_key_listener
+ *
+ *  @ingroup efl_viewmanager
+ *
+ *  @brief This is a base class of EFL key listener. Typically, this class has a role for delegating event propagation from system to a view.
+ *         ui_base_key_listener grabs HW back key event then pass it to the top view from the view manager. You could extend this class for more HW key
+ *         events for your profile feature. By overriding ui_base_key_listener::extend_event_proc(), you could get the key event information when that event is
+ *         triggered. This class must be requested by ui_base_viewmgr and controlled wholly by it.
+ */
 class ui_base_key_listener
 {
 protected:

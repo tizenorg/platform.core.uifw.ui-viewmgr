@@ -23,6 +23,15 @@ namespace efl_viewmanager
 class ui_view;
 class ui_app;
 
+/**
+ *  @class ui_viewmgr
+ *
+ *  @ingroup efl_viewmanager
+ *
+ *  @brief This is a mobile EFL view manager class. Typically, this view manager extends ui_base_viewmgr and implements mobile specific behaviors for
+ *         EFL view manager in mobile profile. ui_viewmgr is nothing more than ui_base_viewmgr in behavior perspective. It just comes out with renaming class
+ *         for adapting with other EFL mobile classes.
+ */
 class ui_viewmgr: public ui_base_viewmgr
 {
 protected:

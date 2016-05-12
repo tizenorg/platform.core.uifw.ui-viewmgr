@@ -24,6 +24,15 @@ class ui_menu;
 class ui_popup;
 class ui_key_listener;
 
+/**
+ *  @class ui_view
+ *
+ *  @ingroup efl_viewmanager
+ *
+ *  @brief This is a mobile view. Typically, this view extends ui_base_view and implements mobile specific behaviors for EFL view in mobile profile.
+ *         Basically, ui_view implements basics for running together with overlays such as ui_menu and ui_popup. You can use this ui_view as an empty ui form
+ *         view.
+ */
 class ui_view: public ui_base_view
 {
 public:
