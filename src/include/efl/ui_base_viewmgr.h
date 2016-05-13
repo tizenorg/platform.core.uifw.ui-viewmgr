@@ -153,11 +153,17 @@ public:
 	Evas_Object *get_base();
 
 protected:
+	/**
+	 *  @brief Set indicator of the view.
+	 *
+	 *  @param indicator The mode to set, one of #ui_view_indicator
+	 */
 	bool set_indicator(ui_view_indicator indicator);
 
 	///Constructor
 	ui_base_viewmgr(const char *pkg, ui_base_key_listener *key_listener);
 	ui_base_viewmgr(const char *pkg);
+
 	///Destructor.
 	virtual ~ui_base_viewmgr();
 

@@ -143,6 +143,11 @@ public:
 	 */
 	ui_view_indicator get_indicator();
 
+	/** @brief H/W back key event occurs on view.
+	 *
+	 *  @note User can override this function to define application specific action when H/W back key
+	 *        event occurs. otherwise current view will be popped.
+	 */
 	virtual void on_back();
 
 protected:
@@ -220,7 +225,21 @@ protected:
 	bool get_event_block();
 
 private:
+
+	/** @brief Connect with given viewmgr.
+	 *
+	 *  @return true if it succeed, false otherwise.
+	 *
+	 *  @see get_viewmgr()
+	 */
 	bool set_viewmgr(ui_iface_viewmgr *viewmgr);
+
+	/** @brief Return the viewmgr instance.
+	 *
+	 *  @return ui_iface_viewmgr instance.
+	 *
+	 *  @see set_viewmgr()
+	 */
 	ui_iface_viewmgr *get_viewmgr();
 
 	_UI_DECLARE_PRIVATE_IMPL(ui_iface_view);
