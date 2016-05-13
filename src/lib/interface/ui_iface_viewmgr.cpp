@@ -248,6 +248,14 @@ ui_iface_view *ui_iface_viewmgr_impl::push_view(ui_iface_view *view)
 
 bool ui_iface_viewmgr_impl::pop_view()
 {
+	//last page to be popped.
+	ui_iface_view*view = this->view_list.back();
+
+	if (view->get_event_block())
+	{
+		return false;
+	}
+
 	//FIXME: No more view?
 	if (this->get_view_count() == 0)
 	{
@@ -268,8 +276,6 @@ bool ui_iface_viewmgr_impl::pop_view()
 		return true;
 	}
 
-	//last page to be popped.
-	ui_iface_view*view = this->view_list.back();
 	view->on_deactivate();
 	this->set_event_block(view, true);
 
