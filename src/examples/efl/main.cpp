@@ -60,6 +60,6 @@ protected:
 
 int main(int argc, char *argv[])
 {
-	sample_app app();
+	sample_app app;
 	return app.run(argc, argv);
 }
