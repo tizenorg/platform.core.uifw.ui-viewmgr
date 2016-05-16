@@ -35,7 +35,11 @@ class ui_base_viewmgr;
 class ui_base_key_listener
 {
 protected:
-	///Constructor.
+	/**
+	 *  @brief This is a constructor for initializing key listener.
+	 *
+	 *  @param viewmgr The instance of ui_base_viewmgr.
+	 */
 	ui_base_key_listener(ui_base_viewmgr *viewmgr);
 
 	///Destructor.
@@ -44,7 +48,7 @@ protected:
 	/**
 	 *  @brief Init H/W key listener to grab key event(back key).
 	 *
-	 *  @note It makes evas_object_rectangle and add key up callback.
+	 *  @note It makes evas_object_rectangle and add key up callback to grab key event.
 	 *
 	 *  @see term()
 	 */
@@ -60,7 +64,7 @@ protected:
 	virtual bool term();
 
 	/**
-	 *  @brief Check the menu key event.
+	 *  @brief Check the menu key event occurs or not.
 	 *
 	 *  @note This is checking H/W key is menu or not.
 	 */

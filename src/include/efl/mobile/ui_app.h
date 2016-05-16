@@ -25,7 +25,12 @@ class ui_viewmgr;
 class ui_app
 {
 public:
-	///Constructor.
+	/**
+	 *  @brief This is a constructor for initializing ui_app.
+	 *
+	 *  @param pkg The name of package.
+	 *  @param loale_dir The path of locale directory.
+	 */
 	ui_app(const char *pkg, const char *locale_dir);
 
 	///Destructor.
@@ -40,6 +45,8 @@ public:
 
 	/**
 	 *  @brief Return ui_app instance.
+	 *
+	 *  @return The instance of ui_app.
 	 */
 	static ui_app *get_instance();
 
@@ -84,31 +91,43 @@ protected:
 
 	/**
 	 *  @brief Calling when gets a launch request event.
+	 *
+	 *  @param app_control_h The instance of app_control_h.
 	 */
 	virtual void on_control(app_control_h app_control);
 
 	/**
 	 *  @brief Calling when device low battery.
+	 *
+	 *  @param app_event_info_h The instance of app_event_info_h.
 	 */
 	virtual void on_low_battery(app_event_info_h event_info);
 
 	/**
 	 *  @brief Calling when device low memory.
+	 *
+	 *  @param app_event_info_h The instance of app_event_info_h.
 	 */
 	virtual void on_low_memory(app_event_info_h event_info);
 
 	/**
 	 *  @brief Calling when device region changed.
+	 *
+	 *  @param app_event_info_h The instance of app_event_info_h.
 	 */
 	virtual void on_region_changed(app_event_info_h event_info);
 
 	/**
 	 *  @brief Calling when device orient changed.
+	 *
+	 *  @param app_event_info_h The instance of app_event_info_h.
 	 */
 	virtual void on_orient_changed(app_event_info_h event_info);
 
 	/**
 	 *  @brief Calling when language changed.
+	 *
+	 *  @param app_event_info_h The instance of app_event_info_h.
 	 */
 	virtual void on_lang_changed(app_event_info_h event_info);
 

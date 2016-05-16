@@ -90,6 +90,8 @@ public:
 
 	/**
 	 *  @brief Return viewmgr instance.
+	 *
+	 *  @return viewmgr instance.
 	 */
 	static ui_iface_viewmgr* get_instance();
 
@@ -137,7 +139,7 @@ protected:
 	 *  @see pop_view()
 	 *  @see ui_iface_view::set_transition_style()
 	 */
-	ui_iface_view *push_view(ui_iface_view *view);
+	virtual ui_iface_view *push_view(ui_iface_view *view);
 
 	/**
 	 *  @brief Pop the top(last) view from this viewmgr view list.

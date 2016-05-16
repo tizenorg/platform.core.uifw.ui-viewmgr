@@ -36,7 +36,8 @@ class ui_view;
 class ui_menu: public ui_base_overlay
 {
 public:
-	/** @brief menu activate.
+	/**
+	 *  @brief menu activate.
 	 *
 	 *  @note It makes menu state as show.
 	 *
@@ -46,7 +47,8 @@ public:
 	 */
 	virtual bool activate();
 
-	/** @brief menu deactivate.
+	/**
+	 *  @brief menu deactivate.
 	 *
 	 *  @note It makes menu state as hide.
 	 *
@@ -56,7 +58,8 @@ public:
 	 */
 	virtual bool deactivate();
 
-	/** @brief This is for replacing or setting a content of the menu.
+	/**
+	 *  @brief This is for replacing or setting a content of the menu.
 	 *
 	 *  @param ctxpopup ctxpopup object. It allows @c NULL for canceling the previous content.
 	 *
@@ -64,7 +67,8 @@ public:
 	 */
 	virtual bool set_content(Elm_Ctxpopup* ctxpopup);
 
-	/** @brief This is for unsetting a content of the menu.
+	/**
+	 *  @brief This is for unsetting a content of the menu.
 	 *
 	 *  @return A previous content. If it wasn't, return value will be @c NULL.
 	 */
@@ -95,7 +99,11 @@ public:
 	virtual int get_degree();
 
 protected:
-	///Constructor.
+	/**
+	 *  @brief This is a constructor for initializing this menu.
+	 *
+	 *  @param The instance of ui_view.
+	 */
 	ui_menu(ui_view *view);
 
 	///Destructor.

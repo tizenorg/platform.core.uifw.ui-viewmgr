@@ -40,16 +40,18 @@ class ui_iface_viewmgr;
 class ui_iface_view : public ui_iface_rotatable
 {
 public:
-	/** @brief This is a constructor for initializing this view resources.
+	/**
+	 *  @brief This is a constructor for initializing this view resources.
 	 *
 	 *  @param name view name.
 	 */
 	ui_iface_view(const char *name = NULL);
 
-	///Destructor for terminating view.
+	///Destructor.
 	virtual ~ui_iface_view();
 
-	/** @brief set transition style of a view.
+	/**
+	 *  @brief Set transition style of a view.
 	 *
 	 *  @note @p style is reserved for supporting various kinds of view transition effects.
 	 *        The actual behaviors with this transition style is up to your frameworks. Default value of the style is NULL.
@@ -64,9 +66,10 @@ public:
 	 */
 	bool set_transition_style(const char *style);
 
-	/** @brief set name of the view.
+	/**
+	 *  @brief Set name of the view.
 	 *
-	 *  @note A view can gets a specific name. default value of the name is NULL.
+	 *  @note A view can get a specific name. default value of the name is NULL.
 	 *
 	 *  @param name a new name of view.
 	 *
@@ -76,7 +79,8 @@ public:
 	 */
 	bool set_name(const char *name);
 
-	/** @brief set content removable.
+	/**
+	 *  @brief Set content removable.
 	 *
 	 *  @param removable if @p removable is @c true, content of this view will be removed on unload state. @c false otherwise.
  	 *
@@ -84,31 +88,36 @@ public:
 	 */
 	void set_removable_content(bool removable);
 
-	/** @brief set the indicator of the view with mode.
+	/**
+	 *  @brief Set the indicator of the view with mode.
 	 *
 	 *  @param indicator The mode to set, one of #ui_view_indicator.
 	 */
 	void set_indicator(ui_view_indicator indicator);
 
-	/** @brief Return a style name of this view.
+	/**
+	 *  @brief Return a style name of this view.
 	 *
 	 *  @return style name of view.
 	 */
 	const char *get_transition_style();
 
-	/** @brief Return a name of this view.
+	/**
+	 *  @brief Return a name of this view.
 	 *
 	 *  @return name of view.
 	 */
 	const char *get_name();
 
-	/** @brief Return a content instance of this view.
+	/**
+	 *  @brief Return a content instance of this view.
 	 *
 	 *  @return content of view.
 	 */
 	T get_content();
 
-	/** @brief This is for replacing or setting a content of the view.
+	/**
+	 *  @brief This is for replacing or setting a content of the view.
 	 *
 	 *  @note @p content is a logical object that represents a view in your framework. The actual type of the content could be translated to any certain types.
 	 *        For instance, the type could be Evas_Object * in EFL and Layer * in Dali.
@@ -119,31 +128,36 @@ public:
 	 */
 	virtual bool set_content(T content);
 
-	/** @brief This is for unsetting a content of the view.
+	/**
+	 *  @brief This is for unsetting a content of the view.
 	 *
 	 *  @return A previous content. If it wasn't, return value will be @c NULL.
 	 */
 	virtual T unset_content();
 
-	/** @brief Return a state of this view.
+	/**
+	 *  @brief Return a state of this view.
 	 *
-	 *  #return current state of view.
+	 *  @return current state of view.
 	 */
 	ui_view_state get_state();
 
-	/** @brief Return a state of removable content.
+	/**
+	 *  @brief Return a state of removable content.
 	 *
 	 *  @return true if the view's content is removable, otherwise false.
 	 */
 	bool get_removable_content();
 
-	/** @brief Return the indicator mode of this view.
+	/**
+	 *  @brief Return the indicator mode of this view.
 	 *
 	 *  @return indicator state of view.
 	 */
 	ui_view_indicator get_indicator();
 
-	/** @brief H/W back key event occurs on view.
+	/**
+	 *  @brief The H/W back key event occurs on view.
 	 *
 	 *  @note User can override this function to define application specific action when H/W back key
 	 *        event occurs. otherwise current view will be popped.
@@ -151,17 +165,29 @@ public:
 	virtual void on_back();
 
 protected:
-
-	/** @brief toggle event block.
+	/**
+	 *  @brief Toggle event block.
 	 *
 	 *  @note This interface is designed for toggling touch event on view transition.
 	 *        ui_iface_viewmgr will call this interface for notifying event blocking toggling on transition time.
 	 *
 	 *  @param block @c true, when blocking is enabled, otherwise @c false.
+	 *
+	 *  @see get_event_block()
 	 */
 	virtual void set_event_block(bool block);
 
-	/** @brief view load state.
+	/**
+	 *  @brief Return the state of event block.
+	 *
+	 *  @return true if the event block enabled, otherwise false.
+	 *
+	 *  @see set_event_block()
+	 */
+	bool get_event_block();
+
+	/**
+	 *  @brief View load state.
 	 *
 	 *  @note A view of this state is moving onto the screen. Get ready for this view. Generally, you could prepare this view's content here and set them to
 	 *        this view. In the most cases, this on_load() will be triggered with this step. load -> deactivated -> activated. Tihs on_load() will be triggered
@@ -169,22 +195,25 @@ protected:
 	 */
 	virtual void on_load();
 
-	/** @brief view unload state.
+	/**
+	 *  @brief View unload state.
 	 *
-     *  @note Remove resources (contents) with regards to this view for saving memory. Otherwise, you could keep those resources (contents) for later access.
-     *        Removing resources might be better in point of performance view. It's up to your scenario. on_unload() will be triggered just right before
-     *        the view is going to be deleted by popping or by somehow. Also, on_unload() will be triggered when this view is pushed behind other views.
+	 *  @note Remove resources (contents) with regards to this view for saving memory. Otherwise, you could keep those resources (contents) for later access.
+	 *        Removing resources might be better in point of performance view. It's up to your scenario. on_unload() will be triggered just right before
+	 *        the view is going to be deleted by popping or by somehow. Also, on_unload() will be triggered when this view is pushed behind other views.
 	 */
 	virtual void on_unload();
 
-	/** @brief view activate state.
-     *
-     *  @note Generally, a view will be activated when show-transition is finished. From whatever its state, when the view comes on the screen,
-     *        on_activate() will be triggered. In the most cases, on_activate() will be triggered with this step. load -> deactivate -> activate
+	/**
+	 *  @brief View activate state.
+ 	 *
+ 	 *  @note Generally, a view will be activated when show-transition is finished. From whatever its state, when the view comes on the screen,
+ 	 *        on_activate() will be triggered. In the most cases, on_activate() will be triggered with this step. load -> deactivate -> activate
 	 */
 	virtual void on_activate();
 
-	/** @brief view deactivate state.
+	/**
+	 *  @brief View deactivate state.
 	 *
 	 *  @note Get ready for unload. Hide transition may be triggered at this point. Deactivate state is triggered on this scenario if this view is still
 	 *        visible but it shouldn't be interactive with users. In the most cases, when a view is going to be popped or destroyed, on_deactivate() will be
@@ -194,7 +223,8 @@ protected:
 	 */
 	virtual void on_deactivate();
 
-	/** @brief view pause state.
+	/**
+	 *  @brief View pause state.
 	 *
 	 *  @note If the system blocks application running in some cases such as phone call, system notification, application switching ..., this Pause will be
 	 *        triggered. Other than that, when application window turns to deactivate (@see ui_iface_viewmgr::deactivate()), on_pause() will be called also.
@@ -202,7 +232,8 @@ protected:
 	 */
 	virtual void on_pause();
 
-	/** @brief view resume state.
+	/**
+	 *  @brief View resume state.
 	 *
 	 *  @note When a view is returns to the activate state from pause state, this on_resume() will be triggered. Other than that, when the system
 	 *        allows application to turn to activate or when the window turns to activate (@see ui_iface_viewmgr::activate()), on_resume() will be triggered
@@ -210,7 +241,8 @@ protected:
 	 */
 	virtual void on_resume();
 
-	/** @brief view destroy state.
+	/**
+	 *  @brief View destroy state.
 	 *
 	 *  @note When this view is on destroyed by popping or by somehow, destroy will be triggered. Most of the cases, you can free your personal resources for
 	 *        the view because this view instance will be totally freed at the end of destroy. Be awre that you must not request any view functions on this
@@ -218,15 +250,11 @@ protected:
 	 */
 	virtual void on_destroy();
 
-	/** @brief Return the state of event block.
-	 *
-	 *  @see set_event_block()
-	 */
-	bool get_event_block();
-
 private:
-
-	/** @brief Connect with given viewmgr.
+	/**
+	 *  @brief Connect with given viewmgr.
+	 *
+	 *  @param viewmgr The instance of viewmgr.
 	 *
 	 *  @return true if it succeed, false otherwise.
 	 *
@@ -234,7 +262,8 @@ private:
 	 */
 	bool set_viewmgr(ui_iface_viewmgr *viewmgr);
 
-	/** @brief Return the viewmgr instance.
+	/**
+	 *  @brief Return the viewmgr instance.
 	 *
 	 *  @return ui_iface_viewmgr instance.
 	 *

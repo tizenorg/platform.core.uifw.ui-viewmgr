@@ -38,13 +38,18 @@ class ui_view;
 class ui_popup : public ui_base_overlay
 {
 public:
-	///Constructor.
+	/**
+	 *  @brief This is a constructor for initializing this popup.
+	 *
+	 *  @param The instance of ui_view.
+	 */
 	ui_popup(ui_view *view);
 
 	///Destructor.
 	virtual ~ui_popup();
 
-	/** @brief popup activate.
+	/**
+	 *  @brief popup activate.
 	 *
 	 *  @note It makes popup state as show.
 	 *
@@ -54,7 +59,8 @@ public:
 	 */
 	virtual bool activate();
 
-	/** @brief popup deactivate.
+	/**
+	 *  @brief popup deactivate.
 	 *
 	 *  @note It makes popup state as hide.
 	 *
@@ -64,7 +70,8 @@ public:
 	 */
 	virtual bool deactivate();
 
-	/** @brief This is for replacing or setting a content of the popup.
+	/**
+	 *  @brief This is for replacing or setting a content of the popup.
 	 *
 	 *  @param popup popup object. It allows @c NULL for canceling the previous content.
 	 *
@@ -72,7 +79,8 @@ public:
 	 */
 	virtual bool set_content(Elm_Popup* popup);
 
-	/** @brief This is for unsetting a content of the popup.
+	/**
+	 *  @brief This is for unsetting a content of the popup.
 	 *
 	 *  @return A previous content. If it wasn't, return value will be @c NULL.
 	 */

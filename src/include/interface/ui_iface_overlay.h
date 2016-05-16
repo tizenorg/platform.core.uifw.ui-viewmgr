@@ -35,7 +35,8 @@ class ui_iface_view;
 class ui_iface_overlay: public ui_iface_rotatable
 {
 public:
-	/** @brief This is for replacing or setting a content of the view.
+	/**
+	 *  @brief This is for replacing or setting a content of the view.
 	 *
 	 *  @note @p content is a logical object that represents a view in your framework. The actual type of the content could be translated to any certain types.
 	 *        For instance, the type could be Evas_Object * in EFL and Layer * in Dali.
@@ -46,34 +47,38 @@ public:
 	 */
 	virtual bool set_content(T content);
 
-	/** @brief This is for unsetting a content of the view.
+	/**
+	 *  @brief This is for unsetting a content of the view.
 	 *
 	 *  @return A previous content. If it wasn't, return value will be @c NULL.
 	 */
 	virtual T unset_content();
 
-	/** @brief H/W back key event occurs on view.
+	/**
+	 *  @brief The H/W back key event occurs on view.
 	 *
 	 *  @note User can override this function to define application specific action when H/W back key
 	 *        event occurs. otherwise current view will be popped.
 	 */
 	virtual void on_back();
 
-	/** @brief Overlay activate.
+	/**
+	 *  @brief Overlay activate.
 	 *
 	 *  @note It makes overlay state as show.
 	 *
-	 *  @return true if it succeed, false otherwise.
+	 *  @return @c true on success or @c false otherwise.
 	 *
 	 *  @see deactivate()
 	 */
 	virtual bool activate();
 
-	/** @brief Overlay deactivate.
+	/**
+	 *  @brief Overlay deactivate.
 	 *
 	 *  @note It makes overlay state as hide.
 	 *
-	 *  @return true if it succeed, false otherwise.
+	 *  @return @c true on success or @c false otherwise.
 	 *
 	 *  @see activate()
 	 */
@@ -96,14 +101,19 @@ public:
 	 */
 	ui_iface_view *get_view();
 
-	/** @brief Return a content instance of this overlay.
+	/**
+	 *  @brief Return a content instance of this overlay.
 	 *
 	 *  @return content of overlay.
 	 */
 	virtual T get_content();
 
 protected:
-	///Constructor.
+	/**
+	 *  @brief This is a constructor for initializing overlay.
+	 *
+	 *  @param view The instance of ui_iface_view.
+	 */
 	ui_iface_overlay(ui_iface_view *view);
 
 	///Destructor.

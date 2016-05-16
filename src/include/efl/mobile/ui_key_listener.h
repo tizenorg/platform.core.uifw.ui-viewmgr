@@ -32,7 +32,11 @@ class ui_viewmgr;
 class ui_key_listener : public ui_base_key_listener
 {
 public:
-	///Constructor.
+	/**
+	 *  @brief This is a constructor for initializing this ui_key_listener.
+	 *
+	 *  @param The instance of ui_viewmgr.
+	 */
 	ui_key_listener(ui_viewmgr *viewmgr);
 
 	/**
@@ -43,7 +47,7 @@ public:
 	virtual bool init();
 
 	/**
-	 *  @brief Check the menu key event.
+	 *  @brief Check the menu key event occurs or not.
 	 *
 	 *  @note This is checking H/W key is menu or not.
 	 */

@@ -36,13 +36,18 @@ namespace efl_viewmanager
 class ui_standard_view: public ui_view
 {
 public:
-	///Constructor.
+	/**
+	 *  @brief This is a constructor for initializing this view resources.
+	 *
+	 *  @param name view name.
+	 */
 	ui_standard_view(const char *name = NULL);
 
 	///Destructor.
 	virtual ~ui_standard_view();
 
-	/** @brief This is for replacing or setting a content of the view.
+	/**
+	 *  @brief This is for replacing or setting a content of the view.
 	 *
 	 *  @param content a new content. It allows @c NULL for canceling the previous content.
 	 *  @param title  title_label The label in the title area. The name of the title label part is "elm.text.title"
@@ -51,7 +56,8 @@ public:
 	 */
 	bool set_content(Evas_Object *content, const char *title = NULL);
 
-	/** @brief This is for replacing or setting a content of the view.
+	/**
+	 *  @brief This is for replacing or setting a content of the view.
 	 *
 	 *  @param content a new content. It allows @c NULL for canceling the previous content.
 	 *  @param title  The label in the title area. The name of the title label part is "elm.text.title".
@@ -67,6 +73,8 @@ public:
 	 *  @brief This is for setting title badge text.
 	 *
 	 *  @param text The label in the title badge area.
+	 *
+	 *  @return true if it succeed, false otherwise.
 	 */
 	bool set_title_badge(const char *text);
 
@@ -74,6 +82,8 @@ public:
 	 *  @brief This is for setting subtitle text.
 	 *
 	 *  @param text The label in the subtitle area.
+	 *
+	 *  @return true if it succeed, false otherwise.
 	 */
 	bool set_subtitle(const char *text);
 
@@ -81,6 +91,8 @@ public:
 	 *  @brief This is for setting title_left_btn.
 	 *
 	 *  @param title_left_btn The button in the left part of title area.
+	 *
+	 *  @return true if it succeed, false otherwise.
 	 */
 	bool set_title_left_btn(Elm_Button *title_left_btn);
 
@@ -88,6 +100,8 @@ public:
 	 *  @brief This is for setting title_right_btn.
 	 *
 	 *  @param title_right_btn The button in the right part of title area.
+	 *
+	 *  @return true if it succeed, false otherwise.
 	 */
 	bool set_title_right_btn(Elm_Button *title_right_btn);
 
@@ -95,6 +109,8 @@ public:
 	 *  @brief This is for setting title text.
 	 *
 	 *  @param text The label in the title area.
+	 *
+	 *  @return true if it succeed, false otherwise.
 	 */
 	bool set_title(const char *text);
 
@@ -102,6 +118,8 @@ public:
 	 *  @brief This is for setting toolbar below title.
 	 *
 	 *  @param toolbar Toolbar object.
+	 *
+	 *  @return true if it succeed, false otherwise.
 	 */
 	bool set_toolbar(Elm_Toolbar *toolbar);
 
@@ -110,6 +128,8 @@ public:
 	 *
 	 *  @param visible title state set as visible if the given param is true, otherwise title area set as invisible.
 	 *  @param anim title area will be shown with animation if the given param is true, otherwise title area will be shown without animation.
+	 *
+	 *  @return true if it succeed, false otherwise.
 	 */
 	bool set_title_visible(bool visible, bool anim);
 
@@ -190,7 +210,7 @@ protected:
 	 *  @note This interface is designed for toggling touch event on view transition.
 	 *        ui_iface_viewmgr will call this interface for notifying event blocking toggling on transition time.
 	 *
-	 *  @param block @c true, when blocking is enabled, otherwise @c false.
+	 *  @param block @c true, blocking enable, otherwise @c false.
 	 */
 	virtual void set_event_block(bool block);
 

@@ -35,7 +35,11 @@ class ui_base_view;
 class ui_base_overlay: public ui_iface_overlay
 {
 protected:
-	///Constructor.
+	/**
+	 *  @brief This is a constructor for initializing overlay.
+	 *
+	 *  @param view The instance of ui_base_view.
+	 */
 	ui_base_overlay(ui_base_view *view);
 
 	///Destructor.

@@ -36,7 +36,14 @@ class ui_viewmgr: public ui_base_viewmgr
 {
 protected:
 	//Don't allow to create ui_viewmgr instance
+	/**
+	 *  @brief This is a constructor for initializing viewmgr.
+	 *
+	 *  @param pkg The name of package.
+	 */
 	ui_viewmgr(const char *pkg);
+
+	///Destructor.
 	virtual ~ui_viewmgr();
 
 private:

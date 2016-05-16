@@ -32,7 +32,7 @@ class ui_iface_rotatable
 {
 protected:
 	/**
-	 *  @brief view portrait state.
+	 *  @brief View portrait state.
 	 *
 	 *  @note This state will be called when view rotation changed to portrait.
 	 *
@@ -42,7 +42,7 @@ protected:
 	virtual void on_portrait() {}
 
 	/**
-	 *  @brief view landscape state.
+	 *  @brief View landscape state.
 	 *
 	 *  @note This state will be called when view rotation changed to landscape.
 	 *
@@ -52,7 +52,7 @@ protected:
 	virtual void on_landscape() {}
 
 	/**
-	 *  @brief view rotate changed.
+	 *  @brief View rotate changed.
 	 *
 	 *  @note This state will be called when view rotation changed.
 	 *
@@ -64,7 +64,8 @@ protected:
 	virtual void on_rotate(int degree) {}
 
 public:
-	/** @brief Get current view's degree.
+	/**
+	 *  @brief Get current view's degree.
 	 *
 	 *  @return Current rotation degree, -1 if it fails to get degree information.
 	 */

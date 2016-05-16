@@ -31,13 +31,18 @@ namespace efl_viewmanager
 class ui_base_view: public ui_iface_view
 {
 public:
-	///Constructor.
+	/**
+	 *  @brief This is a constructor for initializing this view resources.
+	 *
+	 *  @param name view name.
+	 */
 	ui_base_view(const char *name = NULL);
 
 	///Destructor.
 	virtual ~ui_base_view();
 
-	/** @brief This is for replacing or setting a content of the view.
+	/**
+	 *  @brief This is for replacing or setting a content of the view.
 	 *
 	 *  @param content a new content. It allows @c NULL for canceling the previous content.
 	 *
@@ -45,51 +50,59 @@ public:
 	 */
 	virtual bool set_content(Evas_Object *content);
 
-	/** @brief This is for unsetting a content of the view.
+	/**
+	 *  @brief This is for unsetting a content of the view.
 	 *
 	 *  @return A previous content. If it wasn't, return value will be @c NULL.
 	 */
 	virtual Evas_Object *unset_content();
 
-	/**  @brief Get a base layout of viewmgr.
+	/**
+	 *  @brief Get a base layout of viewmgr.
+	 *
+	 *  @return The base layout object of viewmgr.
 	 */
 	virtual Evas_Object *get_base();
 
-	/** @brief Set the indicator mode.
+	/**
+	 *  @brief Set the indicator mode.
 	 *
 	 *  @param indicator The mode to set, one of #ui_base_view_indicator.
 	 */
 	virtual void set_indicator(ui_view_indicator indicator);
 
-	/** @brief Get current view's degree.
+	/**
+	 *  @brief Get current view's degree.
 	 *
 	 *  @return Current rotation degree, -1 if it fails to get degree information.
 	 */
 	virtual int get_degree();
 
 protected:
-	/** @brief Get a parent object of view.
+	/**
+	 *  @brief Get a parent object of view.
 	 *
 	 *  @note This is calling viewmgr get_base() method internally.
 	 *
-	 *  @return base layout of viewmgr.
+	 *  @return The base layout object of viewmgr.
 	 */
 	Evas_Object *get_parent();
 
-	/** @brief toggle event block.
+	/**
+	 *  @brief Toggle event block.
 	 *
-	 *  @note It makes internal conformant event freeze during effect showing.
+	 *  @note It makes view content event freeze during effect showing.
 	 *
 	 *  @param block @c true, when blocking is enabled, otherwise @c false.
 	 */
 	virtual void set_event_block(bool block);
 
 	/**
-	 *  @brief view rotate changed.
+	 *  @brief View rotate changed.
 	 *
 	 *  @note This state will be called when view rotation changed.
 	 *
-	 *  @param degree Current view's degree.
+	 *  @param degree The current degree of view.
 	 *
 	 *  @see on_portrait()
 	 *  @see on_landscpae()
@@ -97,7 +110,7 @@ protected:
 	virtual void on_rotate(int degree);
 
 	/**
-	 *  @brief view portrait state.
+	 *  @brief View portrait state.
 	 *
 	 *  @note This state will be called when view rotation changed to portrait.
 	 *
@@ -107,7 +120,7 @@ protected:
 	virtual void on_portrait();
 
 	/**
-	 *  @brief view landscape state.
+	 *  @brief View landscape state.
 	 *
 	 *  @note This state will be called when view rotation changed to landscape.
 	 *

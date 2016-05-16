@@ -82,21 +82,17 @@ public:
 	virtual ui_base_view *push_view(ui_base_view *view);
 
 	/**
-	 *  @brief Push a new view into this viewmgr. This function is used for when application switches a current view to a new one.
+	 *  @brief Pop the top(last) view from this viewmgr view list.
+	 *         This function is used when application switches the current view back to the previous view.
+	 *         The top view will be removed from the view stack and then it will be deleted by the viewmgr.
 	 *
-	 *  @note Normally, the current view will be hidden by a new view. In default, when user calls this API, view will be switched to @p view instantly,
-	 *        only when viewmgr state is activated. Otherwise, the @p view will be shown later when viewmgr is activated. push_view() is designed for providing
-	 *        view transition effect. If you want push view instantly without any transition, you could use insert_view_before() or insert_view_after().
-	 *        If you want to pop the current view, the please use pop_view().
+	 *  @note If the view is just one left, then viewmgr would be deactivated automatically since the ui application might be invalid anymore. Otherwise,
+	 *        the application will be terminated. It's up to system configuration.
 	 *
-	 *  @param view A view to insert in the viewmgr view list.
+	 *  @return @c true on success or @c false otherwise.
 	 *
-	 *  @return @p view, @c NULL when it fails to push a @p view.
-	 *
-	 *  @see activated()
-	 *  @see insert_view_before()
-	 *  @see insert_view_after()
-	 *  @see pop_view()
+	 *  @see deactivate()
+	 *  @see push_view()
 	 */
 	virtual bool pop_view();
 
@@ -120,15 +116,24 @@ public:
 	 */
 	virtual bool insert_view_after(ui_base_view *view, ui_base_view *after);
 
-	/** @brief Get a window object of viewmgr.
+	/**
+	 *  @brief Get a window object of viewmgr.
+	 *
+	 *  @return The window object of viewmgr.
 	 */
 	Elm_Win *get_window();
 
-	/** @brief Get a conformant object of viewmgr.
+	/**
+	 *  @brief Get a conformant object of viewmgr.
+	 *
+	 *  @return The conformant object of viewmgr.
 	 */
 	Elm_Conformant *get_conformant();
 
-	/** @brief Get a last view of current view stack.
+	/**
+	 *  @brief Return a last(top) view.
+	 *
+	 *  @return The view which is last view of the viewmgr view list.
 	 */
 	ui_base_view *get_last_view();
 
@@ -148,7 +153,10 @@ public:
 	 */
 	ui_base_view *get_view(unsigned int idx);
 
-	/** @brief Get a base layout of viewmgr.
+	/**
+	 *  @brief Get a base layout of viewmgr.
+	 *
+	 *  @return The base layout object of viewmgr.
 	 */
 	Evas_Object *get_base();
 
@@ -156,12 +164,25 @@ protected:
 	/**
 	 *  @brief Set indicator of the view.
 	 *
-	 *  @param indicator The mode to set, one of #ui_view_indicator
+	 *  @param indicator The mode to set, one of #ui_view_indicator.
+	 *
+	 *  @return @c false if current indicator is same with new one, @c true otherwise.
 	 */
 	bool set_indicator(ui_view_indicator indicator);
 
-	///Constructor
+	/**
+	 *  @brief This is a constructor for initializing viewmgr.
+	 *
+	 *  @param pkg The name of package.
+	 *  @param key_listener The instance of ui_base_key_listner.
+	 */
 	ui_base_viewmgr(const char *pkg, ui_base_key_listener *key_listener);
+
+	/**
+	 *  @brief This is a constructor for initializing viewmgr.
+	 *
+	 *  @param pkg The name of package.
+	 */
 	ui_base_viewmgr(const char *pkg);
 
 	///Destructor.

@@ -36,7 +36,11 @@ class ui_key_listener;
 class ui_view: public ui_base_view
 {
 public:
-	///Constructor.
+	/**
+	 *  @brief This is a constructor for initializing this view resources.
+	 *
+	 *  @param name view name.
+	 */
 	ui_view(const char *name = NULL);
 
 	///Destructor.
@@ -45,7 +49,7 @@ public:
 	/**
 	 *  @brief Get menu object.
 	 *
-	 *  @return menu object if any.
+	 *  @return The menu object of connected with view.
 	 */
 	const ui_menu *get_menu();
 
@@ -53,10 +57,10 @@ protected:
 	/**
 	 *  @brief This is making ui_menu instance.
 	 *
-	 *  @note It creates ui_menu instance, if there is no ui_menu instance of this view.
+	 *  @note It creates ui_menu instance, if there is no connected ui_menu instance of this view.
 	 *        It hides menu if there is already menu activated.
 	 *
-	 *  @return menu instance of this view. NULL If the menu already activated.
+	 *  @return The menu instance of this view. NULL If the menu already activated.
 	 */
 	virtual ui_menu *on_menu_pre();
 
@@ -68,14 +72,14 @@ protected:
 	virtual void on_menu_post();
 
 	/**
-	 *  @brief H/W back key event occurs on view.
+	 *  @brief The H/W menu key event occurs on view.
 	 *
 	 *  @param menu menu instance, This is made by key listener when menu key occured.
 	 */
 	virtual void on_menu(ui_menu *menu);
 
 	/**
-	 *  @brief H/W back key event occurs on view.
+	 *  @brief The H/W back key event occurs on view.
 	 *
 	 *  @note User can override this function to define application specific action when H/W back key
 	 *        event occurs. otherwise current view will be popped.
@@ -83,7 +87,7 @@ protected:
 	virtual void on_back();
 
 	/**
-	 *  @brief view rotate changed.
+	 *  @brief View rotate changed.
 	 *
 	 *  @note This state will be called when view rotation changed.
 	 *
@@ -95,7 +99,7 @@ protected:
 	virtual void on_rotate(int degree);
 
 	/**
-	 *  @brief view portrait state.
+	 *  @brief View portrait state.
 	 *
 	 *  @note This state will be called when view rotation changed to portrait.
 	 *
@@ -105,7 +109,7 @@ protected:
 	virtual void on_portrait();
 
 	/**
-	 *  @brief view landscape state.
+	 *  @brief View landscape state.
 	 *
 	 *  @note This state will be called when view rotation changed to landscape.
 	 *
@@ -114,7 +118,7 @@ protected:
 	 */
 	virtual void on_landscape();
 
-	/** @brief view deactivate state.
+	/** @brief View deactivate state.
 	 *
 	 *  @note this state will be triggered by ui_iface_viewmgr.
 	 *
