@@ -17,7 +17,6 @@
 #ifndef _UI_MOBILE_VIEWMANAGER_H_
 #define _UI_MOBILE_VIEWMANAGER_H_
 
-#include <app.h>
 #include "../ui_base_viewmanager.h"
 #include "ui_view.h"
 #include "ui_standard_view.h"

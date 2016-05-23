@@ -278,7 +278,7 @@ void ui_app::on_pause()
 
 void ui_app::on_resume()
 {
-	this->impl->get_viewmgr()->activate();
+//	this->impl->get_viewmgr()->activate();
 }
 
 void ui_app::on_control(app_control_h app_control)
@@ -289,6 +289,7 @@ void ui_app::on_control(app_control_h app_control)
 
 void ui_app::on_terminate()
 {
+	delete(this);
 }
 
 ui_app::ui_app(const char *pkg, const char *locale_dir)

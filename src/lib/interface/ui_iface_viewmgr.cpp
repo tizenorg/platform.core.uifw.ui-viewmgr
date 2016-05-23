@@ -38,6 +38,7 @@ private:
 	static bool event_block;                   //Event block on view transition. This value should be configurable by system.
 	list<ui_iface_view *> view_list;           //View list.
 	bool activated;                            //Activated status of this viewmgr.
+	bool destroying;
 
 public:
 	bool connect_view(ui_iface_view *view);
@@ -190,14 +191,23 @@ ui_iface_viewmgr_impl::ui_iface_viewmgr_impl(ui_iface_viewmgr* viewmgr)
 ui_iface_viewmgr_impl::~ui_iface_viewmgr_impl()
 {
 	//Terminate views
-	for (VIEW_RITR it = this->view_list.rbegin(); it != this->view_list.rend(); it++)
+	this->destroying = EINA_TRUE;
+	for (VIEW_RITR ritr = this->view_list.rbegin(); ritr != this->view_list.rend(); ritr++)
 	{
-		ui_iface_view *view = *it;
-		view->on_deactivate();
-		view->on_unload();
+		ui_iface_view *view = *ritr;
+		if ((view->get_state() != UI_VIEW_STATE_DEACTIVATE) &&
+			(view->get_state() != UI_VIEW_STATE_UNLOAD))
+		{
+			view->on_deactivate();
+		}
+		if (view->get_state() != UI_VIEW_STATE_UNLOAD)
+		{
+			view->on_unload();
+		}
 		view->on_destroy();
 		delete (view);
 	}
+	this->destroying = EINA_FALSE;
 
 	//FIXME: Window is destroyed. Terminate Application!
 	ui_app_exit();
@@ -231,11 +241,10 @@ ui_iface_view *ui_iface_viewmgr_impl::push_view(ui_iface_view *view)
 
 	this->view_list.push_back(view);
 
-	if (!view->get_content())
-	{
-		view->on_load();
-	}
+	//If view manager is not activated yet, don't load view.
+	if (!this->is_activated()) return view;
 
+	view->on_load();
 	view->on_deactivate();
 
 	if (this->view_list.size() != 1)
@@ -329,6 +338,8 @@ bool ui_iface_viewmgr_impl::insert_view_before(ui_iface_view *view, ui_iface_vie
 
 bool ui_iface_viewmgr_impl::remove_view(ui_iface_view *view)
 {
+	if (this->destroying) return false;
+
 	this->view_list.remove(view);
 	this->disconnect_view(view);
 
@@ -372,6 +383,10 @@ bool ui_iface_viewmgr_impl::activate()
 	if (this->activated) return false;
 	if (this->get_view_count() == 0) return false;
 	this->activated = true;
+	ui_iface_view *view = this->get_last_view();
+	view->on_load();
+	view->on_deactivate();
+	view->on_activate();
 	return true;
 }
 
@@ -379,6 +394,18 @@ bool ui_iface_viewmgr_impl::deactivate()
 {
 	if (!this->activated) return false;
 	this->activated = false;
+	ui_iface_view *view = this->get_last_view();
+
+	if ((view->get_state() != UI_VIEW_STATE_DEACTIVATE) &&
+		(view->get_state() != UI_VIEW_STATE_UNLOAD))
+	{
+		view->on_deactivate();
+	}
+	if (view->get_state() != UI_VIEW_STATE_UNLOAD)
+	{
+		view->on_unload();
+	}
+
 	return true;
 }
 
