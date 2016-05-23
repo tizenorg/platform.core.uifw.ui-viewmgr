@@ -245,7 +245,7 @@ protected:
 	 *  @brief View destroy state.
 	 *
 	 *  @note When this view is on destroyed by popping or by somehow, destroy will be triggered. Most of the cases, you can free your personal resources for
-	 *        the view because this view instance will be totally freed at the end of destroy. Be awre that you must not request any view functions on this
+	 *        the view because this view instance will be totally freed at the end of destroy. Be aware that you must not request any view functions on this
 	 *        state.
 	 */
 	virtual void on_destroy();

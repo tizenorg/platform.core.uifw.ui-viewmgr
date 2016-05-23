@@ -22,6 +22,7 @@
 #define Elm_Conformant Evas_Object
 #endif
 
+#include <app.h>
 #include "../interface/ui_iface_viewmanager.h"
 #include "ui_base_overlay.h"
 #include "ui_base_key_listener.h"
