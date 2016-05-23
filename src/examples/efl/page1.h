@@ -41,6 +41,30 @@ protected:
 		this->set_content(content, "Page1");
 	}
 
+	//on_unload() will be called when this page1 is requested to be hidden.
+	void on_unload()
+	{
+		ui_standard_view::on_unload();
+	}
+
+	//on_destroy() will be called when this page1 is requested to be destroyed.
+	void on_destroy()
+	{
+		ui_standard_view::on_destroy();
+	}
+
+	//on_deactivate() will be called when this page1 is requested to be deactivated.
+	void on_deactivate()
+	{
+		ui_standard_view::on_deactivate();
+	}
+
+	//on_activate() will be called when this page1 is requested to be activated.
+	void on_activate()
+	{
+		ui_standard_view::on_activate();
+	}
+
 public:
 	page1() : ui_standard_view("page1") {}
 	~page1() {}

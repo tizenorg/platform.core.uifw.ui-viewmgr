@@ -294,8 +294,6 @@ ui_base_viewmgr_impl::ui_base_viewmgr_impl(ui_base_viewmgr *viewmgr, const char 
 			{
 				ui_base_viewmgr *viewmgr = static_cast<ui_base_viewmgr*>(data);
 				delete(viewmgr);
-				//FIXME: Window is destroyed. Terminate Application!
-				//ui_app_exit();
 			},
 			this->viewmgr);
 
@@ -343,11 +341,6 @@ bool ui_base_viewmgr_impl::term()
 bool ui_base_viewmgr_impl::activate()
 {
 	this->activate_top_view();
-
-	//FIXME: Necessary??
-	ui_base_view *view = this->viewmgr->get_last_view();
-	view->on_activate();
-
 	evas_object_show(this->win);
 
 	return true;
@@ -358,14 +351,11 @@ bool ui_base_viewmgr_impl::deactivate()
 	//FIXME: based on the profile, we should app to go behind or terminate.
 	if (true)
 	{
-		ui_base_view *view = this->viewmgr->get_last_view();
-		if (view) view->on_deactivate();
 		evas_object_lower(this->win);
 	}
 	else
 	{
-		//FIXME: exit app
-		//ui_app_exit();
+		delete(this->viewmgr);
 	}
 
 	return true;
@@ -376,7 +366,7 @@ bool ui_base_viewmgr_impl::pop_view()
 	ui_base_view *pview = this->viewmgr->get_view(this->viewmgr->get_view_count() - 2);
 	ui_base_view *view = this->viewmgr->get_last_view();
 
-	//In case, if view doesn't have transition effect
+	//In case, if view doesn't have any transition effects.
 	if (!strcmp(view->get_transition_style(), "none"))
 	{
 		this->viewmgr->pop_view_finished(pview);
@@ -474,12 +464,12 @@ ui_base_viewmgr::~ui_base_viewmgr()
 {
 	this->impl->term();
 	delete(this->impl);
+	ui_app_exit();
 }
 
 bool ui_base_viewmgr::activate()
 {
 	if (!ui_iface_viewmgr::activate()) return false;
-
 	this->impl->activate();
 
 	return true;
@@ -488,7 +478,6 @@ bool ui_base_viewmgr::activate()
 bool ui_base_viewmgr::deactivate()
 {
 	if (!ui_iface_viewmgr::deactivate()) return false;
-
 	this->impl->deactivate();
 
 	return true;
