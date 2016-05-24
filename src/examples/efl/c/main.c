@@ -1192,7 +1192,7 @@ main(int argc, char *argv[])
 	event_callback.resume = app_resume;
 	event_callback.app_control = app_control;
 
-	int ret = ui_app_init(PACKAGE, LOCALE_DIR);
+	ret = ui_app_init(PACKAGE, LOCALE_DIR);
 	if (ret != 0)
 	{
 		//TODO

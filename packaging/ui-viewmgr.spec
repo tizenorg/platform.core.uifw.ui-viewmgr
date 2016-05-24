@@ -70,5 +70,6 @@ cp %{_builddir}/%{buildsubdir}/LICENSE %{buildroot}/usr/share/license/%{name}
 %{_includedir}/ui-viewmgr/interface/*.h
 %{_includedir}/ui-viewmgr/efl/*.h
 %{_includedir}/ui-viewmgr/efl/mobile/*.h
+%{_includedir}/ui-viewmgr/efl/mobile/c/*.h
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/ui-viewmgr.pc
