@@ -14,6 +14,9 @@
  *  limitations under the License.
  *
  */
+#include <app.h>
+#include <system_settings.h>
+#include <Elementary.h>
 #include <dlog.h>
 #include <ui_viewmanager.h>
 
@@ -32,5 +35,9 @@
 #endif
 
 typedef struct appdata {
-
+	Evas_Object *win;
+	Evas_Object *conform;
+	Evas_Object *layout;
+	Evas_Object *nf;
+	Evas_Object *tabbar;
 } appdata_s;

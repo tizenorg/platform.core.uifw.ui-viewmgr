@@ -26,6 +26,7 @@
 #include "ui_menu.h"
 #include "ui_popup.h"
 #include "ui_app.h"
+#include "c/ui_app_c.h"
 
 #define UI_VIEWMGR (ui_app::get_instance()->get_viewmgr())
 
