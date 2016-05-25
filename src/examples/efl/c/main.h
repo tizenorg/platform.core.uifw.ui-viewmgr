@@ -14,24 +14,30 @@
  *  limitations under the License.
  *
  */
-#ifndef _UI_MOBILE_VIEWMANAGER_H_
-#define _UI_MOBILE_VIEWMANAGER_H_
-
 #include <app.h>
-#include "../ui_base_viewmanager.h"
-#include "ui_view.h"
-#include "ui_standard_view.h"
-#include "ui_key_listener.h"
-#include "ui_viewmgr.h"
-#include "ui_menu.h"
-#include "ui_popup.h"
-#include "ui_app.h"
-#include "c/ui_app_c.h"
-#include "c/ui_menu_c.h"
-#include "c/ui_popup_c.h"
-#include "c/ui_viewmgr_c.h"
-#include "c/ui_view_c.h"
+#include <system_settings.h>
+#include <Elementary.h>
+#include <dlog.h>
+#include <ui_viewmanager.h>
 
-#define UI_VIEWMGR (ui_app::get_instance()->get_viewmgr())
+//uncomment if you want debug
+#ifndef TIZEN_ENGINEER_MODE
+#define TIZEN_ENGINEER_MODE
+#endif
 
-#endif /* UI_MOBILE_VIEWMANAGER_H */
+#ifdef  LOG_TAG
+#undef  LOG_TAG
+#endif
+#define LOG_TAG "UI_VIEWMGR"
+
+#if !defined(PACKAGE)
+#define PACKAGE "ui-viewmgr"
+#endif
+
+typedef struct appdata {
+	Evas_Object *win;
+	Evas_Object *conform;
+	Evas_Object *layout;
+	Evas_Object *nf;
+	Evas_Object *tabbar;
+} appdata_s;
