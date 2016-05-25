@@ -20,11 +20,6 @@
  */
 class page2: public ui_standard_view
 {
-private:
-	Evas_Object *content;
-	Elm_Button *left_title_btn;
-	Elm_Button *right_title_btn;
-
 protected:
 	void on_load()
 	{
@@ -53,23 +48,9 @@ protected:
 
 		//Arguments: content, title, subtitle, title left button, title right button
 		this->set_content(content, "Page2", NULL, left_title_btn, right_title_btn);
-
-		this->content = content;
-		this->left_title_btn = left_title_btn;
-		this->right_title_btn = right_title_btn;
-	}
-	void on_unload()
-	{
-		ui_standard_view::on_unload();
-
-		evas_object_del(this->content);
-		evas_object_del(this->left_title_btn);
-		evas_object_del(this->right_title_btn);
 	}
 
 public:
-	page2() : ui_standard_view("page2")
-	{
-	}
+	page2() : ui_standard_view("page2") {}
 	~page2() {}
 };

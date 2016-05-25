@@ -13,6 +13,10 @@ SET(SRCS
      efl/mobile/ui_standard_view.cpp
      efl/mobile/ui_key_listener.cpp
      efl/mobile/ui_viewmgr.cpp
+     efl/mobile/c/ui_app_c.cpp
+     efl/mobile/c/ui_menu_c.cpp
+     efl/mobile/c/ui_popup_c.cpp
+     efl/mobile/c/ui_view_c.cpp
     )
 
 ADD_LIBRARY(${LIBNAME} SHARED ${SRCS})
