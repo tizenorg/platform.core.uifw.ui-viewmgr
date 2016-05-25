@@ -4,16 +4,21 @@
 using namespace efl_viewmanager;
 
 extern "C" {
-	int ui_app_init(const char *pkg, const char *locale_dir)
+	bool ui_popup_content_set(ui_popup *popup, Elm_Popup *popup)
 	{
 		//TODO
 		return 1;
 	}
 
-	int ui_app_run(int argc, char **argv, ui_app_lifecycle_callback_s *event_callback, void *data)
+	bool ui_popup_activate(ui_popup *popup)
 	{
 		//TODO
 		return 1;
+	}
+
+	void ui_popup_del(ui_popup *popup)
+	{
+		//TODO
 	}
 }
 

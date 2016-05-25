@@ -333,7 +333,7 @@ view16_load_cb(ui_view *view, void *data)
 			view16_title_show_btn_clicked_cb, view16_title_hide_btn_clicked_cb,
 			view16_title_show_anim_btn_clicked_cb, view16_title_hide_anim_btn_clicked_cb, view);
 
-	ui_standard_view_content_set(view, content, "Page16");
+	ui_standard_view_content_set(view, content, "Page16", NULL, NULL);
 }
 
 static void
@@ -371,7 +371,7 @@ view15_load_cb(ui_view *view, void *data)
 
 	Evas_Object *content = create_scrolling_content(base_layout);
 
-	ui_standard_view_content_set(view, content, "Page 15 Scroller In Viewmgr");
+	ui_standard_view_content_set(view, content, "Page 15 Scroller In Viewmgr", NULL, NULL);
 
 	//Title Right button
 	Elm_Button *right_btn = elm_button_add(this->get_base());
@@ -423,7 +423,7 @@ view14_load_cb(ui_view *view, void *data)
 	Evas_Object *content = create_content(base_layout, "ViewMgr Demo<br>None Transition",
 			view14_prev_btn_clicked_cb, view14_next_btn_clicked_cb);
 
-	ui_standard_view_content_set(view, content, "Page14");
+	ui_standard_view_content_set(view, content, "Page14", NULL, NULL);
 }
 
 static void
@@ -469,7 +469,7 @@ view13_load_cb(ui_view *view, void *data)
 	Evas_Object *content = create_content(base_layout, "ViewMgr Demo<br>Fade Transition",
 			view13_prev_btn_clicked_cb, view13_next_btn_clicked_cb);
 
-	ui_standard_view_content_set(view, content, "Page13");
+	ui_standard_view_content_set(view, content, "Page13", NULL, NULL);
 }
 
 static void
@@ -558,14 +558,14 @@ view12_load_cb(ui_view *view, void *data)
 	Evas_Object *content = create_content(base_layout, "ViewMgr Demo<br>Popup",
 			view12_prev_btn_clicked_cb, view12_next_btn_clicked_cb);
 
-	ui_standard_view_content_set(view, content, "Page12");
+	ui_standard_view_content_set(view, content, "Page12", NULL, NULL);
 
 	//Title Right button
 	Elm_Button *right_btn = elm_button_add(base_layout);
 	elm_object_text_set(right_btn, "popup");
 	evas_object_smart_callback_add(right_btn, "clicked", view12_btn_clicked, view);
 
-	this->set_title_right_btn(right_btn);
+	ui_standard_view_title_right_btn_set(view, right_btn);
 }
 
 static void
@@ -592,6 +592,9 @@ create_page12()
 
 static void
 view11_prev_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+	ol ui_popup_content_set(ui_popup *popup, Elm_Popup *popup);
+	bool ui_popup_activate(ui_popup *popup);
+
 {
 	UI_VIEWMGR_VIEW_POP();
 }
@@ -610,7 +613,7 @@ view11_load_cb(ui_view *view, void *data)
 	Evas_Object *content = create_content(base_layout, "ViewMgr Demo<br>Menu Popup",
 			view11_prev_btn_clicked_cb, view11_next_btn_clicked_cb);
 
-	ui_standard_view_content_set(view, content, "Page11");
+	ui_standard_view_content_set(view, content, "Page11", NULL, NULL);
 }
 
 static void ctxpopup_item_select_cb(void *data, Evas_Object *obj, void *event_info)
@@ -688,7 +691,7 @@ view10_rotate_cb(ui_view *view, int degree, void *data)
 		Evas_Object *content = create_content(base_layout, "ViewMgr Demo<br>Rotation",
 				view10_prev_btn_clicked_cb, view10_next_btn_clicked_cb);
 
-		ui_standard_view_content_set(view, content, "Page10");
+		ui_standard_view_content_set(view, content, "Page10", NULL, NULL);
 		ui_view_indicator_set(view, UI_VIEW_INDICATOR_DEFAULT);
 	}
 	else
@@ -696,7 +699,7 @@ view10_rotate_cb(ui_view *view, int degree, void *data)
 		Evas_Object *content = create_content(base_layout, "ViewMgr Demo<br>Rotation",
 				view10_prev_btn_clicked_cb, view10_next_btn_clicked_cb);
 
-		ui_standard_view_content_set(view, content, "Page10");
+		ui_standard_view_content_set(view, content, "Page10", NULL. NULL);
 		ui_view_indicator_set(view, UI_VIEW_INDICATOR_OPTIMAL);
 	}
 }
@@ -757,7 +760,7 @@ view9_portrait_cb(ui_view *view, void *data)
 	Evas_Object *content = create_content(base_layout, "ViewMgr Demo<br>Portrait/Landscape",
 			view9_prev_btn_clicked_cb, view9_next_btn_clicked_cb);
 
-	ui_standard_view_content_set(view, content, "Page9");
+	ui_standard_view_content_set(view, content, "Page9", NULL, NULL);
 	ui_view_indicator_set(view, UI_VIEW_INDICATOR_DEFAULT);
 }
 
@@ -769,7 +772,7 @@ view9_landscape_cb(ui_view *view, void *data)
 	Evas_Object *content = create_content(base_layout, "ViewMgr Demo<br>Portrait/Landscape",
 			view9_prev_btn_clicked_cb, view9_next_btn_clicked_cb);
 
-	ui_standard_view_content_set(view, content, "Page9");
+	ui_standard_view_content_set(view, content, "Page9", NULL, NULL);
 	ui_view_indicator_set(view, UI_VIEW_INDICATOR_OPTIMAL);
 }
 
@@ -838,7 +841,7 @@ create_page8()
 			view8_prev_btn_clicked_cb, view8_next_btn_clicked_cb);
 
 	ui_view_removable_content(view, false);
-	ui_standard_view_content_set(view, content, "Page7");
+	ui_standard_view_content_set(view, content, "Page7", NULL, NULL);
 
 	UI_VIEWMGR_VIEW_PUSH(view);
 }
@@ -867,7 +870,7 @@ view7_load_cb(ui_view *view, void *data)
 	Evas_Object *content = create_content(base_layout, "ViewMgr Demo<br>Navigationbarr",
 			view7_prev_btn_clicked_cb, view7_next_btn_clicked_cb);
 
-	ui_standard_view_content_set(view, content, "Page7");
+	ui_standard_view_content_set(view, content, "Page7", NULL, NULL);
 	Elm_Toolbar *toolbar = create_toolbar(base_layout, "navigarionbar");
 	ui_standard_view_toolbar_set(view, toolbar);
 }
@@ -914,7 +917,7 @@ view6_load_cb(ui_view *view, void *data)
 	Evas_Object *content = create_content(base_layout, "ViewMgr Demo<br>Toolbar",
 			view6_prev_btn_clicked_cb, view6_next_btn_clicked_cb);
 
-	ui_standard_view_content_set(view, content, "Page6");
+	ui_standard_view_content_set(view, content, "Page6", NULL, NULL);
 	Elm_Toolbar *toolbar = create_toolbar(base_layout, "toolbar_with_title");
 	ui_standard_view_toolbar_set(view, toolbar);
 }
@@ -1006,7 +1009,7 @@ view4_load_cb(ui_view *view, void *data)
 	Evas_Object *content = create_content(base_layout, "ViewMgr Demo<br>Title Badge",
 			view4_prev_btn_clicked_cb, view4_next_btn_clicked_cb);
 
-	ui_standard_view_content_set(view, content, "Page4 We put a long title here intentionally");
+	ui_standard_view_content_set(view, content, "Page4 We put a long title here intentionally", NULL, NULL);
 	ui_standard_view_title_badge_set(view, "999+");
 }
 
