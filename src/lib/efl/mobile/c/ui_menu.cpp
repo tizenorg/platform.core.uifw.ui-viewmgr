@@ -1,5 +1,5 @@
 #include "../../../../include/efl/mobile/ui_mobile_viewmanager.h"
-#include "../../../../include/efl/mobile/c/ui_menu_c.h"
+#include "../../../../include/efl/mobile/c/ui_menu.h"
 
 using namespace efl_viewmanager;
 
