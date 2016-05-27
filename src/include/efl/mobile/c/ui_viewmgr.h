@@ -7,9 +7,9 @@ using namespace efl_viewmananger;
 extern "C" {
 #endif
 	//TODO
-	#define UI_VIEWMGR_VIEW_DEACTIVATE() (ui_app::get_instance()->get_viewmgr())->deactivate()
-	#define UI_VIEWMGR_VIEW_PUSH(x) (ui_app::get_instance()->get_viewmgr())->push_view(x)
-	#define UI_VIEWMGR_VIEW_POP() (ui_app::get_instance()->get_viewmgr())->pop_view()
+	#define UI_VIEWMGR_DEACTIVATE() (ui_app_capi::get_instance()->get_viewmgr())->deactivate()
+	#define UI_VIEWMGR_VIEW_PUSH(x) (ui_app_capi::get_instance()->get_viewmgr())->push_view(x)
+	#define UI_VIEWMGR_VIEW_POP() (ui_app_capi::get_instance()->get_viewmgr())->pop_view()
 #ifdef __cplusplus
 }
 #endif

@@ -430,6 +430,7 @@ ui_base_view * ui_base_viewmgr_impl::push_view(ui_base_view *view)
 		return view;
 	}
 
+	LOGE("content set!!!");
 	//Trigger Effects.
 	Evas_Object *prv = this->get_base() == pview->get_base() ? pview->get_content() : pview->get_base();
 	elm_layout_content_set(effect, "pcontent", prv);

@@ -7,19 +7,19 @@ namespace efl_viewmananger
 #ifdef __cplusplus
 extern "C" {
 #endif
-	typedef bool (*ui_view_lifecycle_load_cb) (ui_view *view, void *data);
-	typedef bool (*ui_view_lifecycle_unload_cb) (ui_view *view, void *data);
-	typedef bool (*ui_view_lifecycle_pause_cb) (ui_view *view, void *data);
-	typedef bool (*ui_view_lifecycle_resume_cb) (ui_view *view, void *data);
-	typedef bool (*ui_view_lifecycle_activate_cb) (ui_view *view, void *data);
-	typedef bool (*ui_view_lifecycle_deactivate_cb) (ui_view *view, void *data);
-	typedef bool (*ui_view_lifecycle_destroy_cb) (ui_view *view, void *data);
+	typedef void (*ui_view_lifecycle_load_cb) (ui_view *view, void *data);
+	typedef void (*ui_view_lifecycle_unload_cb) (ui_view *view, void *data);
+	typedef void (*ui_view_lifecycle_pause_cb) (ui_view *view, void *data);
+	typedef void (*ui_view_lifecycle_resume_cb) (ui_view *view, void *data);
+	typedef void (*ui_view_lifecycle_activate_cb) (ui_view *view, void *data);
+	typedef void (*ui_view_lifecycle_deactivate_cb) (ui_view *view, void *data);
+	typedef void (*ui_view_lifecycle_destroy_cb) (ui_view *view, void *data);
 
-	typedef bool (*ui_view_event_rotate_cb) (ui_view *view, int degree, void *data);
-	typedef bool (*ui_view_event_portrait_cb) (ui_view *view, void *data);
-	typedef bool (*ui_view_event_landscape_cb) (ui_view *view, void *data);
-	typedef bool (*ui_view_event_back_cb) (ui_view *view, void *data);
-	typedef bool (*ui_view_event_menu_cb) (ui_menu *menu, void *data);
+	typedef void (*ui_view_event_rotate_cb) (ui_view *view, int degree, void *data);
+	typedef void (*ui_view_event_portrait_cb) (ui_view *view, void *data);
+	typedef void (*ui_view_event_landscape_cb) (ui_view *view, void *data);
+	typedef void (*ui_view_event_back_cb) (ui_view *view, void *data);
+	typedef void (*ui_view_event_menu_cb) (ui_menu *menu, void *data);
 
 	typedef struct
 	{
@@ -61,6 +61,45 @@ extern "C" {
 #ifdef __cplusplus
 }
 #endif
+
+class ui_standard_view_capi : public ui_standard_view
+{
+private:
+	ui_view_lifecycle_callback_s lifecycle_callback;
+	void *data;
+
+protected:
+	void on_load()
+	{
+		ui_standard_view::on_load();
+
+		if (this->lifecycle_callback.load) {
+			this->lifecycle_callback.load(this, this->data);
+		}
+	}
+
+public:
+	ui_standard_view_capi(const char *name)
+		: ui_standard_view(name)
+	{
+		this->lifecycle_callback = {0,};
+		this->data = NULL;
+	}
+
+	~ui_standard_view_capi()
+	{
+	}
+
+	void set_lifecycle_callback(ui_view_lifecycle_callback_s *callback)
+	{
+		this->lifecycle_callback = *callback;
+	}
+
+	void set_data(void *data)
+	{
+		this->data = data;
+	}
+};
 
 }
 #endif /* _UI_VIEW_C_H_ */
