@@ -401,10 +401,11 @@ bool ui_base_viewmgr_impl::pop_view()
 
 ui_base_view * ui_base_viewmgr_impl::push_view(ui_base_view *view)
 {
-	if (!this->viewmgr->is_activated()) return view;
+	if (!this->viewmgr->is_activated())	return view;
 
 	//In case, if viewmgr has one view, we skip effect.
 	if (this->viewmgr->get_view_count() == 1) {
+		LOGE("view count is 1");
 		this->activate_top_view();
 		this->viewmgr->push_view_finished(view);
 		return view;
@@ -430,6 +431,7 @@ ui_base_view * ui_base_viewmgr_impl::push_view(ui_base_view *view)
 		return view;
 	}
 
+	LOGE("content set!!!");
 	//Trigger Effects.
 	Evas_Object *prv = this->get_base() == pview->get_base() ? pview->get_content() : pview->get_base();
 	elm_layout_content_set(effect, "pcontent", prv);

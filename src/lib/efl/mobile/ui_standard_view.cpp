@@ -113,6 +113,7 @@ bool ui_standard_view_impl::create_layout()
 {
 	if (this->layout) return false;
 
+
 	Elm_Layout *layout = elm_layout_add(this->view->get_parent());
 	LAYOUT_VALIDATE();
 
@@ -132,7 +133,6 @@ bool ui_standard_view_impl::create_layout()
 	{
 		elm_object_part_content_set(layout, "elm.swallow.content", this->view->get_content());
 	}
-
 	//Set software back key, if it's needed
 	ui_viewmgr *viewmgr = UI_VIEWMGR;
 	if (viewmgr && viewmgr->need_soft_key())
@@ -156,7 +156,6 @@ bool ui_standard_view_impl::create_layout()
 			elm_object_signal_emit(layout, "elm,state,prev_btn,show", "viewmgr");
 		}
 	}
-
 	this->layout = layout;
 
 	return true;

@@ -24,6 +24,7 @@ protected:
 	//on_load() will be called when this page1 is requested to be shown.
 	void on_load()
 	{
+		LOGE("load!!");
 		ui_standard_view::on_load();
 
 		//Create a main content.
@@ -39,6 +40,7 @@ protected:
 					UI_VIEWMGR->push_view(new page2());
 				});
 		this->set_content(content, "Page1");
+		LOGE("load finished!");
 	}
 
 public:
