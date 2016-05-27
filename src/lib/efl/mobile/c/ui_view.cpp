@@ -1,45 +1,165 @@
-#include "../../../../include/efl/mobile/ui_mobile_viewmanager.h"
+#include "../../../../include/efl/mobile/c/ui_mobile_viewmanager.h"
 #include "../../../../include/efl/mobile/c/ui_view.h"
 
 using namespace efl_viewmanager;
 
+class ui_standard_view_capi : public ui_standard_view
+{
+private:
+	ui_view_lifecycle_callback_s lifecycle_callback;
+	void *data;
+
+protected:
+	void on_load()
+	{
+		ui_standard_view::on_load();
+
+		if (this->lifecycle_callback.load) {
+			this->lifecycle_callback.load(this, this->data);
+		}
+	}
+
+public:
+	ui_standard_view_capi(const char *name)
+		: ui_standard_view(name)
+	{
+		this->lifecycle_callback = {0,};
+		this->data = NULL;
+	}
+
+	~ui_standard_view_capi()
+	{
+	}
+
+	void set_lifecycle_callback(ui_view_lifecycle_callback_s *callback)
+	{
+		this->lifecycle_callback = *callback;
+	}
+
+	void set_data(void *data)
+	{
+		this->data = data;
+	}
+};
+
+class ui_view_capi : public ui_view
+{
+private:
+	ui_view_lifecycle_callback_s lifecycle_callback;
+	void *data;
+
+protected:
+	void on_load()
+	{
+		ui_view::on_load();
+
+		if (this->lifecycle_callback.load) {
+			this->lifecycle_callback.load(this, this->data);
+		}
+	}
+
+public:
+	ui_view_capi(const char *name)
+		: ui_view(name)
+	{
+		this->lifecycle_callback = {0,};
+		this->data = NULL;
+	}
+
+	~ui_view_capi()
+	{
+	}
+
+	void set_lifecycle_callback(ui_view_lifecycle_callback_s *callback)
+	{
+		this->lifecycle_callback = *callback;
+	}
+
+	void set_data(void *data)
+	{
+		this->data = data;
+	}
+};
+
 extern "C" {
 	ui_view* ui_standard_view_create(const char *name)
 	{
-		//TODO
-		return NULL;
+		return new ui_standard_view_capi(name);
+	}
+
+	ui_view* ui_view_create(const char *name)
+	{
+		return new ui_view_capi(name);
 	}
 
 	bool ui_view_lifecycle_callbacks_set(ui_view *view,
 										 ui_view_lifecycle_callback_s *lifecycle_callback, void *data)
 	{
-		//TODO
-		return 1;
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return false;
+		}
+
+		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
+
+		if (lifecycle_callback) capi_view->set_lifecycle_callback(lifecycle_callback);
+		if (data) capi_view->set_data(data);
+
+		return true;
 	}
 	Evas_Object* ui_view_base_get(ui_view *view)
 	{
-		//TODO
-		return NULL;
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return false;
+		}
+
+		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
+
+		return capi_view->get_base();
 	}
 
 	bool ui_view_content_set(ui_view *view, Evas_Object *content)
 	{
-		//TODO
-		return 1;
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return false;
+		}
+
+		ui_view_capi *capi_view = static_cast<ui_view_capi *>(view);
+
+		return capi_view->set_content(content);
 	}
 
 	bool ui_standard_view_content_set(ui_view *view, Evas_Object *content,
 									  const char *title, const char *subtitle,
 									  Evas_Object *title_left_btn, Evas_Object *title_right_btn)
 	{
-		//TODO
-		return 1;
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return false;
+		}
+
+		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
+
+		return capi_view->set_content(content, title, subtitle, title_left_btn, title_right_btn);
 	}
 
 	bool ui_standard_view_title_badge_set(ui_view *view, const char *badge_text)
 	{
-		//TODO
-		return 1;
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return false;
+		}
+
+		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
+
+		return capi_view->set_title_badge(badge_text);
 	}
 
 	bool ui_view_indicator_set(ui_view *view, ui_view_indicator indicator)

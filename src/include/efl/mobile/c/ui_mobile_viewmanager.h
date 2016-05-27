@@ -14,18 +14,15 @@
  *  limitations under the License.
  *
  */
-#ifndef _UI_MOBILE_VIEWMANAGER_H_
-#define _UI_MOBILE_VIEWMANAGER_H_
+#ifndef _UI_MOBILE_VIEWMANAGER_CAPI_H_
+#define _UI_MOBILE_VIEWMANAGER_CAPI_H_
 
-#include "../ui_base_viewmanager.h"
-#include "ui_view.h"
-#include "ui_standard_view.h"
-#include "ui_key_listener.h"
-#include "ui_viewmgr.h"
+#include "../ui_mobile_viewmanager.h"
+#include "ui_app.h"
 #include "ui_menu.h"
 #include "ui_popup.h"
-#include "ui_app.h"
+#include "ui_viewmgr.h"
+#include "ui_view.h"
 
-#define UI_VIEWMGR (ui_app::get_instance()->get_viewmgr())
 
-#endif /* UI_MOBILE_VIEWMANAGER_H */
+#endif /* UI_MOBILE_VIEWMANAGER_CAPI_H */

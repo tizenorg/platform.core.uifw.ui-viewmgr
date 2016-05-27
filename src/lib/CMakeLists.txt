@@ -17,6 +17,7 @@ SET(SRCS
      efl/mobile/c/ui_menu.cpp
      efl/mobile/c/ui_popup.cpp
      efl/mobile/c/ui_view.cpp
+     efl/mobile/c/ui_viewmgr.cpp
     )
 
 ADD_LIBRARY(${LIBNAME} SHARED ${SRCS})
