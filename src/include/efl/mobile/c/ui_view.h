@@ -7,19 +7,19 @@ namespace efl_viewmananger
 #ifdef __cplusplus
 extern "C" {
 #endif
-	typedef bool (*ui_view_lifecycle_load_cb) (ui_view *view, void *data);
-	typedef bool (*ui_view_lifecycle_unload_cb) (ui_view *view, void *data);
-	typedef bool (*ui_view_lifecycle_pause_cb) (ui_view *view, void *data);
-	typedef bool (*ui_view_lifecycle_resume_cb) (ui_view *view, void *data);
-	typedef bool (*ui_view_lifecycle_activate_cb) (ui_view *view, void *data);
-	typedef bool (*ui_view_lifecycle_deactivate_cb) (ui_view *view, void *data);
-	typedef bool (*ui_view_lifecycle_destroy_cb) (ui_view *view, void *data);
+	typedef void (*ui_view_lifecycle_load_cb) (ui_view *view, void *data);
+	typedef void (*ui_view_lifecycle_unload_cb) (ui_view *view, void *data);
+	typedef void (*ui_view_lifecycle_pause_cb) (ui_view *view, void *data);
+	typedef void (*ui_view_lifecycle_resume_cb) (ui_view *view, void *data);
+	typedef void (*ui_view_lifecycle_activate_cb) (ui_view *view, void *data);
+	typedef void (*ui_view_lifecycle_deactivate_cb) (ui_view *view, void *data);
+	typedef void (*ui_view_lifecycle_destroy_cb) (ui_view *view, void *data);
 
-	typedef bool (*ui_view_event_rotate_cb) (ui_view *view, int degree, void *data);
-	typedef bool (*ui_view_event_portrait_cb) (ui_view *view, void *data);
-	typedef bool (*ui_view_event_landscape_cb) (ui_view *view, void *data);
-	typedef bool (*ui_view_event_back_cb) (ui_view *view, void *data);
-	typedef bool (*ui_view_event_menu_cb) (ui_menu *menu, void *data);
+	typedef void (*ui_view_event_rotate_cb) (ui_view *view, int degree, void *data);
+	typedef void (*ui_view_event_portrait_cb) (ui_view *view, void *data);
+	typedef void (*ui_view_event_landscape_cb) (ui_view *view, void *data);
+	typedef void (*ui_view_event_back_cb) (ui_view *view, void *data);
+	typedef void (*ui_view_event_menu_cb) (ui_menu *menu, void *data);
 
 	typedef struct
 	{
@@ -42,6 +42,7 @@ extern "C" {
 	} ui_view_event_callback_s;
 
 	ui_view* ui_standard_view_create(const char *name);
+	ui_view* ui_view_create(const char *name);
 	bool ui_view_lifecycle_callbacks_set(ui_view *view,
 									ui_view_lifecycle_callback_s *lifecycle_callback, void *data);
 	Evas_Object* ui_view_base_get(ui_view *view);
