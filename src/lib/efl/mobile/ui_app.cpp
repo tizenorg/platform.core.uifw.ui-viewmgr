@@ -273,6 +273,7 @@ bool ui_app::on_create()
 
 void ui_app::on_pause()
 {
+	LOGE("deactivate");
 	this->impl->get_viewmgr()->deactivate();
 }
 
@@ -283,6 +284,7 @@ void ui_app::on_resume()
 
 void ui_app::on_control(app_control_h app_control)
 {
+	LOGE("activate called!");
 	/* Handle the launch request. */
 	this->impl->get_viewmgr()->activate();
 }

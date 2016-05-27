@@ -4,15 +4,18 @@
 using namespace efl_viewmanager;
 
 extern "C" {
-	int ui_app_init(const char *pkg, const char *locale_dir)
+	static ui_app_capi *app = NULL;
+
+	bool ui_app_init(const char *pkg, const char *locale_dir)
 	{
-		//TODO
-		return 1;
+		app = new ui_app_capi(pkg, locale_dir);
+
+		if (app) return true;
+		else return false;
 	}
 
 	int ui_app_run(int argc, char **argv, ui_app_lifecycle_callback_s *event_callback, void *data)
 	{
-		//TODO
-		return 1;
+		return app->run(argc, argv, event_callback, data);
 	}
 }
