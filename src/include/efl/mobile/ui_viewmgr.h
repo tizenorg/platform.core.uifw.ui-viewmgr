@@ -22,6 +22,7 @@ namespace efl_viewmanager
 
 class ui_view;
 class ui_app;
+class ui_app_capi;
 
 /**
  *  @class ui_viewmgr
@@ -51,6 +52,7 @@ private:
 	_UI_DISABLE_COPY_AND_ASSIGN(ui_viewmgr);
 	_UI_DECLARE_FRIENDS(ui_view);
 	_UI_DECLARE_FRIENDS(ui_app);
+	_UI_DECLARE_FRIENDS(ui_app_capi);
 };
 }
 
