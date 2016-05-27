@@ -6,20 +6,28 @@ using namespace efl_viewmanager;
 extern "C" {
 	ui_view* ui_standard_view_create(const char *name)
 	{
-		//TODO
-		return NULL;
+		return new ui_standard_view_capi(name);
 	}
 
 	bool ui_view_lifecycle_callbacks_set(ui_view *view,
 										 ui_view_lifecycle_callback_s *lifecycle_callback, void *data)
 	{
-		//TODO
-		return 1;
+		if (!view) return false;
+
+		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
+
+		if (lifecycle_callback) capi_view->set_lifecycle_callback(lifecycle_callback);
+		if (data) capi_view->set_data(data);
+
+		return true;
 	}
 	Evas_Object* ui_view_base_get(ui_view *view)
 	{
-		//TODO
-		return NULL;
+		if (!view) return NULL;
+
+		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
+
+		return capi_view->get_base();
 	}
 
 	bool ui_view_content_set(ui_view *view, Evas_Object *content)
@@ -32,8 +40,11 @@ extern "C" {
 									  const char *title, const char *subtitle,
 									  Evas_Object *title_left_btn, Evas_Object *title_right_btn)
 	{
-		//TODO
-		return 1;
+		if (!view) return false;
+
+		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
+
+		return capi_view->set_content(content, title, subtitle, title_left_btn, title_right_btn);
 	}
 
 	bool ui_standard_view_title_badge_set(ui_view *view, const char *badge_text)

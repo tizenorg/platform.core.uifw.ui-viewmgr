@@ -113,6 +113,7 @@ void ui_base_view::set_indicator(ui_view_indicator indicator)
 
 void ui_base_view::on_rotate(int degree)
 {
+	LOGE("get parent?!");
 }
 
 void ui_base_view::on_portrait()
