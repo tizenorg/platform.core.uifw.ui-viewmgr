@@ -14,27 +14,32 @@
  *  limitations under the License.
  *
  */
-#ifndef _UI_MOBILE_VIEWMANAGER_H_
-#define _UI_MOBILE_VIEWMANAGER_H_
+#ifndef _UI_APP_CAPI_H_
+#define _UI_APP_CAPI_H_
 
-#include <app.h>
-#include "../ui_base_viewmanager.h"
-#include "ui_view.h"
-#include "ui_standard_view.h"
-#include "ui_key_listener.h"
-#include "ui_viewmgr.h"
-#include "ui_menu.h"
-#include "ui_popup.h"
-#include "ui_app.h"
-#include "ui_app_capi.h"
-#include "c/ui_app.h"
-#include "c/ui_menu.h"
-#include "c/ui_popup.h"
-#include "c/ui_viewmgr.h"
-#include "c/ui_view.h"
+namespace efl_viewmanager
+{
 
-//FIXME: um... i need to think more.
-#define UI_VIEWMGR (ui_app_capi::get_instance()->get_viewmgr())
-//#define UI_VIEWMGR (ui_app::get_instance()->get_viewmgr())
+class ui_viewmgr;
 
-#endif /* UI_MOBILE_VIEWMANAGER_H */
+class ui_app_capi
+{
+public:
+	ui_app_capi(const char *pkg, const char *locale_dir);
+	virtual ~ui_app_capi();
+
+	ui_viewmgr *get_viewmgr();
+	static ui_app_capi *get_instance();
+
+	virtual int run(int argc, char **argv, ui_app_lifecycle_callback_s *event_callback, void *data);
+
+protected:
+
+private:
+	_UI_DECLARE_PRIVATE_IMPL(ui_app_capi);
+	_UI_DISABLE_COPY_AND_ASSIGN(ui_app_capi);
+};
+
+}
+
+#endif /* _UI_APP_CAPI_H_ */

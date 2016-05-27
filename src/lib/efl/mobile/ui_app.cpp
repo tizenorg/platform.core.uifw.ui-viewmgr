@@ -117,6 +117,7 @@ static void ui_app_low_memory(app_event_info_h event_info, void *data)
 
 bool ui_app_impl::init()
 {
+	LOGE("init");
 	//FIXME: this scale value should be configurable.
 	elm_app_base_scale_set(2.6);
 
@@ -137,12 +138,14 @@ bool ui_app_impl::init()
 ui_app_impl::ui_app_impl(ui_app *app, const char *pkg, const char *locale_dir)
 		: app(app), viewmgr(NULL)
 {
+	LOGE("ui_app crate");
 	this->pkg = eina_stringshare_add(pkg);
 	this->locale_dir = eina_stringshare_add(locale_dir);
 }
 
 int ui_app_impl::run(int argc, char **argv)
 {
+	LOGE("run!");
 	ui_app_lifecycle_callback_s event_callback =
 	{ 0, };
 	app_event_handler_h handlers[5] =
@@ -273,6 +276,7 @@ bool ui_app::on_create()
 
 void ui_app::on_pause()
 {
+	LOGE("deactivate");
 	this->impl->get_viewmgr()->deactivate();
 }
 
@@ -283,6 +287,7 @@ void ui_app::on_resume()
 
 void ui_app::on_control(app_control_h app_control)
 {
+	LOGE("activate called!");
 	/* Handle the launch request. */
 	this->impl->get_viewmgr()->activate();
 }
