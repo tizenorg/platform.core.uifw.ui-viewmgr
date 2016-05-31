@@ -592,9 +592,6 @@ create_page12()
 
 static void
 view11_prev_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
-	ol ui_popup_content_set(ui_popup *popup, Elm_Popup *popup);
-	bool ui_popup_activate(ui_popup *popup);
-
 {
 	UI_VIEWMGR_VIEW_POP();
 }
