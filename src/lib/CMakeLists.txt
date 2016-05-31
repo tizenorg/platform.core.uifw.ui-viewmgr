@@ -2,6 +2,7 @@ SET(SRCS
      interface/ui_iface_overlay.cpp
      interface/ui_iface_view.cpp
      interface/ui_iface_viewmgr.cpp
+     efl/ui_base_app.cpp
      efl/ui_base_view.cpp
      efl/ui_base_viewmgr.cpp
      efl/ui_base_key_listener.cpp
@@ -13,11 +14,11 @@ SET(SRCS
      efl/mobile/ui_standard_view.cpp
      efl/mobile/ui_key_listener.cpp
      efl/mobile/ui_viewmgr.cpp
-     efl/mobile/c/ui_app.cpp
-     efl/mobile/c/ui_menu.cpp
-     efl/mobile/c/ui_popup.cpp
-     efl/mobile/c/ui_view.cpp
-     efl/mobile/c/ui_viewmgr.cpp
+#     efl/mobile/c/ui_app.cpp
+#     efl/mobile/c/ui_menu.cpp
+#     efl/mobile/c/ui_popup.cpp
+#     efl/mobile/c/ui_view.cpp
+#     efl/mobile/c/ui_viewmgr.cpp
     )
 
 ADD_LIBRARY(${LIBNAME} SHARED ${SRCS})

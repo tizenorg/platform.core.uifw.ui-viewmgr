@@ -47,7 +47,6 @@ protected:
 	virtual ~ui_viewmgr();
 
 private:
-	_UI_DECLARE_PRIVATE_IMPL(ui_viewmgr);
 	_UI_DISABLE_COPY_AND_ASSIGN(ui_viewmgr);
 	_UI_DECLARE_FRIENDS(ui_view);
 	_UI_DECLARE_FRIENDS(ui_app);

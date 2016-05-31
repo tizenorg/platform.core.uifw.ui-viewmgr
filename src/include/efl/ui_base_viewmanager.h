@@ -28,6 +28,7 @@
 #include "ui_base_key_listener.h"
 #include "ui_base_viewmgr.h"
 #include "ui_base_view.h"
+#include "ui_base_app.h"
 
 #define UI_BASE_VIEWMGR dynamic_cast<ui_base_viewmgr *>(ui_iface_viewmgr::get_instance())
 
