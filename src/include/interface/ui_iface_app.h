@@ -14,47 +14,46 @@
  *  limitations under the License.
  *
  */
-#ifndef _UI_BASE_APP_H_
-#define _UI_BASE_APP_H_
+#ifndef _UI_IFACE_APP_H_
+#define _UI_IFACE_APP_H_
 
-namespace efl_viewmanager
-{
+namespace ui_viewmanager {
 
-class ui_base_viewmgr;
+class ui_iface_viewmgr;
 
-class ui_base_app
+class ui_iface_app
 {
 public:
 	/**
-	 *  @brief This is a constructor for initializing ui_base_app.
+	 *  @brief This is a constructor for initializing ui_iface_app.
 	 *
 	 *  @param pkg The name of package.
 	 *  @param loale_dir The path of locale directory.
 	 *  @param viewmgr instance of ui_viewmgr.
 	 */
-	ui_base_app(const char *pkg, const char *locale_dir, ui_base_viewmgr *viewmgr);
+	ui_iface_app(const char *pkg, const char *locale_dir, ui_iface_viewmgr *viewmgr);
 
 	///Destructor.
-	virtual ~ui_base_app();
+	virtual ~ui_iface_app();
 
 	/**
 	 *  @brief Return the viewmgr instance.
 	 *
-	 *  @return ui_viewmgr instance.
+	 *  @return ui_iface_viewmgr instance.
 	 */
-	ui_base_viewmgr *get_viewmgr();
+	ui_iface_viewmgr *get_viewmgr();
 
 	/**
-	 *  @brief Return ui_base_app instance.
+	 *  @brief Return ui_iface_app instance.
 	 *
-	 *  @return The instance of ui_base_app.
+	 *  @return The instance of ui_iface_app.
 	 */
-	static ui_base_app *get_instance();
+	static ui_iface_app *get_instance();
 
 	/**
 	 *  @brief Application life-cycle start and add application event callback functions add.
 	 *
-	 *  @note This is calling ui_base_app_main function to start application life-cycle start.
+	 *  @note This is calling ui_app_main function to start application life-cycle start.
 	 *        and adding all of the functions for application events handling such as
 	 *        create, terminate, pause, resume, app_control, APP_EVENT_LOW_BATTERY, APP_EVENT_LOW_MEMORY
 	 *        APP_EVENT_DEVICE_ORIENTATION_CHANGED, APP_EVENT_LANGUAGE_CHANGED, APP_EVENT_REGION_FORMAT_CHANGED.
@@ -133,10 +132,10 @@ protected:
 	virtual void on_lang_changed(app_event_info_h event_info);
 
 private:
-	_UI_DECLARE_PRIVATE_IMPL(ui_base_app);
-	_UI_DISABLE_COPY_AND_ASSIGN(ui_base_app);
+	_UI_DECLARE_PRIVATE_IMPL(ui_iface_app);
+	_UI_DISABLE_COPY_AND_ASSIGN(ui_iface_app);
 };
 
 }
 
-#endif /* _UI_BASE_APP_H_ */
+#endif /* _UI_IFACE_APP_H_ */

@@ -14,7 +14,6 @@
  *  limitations under the License.
  *
  */
-#include <system_settings.h>
 #include "../../../include/efl/mobile/ui_mobile_viewmanager.h"
 
 /***********************************************************************************************/
@@ -26,7 +25,7 @@
 /***********************************************************************************************/
 
 ui_app::ui_app(const char *pkg, const char *locale_dir)
-		: ui_base_app(pkg, locale_dir, new ui_viewmgr(pkg))
+		: ui_iface_app(pkg, locale_dir, new ui_viewmgr(pkg))
 {
 }
 
@@ -36,10 +35,10 @@ ui_app::~ui_app()
 
 ui_viewmgr *ui_app::get_viewmgr()
 {
-	return dynamic_cast<ui_viewmgr*>(ui_base_app::get_viewmgr());
+	return dynamic_cast<ui_viewmgr*>(ui_iface_app::get_viewmgr());
 }
 
 ui_app *ui_app::get_instance()
 {
-	return dynamic_cast<ui_app*>(ui_base_app::get_instance());
+	return dynamic_cast<ui_app*>(ui_iface_app::get_instance());
 }

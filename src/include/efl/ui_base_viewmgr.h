@@ -192,7 +192,6 @@ private:
 	_UI_DECLARE_PRIVATE_IMPL(ui_base_viewmgr);
 	_UI_DISABLE_COPY_AND_ASSIGN(ui_base_viewmgr);
 	_UI_DECLARE_FRIENDS(ui_base_view);
-	_UI_DECLARE_FRIENDS(ui_base_app);
 };
 
 }

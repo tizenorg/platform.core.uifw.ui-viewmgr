@@ -45,7 +45,7 @@ public:
 	 *
 	 *  @see deactivate()
 	 */
-	bool activate();
+	virtual bool activate();
 
 	/**
 	 *  @brief Deactivate this view manager.
@@ -57,7 +57,7 @@ public:
 	 *
 	 *  @see activate()
 	 */
-	bool deactivate();
+	virtual bool deactivate();
 
 	/**
 	 *  @brief Return the active status of viewmgr.
@@ -248,6 +248,7 @@ private:
 	_UI_DECLARE_PRIVATE_IMPL(ui_iface_viewmgr);
 	_UI_DISABLE_COPY_AND_ASSIGN(ui_iface_viewmgr);
 	_UI_DECLARE_FRIENDS(ui_iface_view);
+	_UI_DECLARE_FRIENDS(ui_iface_app);
 };
 
 }

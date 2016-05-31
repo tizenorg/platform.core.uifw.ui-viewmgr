@@ -70,11 +70,12 @@ enum ui_view_state
 	A(const A&) = delete; \
 	const A& operator=(const A&) = delete
 
-#include "ui_iface_singleton.h"
+#include <app.h>
 #include "ui_iface_rotatable.h"
 #include "ui_iface_overlay.h"
 #include "ui_iface_view.h"
 #include "ui_iface_viewmgr.h"
+#include "ui_iface_app.h"
 
 using namespace ui_viewmanager;
 

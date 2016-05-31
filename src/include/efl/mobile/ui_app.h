@@ -22,7 +22,7 @@ namespace efl_viewmanager
 
 class ui_viewmgr;
 
-class ui_app : public ui_base_app
+class ui_app : public ui_iface_app
 {
 public:
 	/**
