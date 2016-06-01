@@ -240,6 +240,12 @@ extern "C" {
 		return capi_view->set_content(content);
 	}
 
+	Evas_Object *ui_view_content_unset(ui_view *view)
+	{
+		//TODO
+		return NULL;
+	}
+
 	bool ui_standard_view_content_set(ui_view *view, Evas_Object *content,
 									  const char *title, const char *subtitle,
 									  Evas_Object *title_left_btn, Evas_Object *title_right_btn)
@@ -268,6 +274,24 @@ extern "C" {
 		return capi_view->set_title_badge(badge_text);
 	}
 
+	bool ui_standard_view_sub_title_set(ui_view *view, const char *text)
+	{
+		//TODO
+		return 1;
+	}
+
+	bool ui_standard_view_title_left_btn_set(ui_view *view, Evas_Object *title_left_btn)
+	{
+		//TODO
+		return 1;
+	}
+
+	bool ui_standard_view_title_set(ui_view *view, const char *text)
+	{
+		//TODO
+		return 1;
+	}
+
 	void ui_view_indicator_set(ui_view *view, ui_view_indicator indicator)
 	{
 		if (!view)
@@ -294,7 +318,7 @@ extern "C" {
 		return capi_view->set_toolbar(toolbar);
 	}
 
-	void ui_view_removable_content(ui_view *view, bool remove)
+	void ui_view_removable_content_set(ui_view *view, bool remove)
 	{
 		if (!view)
 		{
@@ -384,5 +408,89 @@ extern "C" {
 		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
 
 		return capi_view->set_title_visible(visible, anim);
+	}
+
+	Elm_Button ui_standard_view_title_right_btn_unset(ui_view *view)
+	{
+		//TODO
+		return NULL;
+	}
+
+	Elm_Button ui_standard_view_title_left_btn_unset(ui_view *view)
+	{
+		//TODO
+		return NULL;
+	}
+
+	Elm_toolbar ui_standard_view_toolbar_unset(ui_view *view)
+	{
+		//TODO
+		return NULL;
+	}
+
+	Elm_Button ui_standard_view_title_right_btn_get(ui_view *view)
+	{
+		//TODO
+		return NULL;
+	}
+
+	Elm_Button ui_standard_view_title_left_btn_get(ui_view *view)
+	{
+		//TODO
+		return NULL;
+	}
+
+	Elm_toolbar ui_standard_view_toolbar_get(ui_view *view)
+	{
+		//TODO
+		return NULL;
+	}
+
+	ui_menu *ui_view_menu_get(ui_view *view)
+	{
+		//TODO
+		return NULL;
+	}
+
+	bool ui_view_name_set(ui_view *view, const char *name)
+	{
+		//TODO
+		return 1;
+	}
+
+	const char *ui_view_transition_style_get(ui_view *view)
+	{
+		//TODO
+		return NULL;
+	}
+
+	const char *ui_view_name_get(ui_view *view)
+	{
+		//TODO
+		return NULL;
+	}
+
+	Evas_Object *ui_view_content_get(ui_view *view)
+	{
+		//TODO
+		return NULL;
+	}
+
+	ui_view_state ui_view_state_get(ui_view *view)
+	{
+		//TODO
+		return 0;
+	}
+
+	bool ui_view_removable_content_get(ui_view *view)
+	{
+		//TODO
+		return 1;
+	}
+
+	ui_view_indicator ui_view_indicator_get(ui_view *view)
+	{
+		//TODO
+		return 0;
 	}
 }

@@ -26,6 +26,12 @@ extern "C" {
 		return popup->set_content(elm_popup);
 	}
 
+	Elm_Popup *ui_popup_content_unset(ui_popup *popup)
+	{
+		//TODO
+		return NULL;
+	}
+
 	bool ui_popup_activate(ui_popup *popup)
 	{
 		if (!popup)
@@ -37,6 +43,12 @@ extern "C" {
 		return popup->activate();
 	}
 
+	bool ui_popup_deactivate(ui_popup *popup)
+	{
+		//TODO
+		return 1;
+	}
+
 	void ui_popup_del(ui_popup *popup)
 	{
 		if (!popup)
@@ -46,5 +58,35 @@ extern "C" {
 		}
 
 		delete(popup);
+	}
+
+	bool ui_popup_activate_get(ui_popup *popup)
+	{
+		//TODO
+		return 1;
+	}
+
+	Evas_Object *ui_popup_base_get(ui_popup *popup)
+	{
+		//TODO
+		return NULL;
+	}
+
+	int ui_popup_degree_get(ui_popup *popup)
+	{
+		//TODO
+		return 1;
+	}
+
+	Elm_Popup ui_popup_content_get(ui_popup *popup)
+	{
+		//TODO
+		return NULL;
+	}
+
+	ui_view *ui_popup_view_get(ui_popup *popup)
+	{
+		//TODO
+		return NULL;
 	}
 }

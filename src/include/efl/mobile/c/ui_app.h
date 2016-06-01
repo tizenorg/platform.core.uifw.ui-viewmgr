@@ -10,6 +10,8 @@ extern "C" {
 	bool ui_app_init(const char *pkg, const char *locale_dir);
 	int ui_app_run(int argc, char **argv, ui_app_lifecycle_callback_s *event_callback, void *data);
 	ui_viewmgr *ui_app_viewmgr_get();
+	//Is it needed?
+	ui_app *ui_app_app_get();
 #ifdef __cplusplus
 }
 #endif

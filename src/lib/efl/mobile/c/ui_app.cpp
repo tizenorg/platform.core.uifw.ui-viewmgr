@@ -98,4 +98,10 @@ extern "C" {
 	{
 		return app->get_viewmgr();
 	}
+
+	ui_app *ui_app_app_get()
+	{
+		//TODO
+		return NULL;
+	}
 }
