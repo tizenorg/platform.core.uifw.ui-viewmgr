@@ -3,11 +3,17 @@
 
 using namespace efl_viewmanager;
 
+///////////////////////////////////////////////////////////////////////////
+////////////////////////// ui_standard_view_capi //////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
 class ui_standard_view_capi : public ui_standard_view
 {
 private:
 	ui_view_lifecycle_callback_s lifecycle_callback;
-	void *data;
+	ui_view_event_callback_s event_callback;
+	void *lifecycle_data;
+	void *event_data;
 
 protected:
 	void on_load()
@@ -15,7 +21,37 @@ protected:
 		ui_standard_view::on_load();
 
 		if (this->lifecycle_callback.load) {
-			this->lifecycle_callback.load(this, this->data);
+			this->lifecycle_callback.load(this, this->lifecycle_data);
+		}
+	}
+
+	void on_portrait()
+	{
+		if (this->event_callback.portrait) {
+			this->event_callback.portrait(this, this->event_data);
+		}
+	}
+
+	void on_landscape()
+	{
+		if (this->event_callback.landscape) {
+			this->event_callback.landscape(this, this->event_data);
+		}
+	}
+
+	void on_rotate(int degree)
+	{
+		if (this->event_callback.rotate) {
+			this->event_callback.rotate(this, degree,this->event_data);
+		}
+	}
+
+	void on_menu(ui_menu *menu)
+	{
+		ui_standard_view::on_menu(menu);
+
+		if (this->event_callback.menu) {
+			this->event_callback.menu(menu, this->event_data);
 		}
 	}
 
@@ -24,7 +60,9 @@ public:
 		: ui_standard_view(name)
 	{
 		this->lifecycle_callback = {0,};
-		this->data = NULL;
+		this->event_callback = {0,};
+		this->lifecycle_data = NULL;
+		this->event_data = NULL;
 	}
 
 	~ui_standard_view_capi()
@@ -36,17 +74,34 @@ public:
 		this->lifecycle_callback = *callback;
 	}
 
-	void set_data(void *data)
+	void set_lifecycle_data(void *data)
 	{
-		this->data = data;
+		this->lifecycle_data = data;
+	}
+
+	void set_event_callback(ui_view_event_callback_s *callback)
+	{
+		this->event_callback = *callback;
+	}
+
+	void set_event_data(void *data)
+	{
+		this->event_data = data;
 	}
 };
+
+///////////////////////////////////////////////////////////////////////////
+//////////////////////////// ui_viwe_capi /////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
 class ui_view_capi : public ui_view
 {
 private:
 	ui_view_lifecycle_callback_s lifecycle_callback;
-	void *data;
+	ui_view_event_callback_s event_callback;
+	void *lifecycle_data;
+	void *event_data;
+
 
 protected:
 	void on_load()
@@ -54,7 +109,37 @@ protected:
 		ui_view::on_load();
 
 		if (this->lifecycle_callback.load) {
-			this->lifecycle_callback.load(this, this->data);
+			this->lifecycle_callback.load(this, this->lifecycle_data);
+		}
+	}
+
+	void on_portrait()
+	{
+		if (this->event_callback.portrait) {
+			this->event_callback.portrait(this, this->event_data);
+		}
+	}
+
+	void on_landscape()
+	{
+		if (this->event_callback.landscape) {
+			this->event_callback.landscape(this, this->event_data);
+		}
+	}
+
+	void on_rotate(int degree)
+	{
+		if (this->event_callback.rotate) {
+			this->event_callback.rotate(this, degree,this->event_data);
+		}
+	}
+
+	void on_menu(ui_menu *menu)
+	{
+		ui_view::on_menu(menu);
+
+		if (this->event_callback.menu) {
+			this->event_callback.menu(menu, this->event_data);
 		}
 	}
 
@@ -63,7 +148,9 @@ public:
 		: ui_view(name)
 	{
 		this->lifecycle_callback = {0,};
-		this->data = NULL;
+		this->event_callback = {0,};
+		this->lifecycle_data = NULL;
+		this->event_data = NULL;
 	}
 
 	~ui_view_capi()
@@ -75,9 +162,19 @@ public:
 		this->lifecycle_callback = *callback;
 	}
 
-	void set_data(void *data)
+	void set_lifecycle_data(void *data)
 	{
-		this->data = data;
+		this->lifecycle_data = data;
+	}
+
+	void set_event_callback(ui_view_event_callback_s *callback)
+	{
+		this->event_callback = *callback;
+	}
+
+	void set_event_data(void *data)
+	{
+		this->event_data = data;
 	}
 };
 
@@ -92,8 +189,7 @@ extern "C" {
 		return new ui_view_capi(name);
 	}
 
-	bool ui_view_lifecycle_callbacks_set(ui_view *view,
-										 ui_view_lifecycle_callback_s *lifecycle_callback, void *data)
+	bool ui_view_lifecycle_callbacks_set(ui_view *view, ui_view_lifecycle_callback_s *lifecycle_callback, void *data)
 	{
 		if (!view)
 		{
@@ -101,10 +197,20 @@ extern "C" {
 			return false;
 		}
 
-		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
+		//FIXME: Maybe... There is a more nice way for it...
+		ui_standard_view_capi *capi_standard_view = dynamic_cast<ui_standard_view_capi *>(view);
+		if (capi_standard_view)
+		{
+			if (lifecycle_callback) capi_standard_view->set_lifecycle_callback(lifecycle_callback);
+			if (data) capi_standard_view->set_lifecycle_data(data);
+		}
+		else
+		{
+			ui_view_capi *capi_view = dynamic_cast<ui_view_capi *>(view);
 
-		if (lifecycle_callback) capi_view->set_lifecycle_callback(lifecycle_callback);
-		if (data) capi_view->set_data(data);
+			if (lifecycle_callback) capi_view->set_lifecycle_callback(lifecycle_callback);
+			if (data) capi_view->set_lifecycle_data(data);
+		}
 
 		return true;
 	}
@@ -162,39 +268,121 @@ extern "C" {
 		return capi_view->set_title_badge(badge_text);
 	}
 
-	bool ui_view_indicator_set(ui_view *view, ui_view_indicator indicator)
+	void ui_view_indicator_set(ui_view *view, ui_view_indicator indicator)
 	{
-		//TODO
-		return 1;
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return;
+		}
+
+		ui_view_capi *capi_view = static_cast<ui_view_capi *>(view);
+
+		capi_view->set_indicator(indicator);
 	}
 
 	bool ui_standard_view_toolbar_set(ui_view *view, Elm_Toolbar *toolbar)
 	{
-		//TODO
-		return 1;
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return false;
+		}
+
+		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
+
+		return capi_view->set_toolbar(toolbar);
 	}
 
 	void ui_view_removable_content(ui_view *view, bool remove)
 	{
-		//TODO
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return;
+		}
+
+		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
+
+		capi_view->set_removable_content(remove);
 	}
 
 	bool ui_view_event_callbacks_set(ui_view *view,
 		                             ui_view_event_callback_s *event_callback, void *data)
 	{
-		//TODO
-		return 1;
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return false;
+		}
+
+		//FIXME: Maybe... There is a more nice way for it...
+		ui_standard_view_capi *capi_standard_view = dynamic_cast<ui_standard_view_capi *>(view);
+		if (capi_standard_view)
+		{
+			if (event_callback) capi_standard_view->set_event_callback(event_callback);
+			if (data) capi_standard_view->set_event_data(data);
+		}
+		else
+		{
+			ui_view_capi *capi_view = dynamic_cast<ui_view_capi *>(view);
+
+			if (event_callback) capi_view->set_event_callback(event_callback);
+			if (data) capi_view->set_event_data(data);
+		}
+
+		return true;
+	}
+
+	int  ui_view_degree_get(ui_view *view)
+	{
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return -1;
+		}
+
+		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
+
+		return capi_view->get_degree();
 	}
 
 	bool ui_standard_view_title_right_btn_set(ui_view *view, Evas_Object *title_right_btn)
 	{
-		//TODO
-		return 1;
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return -1;
+		}
+
+		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
+
+		return capi_view->set_title_right_btn(title_right_btn);
+	}
+
+	bool ui_view_transition_style_set(ui_view *view, const char *style)
+	{
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return -1;
+		}
+
+		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
+
+		return capi_view->set_transition_style(style);
 	}
 
 	bool ui_standard_view_title_visible_set(ui_view *view, bool visible, bool anim)
 	{
-		//TODO
-		return 1;
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return -1;
+		}
+
+		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
+
+		return capi_view->set_title_visible(visible, anim);
 	}
 }
