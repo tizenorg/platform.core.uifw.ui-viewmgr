@@ -349,3 +349,18 @@ ui_iface_viewmgr *ui_iface_view::get_viewmgr()
 	return this->impl->viewmgr;
 }
 
+void ui_iface_view::on_low_memory()
+{
+}
+
+void ui_iface_view::on_low_battery()
+{
+}
+
+void ui_iface_view::on_region_changed(const char *region)
+{
+}
+
+void ui_iface_view::on_language_changed(const char *language)
+{
+}

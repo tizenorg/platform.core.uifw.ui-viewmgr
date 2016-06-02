@@ -250,6 +250,37 @@ protected:
 	 */
 	virtual void on_destroy();
 
+	/**
+	 *  @brief Low Memory Event
+	 *
+	 *  @note This event function is responsible for saving data in the main memory to a persistent memory or storage to avoid data loss in case the Tizen
+	 *        platform Low Memory Killer kills your application to get more free memory. This event function must also release any cached data in the main
+	 *        memory to secure more free memory.
+	 */
+	virtual void on_low_memory();
+
+	/**
+	 *  @brief Low Battery Event
+	 *
+	 *  @note This event function is responsible for saving data in the main memory to a persistent memory or storage to avoid data loss in case the power goes
+	 *        off completely. This event function must also stop heavy CPU consumption or power consumption activities to save the remaining power.
+	 */
+	virtual void on_low_battery();
+
+	/**
+	 *  @brief Region Changed Event
+	 *
+	 *  @note This event function is responsible for refreshing the display into the new time zone.
+	 */
+	virtual void on_region_changed(const char *region);
+
+	/**
+	 *  @brief Language Changed Event
+	 *
+	 *  @note This event function is responsible for refreshing the display into the new language.
+	 */
+	virtual void on_language_changed(const char *language);
+
 private:
 	/**
 	 *  @brief Connect with given viewmgr.
@@ -274,6 +305,7 @@ private:
 	_UI_DECLARE_PRIVATE_IMPL(ui_iface_view);
 	_UI_DISABLE_COPY_AND_ASSIGN(ui_iface_view);
 	_UI_DECLARE_FRIENDS(ui_iface_viewmgr);
+	_UI_DECLARE_FRIENDS(ui_iface_app);
 };
 
 }

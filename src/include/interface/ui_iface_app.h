@@ -134,6 +134,7 @@ protected:
 private:
 	_UI_DECLARE_PRIVATE_IMPL(ui_iface_app);
 	_UI_DISABLE_COPY_AND_ASSIGN(ui_iface_app);
+	_UI_DECLARE_FRIENDS(ui_iface_view);
 };
 
 }

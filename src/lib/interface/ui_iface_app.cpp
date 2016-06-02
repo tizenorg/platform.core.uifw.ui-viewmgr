@@ -45,7 +45,6 @@ public:
 	void on_resume();
 	void on_control(app_control_h app_control);
 
-	//
 	void on_low_battery(app_event_info_h event_info);
 	void on_low_memory(app_event_info_h event_info);
 	void on_region_changed(app_event_info_h event_info);
@@ -226,30 +225,48 @@ static ui_iface_app *inst = NULL;
 
 void ui_iface_app::on_lang_changed(app_event_info_h event_info)
 {
-	char *locale = NULL;
-	system_settings_get_value_string(SYSTEM_SETTINGS_KEY_LOCALE_LANGUAGE, &locale);
-	elm_language_set(locale);
-	free(locale);
+	char *language = NULL;
+	int ret = app_event_get_language(event_info, &language);
+	if (ret != APP_ERROR_NONE) {
+		dlog_print(DLOG_ERROR, LOG_TAG, "app_event_get_language() failed. Err = %d.", ret);
+		return;
+	}
+
+	if (language != NULL) {
+		elm_language_set(language);
+		ui_iface_view *view = this->impl->viewmgr->get_last_view();
+		view->on_language_changed(language);
+		free(language);
+	}
 }
 
 void ui_iface_app::on_low_memory(app_event_info_h event_info)
 {
-
+	ui_iface_view *view = this->impl->viewmgr->get_last_view();
+	view->on_low_memory();
 }
 
 void ui_iface_app::on_low_battery(app_event_info_h event_info)
 {
-
+	ui_iface_view *view = this->impl->viewmgr->get_last_view();
+	view->on_low_battery();
 }
 
 void ui_iface_app::on_region_changed(app_event_info_h event_info)
 {
+	char *region = NULL;
+	int ret = app_event_get_region_format(event_info, &region);
+	if (ret != APP_ERROR_NONE) {
+		dlog_print(DLOG_ERROR, LOG_TAG, "model_app_event_get_region_format() failed. Err = %d", ret);
+		return;
+	}
 
+	ui_iface_view *view = this->impl->viewmgr->get_last_view();
+	view->on_region_changed(region);
 }
 
 void ui_iface_app::on_orient_changed(app_event_info_h event_info)
 {
-
 }
 
 bool ui_iface_app::on_create()
