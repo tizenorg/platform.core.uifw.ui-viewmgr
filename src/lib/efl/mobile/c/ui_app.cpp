@@ -101,7 +101,6 @@ extern "C" {
 
 	ui_app *ui_app_app_get()
 	{
-		//TODO
-		return NULL;
+		return app;
 	}
 }

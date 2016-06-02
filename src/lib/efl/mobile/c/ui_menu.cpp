@@ -15,52 +15,92 @@ extern "C" {
 		return menu->set_content(ctxpopup);
 	}
 
+	Elm_Ctxpopup ui_menu_content_get(ui_menu *menu)
+	{
+		if (!menu)
+		{
+			LOGE("Invalid Menu");
+			return NULL;
+		}
+
+		return menu->get_content();
+	}
+
 	Elm_Ctxpopup *ui_menu_content_unset(ui_menu *menu)
 	{
-		//TODO
-		return NULL;
+		if (!menu)
+		{
+			LOGE("Invalid Menu");
+			return NULL;
+		}
+
+		return menu->unset_content();
 	}
 
 	bool ui_menu_activate(ui_menu *menu)
 	{
-		//TODO
-		return 1;
+		if (!menu)
+		{
+			LOGE("Invalid Menu");
+			return false;
+		}
+
+		return menu->activate();
 	}
 
 	bool ui_menu_deactivate(ui_menu *menu)
 	{
-		//TODO
-		return 1;
+		if (!menu)
+		{
+			LOGE("Invalid Menu");
+			return false;
+		}
+
+		return menu->deactivate();
 	}
 
 	bool ui_menu_activate_get(ui_menu *menu)
 	{
-		//TODO
-		return 1;
+		if (!menu)
+		{
+			LOGE("Invalid Menu");
+			return false;
+		}
+
+		return menu->is_activated();
 	}
 
 	Evas_Object *ui_menu_base_get(ui_menu *menu)
 	{
-		//TODO
-		return NULL;
+		if (!menu)
+		{
+			LOGE("Invalid Menu");
+			return NULL;
+		}
+
+		return menu->get_base();
 	}
 
 	int ui_menu_degree_get(ui_menu *menu)
 	{
-		//TODO
-		return 0;
-	}
+		if (!menu)
+		{
+			LOGE("Invalid Menu");
+			return -1;
+		}
 
-	Elm_Ctxpopup ui_menu_content_get(ui_menu *menu)
-	{
-		//TODO
-		return NULL;
+		return menu->get_degree();
 	}
 
 	ui_view *ui_menu_view_get(ui_menu *menu)
 	{
-		//TODO
-		return NULL;
+		if (!menu)
+		{
+			LOGE("Invalid Menu");
+			return NULL;
+		}
+
+		return menu->get_view();
 	}
 }
 

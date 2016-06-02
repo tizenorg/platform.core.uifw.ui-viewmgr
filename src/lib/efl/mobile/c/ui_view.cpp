@@ -179,17 +179,9 @@ public:
 };
 
 extern "C" {
-	ui_view* ui_standard_view_create(const char *name)
-	{
-		return new ui_standard_view_capi(name);
-	}
+//================================== view common APIs ========================================
 
-	ui_view* ui_view_create(const char *name)
-	{
-		return new ui_view_capi(name);
-	}
-
-	bool ui_view_lifecycle_callbacks_set(ui_view *view, ui_view_lifecycle_callback_s *lifecycle_callback, void *data)
+bool ui_view_lifecycle_callbacks_set(ui_view *view, ui_view_lifecycle_callback_s *lifecycle_callback, void *data)
 	{
 		if (!view)
 		{
@@ -213,122 +205,6 @@ extern "C" {
 		}
 
 		return true;
-	}
-	Evas_Object* ui_view_base_get(ui_view *view)
-	{
-		if (!view)
-		{
-			LOGE("Invalid View");
-			return false;
-		}
-
-		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
-
-		return capi_view->get_base();
-	}
-
-	bool ui_view_content_set(ui_view *view, Evas_Object *content)
-	{
-		if (!view)
-		{
-			LOGE("Invalid View");
-			return false;
-		}
-
-		ui_view_capi *capi_view = static_cast<ui_view_capi *>(view);
-
-		return capi_view->set_content(content);
-	}
-
-	Evas_Object *ui_view_content_unset(ui_view *view)
-	{
-		//TODO
-		return NULL;
-	}
-
-	bool ui_standard_view_content_set(ui_view *view, Evas_Object *content,
-									  const char *title, const char *subtitle,
-									  Evas_Object *title_left_btn, Evas_Object *title_right_btn)
-	{
-		if (!view)
-		{
-			LOGE("Invalid View");
-			return false;
-		}
-
-		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
-
-		return capi_view->set_content(content, title, subtitle, title_left_btn, title_right_btn);
-	}
-
-	bool ui_standard_view_title_badge_set(ui_view *view, const char *badge_text)
-	{
-		if (!view)
-		{
-			LOGE("Invalid View");
-			return false;
-		}
-
-		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
-
-		return capi_view->set_title_badge(badge_text);
-	}
-
-	bool ui_standard_view_sub_title_set(ui_view *view, const char *text)
-	{
-		//TODO
-		return 1;
-	}
-
-	bool ui_standard_view_title_left_btn_set(ui_view *view, Evas_Object *title_left_btn)
-	{
-		//TODO
-		return 1;
-	}
-
-	bool ui_standard_view_title_set(ui_view *view, const char *text)
-	{
-		//TODO
-		return 1;
-	}
-
-	void ui_view_indicator_set(ui_view *view, ui_view_indicator indicator)
-	{
-		if (!view)
-		{
-			LOGE("Invalid View");
-			return;
-		}
-
-		ui_view_capi *capi_view = static_cast<ui_view_capi *>(view);
-
-		capi_view->set_indicator(indicator);
-	}
-
-	bool ui_standard_view_toolbar_set(ui_view *view, Elm_Toolbar *toolbar)
-	{
-		if (!view)
-		{
-			LOGE("Invalid View");
-			return false;
-		}
-
-		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
-
-		return capi_view->set_toolbar(toolbar);
-	}
-
-	void ui_view_removable_content_set(ui_view *view, bool remove)
-	{
-		if (!view)
-		{
-			LOGE("Invalid View");
-			return;
-		}
-
-		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
-
-		capi_view->set_removable_content(remove);
 	}
 
 	bool ui_view_event_callbacks_set(ui_view *view,
@@ -358,6 +234,88 @@ extern "C" {
 		return true;
 	}
 
+	Evas_Object* ui_view_base_get(ui_view *view)
+	{
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return false;
+		}
+
+		ui_standard_view_capi *capi_standard_view = dynamic_cast<ui_standard_view_capi *>(view);
+		if (capi_standard_view)
+			return capi_standard_view->get_base();
+		else
+		{
+			ui_view_capi *capi_view = dynamic_cast<ui_view_capi *>(view);
+
+			return capi_view->get_base();
+		}
+	}
+
+	Evas_Object *ui_view_content_unset(ui_view *view)
+	{
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return NULL;
+		}
+
+		ui_standard_view_capi *capi_standard_view = dynamic_cast<ui_standard_view_capi *>(view);
+		if (capi_standard_view)
+			return capi_standard_view->unset_content();
+		else
+		{
+			ui_view_capi *capi_view = dynamic_cast<ui_view_capi *>(view);
+
+			return capi_view->unset_content();
+		}
+	}
+
+	void ui_view_indicator_set(ui_view *view, ui_view_indicator indicator)
+	{
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return;
+		}
+
+		return view->set_indicator(indicator);
+	}
+
+	ui_view_indicator ui_view_indicator_get(ui_view *view)
+	{
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return -1;
+		}
+
+		return view->get_indicator();
+	}
+
+	void ui_view_removable_content_set(ui_view *view, bool remove)
+	{
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return;
+		}
+
+		view->set_removable_content(remove);
+	}
+
+	bool ui_view_removable_content_get(ui_view *view)
+	{
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return false;
+		}
+
+		return view->get_removable_content();
+	}
+
 	int  ui_view_degree_get(ui_view *view)
 	{
 		if (!view)
@@ -366,22 +324,7 @@ extern "C" {
 			return -1;
 		}
 
-		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
-
-		return capi_view->get_degree();
-	}
-
-	bool ui_standard_view_title_right_btn_set(ui_view *view, Evas_Object *title_right_btn)
-	{
-		if (!view)
-		{
-			LOGE("Invalid View");
-			return -1;
-		}
-
-		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
-
-		return capi_view->set_title_right_btn(title_right_btn);
+		return view->get_degree();
 	}
 
 	bool ui_view_transition_style_set(ui_view *view, const char *style)
@@ -389,12 +332,259 @@ extern "C" {
 		if (!view)
 		{
 			LOGE("Invalid View");
+			return false;
+		}
+
+		return view->set_transition_style(style);
+	}
+
+	const char *ui_view_transition_style_get(ui_view *view)
+	{
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return NULL;
+		}
+
+		return view->get_transition_style();
+	}
+
+	ui_menu *ui_view_menu_get(ui_view *view)
+	{
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return NULL;
+		}
+
+		return view->get_menu();
+	}
+
+	bool ui_view_name_set(ui_view *view, const char *name)
+	{
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return false;
+		}
+
+		return view->set_name(name);
+
+	}
+
+	const char *ui_view_name_get(ui_view *view)
+	{
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return NULL;
+		}
+
+		return view->get_name();
+
+	}
+
+	ui_view_state ui_view_state_get(ui_view *view)
+	{
+		if (!view)
+		{
+			LOGE("Invalid View");
 			return -1;
+		}
+
+		return view->get_state();
+	}
+
+	Evas_Object *ui_view_content_get(ui_view *view)
+	{
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return NULL;
+		}
+
+		return view->get_content();
+
+	}
+
+//================================ ui_standard view APIs =====================================
+
+	ui_view* ui_standard_view_create(const char *name)
+	{
+		return new ui_standard_view_capi(name);
+	}
+
+	bool ui_standard_view_content_set(ui_view *view, Evas_Object *content,
+									  const char *title, const char *subtitle,
+									  Evas_Object *title_left_btn, Evas_Object *title_right_btn)
+	{
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return false;
 		}
 
 		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
 
-		return capi_view->set_transition_style(style);
+		return capi_view->set_content(content, title, subtitle, title_left_btn, title_right_btn);
+	}
+
+
+	bool ui_standard_view_title_set(ui_view *view, const char *text)
+	{
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return false;
+		}
+
+		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
+
+		return capi_view->set_sutitle(text);
+	}
+
+	bool ui_standard_view_sub_title_set(ui_view *view, const char *text)
+	{
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return false;
+		}
+
+		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
+
+		return capi_view->set_subtitle();
+	}
+
+	bool ui_standard_view_title_badge_set(ui_view *view, const char *badge_text)
+	{
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return false;
+		}
+
+		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
+
+		return capi_view->set_title_badge(badge_text);
+	}
+
+	bool ui_standard_view_title_right_btn_set(ui_view *view, Evas_Object *title_right_btn)
+	{
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return false;
+		}
+
+		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
+
+		return capi_view->set_title_right_btn(title_right_btn);
+	}
+
+	Elm_Button ui_standard_view_title_right_btn_get(ui_view *view)
+	{
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return NULL;
+		}
+
+		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
+
+		return capi_view->get_title_right_btn();
+	}
+
+	Elm_Button ui_standard_view_title_right_btn_unset(ui_view *view)
+	{
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return NULL;
+		}
+
+		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
+
+		return capi_view->unset_title_right_btn();
+	}
+
+	bool ui_standard_view_title_left_btn_set(ui_view *view, Evas_Object *title_left_btn)
+	{
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return false;
+		}
+
+		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
+
+		return capi_view->set_title_left_btn(title_right_btn);
+	}
+
+	Elm_Button ui_standard_view_title_left_btn_get(ui_view *view)
+	{
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return NULL;
+		}
+
+		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
+
+		return capi_view->get_title_left_btn();
+	}
+
+	Elm_Button ui_standard_view_title_left_btn_unset(ui_view *view)
+	{
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return NULL;
+		}
+
+		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
+
+		return capi_view->unset_title_right_btn();
+	}
+
+
+	bool ui_standard_view_toolbar_set(ui_view *view, Elm_Toolbar *toolbar)
+	{
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return false;
+		}
+
+		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
+
+		return capi_view->set_toolbar(toolbar);
+	}
+
+	Elm_toolbar ui_standard_view_toolbar_get(ui_view *view)
+	{
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return NULL;
+		}
+
+		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
+
+		return capi_view->get_toolbar();
+	}
+
+	Elm_toolbar ui_standard_view_toolbar_unset(ui_view *view)
+	{
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return NULL;
+		}
+
+		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
+
+		return capi_view->unset_toolbar();
 	}
 
 	bool ui_standard_view_title_visible_set(ui_view *view, bool visible, bool anim)
@@ -410,87 +600,23 @@ extern "C" {
 		return capi_view->set_title_visible(visible, anim);
 	}
 
-	Elm_Button ui_standard_view_title_right_btn_unset(ui_view *view)
+//==================================== ui_view APIs ==========================================
+
+	ui_view* ui_view_create(const char *name)
 	{
-		//TODO
-		return NULL;
+		return new ui_view_capi(name);
 	}
 
-	Elm_Button ui_standard_view_title_left_btn_unset(ui_view *view)
+	bool ui_view_content_set(ui_view *view, Evas_Object *content)
 	{
-		//TODO
-		return NULL;
-	}
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return false;
+		}
 
-	Elm_toolbar ui_standard_view_toolbar_unset(ui_view *view)
-	{
-		//TODO
-		return NULL;
-	}
+		ui_view_capi *capi_view = static_cast<ui_view_capi *>(view);
 
-	Elm_Button ui_standard_view_title_right_btn_get(ui_view *view)
-	{
-		//TODO
-		return NULL;
-	}
-
-	Elm_Button ui_standard_view_title_left_btn_get(ui_view *view)
-	{
-		//TODO
-		return NULL;
-	}
-
-	Elm_toolbar ui_standard_view_toolbar_get(ui_view *view)
-	{
-		//TODO
-		return NULL;
-	}
-
-	ui_menu *ui_view_menu_get(ui_view *view)
-	{
-		//TODO
-		return NULL;
-	}
-
-	bool ui_view_name_set(ui_view *view, const char *name)
-	{
-		//TODO
-		return 1;
-	}
-
-	const char *ui_view_transition_style_get(ui_view *view)
-	{
-		//TODO
-		return NULL;
-	}
-
-	const char *ui_view_name_get(ui_view *view)
-	{
-		//TODO
-		return NULL;
-	}
-
-	Evas_Object *ui_view_content_get(ui_view *view)
-	{
-		//TODO
-		return NULL;
-	}
-
-	ui_view_state ui_view_state_get(ui_view *view)
-	{
-		//TODO
-		return 0;
-	}
-
-	bool ui_view_removable_content_get(ui_view *view)
-	{
-		//TODO
-		return 1;
-	}
-
-	ui_view_indicator ui_view_indicator_get(ui_view *view)
-	{
-		//TODO
-		return 0;
+		return capi_view->set_content(content);
 	}
 }

@@ -9,6 +9,17 @@ extern "C" {
 		return new ui_popup(view);
 	}
 
+	void ui_popup_del(ui_popup *popup)
+	{
+		if (!popup)
+		{
+			LOGE("Invalid popup");
+			return;
+		}
+
+		delete(popup);
+	}
+
 	bool ui_popup_content_set(ui_popup *popup, Elm_Popup *elm_popup)
 	{
 		if (!popup)
@@ -26,10 +37,26 @@ extern "C" {
 		return popup->set_content(elm_popup);
 	}
 
+	Elm_Popup ui_popup_content_get(ui_popup *popup)
+	{
+		if (!popup)
+		{
+			LOGE("Invalid popup");
+			return NULL;
+		}
+
+		return popup->get_content();
+	}
+
 	Elm_Popup *ui_popup_content_unset(ui_popup *popup)
 	{
-		//TODO
-		return NULL;
+		if (!popup)
+		{
+			LOGE("Invalid popup");
+			return NULL;
+		}
+
+		return popup->unset_content();
 	}
 
 	bool ui_popup_activate(ui_popup *popup)
@@ -45,48 +72,56 @@ extern "C" {
 
 	bool ui_popup_deactivate(ui_popup *popup)
 	{
-		//TODO
-		return 1;
-	}
-
-	void ui_popup_del(ui_popup *popup)
-	{
 		if (!popup)
 		{
 			LOGE("Invalid popup");
-			return;
+			return false;
 		}
 
-		delete(popup);
+		return popup->deactivate();
 	}
 
 	bool ui_popup_activate_get(ui_popup *popup)
 	{
-		//TODO
-		return 1;
+		if (!popup)
+		{
+			LOGE("Invalid popup");
+			return false;
+		}
+
+		return popup->is_activated();
 	}
 
 	Evas_Object *ui_popup_base_get(ui_popup *popup)
 	{
-		//TODO
-		return NULL;
+		if (!popup)
+		{
+			LOGE("Invalid popup");
+			return NULL;
+		}
+
+		return popup->get_base();
 	}
 
 	int ui_popup_degree_get(ui_popup *popup)
 	{
-		//TODO
-		return 1;
-	}
+		if (!popup)
+		{
+			LOGE("Invalid popup");
+			return -1;
+		}
 
-	Elm_Popup ui_popup_content_get(ui_popup *popup)
-	{
-		//TODO
-		return NULL;
+		return popup->get_degree();
 	}
 
 	ui_view *ui_popup_view_get(ui_popup *popup)
 	{
-		//TODO
-		return NULL;
+		if (!popup)
+		{
+			LOGE("Invalid popup");
+			return NULL;
+		}
+
+		return popup->get_view();
 	}
 }
