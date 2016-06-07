@@ -44,12 +44,17 @@ public:
 	}
 
 protected:
-	void on_control(app_control_h app_control)
+	bool on_create()
 	{
-		ui_app::on_control(app_control);
+		if (!ui_app::on_create())
+		{
+			return false;
+		}
 
 		//Push first view in viewmgr.
 		UI_VIEWMGR->push_view(new page1());
+
+		return true;
 	}
 };
 
