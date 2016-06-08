@@ -15,7 +15,7 @@ extern "C" {
 		return menu->set_content(ctxpopup);
 	}
 
-	Elm_Ctxpopup ui_menu_content_get(ui_menu *menu)
+	Elm_Ctxpopup *ui_menu_content_get(ui_menu *menu)
 	{
 		if (!menu)
 		{
@@ -100,7 +100,7 @@ extern "C" {
 			return NULL;
 		}
 
-		return menu->get_view();
+		return static_cast<ui_view *>(menu->get_view());
 	}
 }
 

@@ -8,7 +8,7 @@ namespace efl_viewmananger
 extern "C" {
 #endif
 	bool ui_menu_content_set(ui_menu *menu, Elm_Ctxpopup *ctxpopup);
-	Elm_Ctxpopup ui_menu_content_get(ui_menu *menu);
+	Elm_Ctxpopup *ui_menu_content_get(ui_menu *menu);
 	Elm_Ctxpopup *ui_menu_content_unset(ui_menu *menu);
 
 	bool ui_menu_activate(ui_menu *menu);
