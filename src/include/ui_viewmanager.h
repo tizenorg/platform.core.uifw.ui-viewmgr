@@ -15,5 +15,5 @@
  *
  */
 //FIXME: C++ app include below.
-#include "efl/mobile/ui_mobile_viewmanager.h"
-//#include "efl/mobile/c/ui_mobile_viewmanager.h"
+//#include "efl/mobile/ui_mobile_viewmanager.h"
+#include "efl/mobile/c/ui_mobile_viewmanager.h"
