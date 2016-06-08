@@ -825,7 +825,7 @@ create_page8()
 	Evas_Object *content = create_content(base_layout, "ViewMgr Demo<br>Content Preload",
 			view8_prev_btn_clicked_cb, view8_next_btn_clicked_cb);
 
-	ui_view_removable_content(view, false);
+	ui_view_removable_content_set(view, false);
 	ui_standard_view_content_set(view, content, "Page8", NULL, NULL, NULL);
 
 	UI_VIEWMGR_VIEW_PUSH(view);
@@ -1175,16 +1175,18 @@ main(int argc, char *argv[])
 	appdata_s ad = {0,};
 	int ret = 0;
 
-	ui_app_lifecycle_callback_s event_callback = {0,};
+	ui_app_lifecycle_callback_s lifecycle_callback = {0,};
+	ui_app_event_callback_s event_callback = {0,};
 
 	ret = ui_app_init(PACKAGE, LOCALE_DIR);
 	if (!ret) {
 		dlog_print(DLOG_ERROR, LOG_TAG, "ui_app_init() is failed. err = %d", ret);
 	}
 
-	event_callback.create = app_create;
+	lifecycle_callback.create = app_create;
+	event_callback.orient_changed = orient_changed;
 
-	ret = ui_app_run(argc, argv, &event_callback, &ad);
+	ret = ui_app_run(argc, argv, &lifecycle_callback, &event_callback, &ad);
 	if (ret != APP_ERROR_NONE) {
 		dlog_print(DLOG_ERROR, LOG_TAG, "ui_app_run() is failed. err = %d", ret);
 	}

@@ -51,6 +51,7 @@ protected:
 
 	void on_menu(ui_menu *menu)
 	{
+		//FIXME: Is it needed?
 		ui_standard_view::on_menu(menu);
 
 		Elm_Ctxpopup *ctxpopup = elm_ctxpopup_add(menu->get_base());

@@ -37,7 +37,7 @@ extern "C" {
 		return popup->set_content(elm_popup);
 	}
 
-	Elm_Popup ui_popup_content_get(ui_popup *popup)
+	Elm_Popup *ui_popup_content_get(ui_popup *popup)
 	{
 		if (!popup)
 		{
@@ -122,6 +122,6 @@ extern "C" {
 			return NULL;
 		}
 
-		return popup->get_view();
+		return static_cast<ui_view *>(popup->get_view());
 	}
 }
