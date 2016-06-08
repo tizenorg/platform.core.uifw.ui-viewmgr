@@ -11,7 +11,7 @@ extern "C" {
 	void ui_popup_del(ui_popup *popup);
 
 	bool ui_popup_content_set(ui_popup *popup, Elm_Popup *elm_popup);
-	Elm_Popup ui_popup_content_get(ui_popup *popup);
+	Elm_Popup *ui_popup_content_get(ui_popup *popup);
 	Elm_Popup *ui_popup_content_unset(ui_popup *popup);
 
 	bool ui_popup_activate(ui_popup *popup);
