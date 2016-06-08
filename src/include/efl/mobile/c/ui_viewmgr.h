@@ -14,9 +14,9 @@ extern "C" {
 	bool ui_viewmgr_activate(ui_viewmgr *viewmgr);
 	bool ui_viewmgr_deactivate(ui_viewmgr *viewmgr);
 
-	Elm_Win ui_viewmgr_window_get(ui_viewmgr *viewmgr);
+	Elm_Win *ui_viewmgr_window_get(ui_viewmgr *viewmgr);
 
-	Elm_Conformant ui_viewmgr_conformant_get(ui_viewmgr *viewmgr);
+	Elm_Conformant *ui_viewmgr_conformant_get(ui_viewmgr *viewmgr);
 
 	ui_view *ui_viewmgr_last_view_get(ui_viewmgr *viewmgr);
 

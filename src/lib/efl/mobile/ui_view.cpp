@@ -139,6 +139,7 @@ void ui_view_impl::on_rotate(int degree)
 {
 	if (!this->menu) return;
 	if (!this->menu->is_activated()) return;
+	//FIXME: is it needed?
 	this->menu->on_rotate(degree);
 }
 
@@ -146,6 +147,7 @@ void ui_view_impl::on_portrait()
 {
 	if (!this->menu) return;
 	if (!this->menu->is_activated()) return;
+	//FIXME: is it needed?
 	this->menu->on_portrait();
 }
 
@@ -153,6 +155,7 @@ void ui_view_impl::on_landscape()
 {
 	if (!this->menu) return;
 	if (!this->menu->is_activated()) return;
+	//FIXME: is it needed?
 	this->menu->on_landscape();
 }
 
