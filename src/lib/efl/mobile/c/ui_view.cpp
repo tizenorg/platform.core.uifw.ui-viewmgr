@@ -18,40 +18,109 @@ private:
 protected:
 	void on_load()
 	{
-		ui_standard_view::on_load();
-
 		if (this->lifecycle_callback.load) {
-			this->lifecycle_callback.load(this, this->lifecycle_data);
+			if (this->lifecycle_callback.load(this, this->lifecycle_data)) {
+				ui_standard_view::on_load();
+			}
+		}
+	}
+
+	void on_unload()
+	{
+		if (this->lifecycle_callback.unload) {
+			if (this->lifecycle_callback.unload(this, this->lifecycle_data)) {
+				ui_standard_view::on_unload();
+			}
+		}
+	}
+
+	void on_pause()
+	{
+		if (this->lifecycle_callback.pause) {
+			if (this->lifecycle_callback.pause(this, this->lifecycle_data)) {
+				ui_standard_view::on_pause();
+			}
+		}
+	}
+
+	void on_resume()
+	{
+		if (this->lifecycle_callback.resume) {
+			if (this->lifecycle_callback.resume(this, this->lifecycle_data)) {
+				ui_standard_view::on_resume();
+			}
+		}
+	}
+
+	void on_activate()
+	{
+		if (this->lifecycle_callback.activate) {
+			if (this->lifecycle_callback.activate(this, this->lifecycle_data)) {
+				ui_standard_view::on_activate();
+			}
+		}
+	}
+
+	void on_deactivate()
+	{
+		if (this->lifecycle_callback.deactivate) {
+			if (this->lifecycle_callback.deactivate(this, this->lifecycle_data)) {
+				ui_standard_view::on_deactivate();
+			}
+		}
+	}
+
+	void on_destroy()
+	{
+		if (this->lifecycle_callback.destroy) {
+			if (this->lifecycle_callback.destroy(this, this->lifecycle_data)) {
+				ui_standard_view::on_destroy();
+			}
 		}
 	}
 
 	void on_portrait()
 	{
 		if (this->event_callback.portrait) {
-			this->event_callback.portrait(this, this->event_data);
+			if (this->event_callback.portrait(this, this->event_data)) {
+				ui_standard_view::on_portrait();
+			}
 		}
 	}
 
 	void on_landscape()
 	{
 		if (this->event_callback.landscape) {
-			this->event_callback.landscape(this, this->event_data);
+			if (this->event_callback.landscape(this, this->event_data)) {
+				ui_standard_view::on_landscape();
+			}
 		}
 	}
 
 	void on_rotate(int degree)
 	{
 		if (this->event_callback.rotate) {
-			this->event_callback.rotate(this, degree,this->event_data);
+			if (this->event_callback.rotate(this, degree,this->event_data)) {
+				ui_standard_view::on_rotate(degree);
+			}
+		}
+	}
+
+	void on_back()
+	{
+		if (this->event_callback.back) {
+			if (this->event_callback.back(this, this->event_data)) {
+				ui_standard_view::on_back();
+			}
 		}
 	}
 
 	void on_menu(ui_menu *menu)
 	{
-		ui_standard_view::on_menu(menu);
-
 		if (this->event_callback.menu) {
-			this->event_callback.menu(menu, this->event_data);
+			if (this->event_callback.menu(menu, this->event_data)) {
+				ui_standard_view::on_menu(menu);
+			}
 		}
 	}
 
@@ -288,7 +357,7 @@ bool ui_view_lifecycle_callbacks_set(ui_view *view, ui_view_lifecycle_callback_s
 		if (!view)
 		{
 			LOGE("Invalid View");
-			return -1;
+			return UI_VIEW_INDICATOR_LAST;
 		}
 
 		return view->get_indicator();
@@ -349,7 +418,7 @@ bool ui_view_lifecycle_callbacks_set(ui_view *view, ui_view_lifecycle_callback_s
 		return view->get_transition_style();
 	}
 
-	ui_menu *ui_view_menu_get(ui_view *view)
+	const ui_menu *ui_view_menu_get(ui_view *view)
 	{
 		if (!view)
 		{
@@ -389,7 +458,7 @@ bool ui_view_lifecycle_callbacks_set(ui_view *view, ui_view_lifecycle_callback_s
 		if (!view)
 		{
 			LOGE("Invalid View");
-			return -1;
+			return UI_VIEW_STATE_LAST;
 		}
 
 		return view->get_state();
@@ -440,7 +509,7 @@ bool ui_view_lifecycle_callbacks_set(ui_view *view, ui_view_lifecycle_callback_s
 
 		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
 
-		return capi_view->set_sutitle(text);
+		return capi_view->set_title(text);
 	}
 
 	bool ui_standard_view_sub_title_set(ui_view *view, const char *text)
@@ -453,7 +522,7 @@ bool ui_view_lifecycle_callbacks_set(ui_view *view, ui_view_lifecycle_callback_s
 
 		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
 
-		return capi_view->set_subtitle();
+		return capi_view->set_subtitle(text);
 	}
 
 	bool ui_standard_view_title_badge_set(ui_view *view, const char *badge_text)
@@ -482,7 +551,7 @@ bool ui_view_lifecycle_callbacks_set(ui_view *view, ui_view_lifecycle_callback_s
 		return capi_view->set_title_right_btn(title_right_btn);
 	}
 
-	Elm_Button ui_standard_view_title_right_btn_get(ui_view *view)
+	Elm_Button *ui_standard_view_title_right_btn_get(ui_view *view)
 	{
 		if (!view)
 		{
@@ -495,7 +564,7 @@ bool ui_view_lifecycle_callbacks_set(ui_view *view, ui_view_lifecycle_callback_s
 		return capi_view->get_title_right_btn();
 	}
 
-	Elm_Button ui_standard_view_title_right_btn_unset(ui_view *view)
+	Elm_Button *ui_standard_view_title_right_btn_unset(ui_view *view)
 	{
 		if (!view)
 		{
@@ -518,10 +587,10 @@ bool ui_view_lifecycle_callbacks_set(ui_view *view, ui_view_lifecycle_callback_s
 
 		ui_standard_view_capi *capi_view = static_cast<ui_standard_view_capi *>(view);
 
-		return capi_view->set_title_left_btn(title_right_btn);
+		return capi_view->set_title_left_btn(title_left_btn);
 	}
 
-	Elm_Button ui_standard_view_title_left_btn_get(ui_view *view)
+	Elm_Button *ui_standard_view_title_left_btn_get(ui_view *view)
 	{
 		if (!view)
 		{
@@ -534,7 +603,7 @@ bool ui_view_lifecycle_callbacks_set(ui_view *view, ui_view_lifecycle_callback_s
 		return capi_view->get_title_left_btn();
 	}
 
-	Elm_Button ui_standard_view_title_left_btn_unset(ui_view *view)
+	Elm_Button *ui_standard_view_title_left_btn_unset(ui_view *view)
 	{
 		if (!view)
 		{
@@ -561,7 +630,7 @@ bool ui_view_lifecycle_callbacks_set(ui_view *view, ui_view_lifecycle_callback_s
 		return capi_view->set_toolbar(toolbar);
 	}
 
-	Elm_toolbar ui_standard_view_toolbar_get(ui_view *view)
+	Elm_Toolbar *ui_standard_view_toolbar_get(ui_view *view)
 	{
 		if (!view)
 		{
@@ -574,7 +643,7 @@ bool ui_view_lifecycle_callbacks_set(ui_view *view, ui_view_lifecycle_callback_s
 		return capi_view->get_toolbar();
 	}
 
-	Elm_toolbar ui_standard_view_toolbar_unset(ui_view *view)
+	Elm_Toolbar *ui_standard_view_toolbar_unset(ui_view *view)
 	{
 		if (!view)
 		{

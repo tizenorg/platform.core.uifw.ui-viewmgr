@@ -7,19 +7,19 @@ namespace efl_viewmananger
 #ifdef __cplusplus
 extern "C" {
 #endif
-	typedef void (*ui_view_lifecycle_load_cb) (ui_view *view, void *data);
-	typedef void (*ui_view_lifecycle_unload_cb) (ui_view *view, void *data);
-	typedef void (*ui_view_lifecycle_pause_cb) (ui_view *view, void *data);
-	typedef void (*ui_view_lifecycle_resume_cb) (ui_view *view, void *data);
-	typedef void (*ui_view_lifecycle_activate_cb) (ui_view *view, void *data);
-	typedef void (*ui_view_lifecycle_deactivate_cb) (ui_view *view, void *data);
-	typedef void (*ui_view_lifecycle_destroy_cb) (ui_view *view, void *data);
+	typedef bool (*ui_view_lifecycle_load_cb) (ui_view *view, void *data);
+	typedef bool (*ui_view_lifecycle_unload_cb) (ui_view *view, void *data);
+	typedef bool (*ui_view_lifecycle_pause_cb) (ui_view *view, void *data);
+	typedef bool (*ui_view_lifecycle_resume_cb) (ui_view *view, void *data);
+	typedef bool (*ui_view_lifecycle_activate_cb) (ui_view *view, void *data);
+	typedef bool (*ui_view_lifecycle_deactivate_cb) (ui_view *view, void *data);
+	typedef bool (*ui_view_lifecycle_destroy_cb) (ui_view *view, void *data);
 
-	typedef void (*ui_view_event_rotate_cb) (ui_view *view, int degree, void *data);
-	typedef void (*ui_view_event_portrait_cb) (ui_view *view, void *data);
-	typedef void (*ui_view_event_landscape_cb) (ui_view *view, void *data);
-	typedef void (*ui_view_event_back_cb) (ui_view *view, void *data);
-	typedef void (*ui_view_event_menu_cb) (ui_menu *menu, void *data);
+	typedef bool (*ui_view_event_rotate_cb) (ui_view *view, int degree, void *data);
+	typedef bool (*ui_view_event_portrait_cb) (ui_view *view, void *data);
+	typedef bool (*ui_view_event_landscape_cb) (ui_view *view, void *data);
+	typedef bool (*ui_view_event_back_cb) (ui_view *view, void *data);
+	typedef bool (*ui_view_event_menu_cb) (ui_menu *menu, void *data);
 
 	typedef struct
 	{
@@ -60,7 +60,7 @@ extern "C" {
 	bool ui_view_transition_style_set(ui_view *view, const char *style);
 	const char *ui_view_transition_style_get(ui_view *view);
 
-	ui_menu *ui_view_menu_get(ui_view *view);
+	const ui_menu *ui_view_menu_get(ui_view *view);
 
 	bool ui_view_name_set(ui_view *view, const char *name);
 	const char *ui_view_name_get(ui_view *view);
@@ -84,16 +84,16 @@ extern "C" {
 	bool ui_standard_view_title_badge_set(ui_view *view, const char *badge_text);
 
 	bool ui_standard_view_title_right_btn_set(ui_view *view, Evas_Object *title_right_btn);
-	Elm_Button ui_standard_view_title_right_btn_get(ui_view *view);
-	Elm_Button ui_standard_view_title_right_btn_unset(ui_view *view);
+	Elm_Button *ui_standard_view_title_right_btn_get(ui_view *view);
+	Elm_Button *ui_standard_view_title_right_btn_unset(ui_view *view);
 
 	bool ui_standard_view_title_left_btn_set(ui_view *view, Evas_Object *title_left_btn);
-	Elm_Button ui_standard_view_title_left_btn_get(ui_view *view);
-	Elm_Button ui_standard_view_title_left_btn_unset(ui_view *view);
+	Elm_Button *ui_standard_view_title_left_btn_get(ui_view *view);
+	Elm_Button *ui_standard_view_title_left_btn_unset(ui_view *view);
 
 	bool ui_standard_view_toolbar_set(ui_view *view, Elm_Toolbar *toolbar);
-	Elm_toolbar ui_standard_view_toolbar_get(ui_view *view);
-	Elm_toolbar ui_standard_view_toolbar_unset(ui_view *view);
+	Elm_Toolbar *ui_standard_view_toolbar_get(ui_view *view);
+	Elm_Toolbar *ui_standard_view_toolbar_unset(ui_view *view);
 
 	bool ui_standard_view_title_visible_set(ui_view *view, bool visible, bool anim);
 
