@@ -70,7 +70,7 @@ extern "C" {
 		return viewmgr->deactivate();
 	}
 
-	Elm_Win ui_viewmgr_window_get(ui_viewmgr *viewmgr)
+	Elm_Win *ui_viewmgr_window_get(ui_viewmgr *viewmgr)
 	{
 		if (!viewmgr)
 		{
@@ -81,7 +81,7 @@ extern "C" {
 		return viewmgr->get_window();
 	}
 
-	Elm_Conformant ui_viewmgr_conformant_get(ui_viewmgr *viewmgr)
+	Elm_Conformant *ui_viewmgr_conformant_get(ui_viewmgr *viewmgr)
 	{
 		if (!viewmgr)
 		{
