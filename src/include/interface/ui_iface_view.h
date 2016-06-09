@@ -215,29 +215,26 @@ protected:
 	/**
 	 *  @brief View deactivate state.
 	 *
-	 *  @note Get ready for unload. Hide transition may be triggered at this point. Deactivate state is triggered on this scenario if this view is still
-	 *        visible but it shouldn't be interactive with users. In the most cases, when a view is going to be popped or destroyed, on_deactivate() will be
-	 *        triggered. Also, when a new view is pushed, so if it becomes invisible state by other views, on_deactivate() will be triggered also. Some
-	 *        UI controls such as a Popup or a Menu popup usually blocks views. For those scenario, this blocked views would be deactivated again,
-	 *        But it would be still visible in some way (ie,half transparency).
+	 *  @note Get ready for unload. Hide transition may be triggered at this point. If the system blocks application running in some cases such as phone call,
+	 *        system notification, application switching ..., Deactivate state will be triggered. Also, when a view is going to be popped or destroyed,
+	 *        on_deactivate() will be triggered. Lastly, when a new view is pushed, so if it becomes invisible state by other views, on_deactivate() will be
+	 *        triggered also.
 	 */
 	virtual void on_deactivate();
 
 	/**
 	 *  @brief View pause state.
 	 *
-	 *  @note If the system blocks application running in some cases such as phone call, system notification, application switching ..., this Pause will be
-	 *        triggered. Other than that, when application window turns to deactivate (@see ui_iface_viewmgr::deactivate()), on_pause() will be called also.
-	 *        However, If the view is already deactivated or under the unload state, the pause won't be called.
+	 *  @note Some UI controls such as Popup or a Menu popup usually blocks views. For those scenarios, this blocked view would be paused and shouldn't be
+	 *        interactive with users. However, still it would be visible in some way (ie, half transparency). For this, this Pause will be triggered.
+	 *        If the view is already deactivated or under the unload state, the pause won't be called.
 	 */
 	virtual void on_pause();
 
 	/**
 	 *  @brief View resume state.
 	 *
-	 *  @note When a view is returns to the activate state from pause state, this on_resume() will be triggered. Other than that, when the system
-	 *        allows application to turn to activate or when the window turns to activate (@see ui_iface_viewmgr::activate()), on_resume() will be triggered
-	 *        for the paused views.
+	 *  @note When a view is returns to the activate state from pause state, this on_resume() will be triggered. For instance, a Popup is dismissed.
 	 */
 	virtual void on_resume();
 

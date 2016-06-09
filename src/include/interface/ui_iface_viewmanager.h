@@ -24,11 +24,11 @@
  */
 enum ui_view_indicator
 {
-	UI_VIEW_INDICATOR_DEFAULT = 0, ///<Opaque indicator
-	UI_VIEW_INDICATOR_OPTIMAL,     ///<Transparent indicator
-	UI_VIEW_INDICATOR_OVERLAP,     ///<Overlap indicator
-	UI_VIEW_INDICATOR_HIDE,        ///<Indicator hide
-	UI_VIEW_INDICATOR_SHOW,        ///<Indicator show
+	UI_VIEW_INDICATOR_DEFAULT = 0, ///< Opaque indicator
+	UI_VIEW_INDICATOR_OPTIMAL,     ///< Transparent indicator
+	UI_VIEW_INDICATOR_OVERLAP,     ///< Overlap indicator
+	UI_VIEW_INDICATOR_HIDE,        ///< Indicator hide
+	UI_VIEW_INDICATOR_SHOW,        ///< Indicator show
 	UI_VIEW_INDICATOR_LAST
 };
 
