@@ -21,6 +21,17 @@ namespace ui_viewmanager {
 
 class ui_iface_viewmgr;
 
+/**
+ *  @class ui_iface_app
+ *
+ *  @ingroup ui_viewmanager
+ *
+ *  @brief ui_iface_app is designed for wrapping the application instance. This class hides unnecessary application settings but expose only basic functions
+ *         such as initialization and run. Basically, it works on the application life-cycle. It has application life-cycle event interfaces such as create(),
+ *         pause(), resume(), terminate(), etc so that users can handle those events for the their application concept. Also, It provides system event
+ *         interfaces such as low_baterry(), low_meomory(), lang_changed(), region_changed() and so on. ui_iface_app create an unique ui_viewmgr instance
+ *         internally, and manage its life.
+ */
 class ui_iface_app
 {
 public:
