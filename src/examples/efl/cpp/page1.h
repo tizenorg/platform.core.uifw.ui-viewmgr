@@ -38,7 +38,7 @@ protected:
 				{
 					UI_VIEWMGR->push_view(new page2());
 				});
-		this->set_content(content, "Page1");
+		this->set_content(content, "Page1 C++ example");
 	}
 
 public:
