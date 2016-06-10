@@ -14,6 +14,9 @@
  *  limitations under the License.
  *
  */
-//FIXME: C++ app include below.
+
+#ifdef TARGET_LANG_C
+#include "efl/mobile/c/ui_mobile_viewmanager.h"
+#else
 #include "efl/mobile/ui_mobile_viewmanager.h"
-//#include "efl/mobile/c/ui_mobile_viewmanager.h"
+#endif
