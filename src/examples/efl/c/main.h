@@ -14,9 +14,6 @@
  *  limitations under the License.
  *
  */
-#include <app.h>
-#include <system_settings.h>
-#include <Elementary.h>
 #include <dlog.h>
 #include <ui_viewmanager.h>
 
@@ -41,3 +38,29 @@ typedef struct appdata {
 	Evas_Object *nf;
 	Evas_Object *tabbar;
 } appdata_s;
+
+
+Evas_Object* create_content(Evas_Object *parent, const char *text, Evas_Smart_Cb prev_btn_clicked_cb, Evas_Smart_Cb next_btn_clicked_cb);
+Evas_Object* create_landscape_content(Evas_Object *parent, const char *text, Evas_Smart_Cb prev_btn_clicked_cb, Evas_Smart_Cb next_btn_clicked_cb);
+Evas_Object* create_title_handle_content(Evas_Object *parent, Evas_Smart_Cb prev_btn_clicked_cb, Evas_Smart_Cb next_btn_clicked_cb,
+										 Evas_Smart_Cb title_show_btn_clicked_cb, Evas_Smart_Cb title_hide_btn_clicked_cb,
+										 Evas_Smart_Cb title_show_anim_btn_clicked_cb, Evas_Smart_Cb title_hide_anim_btn_clicked_cb, ui_view *view);
+Evas_Object* create_scrolling_content(Evas_Object *parent);
+Elm_Toolbar* create_toolbar(Evas_Object *parent, const char *style);
+
+void create_page1();
+void create_page2();
+void create_page3();
+void create_page4();
+void create_page5();
+void create_page6();
+void create_page7();
+void create_page8();
+void create_page9();
+void create_page10();
+void create_page11();
+void create_page12();
+void create_page13();
+void create_page14();
+void create_page15();
+void create_page16();

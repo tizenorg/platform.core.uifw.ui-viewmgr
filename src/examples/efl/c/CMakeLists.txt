@@ -1,5 +1,22 @@
 SET(SRCS
       main.cpp
+      contents.cpp
+      page1.cpp
+      page2.cpp
+      page3.cpp
+      page4.cpp
+      page5.cpp
+      page6.cpp
+      page7.cpp
+      page8.cpp
+      page9.cpp
+      page10.cpp
+      page11.cpp
+      page12.cpp
+      page13.cpp
+      page14.cpp
+      page15.cpp
+      page16.cpp
    )
 
 ADD_EXECUTABLE(${BINNAME} ${SRCS})
