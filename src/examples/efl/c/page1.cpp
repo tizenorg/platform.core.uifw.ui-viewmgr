@@ -37,7 +37,7 @@ view1_load_cb(ui_view *view, void *data)
 	Evas_Object *content = create_content(base_layout, "ViewMgr Demo<br>Basic View",
 			view1_prev_btn_clicked_cb, view1_next_btn_clicked_cb);
 
-	ui_standard_view_content_set(view, content, "Page1 C example", NULL, NULL, NULL);
+	ui_standard_view_content_set(view, content, "Page1", NULL, NULL, NULL);
 
 	return true;
 }

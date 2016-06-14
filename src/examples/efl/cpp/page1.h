@@ -15,7 +15,7 @@
  *
  */
 
-/** This example create a simple view which is inheritance ui_standard_view.
+/** This example create a simple view which is inheritance of an ui_standard_view.
  *  Then push in viewmgr.
  */
 class page1: public ui_standard_view
@@ -27,7 +27,7 @@ protected:
 		ui_standard_view::on_load();
 
 		//Create a main content.
-		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Basic View",
+		Evas_Object *content = create_content(this->get_base(), "ViewMgr++ Demo<br>Basic View",
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
@@ -38,7 +38,7 @@ protected:
 				{
 					UI_VIEWMGR->push_view(new page2());
 				});
-		this->set_content(content, "Page1 C++ example");
+		this->set_content(content, "Page1");
 	}
 
 public:

@@ -34,7 +34,7 @@ protected:
 		//Portrait
 		if (this->get_degree() == 0 || this->get_degree() == 180)
 		{
-			Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Rotation",
+			Evas_Object *content = create_content(this->get_base(), "ViewMgr++ Demo<br>Rotation",
 					//Prev Button Callback
 					[](void *data, Evas_Object *obj, void *event_info) -> void
 					{
@@ -52,7 +52,7 @@ protected:
 		//Landscape
 		else
 		{
-			Evas_Object *content = create_landscape_content(this->get_base(), "ViewMgr Demo<br>Rotation",
+			Evas_Object *content = create_landscape_content(this->get_base(), "ViewMgr++ Demo<br>Rotation",
 					//Prev Button Callback
 					[](void *data, Evas_Object *obj, void *event_info) -> void
 					{

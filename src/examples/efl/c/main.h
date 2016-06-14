@@ -31,15 +31,6 @@
 #define PACKAGE "ui-viewmgr"
 #endif
 
-typedef struct appdata {
-	Evas_Object *win;
-	Evas_Object *conform;
-	Evas_Object *layout;
-	Evas_Object *nf;
-	Evas_Object *tabbar;
-} appdata_s;
-
-
 Evas_Object* create_content(Evas_Object *parent, const char *text, Evas_Smart_Cb prev_btn_clicked_cb, Evas_Smart_Cb next_btn_clicked_cb);
 Evas_Object* create_landscape_content(Evas_Object *parent, const char *text, Evas_Smart_Cb prev_btn_clicked_cb, Evas_Smart_Cb next_btn_clicked_cb);
 Evas_Object* create_title_handle_content(Evas_Object *parent, Evas_Smart_Cb prev_btn_clicked_cb, Evas_Smart_Cb next_btn_clicked_cb,
