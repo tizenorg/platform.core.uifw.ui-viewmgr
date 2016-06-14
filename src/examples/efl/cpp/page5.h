@@ -26,7 +26,7 @@ protected:
 		ui_view::on_load();
 
 		//Create a main content.
-		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Full View",
+		Evas_Object *content = create_content(this->get_base(), "ViewMgr++ Demo<br>Full View",
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{

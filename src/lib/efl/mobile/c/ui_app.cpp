@@ -118,30 +118,46 @@ public:
 	}
 };
 
-extern "C" {
-	static ui_app_capi *app = NULL;
 
-	bool ui_app_init(const char *pkg, const char *locale_dir)
+static ui_app_capi *g_app = NULL;
+
+bool ui_app_init(const char *pkg, const char *locale_dir)
+{
+	ui_app_capi *app = g_app;
+	if (app) return true;
+
+	app = new ui_app_capi(pkg, locale_dir);
+	if (!app)
 	{
-		app = new ui_app_capi(pkg, locale_dir);
-
-		if (app) return true;
-		else return false;
+		LOGE("Failed to create new ui_app_capi()!");
+		return false;
 	}
 
-	int ui_app_run(int argc, char **argv, ui_app_lifecycle_callback_s *lifecycle_callback,
-			   ui_app_event_callback_s *event_callback, void *data)
-	{
-		return app->run(argc, argv, lifecycle_callback, event_callback, data);
-	}
+	g_app = app;
 
-	ui_viewmgr *ui_app_viewmgr_get()
-	{
-		return app->get_viewmgr();
-	}
+	return true;
+}
 
-	ui_app *ui_app_app_get()
-	{
-		return app;
-	}
+int ui_app_run(int argc, char **argv, ui_app_lifecycle_callback_s *lifecycle_callback, ui_app_event_callback_s *event_callback, void *data)
+{
+	ui_app_capi *app = g_app;
+	if (!app) return -1;
+
+	return app->run(argc, argv, lifecycle_callback, event_callback, data);
+}
+
+ui_viewmgr *ui_app_viewmgr_get()
+{
+	ui_app_capi *app = g_app;
+	if (!app) return NULL;
+
+	return app->get_viewmgr();
+}
+
+bool ui_app_term(void)
+{
+	ui_app_capi *app = g_app;
+	if (app) delete (app);
+
+	return true;
 }

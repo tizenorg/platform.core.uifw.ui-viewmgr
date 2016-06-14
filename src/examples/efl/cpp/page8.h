@@ -23,7 +23,7 @@ public:
 	page8() : ui_standard_view("page8")
 	{
 		//Create a main content.
-		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Content Preloading",
+		Evas_Object *content = create_content(this->get_base(), "ViewMgr++ Demo<br>Content Preloading",
 			//Prev Button Callback
 			[](void *data, Evas_Object *obj, void *event_info) -> void
 			{
