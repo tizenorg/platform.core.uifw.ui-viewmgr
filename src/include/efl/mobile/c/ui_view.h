@@ -1,12 +1,10 @@
-#ifndef _UI_VIEW_C_H_
-#define _UI_VIEW_C_H_
-
-namespace efl_viewmananger
-{
+#ifndef _UI_VIEW_CAPI_H_
+#define _UI_VIEW_CAPI_H_
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
 	typedef bool (*ui_view_lifecycle_load_cb) (ui_view *view, void *data);
 	typedef bool (*ui_view_lifecycle_unload_cb) (ui_view *view, void *data);
 	typedef bool (*ui_view_lifecycle_pause_cb) (ui_view *view, void *data);
@@ -108,5 +106,4 @@ extern "C" {
 }
 #endif
 
-}
-#endif /* _UI_VIEW_C_H_ */
+#endif /* _UI_VIEW_CAPI_H_ */

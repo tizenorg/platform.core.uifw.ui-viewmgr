@@ -52,7 +52,7 @@ static void ctxpopup_item_select_cb(void *data, Evas_Object *obj, void *event_in
 static bool
 view11_menu_cb(ui_menu *menu, void *data)
 {
-	Elm_Ctxpopup *ctxpopup = elm_ctxpopup_add(menu->get_base());
+	Elm_Ctxpopup *ctxpopup = elm_ctxpopup_add(ui_menu_base_get(menu));
 	elm_ctxpopup_item_append(ctxpopup, "Phone calls", NULL, ctxpopup_item_select_cb, NULL);
 	elm_ctxpopup_item_append(ctxpopup, "Favorites", NULL, ctxpopup_item_select_cb, NULL);
 	elm_ctxpopup_item_append(ctxpopup, "Search", NULL, ctxpopup_item_select_cb, NULL);

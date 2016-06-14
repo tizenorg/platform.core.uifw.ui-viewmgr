@@ -1,5 +1,5 @@
-#ifndef _UI_APP_C_H_
-#define _UI_APP_C_H_
+#ifndef _UI_APP_CAPI_H_
+#define _UI_APP_CAPI_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -25,9 +25,8 @@ extern "C" {
 	ui_viewmgr *ui_app_viewmgr_get();
 	bool ui_app_term(void);
 
-
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* _UI_APP_C_H_ */
+#endif /* _UI_APP_CAPI_H_ */
