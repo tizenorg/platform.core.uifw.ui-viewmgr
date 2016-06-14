@@ -19,32 +19,6 @@
 
 #include <dlog.h>
 
-/**
- * Possible values for indicator state.
- */
-enum ui_view_indicator
-{
-	UI_VIEW_INDICATOR_DEFAULT = 0, ///< Opaque indicator
-	UI_VIEW_INDICATOR_OPTIMAL,     ///< Transparent indicator
-	UI_VIEW_INDICATOR_OVERLAP,     ///< Overlap indicator
-	UI_VIEW_INDICATOR_HIDE,        ///< Indicator hide
-	UI_VIEW_INDICATOR_SHOW,        ///< Indicator show
-	UI_VIEW_INDICATOR_LAST
-};
-
-/**
- * Possible values for view state.
- */
-enum ui_view_state
-{
-	UI_VIEW_STATE_LOAD = 0,        ///< Load state
-	UI_VIEW_STATE_UNLOAD,          ///< Unload state
-	UI_VIEW_STATE_ACTIVATE,        ///< Activate state
-	UI_VIEW_STATE_DEACTIVATE,      ///< Deactivate state
-	UI_VIEW_STATE_PAUSE,           ///< Pause state
-	UI_VIEW_STATE_LAST
-};
-
 #define UI_EFL 1
 
 #if UI_EFL
@@ -71,6 +45,7 @@ enum ui_view_state
 	const A& operator=(const A&) = delete
 
 #include <app.h>
+#include "ui_iface_types.h"
 #include "ui_iface_rotatable.h"
 #include "ui_iface_overlay.h"
 #include "ui_iface_view.h"

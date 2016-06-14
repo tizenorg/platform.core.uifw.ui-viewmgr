@@ -18,13 +18,14 @@
 #include "main.h"
 
 static void
-view1_prev_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+prev_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
+	//FIXME: deactivate??? or ui_app deactivate??? or ui_viewmgr pop???
 	UI_VIEWMGR_DEACTIVATE();
 }
 
 static void
-view1_next_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+next_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	create_page2();
 }
@@ -32,11 +33,13 @@ view1_next_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 static bool
 view1_load_cb(ui_view *view, void *data)
 {
-	Evas_Object *base_layout = ui_view_base_get(view);
+	Evas_Object *content;
+	Evas_Object *base;
 
-	Evas_Object *content = create_content(base_layout, "ViewMgr Demo<br>Basic View",
-			view1_prev_btn_clicked_cb, view1_next_btn_clicked_cb);
+	base = ui_view_base_get(view);
+	if (!base) return false;
 
+	content = create_content(base, "ViewMgr Demo<br>Basic View", prev_btn_clicked_cb, next_btn_clicked_cb);
 	ui_standard_view_content_set(view, content, "Page1", NULL, NULL, NULL);
 
 	return true;
@@ -45,16 +48,24 @@ view1_load_cb(ui_view *view, void *data)
 void
 create_page1()
 {
+	int ret;
+	ui_view *view;
 	ui_view_lifecycle_callback_s lifecycle_callback = {0, };
+
+	view = ui_standard_view_create("page1");
+	if (!view)
+	{
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to create a view");
+		return;
+	}
 
 	lifecycle_callback.load = view1_load_cb;
 
-	ui_view *view = ui_standard_view_create("page1");
-
-	int ret = ui_view_lifecycle_callbacks_set(view, &lifecycle_callback, NULL);
-	if (!ret)
+	if (!ui_view_lifecycle_callbacks_set(view, &lifecycle_callback, NULL))
 	{
 		dlog_print(DLOG_ERROR, LOG_TAG, "ui_view_lifecycle_callback_set is failed. err = %d", ret);
+		ui_view_destroy(view);
+		return;
 	}
 
 	UI_VIEWMGR_VIEW_PUSH(view);

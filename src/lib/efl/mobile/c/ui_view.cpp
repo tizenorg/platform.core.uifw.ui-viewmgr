@@ -1,4 +1,4 @@
-#include "../../../../include/efl/mobile/c/ui_mobile_viewmanager.h"
+#include "../../../../include/efl/mobile/ui_mobile_viewmanager.h"
 #include "../../../../include/efl/mobile/c/ui_view.h"
 
 using namespace efl_viewmanager;
@@ -474,6 +474,17 @@ bool ui_view_lifecycle_callbacks_set(ui_view *view, ui_view_lifecycle_callback_s
 
 		return view->get_content();
 
+	}
+
+	bool ui_view_destroy(ui_view *view)
+	{
+		if (!view)
+		{
+			LOGE("Invalid View");
+			return false;
+		}
+		delete(view);
+		return true;
 	}
 
 //================================ ui_standard view APIs =====================================
