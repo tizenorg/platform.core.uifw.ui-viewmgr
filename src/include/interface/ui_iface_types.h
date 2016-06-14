@@ -40,6 +40,7 @@ enum ui_view_state
 	UI_VIEW_STATE_ACTIVATE,        ///< Activate state
 	UI_VIEW_STATE_DEACTIVATE,      ///< Deactivate state
 	UI_VIEW_STATE_PAUSE,           ///< Pause state
+	UI_VIEW_STATE_UNKNOWN,         ///< Unknown state
 	UI_VIEW_STATE_LAST
 };
 

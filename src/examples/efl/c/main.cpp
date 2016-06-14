@@ -22,7 +22,7 @@ app_control(app_control_h app_control, void *data)
 int
 main(int argc, char *argv[])
 {
-	int ret;
+	int ret = 0;
 	ui_app_lifecycle_callback_s lifecycle_callback = {0, };
 
 	//Initialize ui_app. ui_app initializes basic resources including ui_viewmgr internally.
@@ -37,7 +37,7 @@ main(int argc, char *argv[])
 	lifecycle_callback.app_control = app_control;
 
 	//Run ui_app. Now it requests to run an application mainloop.
-	if (!(ret = ui_app_run(argc, argv, &lifecycle_callback, NULL, NULL)))
+	if (!(ret = ui_app_run(argc, argv, &lifecycle_callback, NULL)))
 	{
 		dlog_print(DLOG_ERROR, LOG_TAG, "ui_app_run() is failed. err = %d", ret);
 		return ret;

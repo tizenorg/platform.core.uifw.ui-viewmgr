@@ -33,8 +33,8 @@ next_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 static bool
 view1_load_cb(ui_view *view, void *data)
 {
-	Evas_Object *content;
-	Evas_Object *base;
+	Evas_Object *content = NULL;
+	Evas_Object *base = NULL;
 
 	base = ui_view_base_get(view);
 	if (!base) return false;
@@ -48,8 +48,8 @@ view1_load_cb(ui_view *view, void *data)
 void
 create_page1()
 {
-	int ret;
-	ui_view *view;
+	int ret = 0;
+	ui_view *view = NULL;
 	ui_view_lifecycle_callback_s lifecycle_callback = {0, };
 
 	view = ui_standard_view_create("page1");
@@ -61,7 +61,7 @@ create_page1()
 
 	lifecycle_callback.load = view1_load_cb;
 
-	if (!ui_view_lifecycle_callbacks_set(view, &lifecycle_callback, NULL))
+	if (!(ret = ui_view_lifecycle_callbacks_set(view, &lifecycle_callback, NULL)))
 	{
 		dlog_print(DLOG_ERROR, LOG_TAG, "ui_view_lifecycle_callback_set is failed. err = %d", ret);
 		ui_view_destroy(view);
