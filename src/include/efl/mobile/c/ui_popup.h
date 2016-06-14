@@ -1,12 +1,10 @@
 #ifndef _UI_POPUP_C_H_
 #define _UI_POPUP_C_H_
 
-namespace efl_viewmananger
-{
-
 #ifdef __cplusplus
 extern "C" {
 #endif
+
 	ui_popup *ui_popup_create(ui_view *view);
 	void ui_popup_del(ui_popup *popup);
 
@@ -23,9 +21,9 @@ extern "C" {
 	int ui_popup_degree_get(ui_popup *popup);
 
 	ui_view *ui_popup_view_get(ui_popup *popup);
-#ifdef __cplusplus
+
+	#ifdef __cplusplus
 }
 #endif
 
-}
 #endif /* _UI_POPUP_C_H_ */

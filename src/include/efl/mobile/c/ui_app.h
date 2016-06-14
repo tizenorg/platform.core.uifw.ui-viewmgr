@@ -25,7 +25,6 @@ extern "C" {
 	ui_viewmgr *ui_app_viewmgr_get();
 	bool ui_app_term(void);
 
-
 #ifdef __cplusplus
 }
 #endif
