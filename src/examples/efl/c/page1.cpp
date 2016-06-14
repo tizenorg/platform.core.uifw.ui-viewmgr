@@ -31,7 +31,7 @@ next_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 }
 
 static bool
-view1_load_cb(ui_view *view, void *data)
+load_cb(ui_view *view, void *data)
 {
 	Evas_Object *content;
 	Evas_Object *base;
