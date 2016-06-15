@@ -63,7 +63,7 @@ create_page1()
 
 	if (!(ret = ui_view_lifecycle_callbacks_set(view, &lifecycle_callback, NULL)))
 	{
-		dlog_print(DLOG_ERROR, LOG_TAG, "ui_view_lifecycle_callback_set is failed. err = %d", ret);
+		dlog_print(DLOG_ERROR, LOG_TAG, "ui_view_lifecycle_callback_set() is failed. err = %d", ret);
 		ui_view_destroy(view);
 		return;
 	}

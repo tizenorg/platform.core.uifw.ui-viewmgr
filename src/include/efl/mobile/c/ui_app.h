@@ -5,6 +5,7 @@
 extern "C" {
 #endif
 
+
 //FIXME: rename prefix
 bool ui_app_init(const char *pkg, const char *locale_dir);
 int ui_app_run(int argc, char **argv, ui_app_lifecycle_callback_s *lifecycle_callback, void *data);

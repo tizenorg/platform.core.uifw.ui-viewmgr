@@ -135,7 +135,7 @@ bool ui_standard_view_content_set(ui_view *view, Evas_Object *content, const cha
 {
 	if (!view)
 	{
-		LOGE("Invalid View");
+		LOGE("Invalid ui_view");
 		return false;
 	}
 
@@ -148,7 +148,7 @@ bool ui_standard_view_title_set(ui_view *view, const char *text)
 {
 	if (!view)
 	{
-		LOGE("Invalid View");
+		LOGE("Invalid ui_view");
 		return false;
 	}
 
@@ -161,7 +161,7 @@ bool ui_standard_view_sub_title_set(ui_view *view, const char *text)
 {
 	if (!view)
 	{
-		LOGE("Invalid View");
+		LOGE("Invalid ui_view");
 		return false;
 	}
 
@@ -174,7 +174,7 @@ bool ui_standard_view_title_badge_set(ui_view *view, const char *badge_text)
 {
 	if (!view)
 	{
-		LOGE("Invalid View");
+		LOGE("Invalid ui_view");
 		return false;
 	}
 
@@ -187,7 +187,7 @@ bool ui_standard_view_title_right_btn_set(ui_view *view, Evas_Object *title_righ
 {
 	if (!view)
 	{
-		LOGE("Invalid View");
+		LOGE("Invalid ui_view");
 		return false;
 	}
 
@@ -200,7 +200,7 @@ Elm_Button *ui_standard_view_title_right_btn_get(ui_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid View");
+		LOGE("Invalid ui_view");
 		return NULL;
 	}
 
@@ -213,7 +213,7 @@ Elm_Button *ui_standard_view_title_right_btn_unset(ui_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid View");
+		LOGE("Invalid ui_view");
 		return NULL;
 	}
 
@@ -226,7 +226,7 @@ bool ui_standard_view_title_left_btn_set(ui_view *view, Evas_Object *title_left_
 {
 	if (!view)
 	{
-		LOGE("Invalid View");
+		LOGE("Invalid ui_view");
 		return false;
 	}
 
@@ -239,7 +239,7 @@ Elm_Button *ui_standard_view_title_left_btn_get(ui_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid View");
+		LOGE("Invalid ui_view");
 		return NULL;
 	}
 
@@ -252,7 +252,7 @@ Elm_Button *ui_standard_view_title_left_btn_unset(ui_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid View");
+		LOGE("Invalid ui_view");
 		return NULL;
 	}
 
@@ -265,7 +265,7 @@ bool ui_standard_view_toolbar_set(ui_view *view, Elm_Toolbar *toolbar)
 {
 	if (!view)
 	{
-		LOGE("Invalid View");
+		LOGE("Invalid ui_view");
 		return false;
 	}
 
@@ -278,7 +278,7 @@ Elm_Toolbar *ui_standard_view_toolbar_get(ui_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid View");
+		LOGE("Invalid ui_view");
 		return NULL;
 	}
 
@@ -291,7 +291,7 @@ Elm_Toolbar *ui_standard_view_toolbar_unset(ui_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid View");
+		LOGE("Invalid ui_view");
 		return NULL;
 	}
 
@@ -304,7 +304,7 @@ bool ui_standard_view_title_visible_set(ui_view *view, bool visible, bool anim)
 {
 	if (!view)
 	{
-		LOGE("Invalid View");
+		LOGE("Invalid ui_view");
 		return false;
 	}
 

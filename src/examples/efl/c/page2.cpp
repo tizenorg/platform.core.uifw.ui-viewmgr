@@ -18,13 +18,13 @@
 #include "main.h"
 
 static void
-view2_prev_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+prev_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	UI_VIEWMGR_VIEW_POP();
 }
 
 static void
-view2_next_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+next_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	create_page3();
 }
@@ -32,18 +32,21 @@ view2_next_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 static bool
 view2_load_cb(ui_view *view, void *data)
 {
-	Evas_Object *base_layout = ui_view_base_get(view);
+	Evas_Object *content = NULL;
+	Evas_Object *base = NULL;
 
-	Evas_Object *content = create_content(base_layout, "ViewMgr Demo<br>Title Buttons",
-			view2_prev_btn_clicked_cb, view2_next_btn_clicked_cb);
+	base = ui_view_base_get(view);
+	if (!base) return false;
+
+	content = create_content(base, "ViewMgr Demo<br>Title Buttons", prev_btn_clicked_cb, next_btn_clicked_cb);
 
 	//Title left button
-	Elm_Button *left_title_btn = elm_button_add(base_layout);
+	Elm_Button *left_title_btn = elm_button_add(base);
 	elm_object_text_set(left_title_btn, "Cancel");
 
 	//Title right button
-	Elm_Button *right_title_btn = elm_button_add(base_layout);
-	elm_object_text_set(right_title_btn, "Done");
+	Elm_Button *right_title_btn = elm_button_add(base);
+	elm_object_text_set(right_title_btn, "Done2221");
 
 	ui_standard_view_content_set(view, content, "Page2", NULL, left_title_btn, right_title_btn);
 
@@ -53,16 +56,23 @@ view2_load_cb(ui_view *view, void *data)
 void
 create_page2()
 {
+	int ret = 0;
+	ui_view *view = NULL;
 	ui_view_lifecycle_callback_s lifecycle_callback = {0, };
 
-	lifecycle_callback.load = view2_load_cb;
-
-	ui_view *view = ui_standard_view_create("page2");
-
-	int ret = ui_view_lifecycle_callbacks_set(view, &lifecycle_callback, NULL);
-	if (!ret)
+	view = ui_standard_view_create("page2");
+	if (!view)
 	{
-		dlog_print(DLOG_ERROR, LOG_TAG, "ui_view_lifecycle_callback_set is failed. err = %d", ret);
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to create a view");
+		return;
+	}
+
+	lifecycle_callback.load = view2_load_cb;
+	if (!ui_view_lifecycle_callbacks_set(view, &lifecycle_callback, NULL))
+	{
+		dlog_print(DLOG_ERROR, LOG_TAG, "ui_view_lifecycle_callback_set() is failed. err = %d", ret);
+		ui_view_destroy(view);
+		return;
 	}
 
 	UI_VIEWMGR_VIEW_PUSH(view);

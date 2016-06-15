@@ -129,7 +129,7 @@ bool ui_view_lifecycle_callbacks_set(ui_view *view, ui_view_lifecycle_callback_s
 {
 	if (!view)
 	{
-		LOGE("Invalid View");
+		LOGE("Invalid ui_view");
 		return false;
 	}
 
@@ -153,7 +153,7 @@ bool ui_view_event_callbacks_set(ui_view *view, ui_view_event_callback_s *event_
 {
 	if (!view)
 	{
-		LOGE("Invalid View");
+		LOGE("Invalid ui_view");
 		return false;
 	}
 
@@ -177,7 +177,7 @@ Evas_Object* ui_view_base_get(ui_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid View");
+		LOGE("Invalid ui_view");
 		return NULL;
 	}
 	return view->get_base();
@@ -187,7 +187,7 @@ Evas_Object *ui_view_content_unset(ui_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid View");
+		LOGE("Invalid ui_view");
 		return NULL;
 	}
 
@@ -198,7 +198,7 @@ void ui_view_indicator_set(ui_view *view, ui_view_indicator indicator)
 {
 	if (!view)
 	{
-		LOGE("Invalid View");
+		LOGE("Invalid ui_view");
 		return;
 	}
 
@@ -209,7 +209,7 @@ ui_view_indicator ui_view_indicator_get(ui_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid View");
+		LOGE("Invalid ui_view");
 		return UI_VIEW_INDICATOR_LAST;
 	}
 
@@ -220,7 +220,7 @@ void ui_view_removable_content_set(ui_view *view, bool remove)
 {
 	if (!view)
 	{
-		LOGE("Invalid View");
+		LOGE("Invalid ui_view");
 		return;
 	}
 
@@ -231,7 +231,7 @@ bool ui_view_removable_content_get(ui_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid View");
+		LOGE("Invalid ui_view");
 		return false;
 	}
 
@@ -242,7 +242,7 @@ int ui_view_degree_get(ui_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid View");
+		LOGE("Invalid ui_view");
 		return -1;
 	}
 
@@ -253,7 +253,7 @@ bool ui_view_transition_style_set(ui_view *view, const char *style)
 {
 	if (!view)
 	{
-		LOGE("Invalid View");
+		LOGE("Invalid ui_view");
 		return false;
 	}
 
@@ -264,7 +264,7 @@ const char *ui_view_transition_style_get(ui_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid View");
+		LOGE("Invalid ui_view");
 		return NULL;
 	}
 
@@ -275,7 +275,7 @@ const ui_menu *ui_view_menu_get(ui_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid View");
+		LOGE("Invalid ui_view");
 		return NULL;
 	}
 
@@ -286,7 +286,7 @@ bool ui_view_name_set(ui_view *view, const char *name)
 {
 	if (!view)
 	{
-		LOGE("Invalid View");
+		LOGE("Invalid ui_view");
 		return false;
 	}
 
@@ -298,7 +298,7 @@ const char *ui_view_name_get(ui_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid View");
+		LOGE("Invalid ui_view");
 		return NULL;
 	}
 
@@ -310,7 +310,7 @@ ui_view_state ui_view_state_get(ui_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid View");
+		LOGE("Invalid ui_view");
 		return UI_VIEW_STATE_UNKNOWN;
 	}
 
@@ -321,19 +321,18 @@ Evas_Object *ui_view_content_get(ui_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid View");
+		LOGE("Invalid ui_view");
 		return NULL;
 	}
 
 	return view->get_content();
-
 }
 
 bool ui_view_destroy(ui_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid View");
+		LOGE("Invalid ui_view");
 		return false;
 	}
 	delete (view);
@@ -349,7 +348,7 @@ bool ui_view_content_set(ui_view *view, Evas_Object *content)
 {
 	if (!view)
 	{
-		LOGE("Invalid View");
+		LOGE("Invalid ui_view");
 		return false;
 	}
 	return view->set_content(content);
