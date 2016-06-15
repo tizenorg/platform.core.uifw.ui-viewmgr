@@ -37,10 +37,20 @@ view1_load_cb(ui_view *view, void *data)
 	Evas_Object *base = NULL;
 
 	base = ui_view_base_get(view);
-	if (!base) return false;
+	if (!base)
+	{
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to get a view base object");
+		return false;
+	}
 
 	content = create_content(base, "ViewMgr Demo<br>Basic View", prev_btn_clicked_cb, next_btn_clicked_cb);
-	ui_standard_view_content_set(view, content, "Page1", NULL, NULL, NULL);
+	if (!content) return false;
+
+	if (!ui_standard_view_content_set(view, content, "Page1", NULL, NULL, NULL))
+	{
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to set view content");
+		return false;
+	}
 
 	return true;
 }

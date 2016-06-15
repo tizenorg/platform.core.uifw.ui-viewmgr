@@ -36,9 +36,14 @@ view2_load_cb(ui_view *view, void *data)
 	Evas_Object *base = NULL;
 
 	base = ui_view_base_get(view);
-	if (!base) return false;
+	if (!base)
+	{
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to get a view base object");
+		return false;
+	}
 
 	content = create_content(base, "ViewMgr Demo<br>Title Buttons", prev_btn_clicked_cb, next_btn_clicked_cb);
+	if (!content) return false;
 
 	//Title left button
 	Elm_Button *left_title_btn = elm_button_add(base);
@@ -46,9 +51,13 @@ view2_load_cb(ui_view *view, void *data)
 
 	//Title right button
 	Elm_Button *right_title_btn = elm_button_add(base);
-	elm_object_text_set(right_title_btn, "Done2221");
+	elm_object_text_set(right_title_btn, "Done");
 
-	ui_standard_view_content_set(view, content, "Page2", NULL, left_title_btn, right_title_btn);
+	if (!ui_standard_view_content_set(view, content, "Page2", NULL, left_title_btn, right_title_btn))
+	{
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to set view content");
+		return false;
+	}
 
 	return true;
 }
@@ -68,7 +77,7 @@ create_page2()
 	}
 
 	lifecycle_callback.load = view2_load_cb;
-	if (!ui_view_lifecycle_callbacks_set(view, &lifecycle_callback, NULL))
+	if (!(ret = ui_view_lifecycle_callbacks_set(view, &lifecycle_callback, NULL)))
 	{
 		dlog_print(DLOG_ERROR, LOG_TAG, "ui_view_lifecycle_callback_set() is failed. err = %d", ret);
 		ui_view_destroy(view);

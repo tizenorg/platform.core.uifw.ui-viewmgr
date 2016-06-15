@@ -18,13 +18,13 @@
 #include "main.h"
 
 static void
-view7_prev_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+prev_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	UI_VIEWMGR_VIEW_POP();
 }
 
 static void
-view7_next_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+next_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	create_page8();
 }
@@ -32,14 +32,27 @@ view7_next_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 static bool
 view7_load_cb(ui_view *view, void *data)
 {
-	Evas_Object *base_layout = ui_view_base_get(view);
+	Evas_Object *content = NULL;
+	Evas_Object *base = NULL;
 
-	Evas_Object *content = create_content(base_layout, "ViewMgr Demo<br>Navigationbarr",
-			view7_prev_btn_clicked_cb, view7_next_btn_clicked_cb);
+	base = ui_view_base_get(view);
+	if (!base)
+	{
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to get a view base object");
+		return false;
+	}
 
-	ui_standard_view_content_set(view, content, "Page7", NULL, NULL, NULL);
-	Elm_Toolbar *toolbar = create_toolbar(base_layout, "navigationbar");
-	ui_standard_view_toolbar_set(view, toolbar);
+	content = create_content(base, "ViewMgr Demo<br>Navigationbar",prev_btn_clicked_cb, next_btn_clicked_cb);
+	if (!content) return false;
+
+	if (!ui_standard_view_content_set(view, content, "Page7", NULL, NULL, NULL))
+	{
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to set view content");
+		return false;
+	}
+
+	Elm_Toolbar *toolbar = create_toolbar(base, "navigationbar");
+	if (toolbar) ui_standard_view_toolbar_set(view, toolbar);
 
 	return true;
 }
@@ -47,16 +60,23 @@ view7_load_cb(ui_view *view, void *data)
 void
 create_page7()
 {
+	int ret = 0;
+	ui_view *view = NULL;
 	ui_view_lifecycle_callback_s lifecycle_callback = {0, };
 
-	lifecycle_callback.load = view7_load_cb;
-
-	ui_view *view = ui_standard_view_create("page7");
-
-	int ret = ui_view_lifecycle_callbacks_set(view, &lifecycle_callback, NULL);
-	if (ret != 0)
+	view = ui_standard_view_create("page7");
+	if (!view)
 	{
-		//TODO
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to create a view");
+		return;
+	}
+
+	lifecycle_callback.load = view7_load_cb;
+	if (!(ret = ui_view_lifecycle_callbacks_set(view, &lifecycle_callback, NULL)))
+	{
+		dlog_print(DLOG_ERROR, LOG_TAG, "ui_view_lifecycle_callback_set is failed. err = %d", ret);
+		ui_view_destroy(view);
+		return;
 	}
 
 	UI_VIEWMGR_VIEW_PUSH(view);

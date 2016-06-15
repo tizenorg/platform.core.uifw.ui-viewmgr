@@ -35,9 +35,11 @@ public:
 				UI_VIEWMGR->push_view(new page9());
 			});
 
-		//Don't delete view's content when this view poped.
-		this->set_removable_content(false);
 		this->set_content(content, "Page 8");
+
+		//Don't delete view's content when this view popped.
+		//This is a show case for saving this content for reuse later.
+		this->set_removable_content(false);
 	}
 	~page8() {}
 };

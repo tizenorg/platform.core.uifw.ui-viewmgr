@@ -18,13 +18,13 @@
 #include "main.h"
 
 static void
-view8_prev_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+prev_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	UI_VIEWMGR_VIEW_POP();
 }
 
 static void
-view8_next_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+next_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	create_page9();
 }
@@ -32,15 +32,43 @@ view8_next_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 void
 create_page8()
 {
-	ui_view *view = ui_standard_view_create("page8");
+	ui_view *view = NULL;
+	Evas_Object *base = NULL;
+	Evas_Object *content = NULL;
 
-	Evas_Object *base_layout = ui_view_base_get(view);
+	view = ui_standard_view_create("page8");
+	if (!view)
+	{
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to create a view");
+		return;
+	}
 
-	Evas_Object *content = create_content(base_layout, "ViewMgr Demo<br>Content Preload",
-			view8_prev_btn_clicked_cb, view8_next_btn_clicked_cb);
+	base = ui_view_base_get(view);
+	if (!base)
+	{
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to get a view base object");
+		ui_view_destroy(view);
+		return;
+	}
 
+	content = create_content(base, "ViewMgr Demo<br>Content Preload", prev_btn_clicked_cb, next_btn_clicked_cb);
+	if (!content)
+	{
+		ui_view_destroy(view);
+		return;
+	}
+
+	if (!ui_standard_view_content_set(view, content, "Page8", NULL, NULL, NULL))
+	{
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to set view content");
+		ui_view_destroy(view);
+		return;
+	}
+
+	//Don't delete view's content when this view popped.
+	//This is a show case for saving this content for reuse later.
 	ui_view_removable_content_set(view, false);
-	ui_standard_view_content_set(view, content, "Page8", NULL, NULL, NULL);
+
 
 	UI_VIEWMGR_VIEW_PUSH(view);
 }
