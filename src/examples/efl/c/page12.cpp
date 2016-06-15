@@ -18,13 +18,13 @@
 #include "main.h"
 
 static void
-view12_prev_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+prev_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	UI_VIEWMGR_VIEW_POP();
 }
 
 static void
-view12_next_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+next_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	create_page13();
 }
@@ -47,44 +47,77 @@ popup_dismissed_cb(void *data, Evas_Object *obj, void *event_info)
 	//FIXME: remove dismissed callback because this callback is called twice.
 	//It seems this is an efl or popup error, not this ui_popup nor example.
 	evas_object_smart_callback_del(obj, "dismissed", popup_dismissed_cb);
-	ui_popup *popup = static_cast<ui_popup *>(data);
 
-	//Is It right?
-	ui_popup_del(popup);
+	//Destroy ui_popup
+	ui_popup *popup = (ui_popup *) data;
+	ui_popup_destroy(popup);
 }
 
 static void
 view12_btn_clicked(void *data, Evas_Object *obj, void *event_info)
 {
-	ui_view *view = static_cast<ui_view *>(data);
+	ui_view *view = NULL;
+	ui_popup *popup = NULL;
+	Evas_Object *base = NULL;
+	Elm_Popup *content = NULL;
 
-	//Create popup.
-	//FIXME: is overlay a proper name?
-	ui_popup *popup = ui_popup_create(view);
+	view = (ui_view *) data;
 
-	Elm_Popup *elm_popup = elm_popup_add(ui_view_base_get(view));
-	elm_object_text_set(elm_popup, "This popup has only text which is set via desc set function, (This popup gets hidden when user clicks outside) here timeout of 3 sec is set.");
-	elm_popup_timeout_set(elm_popup, 3.0);
-	evas_object_smart_callback_add(elm_popup, "dismissed", popup_dismissed_cb, popup);
-	evas_object_smart_callback_add(elm_popup, "block,clicked", popup_block_clicked_cb, NULL);
-	evas_object_smart_callback_add(elm_popup, "timeout", popup_timeout_cb, NULL);
+	//Create a popup.
+	if (!(popup = ui_popup_create(view)))
+	{
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to create a ui_popup");
+		return;
+	}
 
-	ui_popup_content_set(popup, elm_popup);
+	//Get a base object from popup.
+	base = ui_popup_base_get(popup);
+	if (!base)
+	{
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to get a view base object");
+		return;
+	}
+
+	//Create a popup object.
+	if (!(content = elm_popup_add(base)))
+	{
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to create a popup object");
+		return;
+	}
+	elm_object_text_set(content, "This popup has only text which is set via desc set function, (This popup gets hidden when user clicks outside) here timeout of 3 sec is set.");
+	elm_popup_timeout_set(content, 3.0);
+	evas_object_smart_callback_add(content, "dismissed", popup_dismissed_cb, popup);
+	evas_object_smart_callback_add(content, "block,clicked", popup_block_clicked_cb, NULL);
+	evas_object_smart_callback_add(content, "timeout", popup_timeout_cb, NULL);
+
+	//Set elm popup as a ui_popup content.
+	ui_popup_content_set(popup, content);
 	ui_popup_activate(popup);
 }
 
 static bool
 view12_load_cb(ui_view *view, void *data)
 {
-	Evas_Object *base_layout = ui_view_base_get(view);
+	Evas_Object *content = NULL;
+	Evas_Object *base = NULL;
+	Elm_Button *right_btn = NULL;
 
-	Evas_Object *content = create_content(base_layout, "ViewMgr Demo<br>Popup",
-			view12_prev_btn_clicked_cb, view12_next_btn_clicked_cb);
+	//Get a base object from view.
+	base = ui_view_base_get(view);
+	if (!base)
+	{
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to get a view base object");
+		return false;
+	}
+
+	//Create and set a main content.
+	content = create_content(base, "ViewMgr Demo<br>Popup", prev_btn_clicked_cb, next_btn_clicked_cb);
+	if (!content) return false;
 
 	ui_standard_view_content_set(view, content, "Page12", NULL, NULL, NULL);
 
 	//Title Right button
-	Elm_Button *right_btn = elm_button_add(base_layout);
+	right_btn = elm_button_add(base);
 	elm_object_text_set(right_btn, "popup");
 	evas_object_smart_callback_add(right_btn, "clicked", view12_btn_clicked, view);
 
@@ -96,15 +129,25 @@ view12_load_cb(ui_view *view, void *data)
 void
 create_page12()
 {
+	int ret = 0;
+	ui_view *view = NULL;
 	ui_view_lifecycle_callback_s lifecycle_callback = {0, };
-	lifecycle_callback.load = view12_load_cb;
 
-	ui_view *view = ui_standard_view_create("page12");
-
-	int ret = ui_view_lifecycle_callbacks_set(view, &lifecycle_callback, NULL);
-	if (ret != 0)
+	//Create a view
+	view = ui_standard_view_create("page12");
+	if (!view)
 	{
-		//TODO
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to create a view");
+		return;
+	}
+
+	//Set View Life-Cycle callbacks.
+	lifecycle_callback.load = view12_load_cb;
+	if (!(ret = ui_view_lifecycle_callbacks_set(view, &lifecycle_callback, NULL)))
+	{
+		dlog_print(DLOG_ERROR, LOG_TAG, "ui_view_lifecycle_callback_set is failed. err = %d", ret);
+		ui_view_destroy(view);
+		return;
 	}
 
 	UI_VIEWMGR_VIEW_PUSH(view);

@@ -71,8 +71,8 @@ public:
 
 	void create_popup()
 	{
-		//FIXME: is overlay a proper name?
 		ui_popup *popup = new ui_popup(this);
+		if (!popup) return;
 
 		Elm_Popup *obj = elm_popup_add(popup->get_base());
 		elm_object_text_set(obj, "This popup has only text which is set via desc set function, (This popup gets hidden when user clicks outside) here timeout of 3 sec is set.");

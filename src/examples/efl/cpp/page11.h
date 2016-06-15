@@ -22,8 +22,8 @@
 static void ctxpopup_item_select_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	Elm_Object_Item *it = static_cast<Elm_Object_Item *>(event_info);
-	elm_ctxpopup_dismiss(obj);
 	LOGE("Item (%s) is selected", elm_object_item_text_get(it));
+	elm_ctxpopup_dismiss(obj);
 }
 
 class page11: public ui_standard_view
