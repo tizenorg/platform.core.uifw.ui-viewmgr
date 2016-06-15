@@ -18,54 +18,62 @@
 #include "main.h"
 
 static void
-view16_prev_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+prev_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	UI_VIEWMGR_VIEW_POP();
 }
 
 static void
-view16_next_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+next_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	UI_VIEWMGR_DEACTIVATE();
 }
 
 static void
-view16_title_show_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+title_show_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	ui_view *view = static_cast<ui_view *>(data);
+	ui_view *view = (ui_view *) data;
 	ui_standard_view_title_visible_set(view, true, false);
 }
 
 static void
-view16_title_hide_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+title_hide_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	ui_view *view = static_cast<ui_view *>(data);
+	ui_view *view = (ui_view *) data;
 	ui_standard_view_title_visible_set(view, false, false);
 }
 
 static void
-view16_title_show_anim_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+title_show_anim_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	ui_view *view = static_cast<ui_view *>(data);
+	ui_view *view = (ui_view *) data;
 	ui_standard_view_title_visible_set(view, true, true);
 }
 
 static void
-view16_title_hide_anim_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+title_hide_anim_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	ui_view *view = static_cast<ui_view *>(data);
+	ui_view *view = (ui_view *) data;
 	ui_standard_view_title_visible_set(view, false, true);
 }
 
 static bool
 view16_load_cb(ui_view *view, void *data)
 {
-	Evas_Object *base_layout = ui_view_base_get(view);
+	Evas_Object *content = NULL;
+	Evas_Object *base = NULL;
 
-	Evas_Object *content = create_title_handle_content(base_layout,
-			view16_prev_btn_clicked_cb, view16_next_btn_clicked_cb,
-			view16_title_show_btn_clicked_cb, view16_title_hide_btn_clicked_cb,
-			view16_title_show_anim_btn_clicked_cb, view16_title_hide_anim_btn_clicked_cb, view);
+	//Get a base object from view.
+	base = ui_view_base_get(view);
+	if (!base)
+	{
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to get a view base object");
+		return false;
+	}
+
+	//Create and set a main content.
+	content = create_title_handle_content(base, prev_btn_clicked_cb, next_btn_clicked_cb, title_show_btn_clicked_cb, title_hide_btn_clicked_cb, title_show_anim_btn_clicked_cb, title_hide_anim_btn_clicked_cb, view);
+	if (!content) return false;
 
 	ui_standard_view_content_set(view, content, "Page16", NULL, NULL, NULL);
 
@@ -75,16 +83,25 @@ view16_load_cb(ui_view *view, void *data)
 void
 create_page16()
 {
+	int ret = 0;
+	ui_view *view = NULL;
 	ui_view_lifecycle_callback_s lifecycle_callback = {0, };
 
-	lifecycle_callback.load = view16_load_cb;
-
-	ui_view *view = ui_standard_view_create("page16");
-
-	int ret = ui_view_lifecycle_callbacks_set(view, &lifecycle_callback, NULL);
-	if (ret != 0)
+	//Create a view.
+	view = ui_standard_view_create("page16");
+	if (!view)
 	{
-		//TODO
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to create a view");
+		return;
+	}
+
+	//Set View Life-Cycle callbacks.
+	lifecycle_callback.load = view16_load_cb;
+	if (!(ret = ui_view_lifecycle_callbacks_set(view, &lifecycle_callback, NULL)))
+	{
+		dlog_print(DLOG_ERROR, LOG_TAG, "ui_view_lifecycle_callback_set is failed. err = %d", ret);
+		ui_view_destroy(view);
+		return;
 	}
 
 	UI_VIEWMGR_VIEW_PUSH(view);

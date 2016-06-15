@@ -18,13 +18,13 @@
 #include "main.h"
 
 static void
-view13_prev_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+prev_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	UI_VIEWMGR_VIEW_POP();
 }
 
 static void
-view13_next_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+next_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	create_page14();
 }
@@ -32,10 +32,20 @@ view13_next_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 static bool
 view13_load_cb(ui_view *view, void *data)
 {
-	Evas_Object *base_layout = ui_view_base_get(view);
+	Evas_Object *content = NULL;
+	Evas_Object *base = NULL;
 
-	Evas_Object *content = create_content(base_layout, "ViewMgr Demo<br>Fade Transition",
-			view13_prev_btn_clicked_cb, view13_next_btn_clicked_cb);
+	//Get a base object from view.
+	base = ui_view_base_get(view);
+	if (!base)
+	{
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to get a view base object");
+		return false;
+	}
+
+	//Create and set a main content.
+	content = create_content(base, "ViewMgr Demo<br>Fade Transition", prev_btn_clicked_cb, next_btn_clicked_cb);
+	if (!content) return false;
 
 	ui_standard_view_content_set(view, content, "Page13", NULL, NULL, NULL);
 
@@ -45,17 +55,28 @@ view13_load_cb(ui_view *view, void *data)
 void
 create_page13()
 {
+	int ret = 0;
+	ui_view *view = NULL;
 	ui_view_lifecycle_callback_s lifecycle_callback = {0, };
 
-	lifecycle_callback.load = view13_load_cb;
+	//Create a view.
+	view = ui_standard_view_create("page13");
+	if (!view)
+	{
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to create a view");
+		return;
+	}
 
-	ui_view *view = ui_standard_view_create("page13");
+	//Set Fade Transition Effect.
 	ui_view_transition_style_set(view, "fade");
 
-	int ret = ui_view_lifecycle_callbacks_set(view, &lifecycle_callback, NULL);
-	if (ret != 0)
+	//Set View Life-Cycle callbacks.
+	lifecycle_callback.load = view13_load_cb;
+	if (!(ret = ui_view_lifecycle_callbacks_set(view, &lifecycle_callback, NULL)))
 	{
-		//TODO
+		dlog_print(DLOG_ERROR, LOG_TAG, "ui_view_lifecycle_callback_set is failed. err = %d", ret);
+		ui_view_destroy(view);
+		return;
 	}
 
 	UI_VIEWMGR_VIEW_PUSH(view);
