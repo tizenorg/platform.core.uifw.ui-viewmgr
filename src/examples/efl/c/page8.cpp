@@ -36,6 +36,7 @@ create_page8()
 	Evas_Object *base = NULL;
 	Evas_Object *content = NULL;
 
+	//Create a view.
 	view = ui_standard_view_create("page8");
 	if (!view)
 	{
@@ -43,6 +44,7 @@ create_page8()
 		return;
 	}
 
+	//Get a base object from view.
 	base = ui_view_base_get(view);
 	if (!base)
 	{
@@ -51,6 +53,7 @@ create_page8()
 		return;
 	}
 
+	//Create and set a main content in advance.
 	content = create_content(base, "ViewMgr Demo<br>Content Preload", prev_btn_clicked_cb, next_btn_clicked_cb);
 	if (!content)
 	{

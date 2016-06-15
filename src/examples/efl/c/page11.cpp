@@ -18,13 +18,13 @@
 #include "main.h"
 
 static void
-view11_prev_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+prev_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	UI_VIEWMGR_VIEW_POP();
 }
 
 static void
-view11_next_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+next_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	create_page12();
 }
@@ -32,19 +32,34 @@ view11_next_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 static bool
 view11_load_cb(ui_view *view, void *data)
 {
-	Evas_Object *base_layout = ui_view_base_get(view);
+	Evas_Object *content = NULL;
+	Evas_Object *base = NULL;
 
-	Evas_Object *content = create_content(base_layout, "ViewMgr Demo<br>Menu Popup",
-			view11_prev_btn_clicked_cb, view11_next_btn_clicked_cb);
+	//Get a base object from view.
+	base = ui_view_base_get(view);
+	if (!base)
+	{
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to get a view base object");
+		return false;
+	}
 
-	ui_standard_view_content_set(view, content, "Page11", NULL, NULL, NULL);
+	//Create and set a main content.
+	content = create_content(base, "ViewMgr Demo<br>Menu Popup", prev_btn_clicked_cb, next_btn_clicked_cb);
+	if (!content) return false;
+
+	if (!ui_standard_view_content_set(view, content, "Page11", NULL, NULL, NULL))
+	{
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to set view content");
+		return false;
+	}
 
 	return true;
 }
 
-static void ctxpopup_item_select_cb(void *data, Evas_Object *obj, void *event_info)
+static void
+ctxpopup_item_select_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	Elm_Object_Item *it = static_cast<Elm_Object_Item *>(event_info);
+	Elm_Object_Item *it = (Elm_Object_Item *) data;
 	elm_ctxpopup_dismiss(obj);
 	LOGE("Item (%s) is selected", elm_object_item_text_get(it));
 }
@@ -52,7 +67,25 @@ static void ctxpopup_item_select_cb(void *data, Evas_Object *obj, void *event_in
 static bool
 view11_menu_cb(ui_menu *menu, void *data)
 {
-	Elm_Ctxpopup *ctxpopup = elm_ctxpopup_add(ui_menu_base_get(menu));
+	Evas_Object *base = NULL;
+	Elm_Ctxpopup *ctxpopup = NULL;
+
+	//Get a base object from menu.
+	base = ui_menu_base_get(menu);
+	if (!base)
+	{
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to get a menu base object");
+		return false;
+	}
+
+	//Create and set a ctxpopup as a menu.
+	ctxpopup = elm_ctxpopup_add(base);
+	if (!ctxpopup)
+	{
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to create a ctxpopup.");
+		return false;
+	}
+
 	elm_ctxpopup_item_append(ctxpopup, "Phone calls", NULL, ctxpopup_item_select_cb, NULL);
 	elm_ctxpopup_item_append(ctxpopup, "Favorites", NULL, ctxpopup_item_select_cb, NULL);
 	elm_ctxpopup_item_append(ctxpopup, "Search", NULL, ctxpopup_item_select_cb, NULL);
@@ -71,24 +104,33 @@ view11_menu_cb(ui_menu *menu, void *data)
 void
 create_page11()
 {
+	int ret = 0;
+	ui_view *view = NULL;
 	ui_view_lifecycle_callback_s lifecycle_callback = {0, };
 	ui_view_event_callback_s event_callback = {0, };
 
-	lifecycle_callback.load = view11_load_cb;
-	event_callback.menu = view11_menu_cb;
-
-	ui_view *view = ui_standard_view_create("page11");
-
-	int ret = ui_view_lifecycle_callbacks_set(view, &lifecycle_callback, NULL);
-	if (ret != 0)
+	//Create a view.
+	view = ui_standard_view_create("page11");
+	if (!view)
 	{
-		//TODO
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to create a view");
+		return;
 	}
 
-	ret = ui_view_event_callbacks_set(view, &event_callback, NULL);
-	if (ret != 0)
+	//Set View Life-Cycle callbacks.
+	lifecycle_callback.load = view11_load_cb;
+	if (!(ret = ui_view_lifecycle_callbacks_set(view, &lifecycle_callback, NULL)))
 	{
-		//TODO
+		dlog_print(DLOG_ERROR, LOG_TAG, "ui_view_lifecycle_callback_set is failed. err = %d", ret);
+		ui_view_destroy(view);
+		return;
+	}
+
+	//Set Menu Event callbacks.
+	event_callback.menu = view11_menu_cb;
+	if (!(ret = ui_view_event_callbacks_set(view, &event_callback, NULL)))
+	{
+		dlog_print(DLOG_ERROR, LOG_TAG, "ui_view_event_callback_set is failed. err = %d", ret);
 	}
 
 	UI_VIEWMGR_VIEW_PUSH(view);
