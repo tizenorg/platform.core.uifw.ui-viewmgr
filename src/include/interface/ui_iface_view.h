@@ -69,7 +69,7 @@ public:
 	/**
 	 *  @brief Set name of the view.
 	 *
-	 *  @note A view can get a specific name. default value of the name is NULL.
+	 *  @note A view can have a unique name. Default value of the name is NULL.
 	 *
 	 *  @param name A new name of view.
 	 *
@@ -89,7 +89,7 @@ public:
 	void set_removable_content(bool removable);
 
 	/**
-	 *  @brief Set the indicator of the view with mode.
+	 *  @brief Set the indicator mode of the view.
 	 *
 	 *  @param indicator The mode to set, one of #ui_view_indicator.
 	 */
@@ -112,26 +112,26 @@ public:
 	/**
 	 *  @brief Return a content instance of this view.
 	 *
-	 *  @return content of view.
+	 *  @return content of view. If no contents set yet, @c NULL.
 	 */
 	T get_content();
 
 	/**
-	 *  @brief This is for replacing or setting a content of the view.
+	 *  @brief Replace or set a content of the view.
 	 *
 	 *  @note @p content is a logical object that represents a view in your framework. The actual type of the content could be translated to any certain types.
 	 *        For instance, the type could be Evas_Object * in EFL and Layer * in Dali.
 	 *
 	 *  @param content a new content. It allows @c NULL for canceling the previous content.
 	 *
-	 *  @return true if it succeed, false otherwise.
+	 *  @return @c true if it succeeds, @c false otherwise.
 	 */
 	virtual bool set_content(T content);
 
 	/**
-	 *  @brief This is for unsetting a content of the view.
+	 *  @brief Unset the view content.
 	 *
-	 *  @return A previous content. If it wasn't, return value will be @c NULL.
+	 *  @return A previous content. If it wasn't, return @c NULL.
 	 */
 	virtual T unset_content();
 
@@ -284,7 +284,7 @@ private:
 	 *
 	 *  @param viewmgr The instance of viewmgr.
 	 *
-	 *  @return true if it succeed, false otherwise.
+	 *  @return @c true if it succeeds, @c false otherwise.
 	 *
 	 *  @see get_viewmgr()
 	 */

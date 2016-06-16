@@ -77,18 +77,6 @@ public:
 	unsigned int get_view_count();
 
 	/**
-	 *  @brief Return a view index(page) number of the given view.
-	 *         You could use this function to query the given @p view list order.
-	 *
-	 *  @param view A view to query the index.
-	 *
-	 *  @return An index of the given @p view on success, otherwise, -1.
-	 *
-	 *  @warning The index number of views are variable since the view list is variable.
-	 */
-	int get_view_index(const ui_iface_view *view);
-
-	/**
 	 *  @brief Return whether soft key is required or not.
 	 *
 	 *  @note Soft key is kind of like the software back button. It's used for product users to change current view to a previous view (pop).
@@ -99,6 +87,18 @@ public:
 	 *  @return @c true if soft key is required, @c false otherwise.
 	 */
 	static bool need_soft_key();
+
+	/**
+	 *  @brief Return a view index(page) number of the given view.
+	 *         You could use this function to query the given @p view list order.
+	 *
+	 *  @param view A view to query the index.
+	 *
+	 *  @return An index of the given @p view on success, otherwise, -1.
+	 *
+	 *  @warning The index number of views are variable since the view list is variable.
+	 */
+	int get_view_index(const ui_iface_view *view);
 
 	/**
 	 *  @brief Return viewmgr instance.

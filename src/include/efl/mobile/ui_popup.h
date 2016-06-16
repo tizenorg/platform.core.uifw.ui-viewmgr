@@ -53,7 +53,7 @@ public:
 	 *
 	 *  @note It makes popup state as show.
 	 *
-	 *  @return true if it succeed, false otherwise.
+	 *  @return @c true if it succeeds, @c false otherwise.
 	 *
 	 *  @see deactivate()
 	 */
@@ -64,7 +64,7 @@ public:
 	 *
 	 *  @note It makes popup state as hide.
 	 *
-	 *  @return true if it succeed, false otherwise.
+	 *  @return @c true if it succeeds, @c false otherwise.
 	 *
 	 *  @see activate()
 	 */
@@ -75,7 +75,7 @@ public:
 	 *
 	 *  @param popup popup object. It allows @c NULL for canceling the previous content.
 	 *
-	 *  @return true if it succeed, false otherwise.
+	 *  @return @c true if it succeeds, @c false otherwise.
 	 */
 	virtual bool set_content(Elm_Popup* popup);
 
@@ -97,9 +97,11 @@ public:
 	virtual bool is_activated();
 
 	/**
-	 *  @brief Get a base window of viewmgr.
+	 *  @brief Get a base object of an ui_popup.
 	 *
-	 *  @return viewmgr's window object.
+	 * @note Normally, A base object can be used for a parent of ui_popup content.
+	 *
+	 *  @return base object of ui_popup.
 	 */
 	virtual Evas_Object *get_base();
 

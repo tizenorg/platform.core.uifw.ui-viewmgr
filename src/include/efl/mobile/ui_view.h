@@ -49,7 +49,7 @@ public:
 	/**
 	 *  @brief Get menu object.
 	 *
-	 *  @return The menu object of connected with view.
+	 *  @return The menu object that connected with this view.
 	 */
 	const ui_menu *get_menu();
 

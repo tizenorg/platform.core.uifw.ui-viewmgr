@@ -46,21 +46,23 @@ public:
 	 *
 	 *  @param content a new content. It allows @c NULL for canceling the previous content.
 	 *
-	 *  @return A previous content. If it wasn't, return value will be @c NULL.
+	 *  @return A previous content. If it wasn't, return @c NULL.
 	 */
 	virtual bool set_content(Evas_Object *content);
 
 	/**
 	 *  @brief This is for unsetting a content of the view.
 	 *
-	 *  @return A previous content. If it wasn't, return value will be @c NULL.
+	 *  @return A previous content. If it wasn't, return @c NULL.
 	 */
 	virtual Evas_Object *unset_content();
 
 	/**
-	 *  @brief Get a base layout of viewmgr.
+	 *  @brief Get a base object of ui_view.
 	 *
-	 *  @return The base layout object of viewmgr.
+	 *  @note Normally, this base object can be used for a parent of a view content.
+	 *
+	 *  @return The base object of ui_view.
 	 */
 	virtual Evas_Object *get_base();
 
