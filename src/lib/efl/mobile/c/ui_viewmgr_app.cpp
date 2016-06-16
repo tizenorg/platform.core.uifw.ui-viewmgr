@@ -73,7 +73,7 @@ public:
 
 static ui_app_capi *g_app = NULL;
 
-bool ui_app_init(const char *pkg, const char *locale_dir)
+bool ui_viewmgr_app_init(const char *pkg, const char *locale_dir)
 {
 	ui_app_capi *app = g_app;
 	if (app) return true;
@@ -90,7 +90,7 @@ bool ui_app_init(const char *pkg, const char *locale_dir)
 	return true;
 }
 
-int ui_app_run(int argc, char **argv, ui_app_lifecycle_callback_s *lifecycle_callback, void *data)
+int ui_viewmgr_app_run(int argc, char **argv, ui_app_lifecycle_callback_s *lifecycle_callback, void *data)
 {
 	ui_app_capi *app = g_app;
 	if (!app) return -1;
@@ -98,15 +98,7 @@ int ui_app_run(int argc, char **argv, ui_app_lifecycle_callback_s *lifecycle_cal
 	return app->run(argc, argv, lifecycle_callback, data);
 }
 
-ui_viewmgr *ui_app_viewmgr_get()
-{
-	ui_app_capi *app = g_app;
-	if (!app) return NULL;
-
-	return app->get_viewmgr();
-}
-
-bool ui_app_term(void)
+bool ui_viewmgr_app_term(void)
 {
 	ui_app_capi *app = g_app;
 	if (app) delete (app);

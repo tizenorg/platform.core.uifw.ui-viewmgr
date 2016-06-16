@@ -20,9 +20,9 @@ int ui_viewmgr_view_count_get(ui_viewmgr *viewmgr);
 bool ui_viewmgr_soft_key_need_get(ui_viewmgr *viewmgr);
 ui_viewmgr *ui_viewmgr_viewmgr_get();
 
-#define UI_VIEWMGR_DEACTIVATE() (ui_viewmgr_deactivate(ui_app_viewmgr_get()))
-#define UI_VIEWMGR_VIEW_PUSH(x) (ui_viewmgr_view_push(ui_app_viewmgr_get(), x))
-#define UI_VIEWMGR_VIEW_POP() (ui_viewmgr_view_pop(ui_app_viewmgr_get()))
+#define UI_VIEWMGR_DEACTIVATE() (ui_viewmgr_deactivate(ui_viewmgr_viewmgr_get()))
+#define UI_VIEWMGR_VIEW_PUSH(X) (ui_viewmgr_view_push(ui_viewmgr_viewmgr_get(), (X)))
+#define UI_VIEWMGR_VIEW_POP() (ui_viewmgr_view_pop(ui_viewmgr_viewmgr_get()))
 
 #ifdef __cplusplus
 }

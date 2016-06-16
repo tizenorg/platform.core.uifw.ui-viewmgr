@@ -102,8 +102,6 @@ bool ui_popup::set_content(Elm_Popup *popup)
 	}
 
 	elm_popup_align_set(popup, ELM_NOTIFY_ALIGN_FILL, 1.0);
-
-	//FIXME: rename style.
 	evas_object_event_callback_add(popup, EVAS_CALLBACK_DEL, popup_del_cb, this);
 	evas_object_smart_callback_add(popup, "dismissed", popup_dismissed_cb, this);
 
