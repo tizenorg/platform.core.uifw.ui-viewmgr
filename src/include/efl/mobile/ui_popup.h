@@ -97,9 +97,11 @@ public:
 	virtual bool is_activated();
 
 	/**
-	 *  @brief Get a base window of viewmgr.
+	 *  @brief Get a base object of an ui_popup.
 	 *
-	 *  @return viewmgr's window object.
+	 * @note Normally, A base object can be used for a parent of ui_popup content.
+	 *
+	 *  @return base object of ui_popup.
 	 */
 	virtual Evas_Object *get_base();
 

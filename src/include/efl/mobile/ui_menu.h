@@ -85,14 +85,15 @@ public:
 	virtual bool is_activated();
 
 	/**
-	 *  @brief Get a base window of viewmgr.
+	 *  @brief Get a base object of a ui_menu.
 	 *
-	 *  @return viewmgr's window object.
+	 *  @note Normally, A base object can be used for a parent of ui_menu content.
+	 *  @return base object of ui_menu.
 	 */
 	virtual Evas_Object *get_base();
 
 	/**
-	 *  @brief Get current menu's degree.
+	 *  @brief Get a current menu's degree.
 	 *
 	 *  @return Current rotation degree, -1 if it fails to get degree information.
 	 */

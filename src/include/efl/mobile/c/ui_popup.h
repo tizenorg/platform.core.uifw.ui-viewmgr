@@ -6,33 +6,39 @@ extern "C" {
 #endif
 
 /**
- *  @brief This is a constructor for initializing this ui_popup.
+ *  @brief A constructor for an ui_popup.
  *
- *  @param view The view object
+ *  @param view An instance of ui_view.
  *
- *  @return The ui_popup object
+ *  @note The instance of ui_popup is subordinated to the given @p ui_view. If the given @p ui_view is hidden or deactivated, this ui_popup will be also do
+ *        same followed to its ui_view behaviors.
+ *
+ *  @return An ui_popup instance.
+ *
+ *  @warning The instance of ui_popup will be destroyed automatically when the ui_view is destroyed.
  *
  *  @see ui_popup_destroy()
  */
 ui_popup *ui_popup_create(ui_view *view);
 
 /**
- *  @brief This is a ui_popup destructor.
+ *  @brief A destructor for an ui_popup.
  *
- *  @param popup The ui_popup object
+ *  @note destroy an @p given ui_popup instance.
  *
- *  @seee ui_popup_create()
+ *  @param popup An ui_popup instance.
+ *
+ *  @see ui_popup_create()
  */
 void ui_popup_destroy(ui_popup *popup);
 
 /**
- *  @brief This is for replacing or setting a content of the ui_popup.
+ *  @brief Replace or set a content of an ui_popup.
  *
- *  @popup popup The ui_popup object
+ *  @param popup An ui_popup instance.
+ *  @param content popup object. It allows @c NULL to cancel the previous content.
  *
- *  @param elm_popup elm_popup object. It allows @c NULL for canceling the previous content.
- *
- *  @return true if it succeed, false otherwise
+ *  @return @c true if it succeeds, @c false otherwise.
  *
  *  @see ui_popup_content_get()
  */
@@ -41,43 +47,46 @@ bool ui_popup_content_set(ui_popup *popup, Elm_Popup *content);
 /**
  *  @brief Return a content object of ui_popup.
  *
- *  @param popup The ui_popup object
+ *  @param popup An ui_popup instance.
  *
- *  @return content of ui_popup object
+ *  @return A content of ui_popup.
  *
  *  @see ui_popup_content_set()
  */
 Elm_Popup *ui_popup_content_get(ui_popup *popup);
 
 /**
- *  @brief This is for unsetting a content of the ui_popup.
+ *  @brief Unset an ui_popup content.
  *
- *  @param popup The ui_popup object
+ *  @param popup An ui_popup instance.
  *
- *  @return A previous content. If it wasn't, return value will be @c NULL
+ *  @return A previous content. If it wasn't, return @c NULL.
  *
  *  @see ui_popup_content_set()
- *  @see ui_popup_content_get()
  */
 Elm_Popup *ui_popup_content_unset(ui_popup *popup);
 
 /**
- *  @brief This is activating the ui_popup.
+ *  @brief Activate an ui_popup.
  *
- *  @param popup The popup object
+ *  @note It makes ui_popup state as show.
  *
- *  @return true if it succeed, false otherwise
+ *  @param popup An ui_popup instance.
+ *
+ *  @return @c true if it succeeds, @c false otherwise.
  *
  *  @see ui_popup_deactivate()
  */
 bool ui_popup_activate(ui_popup *popup);
 
 /**
- *  @brief This is deactivating the ui_popup.
+ *  @brief Deactivate an ui_popup.
  *
- *  @param popup The ui_popup object
+ *  @note It makes ui_popup state as hide.
  *
- *  @return true if it succeed, false otherwise
+ *  @param popup An ui_popup instance.
+ *
+ *  @return @c true if it succeeds, @c false otherwise.
  *
  *  @see ui_popup_activate()
  */
@@ -86,7 +95,7 @@ bool ui_popup_deactivate(ui_popup *popup);
 /**
  *  @brief Return the active status of ui_popup.
  *
- *  @param popup The ui_popup object
+ *  @param popup An ui_popup instance.
  *
  *  @return @c true if ui_popup is activated, @c false otherwise
  *
@@ -95,29 +104,30 @@ bool ui_popup_deactivate(ui_popup *popup);
  */
 bool ui_popup_activated_get(ui_popup *popup);
 
-//FIXME: is it really need?
 /**
- *  @brief Get a base window of viewmgr.
+ *  @brief Get a base object of an ui_popup.
  *
- *  @param popup The ui_popup object
+ *  @note Normally, A base object can be used for a parent of ui_popup content.
  *
- *  @return viewmgr's window object
+ *  @param menu An ui_popup instance.
+ *
+ *  @return base object of ui_popup.
  */
 Evas_Object *ui_popup_base_get(ui_popup *popup);
 
 /**
  *  @brief Get current ui_popup's degree.
  *
- *  @param popup The ui_popup object
+ *  @param popup An ui_popup instance.
  *
- *  @return Current rotation degree, -1 if it fails to get degree information
+ *  @return Current rotation degree, -1 if it fails to get degree information.
  */
 int ui_popup_degree_get(ui_popup *popup);
 
 /**
  *  @brief Return a view which is matched with the ui_popup.
  *
- *  @param popup The ui_popup object
+ *  @param popup An ui_popup instance.
  *
  *  @return The view which is matched with ui_popup.
  */
