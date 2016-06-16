@@ -154,9 +154,11 @@ public:
 	ui_base_view *get_view(unsigned int idx);
 
 	/**
-	 *  @brief Get a base layout of viewmgr.
+	 *  @brief Get a base object of this viewmgr.
 	 *
-	 *  @return The base layout object of viewmgr.
+	 *  @note Normally, a base object can be used for adding additional objects.
+	 *
+	 *  @return The base object of this viewmgr.
 	 */
 	Evas_Object *get_base();
 

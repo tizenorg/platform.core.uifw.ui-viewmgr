@@ -1,6 +1,6 @@
 #include "../../../../include/efl/mobile/ui_mobile_viewmanager.h"
 #include "../../../../include/efl/mobile/c/ui_view.h"
-#include "../../../../include/efl/mobile/c/ui_capi_private.h"
+#include "../../../../include/efl/mobile/c/ui_private.h"
 
 using namespace efl_viewmanager;
 
@@ -202,7 +202,7 @@ void ui_view_indicator_set(ui_view *view, ui_view_indicator indicator)
 		return;
 	}
 
-	return view->set_indicator(indicator);
+	view->set_indicator(indicator);
 }
 
 ui_view_indicator ui_view_indicator_get(ui_view *view)

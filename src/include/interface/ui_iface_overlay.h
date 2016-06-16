@@ -43,14 +43,14 @@ public:
 	 *
 	 *  @param content a new content. It allows @c NULL for canceling the previous content.
 	 *
-	 *  @return true if it succeed, false otherwise.
+	 *  @return @c true if it succeeds, @c false otherwise.
 	 */
 	virtual bool set_content(T content);
 
 	/**
 	 *  @brief This is for unsetting a content of the view.
 	 *
-	 *  @return A previous content. If it wasn't, return value will be @c NULL.
+	 *  @return A previous content. If it wasn't, return @c NULL.
 	 */
 	virtual T unset_content();
 
@@ -67,7 +67,7 @@ public:
 	 *
 	 *  @note It makes overlay state as show.
 	 *
-	 *  @return @c true on success or @c false otherwise.
+	 *  @return @c true if it succeeds, @c false otherwise.
 	 *
 	 *  @see deactivate()
 	 */

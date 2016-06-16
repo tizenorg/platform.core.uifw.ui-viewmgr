@@ -6,58 +6,60 @@ extern "C" {
 #endif
 
 /**
- *  @brief This is for replacing or setting a content of the ui_menu.
+ *  @brief Replace or set a content of an ui_menu.
  *
- *  @param menu The ui_menu object
- *  @param ctxpopup ctxpopup object. It allows @c NULL for canceling the previous content
+ *  @param menu An ui_menu object
+ *  @param ctxpopup ctxpopup object. It allows @c NULL for canceling the previous content.
  *
- *  @return true if it succeed, false otherwise
+ *  @return @c true if it succeeds, @c false otherwise.
  *
  *  @see ui_menu_content_get()
  */
 bool ui_menu_content_set(ui_menu *menu, Elm_Ctxpopup *ctxpopup);
 
 /**
- *  @brief Return a content object of ui_menu.
+ *  @brief Return an ui_menu content.
  *
- *  @param menu The ui_menu object
+ *  @param menu An ui_menu instance.
  *
- *  @return content of ui_memu object
+ *  @return A content of ui_menu.
  *
  *  @see ui_menu_content_set()
  */
 Elm_Ctxpopup *ui_menu_content_get(ui_menu *menu);
 
 /**
- *  @brief This is for unsetting a content of the ui_menu.
+ *  @brief Unset an ui_menu content.
  *
- *  @param menu The ui_menu object
+ *  @param menu An ui_menu instance.
  *
- *  @return A previous content. If it wasn't, return value will be @c NULL.
+ *  @return A previous content. If it wasn't, return @c NULL.
+ *
+ *  @see ui_menu_content_set()
  */
 Elm_Ctxpopup *ui_menu_content_unset(ui_menu *menu);
 
 /**
- *  @brief This is activating the ui_menu.
+ *  @brief Activate an ui_menu.
  *
  *  @note It makes ui_menu state as show.
  *
- *  @param menu The ui_menu object
+ *  @param menu An ui_menu instance.
  *
- *  @return true if it succeed, false otherwise
+ *  @return @c true if it succeeds, @c false otherwise.
  *
  *  @see ui_menu_deactivate()
  */
 bool ui_menu_activate(ui_menu *menu);
 
 /**
- *  @brief This is deactivating the ui_menu.
+ *  @brief Deactivate an ui_menu.
  *
  *  @note It makes ui_menu state as hide.
  *
- *  @param menu The ui_menu object
+ *  @param menu An ui_menu instance.
  *
- *  @return true if it succeed, false otherwise
+ *  @return @c true if it succeeds, @c false otherwise.
  *
  *  @see ui_menu_activate()
  */
@@ -66,38 +68,39 @@ bool ui_menu_deactivate(ui_menu *menu);
 /**
  *  @brief Return the active status of ui_menu.
  *
- *  @param menu The ui_menu object
+ *  @param menu An ui_menu instance.
  *
- *  @return @c true if ui_menu is activated, @c false otherwise
+ *  @return @c true if it succeeds, @c false otherwise.
  *
  *  @see ui_menu_activate()
  *  @see ui_menu_deactivate()
  */
 bool ui_menu_activated_get(ui_menu *menu);
 
-//FIXME: is it really need?
 /**
- *  @brief Get a base window of viewmgr.
+ *  @brief Get a base object of an ui_menu.
  *
- *  @param menu The ui_menu object
+ *  @note Normally, A base object can be used for a parent of ui_menu content.
  *
- *  @return viewmgr's window object
+ *  @param menu An ui_menu instance.
+ *
+ *  @return base object of ui_menu.
  */
 Evas_Object *ui_menu_base_get(ui_menu *menu);
 
 /**
- *  @brief Get current ui_menu's degree.
+ *  @brief Get a current ui_menu's degree.
  *
- *  @param menu The ui_menu object
+ *  @param menu An ui_menu instance.
  *
- *  @return Current rotation degree, -1 if it fails to get degree information
+ *  @return Current rotation degree, -1 if it fails to get degree information.
  */
 int ui_menu_degree_get(ui_menu *menu);
 
 /**
- *  @brief Return a view which is matched with the ui_menu.
+ *  @brief Return a view which is matched with this ui_menu.
  *
- *  @param menu The ui_menu object
+ *  @param menu An ui_menu instance.
  *
  *  @return The view which is matched with ui_menu
  */
