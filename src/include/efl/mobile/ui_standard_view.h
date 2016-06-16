@@ -37,7 +37,7 @@ class ui_standard_view: public ui_view
 {
 public:
 	/**
-	 *  @brief This is a constructor for initializing this view resources.
+	 *  @brief A constructor for an ui_standard_view.
 	 *
 	 *  @param name view name.
 	 */
@@ -47,17 +47,17 @@ public:
 	virtual ~ui_standard_view();
 
 	/**
-	 *  @brief This is for replacing or setting a content of the view.
+	 *  @brief Replace or set a content of the view.
 	 *
 	 *  @param content a new content. It allows @c NULL for canceling the previous content.
 	 *  @param title  title_label The label in the title area. The name of the title label part is "elm.text.title"
 	 *
-	 *  @return true if it succeed, false otherwise.
+	 *  @return @c true if it succeeds, @c false otherwise.
 	 */
 	bool set_content(Evas_Object *content, const char *title = NULL);
 
 	/**
-	 *  @brief This is for replacing or setting a content of the view.
+	 *  @brief Replace or set a content of the view.
 	 *
 	 *  @param content A new content. It allows @c NULL for canceling the previous content.
 	 *  @param title  The label in the title area. The name of the title label part is "elm.text.title".
@@ -65,99 +65,99 @@ public:
 	 *  @param title_left_btn The button in the left part of title area.
 	 *  @param title_right_btn The button in the right part of title area.
 	 *
-	 *  @return true if it succeed, false otherwise.
+	 *  @return @c true if it succeeds, @c false otherwise.
 	 */
 	bool set_content(Evas_Object *content, const char *title, const char *subtitle, Elm_Button *title_left_btn, Elm_Button *title_right_btn);
 
 	/**
-	 *  @brief This is for setting title badge text.
+	 *  @brief Set a title badge text.
 	 *
 	 *  @param text The label in the title badge area.
 	 *
-	 *  @return true if it succeed, false otherwise.
+	 *  @return @c true if it succeeds, @c false otherwise.
 	 */
 	bool set_title_badge(const char *text);
 
 	/**
-	 *  @brief This is for setting subtitle text.
+	 *  @brief Set a subtitle text.
 	 *
 	 *  @param text The label in the subtitle area.
 	 *
-	 *  @return true if it succeed, false otherwise.
+	 *  @return @c true if it succeeds, @c false otherwise.
 	 */
 	bool set_subtitle(const char *text);
 
 	/**
-	 *  @brief This is for setting title_left_btn.
+	 *  @brief Set a title_left_btn.
 	 *
 	 *  @param title_left_btn The button in the left part of title area.
 	 *
-	 *  @return true if it succeed, false otherwise.
+	 *  @return @c true if it succeeds, @c false otherwise.
 	 */
 	bool set_title_left_btn(Elm_Button *title_left_btn);
 
 	/**
-	 *  @brief This is for setting title_right_btn.
+	 *  @brief Set a title_right_btn.
 	 *
 	 *  @param title_right_btn The button in the right part of title area.
 	 *
-	 *  @return true if it succeed, false otherwise.
+	 *  @return @c true if it succeeds, @c false otherwise.
 	 */
 	bool set_title_right_btn(Elm_Button *title_right_btn);
 
 	/**
-	 *  @brief This is for setting title text.
+	 *  @brief Set a title text.
 	 *
 	 *  @param text The label in the title area.
 	 *
-	 *  @return true if it succeed, false otherwise.
+	 *  @return @c true if it succeeds, @c false otherwise.
 	 */
 	bool set_title(const char *text);
 
 	/**
-	 *  @brief This is for setting toolbar below title.
+	 *  @brief Set a toolbar below title.
 	 *
 	 *  @param toolbar Toolbar object.
 	 *
-	 *  @return true if it succeed, false otherwise.
+	 *  @return @c true if it succeeds, @c false otherwise.
 	 */
 	bool set_toolbar(Elm_Toolbar *toolbar);
 
 	/**
-	 *  @brief This is handling title visible state.
+	 *  @brief Control the title visible state.
 	 *
-	 *  @param visible title state set as visible if the given param is true, otherwise title area set as invisible.
-	 *  @param anim title area will be shown with animation if the given param is true, otherwise title area will be shown without animation.
+	 *  @param visible title state set as visible if the given param is @c true, otherwise title area set as invisible.
+	 *  @param anim title area will be shown with animation if the given param is @c true, otherwise title area will be shown without animation.
 	 *
-	 *  @return true if it succeed, false otherwise.
+	 *  @return @c true if it succeeds, @c false otherwise.
 	 */
 	bool set_title_visible(bool visible, bool anim);
 
 	/**
-	 *  @brief This is for unsetting a content of the view.
+	 *  @brief Unset a content of the view.
 	 *
-	 *  @return A previous content. If it wasn't, return value will be @c NULL.
+	 *  @return A previous content. If it wasn't, return @c NULL.
 	 */
 	Evas_Object *unset_content();
 
 	/**
-	 *  @brief This is for unsetting a title left button of title area.
+	 *  @brief Unset a title left button of title area.
 	 *
-	 *  @return A previous content. If it wasn't, return value will be @c NULL.
+	 *  @return A previous content. If it wasn't, return @c NULL.
 	 */
 	Elm_Button *unset_title_left_btn();
 
 	/**
-	 *  @brief This is for unsetting a title right button of title area.
+	 *  @brief Unset a title right button of title area.
 	 *
-	 *  @return A previous content. If it wasn't, return value will be @c NULL.
+	 *  @return A previous content. If it wasn't, return @c NULL.
 	 */
 	Elm_Button *unset_title_right_btn();
 
 	/**
-	 *  @brief This is for unsetting a toolbar.
+	 *  @brief Unset a toolbar.
 	 *
-	 *  @return A previous content. If it wasn't, return value will be @c NULL.
+	 *  @return A previous content. If it wasn't, return @c NULL.
 	 */
 	Elm_Toolbar *unset_toolbar();
 
