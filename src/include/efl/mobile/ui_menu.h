@@ -77,7 +77,7 @@ public:
 	/**
 	 *  @brief Return the active status of menu.
 	 *
-	 *  @return @c true if overlay is activated, @c false otherwise.
+	 *  @return @c true if menu is activated, @c false otherwise.
 	 *
 	 *  @see activate()
 	 *  @see deactivate()

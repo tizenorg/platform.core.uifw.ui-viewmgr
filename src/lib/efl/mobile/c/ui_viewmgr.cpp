@@ -113,6 +113,18 @@ Evas_Object *ui_viewmgr_base_get(ui_viewmgr *viewmgr)
 	return viewmgr->get_base();
 }
 
+int ui_viewmgr_view_index_get(ui_viewmgr *viewmgr, const ui_view *view)
+{
+	if (!viewmgr || !view)
+	{
+		LOGE("Invalid Parameter viewmgr = %p, view = %p", viewmgr, view);
+		return -1;
+	}
+
+	return viewmgr->get_view_index(view);
+}
+
+
 int ui_viewmgr_view_count_get(ui_viewmgr *viewmgr)
 {
 	if (!viewmgr)

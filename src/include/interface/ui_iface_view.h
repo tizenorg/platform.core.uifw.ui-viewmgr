@@ -71,7 +71,7 @@ public:
 	 *
 	 *  @note A view can get a specific name. default value of the name is NULL.
 	 *
-	 *  @param name a new name of view.
+	 *  @param name A new name of view.
 	 *
 	 *  @return true if the given @c name is available, otherwise false.
 	 *

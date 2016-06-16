@@ -59,7 +59,7 @@ public:
 	/**
 	 *  @brief This is for replacing or setting a content of the view.
 	 *
-	 *  @param content a new content. It allows @c NULL for canceling the previous content.
+	 *  @param content A new content. It allows @c NULL for canceling the previous content.
 	 *  @param title  The label in the title area. The name of the title label part is "elm.text.title".
 	 *  @param subtitle  The label in the subtitle area. The name of the subtitle label part is "elm.text.subtitle".
 	 *  @param title_left_btn The button in the left part of title area.

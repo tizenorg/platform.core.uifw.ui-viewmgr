@@ -58,14 +58,14 @@ public:
 	{
 	}
 
-	int run(int argc, char **argv, ui_app_lifecycle_callback_s *lifecycle_callback, void *data)
+	int run(int argc, char **argv, ui_app_lifecycle_callback_s *lifecycle_callback, void *user_data)
 	{
 		if (lifecycle_callback)
 		{
 			this->capi_lifecycle_callback = *lifecycle_callback;
 		}
 
-		this->data = data;
+		this->data = user_data;
 
 		return ui_app::run(argc, argv);
 	}
@@ -90,18 +90,20 @@ bool ui_viewmgr_app_init(const char *pkg, const char *locale_dir)
 	return true;
 }
 
-int ui_viewmgr_app_run(int argc, char **argv, ui_app_lifecycle_callback_s *lifecycle_callback, void *data)
+int ui_viewmgr_app_run(int argc, char **argv, ui_app_lifecycle_callback_s *lifecycle_callback, void *user_data)
 {
 	ui_app_capi *app = g_app;
 	if (!app) return -1;
 
-	return app->run(argc, argv, lifecycle_callback, data);
+	return app->run(argc, argv, lifecycle_callback, user_data);
 }
 
 bool ui_viewmgr_app_term(void)
 {
 	ui_app_capi *app = g_app;
 	if (app) delete (app);
+	else return false;
+
 	g_app = NULL;
 
 	return true;
