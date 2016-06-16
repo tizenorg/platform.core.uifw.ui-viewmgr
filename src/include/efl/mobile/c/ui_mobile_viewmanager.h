@@ -36,7 +36,6 @@
 #define ui_menu void
 #define ui_popup void
 
-
 //FIXME: better way?
 #include "../../../interface/ui_iface_types.h"
 
@@ -45,5 +44,6 @@
 #include "ui_popup.h"
 #include "ui_viewmgr.h"
 #include "ui_view.h"
+#include "ui_standard_view.h"
 
 #endif /* UI_MOBILE_VIEWMANAGER_CAPI_H */
