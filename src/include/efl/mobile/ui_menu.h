@@ -41,7 +41,7 @@ public:
 	 *
 	 *  @note It makes menu state as show.
 	 *
-	 *  @return true if it succeed, false otherwise.
+	 *  @return @c true if it succeeds, @c false otherwise.
 	 *
 	 *  @see deactivate()
 	 */
@@ -52,7 +52,7 @@ public:
 	 *
 	 *  @note It makes menu state as hide.
 	 *
-	 *  @return true if it succeed, false otherwise.
+	 *  @return @c true if it succeeds, @c false otherwise.
 	 *
 	 *  @see activate()
 	 */
@@ -63,7 +63,7 @@ public:
 	 *
 	 *  @param ctxpopup ctxpopup object. It allows @c NULL for canceling the previous content.
 	 *
-	 *  @return true if it succeed, false otherwise.
+	 *  @return @c true if it succeeds, @c false otherwise.
 	 */
 	virtual bool set_content(Elm_Ctxpopup* ctxpopup);
 
@@ -85,14 +85,15 @@ public:
 	virtual bool is_activated();
 
 	/**
-	 *  @brief Get a base window of viewmgr.
+	 *  @brief Get a base object of a ui_menu.
 	 *
-	 *  @return viewmgr's window object.
+	 *  @note Normally, A base object can be used for a parent of ui_menu content.
+	 *  @return base object of ui_menu.
 	 */
 	virtual Evas_Object *get_base();
 
 	/**
-	 *  @brief Get current menu's degree.
+	 *  @brief Get a current menu's degree.
 	 *
 	 *  @return Current rotation degree, -1 if it fails to get degree information.
 	 */
