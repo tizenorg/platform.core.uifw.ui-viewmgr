@@ -6,6 +6,13 @@ extern "C" {
 #endif
 
 /**
+ * @defgroup CAPI_UI_VIEWMGR_STANDARD_VIEW ui_standard_view
+ * @ingroup CAPI_UI_VIEWMGR
+ * @brief This module provides functionalities about ui_standard_view.
+ * @{
+ */
+
+/**
  *  @brief A constructor for an ui_standard_view.
  *
  *  @param name view name
@@ -176,5 +183,9 @@ bool ui_standard_view_title_visible_set(ui_view *view, bool visible, bool anim);
 #ifdef __cplusplus
 }
 #endif
+
+/**
+ * @}
+ */
 
 #endif /* _UI_STANDARD_VIEW_CAPI_H_ */

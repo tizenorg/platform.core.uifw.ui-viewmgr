@@ -6,6 +6,13 @@ extern "C" {
 #endif
 
 /**
+ * @defgroup CAPI_UI_VIEWMGR_APPLICATION ui_application
+ * @ingroup CAPI_UI_VIEWMGR
+ * @brief This module provides functionalities about ui_application.
+ * @{
+ */
+
+/**
  *  @brief Initialize ui_application.
  *
  *  This function initializes ui_application and ui_viewmgr.
@@ -47,5 +54,9 @@ bool ui_application_term(void);
 #ifdef __cplusplus
 }
 #endif
+
+/**
+ * @}
+ */
 
 #endif /* _UI_APPLICATION_CAPI_H_ */

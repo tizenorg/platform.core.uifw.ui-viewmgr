@@ -17,6 +17,23 @@
 #ifndef _UI_MOBILE_VIEWMANAGER_CAPI_H_
 #define _UI_MOBILE_VIEWMANAGER_CAPI_H_
 
+/**
+ * @internal
+ * @defgroup CAPI_UI_VIEWMGR ui-viewmgr
+ * @brief This module provides functionalities to manage view of application's.
+ * @section UI_VIEWMGR_GROUP_HEADER Required Header
+ *   \#include <ui_viewmanager.h>
+ *
+ * @section CAPI_UI_VIEWMGR_MODULE_OVERVIEW Overview
+ * ui-viewmgr provides functionalities to manage view of application's.
+ * It includes below features.
+ * 1. View Life-cycle events.
+ * 2. Support view managing methods.
+ * 3. H/W key event support by each view.
+ * 4. Considered overlay controls as view.(ex.Popup, ctxpoup)
+ * 5. Support profile specific UX.
+ */
+
 #include <Elementary.h>
 #include <app.h>
 #include <dlog.h>
