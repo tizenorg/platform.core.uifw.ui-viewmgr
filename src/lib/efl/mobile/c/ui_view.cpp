@@ -1,10 +1,12 @@
 #include "../../../../include/efl/mobile/c/_ui_private.h"
 #include "../../../../include/efl/mobile/c/ui_view.h"
-#include "../../../../include/efl/mobile/c/_ui_private_view.h"
+#include "../../../../include/efl/mobile/c/_ui_common_view_capi.h"
 
 using namespace efl_viewmanager;
 
-class ui_view_capi: public ui_view, public ui_view_event_attr
+static const char *_this_type = "ui_view";
+
+class ui_view_capi: public ui_view, public ui_common_view_capi
 {
 public:
 	void on_load()
@@ -116,7 +118,7 @@ public:
 	}
 
 	ui_view_capi(const char *name)
-			: ui_view(name), ui_view_event_attr()
+			: ui_view(name), ui_common_view_capi(_this_type)
 	{
 	}
 
@@ -130,15 +132,20 @@ struct ui_view_s
 	ui_view_capi *p;
 };
 
+ui_view* ui_view_create(const char *name)
+{
+	return new ui_view_capi(name);
+}
+
 bool ui_view_lifecycle_callbacks_set(ui_view *view, ui_view_lifecycle_callback_s *lifecycle_callback, void *data)
 {
 	if (!view)
 	{
-		LOGE("Invalid ui_view");
+		LOGE("Invalid ui_view = NULL");
 		return false;
 	}
 
-	ui_view_event_attr *event_attr = dynamic_cast<ui_view_event_attr *>(view);
+	ui_common_view_capi *event_attr = dynamic_cast<ui_common_view_capi *>(view);
 	if (!event_attr)
 	{
 		LOGE("This view(%p) doesn't allow lifecycle callback?!");
@@ -158,11 +165,11 @@ bool ui_view_event_callbacks_set(ui_view *view, ui_view_event_callback_s *event_
 {
 	if (!view)
 	{
-		LOGE("Invalid ui_view");
+		LOGE("Invalid ui_view = NULL");
 		return false;
 	}
 
-	ui_view_event_attr *event_attr = dynamic_cast<ui_view_event_attr *>(view);
+	ui_common_view_capi *event_attr = dynamic_cast<ui_common_view_capi *>(view);
 	if (!event_attr)
 	{
 		LOGE("This view(%p) doesn't allow event callback?!");
@@ -182,7 +189,7 @@ Evas_Object* ui_view_base_get(ui_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid ui_view");
+		LOGE("Invalid ui_view = NULL");
 		return NULL;
 	}
 	return view->get_base();
@@ -192,7 +199,7 @@ Evas_Object *ui_view_content_unset(ui_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid ui_view");
+		LOGE("Invalid ui_view = NULL");
 		return NULL;
 	}
 
@@ -203,7 +210,7 @@ void ui_view_indicator_set(ui_view *view, ui_view_indicator indicator)
 {
 	if (!view)
 	{
-		LOGE("Invalid ui_view");
+		LOGE("Invalid ui_view = NULL");
 		return;
 	}
 
@@ -214,7 +221,7 @@ ui_view_indicator ui_view_indicator_get(ui_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid ui_view");
+		LOGE("Invalid ui_view = NULL");
 		return UI_VIEW_INDICATOR_LAST;
 	}
 
@@ -225,7 +232,7 @@ void ui_view_removable_content_set(ui_view *view, bool remove)
 {
 	if (!view)
 	{
-		LOGE("Invalid ui_view");
+		LOGE("Invalid ui_view = NULL");
 		return;
 	}
 
@@ -236,7 +243,7 @@ bool ui_view_removable_content_get(ui_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid ui_view");
+		LOGE("Invalid ui_view = NULL");
 		return false;
 	}
 
@@ -247,7 +254,7 @@ int ui_view_degree_get(ui_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid ui_view");
+		LOGE("Invalid ui_view = NULL");
 		return -1;
 	}
 
@@ -258,7 +265,7 @@ bool ui_view_transition_style_set(ui_view *view, const char *style)
 {
 	if (!view)
 	{
-		LOGE("Invalid ui_view");
+		LOGE("Invalid ui_view = NULL");
 		return false;
 	}
 
@@ -269,7 +276,7 @@ const char *ui_view_transition_style_get(ui_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid ui_view");
+		LOGE("Invalid ui_view = NULL");
 		return NULL;
 	}
 
@@ -280,7 +287,7 @@ const ui_menu *ui_view_menu_get(ui_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid ui_view");
+		LOGE("Invalid ui_view = NULL");
 		return NULL;
 	}
 
@@ -291,7 +298,7 @@ bool ui_view_name_set(ui_view *view, const char *name)
 {
 	if (!view)
 	{
-		LOGE("Invalid ui_view");
+		LOGE("Invalid ui_view = NULL");
 		return false;
 	}
 
@@ -303,7 +310,7 @@ const char *ui_view_name_get(ui_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid ui_view");
+		LOGE("Invalid ui_view = NULL");
 		return NULL;
 	}
 
@@ -315,7 +322,7 @@ ui_view_state ui_view_state_get(ui_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid ui_view");
+		LOGE("Invalid ui_view = NULL");
 		return UI_VIEW_STATE_UNKNOWN;
 	}
 
@@ -326,7 +333,7 @@ Evas_Object *ui_view_content_get(ui_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid ui_view");
+		LOGE("Invalid ui_view = NULL");
 		return NULL;
 	}
 
@@ -337,24 +344,30 @@ bool ui_view_destroy(ui_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid ui_view");
+		LOGE("Invalid ui_view = NULL");
 		return false;
 	}
 	delete (view);
 	return true;
 }
 
-ui_view* ui_view_create(const char *name)
-{
-	return new ui_view_capi(name);
-}
-
 bool ui_view_content_set(ui_view *view, Evas_Object *content)
 {
 	if (!view)
 	{
-		LOGE("Invalid ui_view");
+		LOGE("Invalid ui_view = NULL");
 		return false;
 	}
 	return view->set_content(content);
+}
+
+const char *ui_view_type_get(ui_view *view)
+{
+	if (!view)
+	{
+		LOGE("Invalid ui_view = NULL");
+		return false;
+	}
+
+	return dynamic_cast<ui_common_view_capi *>(view)->type;
 }

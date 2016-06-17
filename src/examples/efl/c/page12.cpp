@@ -54,12 +54,12 @@ popup_dismissed_cb(void *data, Evas_Object *obj, void *event_info)
 static void
 view12_btn_clicked(void *data, Evas_Object *obj, void *event_info)
 {
-	ui_view *view = NULL;
+	ui_standard_view *view = NULL;
 	ui_popup *popup = NULL;
 	Evas_Object *base = NULL;
 	Elm_Popup *content = NULL;
 
-	view = (ui_view *) data;
+	view = (ui_standard_view *) data;
 
 	//Create a popup.
 	if (!(popup = ui_popup_create(view)))
@@ -94,7 +94,7 @@ view12_btn_clicked(void *data, Evas_Object *obj, void *event_info)
 }
 
 static bool
-view12_load_cb(ui_view *view, void *data)
+view12_load_cb(ui_standard_view *view, void *data)
 {
 	Evas_Object *content = NULL;
 	Evas_Object *base = NULL;
@@ -128,7 +128,7 @@ void
 create_page12()
 {
 	int ret = 0;
-	ui_view *view = NULL;
+	ui_standard_view *view = NULL;
 	ui_view_lifecycle_callback_s lifecycle_callback = {0, };
 
 	//Create a view

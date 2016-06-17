@@ -49,8 +49,10 @@
 
 typedef struct ui_viewmgr_s ui_viewmgr;
 typedef struct ui_view_s ui_view;
+typedef ui_view ui_standard_view;
 typedef struct ui_menu_s ui_menu;
 typedef struct ui_popup_s ui_popup;
+
 
 //FIXME: better way?
 #include "../../../interface/ui_iface_types.h"
