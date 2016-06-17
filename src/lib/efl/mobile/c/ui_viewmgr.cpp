@@ -8,6 +8,17 @@ struct ui_viewmgr_s
 	ui_viewmgr *p;
 };
 
+static bool validate_viewmgr(ui_viewmgr *viewmgr)
+{
+	if (!viewmgr)
+	{
+		LOGE("Invalid ui_viewmgr = NULL");
+		return false;
+	}
+	return true;
+}
+
+
 ui_view *ui_viewmgr_view_push(ui_viewmgr *viewmgr, ui_view *view)
 {
 	if (!viewmgr || !view)
@@ -43,78 +54,43 @@ bool ui_viewmgr_view_insert_after(ui_viewmgr *viewmgr, ui_view *view, ui_view *a
 
 bool ui_viewmgr_view_pop(ui_viewmgr *viewmgr)
 {
-	if (!viewmgr)
-	{
-		LOGE("Invalid ui_viewmgr");
-		return -1;
-	}
-
+	if (!validate_viewmgr(viewmgr)) return false;
 	return viewmgr->pop_view();
 }
 
 bool ui_viewmgr_activate(ui_viewmgr *viewmgr)
 {
-	if (!viewmgr)
-	{
-		LOGE("Invalid ui_viewmgr");
-		return -1;
-	}
-
+	if (!validate_viewmgr(viewmgr)) return false;
 	return viewmgr->activate();
 }
 
 bool ui_viewmgr_deactivate(ui_viewmgr *viewmgr)
 {
-	if (!viewmgr)
-	{
-		LOGE("Invalid ui_viewmgr");
-		return -1;
-	}
-
+	if (!validate_viewmgr(viewmgr)) return false;
 	return viewmgr->deactivate();
 }
 
 Elm_Win *ui_viewmgr_window_get(ui_viewmgr *viewmgr)
 {
-	if (!viewmgr)
-	{
-		LOGE("Invalid ui_viewmgr");
-		return NULL;
-	}
-
+	if (!validate_viewmgr(viewmgr)) return NULL;
 	return viewmgr->get_window();
 }
 
 ui_view *ui_viewmgr_last_view_get(ui_viewmgr *viewmgr)
 {
-	if (!viewmgr)
-	{
-		LOGE("Invalid ui_viewmgr");
-		return NULL;
-	}
-
+	if (!validate_viewmgr(viewmgr)) return NULL;
 	return dynamic_cast<ui_view *>(viewmgr->get_last_view());
 }
 
 ui_view *ui_viewmgr_view_get(ui_viewmgr *viewmgr, int idx)
 {
-	if (!viewmgr)
-	{
-		LOGE("Invalid ui_viewmgr");
-		return NULL;
-	}
-
+	if (!validate_viewmgr(viewmgr)) return NULL;
 	return dynamic_cast<ui_view *>(viewmgr->get_view(idx));
 }
 
 Evas_Object *ui_viewmgr_base_get(ui_viewmgr *viewmgr)
 {
-	if (!viewmgr)
-	{
-		LOGE("Invalid ui_viewmgr");
-		return NULL;
-	}
-
+	if (!validate_viewmgr(viewmgr)) return NULL;
 	return viewmgr->get_base();
 }
 
@@ -132,23 +108,14 @@ int ui_viewmgr_view_index_get(ui_viewmgr *viewmgr, const ui_view *view)
 
 int ui_viewmgr_view_count_get(ui_viewmgr *viewmgr)
 {
-	if (!viewmgr)
-	{
-		LOGE("Invalid ui_viewmgr");
-		return -1;
-	}
+	if (!validate_viewmgr(viewmgr)) return -1;
 
 	return viewmgr->get_view_count();
 }
 
 bool ui_viewmgr_soft_key_need_get(ui_viewmgr *viewmgr)
 {
-	if (!viewmgr)
-	{
-		LOGE("Invalid ui_viewmgr");
-		return false;
-	}
-
+	if (!validate_viewmgr(viewmgr)) return false;
 	return viewmgr->need_soft_key();
 }
 

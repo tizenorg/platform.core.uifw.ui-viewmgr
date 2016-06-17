@@ -22,7 +22,8 @@
  */
 enum ui_view_indicator
 {
-	UI_VIEW_INDICATOR_DEFAULT = 0, ///< Opaque indicator
+	UI_VIEW_INDICATOR_UNKNOWN = 0, ///< Unknown state (Exceptional case)
+	UI_VIEW_INDICATOR_DEFAULT,     ///< Opaque indicator
 	UI_VIEW_INDICATOR_OPTIMAL,     ///< Transparent indicator
 	UI_VIEW_INDICATOR_OVERLAP,     ///< Overlap indicator
 	UI_VIEW_INDICATOR_HIDE,        ///< Indicator hide
@@ -35,12 +36,12 @@ enum ui_view_indicator
  */
 enum ui_view_state
 {
-	UI_VIEW_STATE_LOAD = 0,        ///< Load state
+	UI_VIEW_STATE_UNKNOWN = 0,     ///< Unknown state (Exceptional case)
+	UI_VIEW_STATE_LOAD,            ///< Load state
 	UI_VIEW_STATE_UNLOAD,          ///< Unload state
 	UI_VIEW_STATE_ACTIVATE,        ///< Activate state
 	UI_VIEW_STATE_DEACTIVATE,      ///< Deactivate state
 	UI_VIEW_STATE_PAUSE,           ///< Pause state
-	UI_VIEW_STATE_UNKNOWN,         ///< Unknown state
 	UI_VIEW_STATE_LAST
 };
 
