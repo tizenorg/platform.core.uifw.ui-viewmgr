@@ -26,7 +26,7 @@ main(int argc, char *argv[])
 	ui_app_lifecycle_callback_s lifecycle_callback = {0, };
 
 	//Initialize ui_app. ui_app initializes basic resources including ui_viewmgr internally.
-	if (!(ret = ui_viewmgr_app_init(PACKAGE, LOCALE_DIR)))
+	if (!(ret = ui_tizen_app_init(PACKAGE, LOCALE_DIR)))
 	{
 		dlog_print(DLOG_ERROR, LOG_TAG, "ui_app_init() is failed. err = %d", ret);
 		return ret;
@@ -37,14 +37,14 @@ main(int argc, char *argv[])
 	lifecycle_callback.app_control = app_control;
 
 	//Run ui_app. Now it requests to run an application mainloop.
-	if (!(ret = ui_viewmgr_app_run(argc, argv, &lifecycle_callback, NULL)))
+	if (!(ret = ui_tizen_app_run(argc, argv, &lifecycle_callback, NULL)))
 	{
 		dlog_print(DLOG_ERROR, LOG_TAG, "ui_app_run() is failed. err = %d", ret);
 		return ret;
 	}
 
 	//Terminate ui_app. Remove all ui_app resources.
-	if (!(ret = ui_viewmgr_app_term()))
+	if (!(ret = ui_tizen_app_term()))
 	{
 		dlog_print(DLOG_ERROR, LOG_TAG, "ui_app_term() is failed. err = %d", ret);
 		return ret;

@@ -1,28 +1,28 @@
-#ifndef _UI_VIEWMGR_APP_CAPI_H_
-#define _UI_VIEWMGR_APP_CAPI_H_
+#ifndef _UI_TIZEN_APP_CAPI_H_
+#define _UI_TIZEN_APP_CAPI_H_
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /**
- *  @brief Initialize ui_viewmgr_app.
+ *  @brief Initialize ui_tizen_app.
  *
- *  This function initializes ui_viewmgr_app and ui_viewmgr.
+ *  This function initializes ui_tizen_app and ui_viewmgr.
  *
  *  @param pkg The name of package.
  *  @param loale_dir The path of locale directory.
  *
  *  @return @c true if it succeeds, @c false otherwise.
  *
- *  @warning Before exit application, call ui_viewmgr_app_term()
+ *  @warning Before exit application, call ui_tizen_app_term()
  *
- *  @see ui_viewmgr_app_term()
+ *  @see ui_tizen_app_term()
  */
-bool ui_viewmgr_app_init(const char *pkg, const char *locale_dir);
+bool ui_tizen_app_init(const char *pkg, const char *locale_dir);
 
 /**
- *  @brief Run ui_viewmgr_app. This triggers application main loops.
+ *  @brief Run ui_tizen_app. This triggers application main loops.
  *
  *  @note This is wrapping ui_app_main() function.
  *
@@ -33,19 +33,19 @@ bool ui_viewmgr_app_init(const char *pkg, const char *locale_dir);
  *
  *  @return 0 on success, otherwise a negative error value
  */
-int ui_viewmgr_app_run(int argc, char **argv, ui_app_lifecycle_callback_s *lifecycle_callback, void *user_data);
+int ui_tizen_app_run(int argc, char **argv, ui_app_lifecycle_callback_s *lifecycle_callback, void *user_data);
 
 /**
- *  @brief This is ui_viewmgr_app destructor.
+ *  @brief This is ui_tizen_app destructor.
  *
  *  @return @c true if it succeeds, @c false otherwise.
  *
- *  @see ui_viewmgr_app_init()
+ *  @see ui_tizen_app_init()
  */
-bool ui_viewmgr_app_term(void);
+bool ui_tizen_app_term(void);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* _UI_VIEWMGR_APP_CAPI_H_ */
+#endif /* _UI_TIZEN_APP_CAPI_H_ */
