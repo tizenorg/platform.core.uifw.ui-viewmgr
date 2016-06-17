@@ -1,6 +1,6 @@
-#include "../../../../include/efl/mobile/ui_mobile_viewmanager.h"
+#include "../../../../include/efl/mobile/c/_ui_private.h"
 #include "../../../../include/efl/mobile/c/ui_view.h"
-#include "../../../../include/efl/mobile/c/ui_private.h"
+#include "../../../../include/efl/mobile/c/_ui_private_view.h"
 
 using namespace efl_viewmanager;
 
@@ -123,6 +123,11 @@ public:
 	~ui_view_capi()
 	{
 	}
+};
+
+struct ui_view_s
+{
+	ui_view_capi *p;
 };
 
 bool ui_view_lifecycle_callbacks_set(ui_view *view, ui_view_lifecycle_callback_s *lifecycle_callback, void *data)

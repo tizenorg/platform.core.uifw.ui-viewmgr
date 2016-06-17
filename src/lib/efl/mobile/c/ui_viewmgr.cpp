@@ -1,7 +1,12 @@
-#include "../../../../include/efl/mobile/ui_mobile_viewmanager.h"
+#include "../../../../include/efl/mobile/c/_ui_private.h"
 #include "../../../../include/efl/mobile/c/ui_viewmgr.h"
 
 using namespace efl_viewmanager;
+
+struct ui_viewmgr_s
+{
+	ui_viewmgr *p;
+};
 
 ui_view *ui_viewmgr_view_push(ui_viewmgr *viewmgr, ui_view *view)
 {

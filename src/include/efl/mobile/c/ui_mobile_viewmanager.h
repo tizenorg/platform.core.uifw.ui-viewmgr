@@ -30,11 +30,10 @@
 #define Elm_Ctxpopup Evas_Object
 #endif
 
-//FIXME: totally temporary.
-#define ui_viewmgr void
-#define ui_view void
-#define ui_menu void
-#define ui_popup void
+typedef struct ui_viewmgr_s ui_viewmgr;
+typedef struct ui_view_s ui_view;
+typedef struct ui_menu_s ui_menu;
+typedef struct ui_popup_s ui_popup;
 
 //FIXME: better way?
 #include "../../../interface/ui_iface_types.h"

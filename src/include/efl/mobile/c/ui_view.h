@@ -5,6 +5,7 @@
 extern "C" {
 #endif
 
+
 /**
  *  @brief ui_view's lifecycle callback function signature.
  */
@@ -56,6 +57,7 @@ typedef struct
 	ui_view_event_back_cb back;
 	ui_view_event_menu_cb menu;
 } ui_view_event_callback_s;
+
 
 /**
  *  @brief A constructor for an ui_view.

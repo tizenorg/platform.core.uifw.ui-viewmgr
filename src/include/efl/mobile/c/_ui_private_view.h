@@ -14,8 +14,8 @@
  *  limitations under the License.
  *
  */
-#ifndef _UI_CAPI_PRIVATE_H_
-#define _UI_CAPI_PRIVATE_H_
+#ifndef _UI_PRIVATE_VIEW_H_
+#define _UI_PRIVATE_VIEW_H_
 
 namespace efl_viewmanager
 {
@@ -41,4 +41,4 @@ public:
 
 }
 
-#endif /* _UI_CAPI_PRIVATE_H_ */
+#endif /* _UI_PRIVATE_VIEW_H_ */

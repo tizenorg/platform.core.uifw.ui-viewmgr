@@ -1,7 +1,7 @@
-#include "../../../../include/efl/mobile/ui_mobile_viewmanager.h"
+#include "../../../../include/efl/mobile/c/_ui_private.h"
 #include "../../../../include/efl/mobile/c/ui_view.h"
 #include "../../../../include/efl/mobile/c/ui_standard_view.h"
-#include "../../../../include/efl/mobile/c/ui_private.h"
+#include "../../../../include/efl/mobile/c/_ui_private_view.h"
 
 using namespace efl_viewmanager;
 
@@ -124,6 +124,11 @@ public:
 	~ui_standard_view_capi()
 	{
 	}
+};
+
+struct ui_standard_view_s
+{
+	ui_standard_view_capi *p;
 };
 
 ui_view* ui_standard_view_create(const char *name)

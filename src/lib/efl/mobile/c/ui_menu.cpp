@@ -1,7 +1,12 @@
-#include "../../../../include/efl/mobile/ui_mobile_viewmanager.h"
+#include "../../../../include/efl/mobile/c/_ui_private.h"
 #include "../../../../include/efl/mobile/c/ui_menu.h"
 
 using namespace efl_viewmanager;
+
+struct ui_menu_s
+{
+	ui_menu *p;
+};
 
 bool ui_menu_content_set(ui_menu *menu, Elm_Ctxpopup *ctxpopup)
 {
