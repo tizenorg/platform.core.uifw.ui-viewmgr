@@ -15,7 +15,7 @@ SET(SRCS
      efl/mobile/ui_standard_view.cpp
      efl/mobile/ui_key_listener.cpp
      efl/mobile/ui_viewmgr.cpp
-     efl/mobile/c/ui_viewmgr_app.cpp
+     efl/mobile/c/ui_tizen_app.cpp
      efl/mobile/c/ui_menu.cpp
      efl/mobile/c/ui_popup.cpp
      efl/mobile/c/ui_view.cpp
