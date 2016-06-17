@@ -39,7 +39,7 @@
 //FIXME: better way?
 #include "../../../interface/ui_iface_types.h"
 
-#include "ui_tizen_app.h"
+#include "ui_application.h"
 #include "ui_menu.h"
 #include "ui_popup.h"
 #include "ui_viewmgr.h"
