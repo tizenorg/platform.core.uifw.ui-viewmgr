@@ -5,6 +5,12 @@
 extern "C" {
 #endif
 
+/**
+ * @defgroup CAPI_UI_VIEWMGR_VIEW ui_view
+ * @ingroup CAPI_UI_VIEWMGR
+ * @brief This module provides functionalities about ui_view.
+ * @{
+ */
 
 /**
  *  @brief ui_view's lifecycle callback function signature.
@@ -275,5 +281,9 @@ bool ui_view_destroy(ui_view *view);
 #ifdef __cplusplus
 }
 #endif
+
+/**
+ * @}
+ */
 
 #endif /* _UI_VIEW_CAPI_H_ */
