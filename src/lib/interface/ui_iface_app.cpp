@@ -116,9 +116,6 @@ static void ui_app_low_memory(app_event_info_h event_info, void *data)
 
 bool ui_iface_app_impl::init()
 {
-	//FIXME: this scale value should be configurable.
-	elm_app_base_scale_set(2.6);
-
 	/* Bind package locale file */
 	bindtextdomain(this->pkg, this->locale_dir);
 	textdomain(this->pkg);

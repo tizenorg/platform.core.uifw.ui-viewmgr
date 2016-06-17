@@ -93,8 +93,6 @@ bool ui_popup::set_content(Elm_Popup *popup)
 
 	if (!popup) return true;
 
-	//validation!
-	//FIXME: isa ?
 	if (strcmp(evas_object_type_get(popup), "elm_popup"))
 	{
 		LOGE("Menu widget is not a popup!");

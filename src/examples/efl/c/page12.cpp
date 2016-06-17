@@ -44,8 +44,6 @@ popup_timeout_cb(void *data, Evas_Object *obj, void *event_info)
 static void
 popup_dismissed_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	//FIXME: remove dismissed callback because this callback is called twice.
-	//It seems this is an efl or popup error, not this ui_popup nor example.
 	evas_object_smart_callback_del(obj, "dismissed", popup_dismissed_cb);
 
 	//Destroy ui_popup

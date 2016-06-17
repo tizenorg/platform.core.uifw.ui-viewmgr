@@ -120,15 +120,12 @@ bool ui_menu::set_content(Elm_Ctxpopup *ctxpopup)
 
 	if (!ctxpopup) return true;
 
-	//validation!
-	//FIXME: isa ?
 	if (strcmp(evas_object_type_get(ctxpopup), "elm_ctxpopup"))
 	{
 		LOGE("Menu widget is not a ctxpopup!");
 		return false;
 	}
 
-	//FIXME: rename style.
 	elm_object_style_set(ctxpopup, "more/default");
 	elm_ctxpopup_auto_hide_disabled_set(ctxpopup, EINA_TRUE);
 	evas_object_smart_callback_add(ctxpopup, "dismissed", ctxpopup_dismissed_cb, NULL);

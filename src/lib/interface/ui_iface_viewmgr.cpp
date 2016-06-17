@@ -127,7 +127,6 @@ bool ui_iface_viewmgr_impl::need_soft_key()
 
 bool ui_iface_viewmgr_impl::connect_view(ui_iface_view *view)
 {
-	//FIXME: If user call a set_viewmgr() before, It should not return false.
 	return view->set_viewmgr(this->get_instance());
 }
 
@@ -209,7 +208,6 @@ ui_iface_viewmgr_impl::~ui_iface_viewmgr_impl()
 	}
 	this->destroying = EINA_FALSE;
 
-	//FIXME: Window is destroyed. Terminate Application!
 	ui_app_exit();
 
 	ui_iface_viewmgr_impl::inst = NULL;
