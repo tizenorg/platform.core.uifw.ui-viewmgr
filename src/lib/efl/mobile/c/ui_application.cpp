@@ -1,5 +1,5 @@
-#include "../../../../include/efl/mobile/ui_mobile_viewmanager.h"
-#include "../../../../include/efl/mobile/c/ui_mobile_viewmanager.h"
+#include "../../../../include/efl/mobile/c/_ui_private.h"
+#include "../../../../include/efl/mobile/c/ui_application.h"
 
 using namespace efl_viewmanager;
 

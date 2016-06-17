@@ -1,7 +1,12 @@
-#include "../../../../include/efl/mobile/ui_mobile_viewmanager.h"
+#include "../../../../include/efl/mobile/c/_ui_private.h"
 #include "../../../../include/efl/mobile/c/ui_popup.h"
 
 using namespace efl_viewmanager;
+
+struct ui_popup_s
+{
+	ui_popup *p;
+};
 
 ui_popup *ui_popup_create(ui_view *view)
 {

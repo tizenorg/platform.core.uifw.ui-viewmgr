@@ -1,5 +1,5 @@
-#ifndef _UI_TIZEN_APP_CAPI_H_
-#define _UI_TIZEN_APP_CAPI_H_
+#ifndef _UI_APPLICATION_CAPI_H_
+#define _UI_APPLICATION_CAPI_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -48,4 +48,4 @@ bool ui_application_term(void);
 }
 #endif
 
-#endif /* _UI_TIZEN_APP_CAPI_H_ */
+#endif /* _UI_APPLICATION_CAPI_H_ */
