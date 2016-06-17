@@ -30,7 +30,7 @@ next_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 }
 
 static bool
-view13_load_cb(ui_view *view, void *data)
+view13_load_cb(ui_standard_view *view, void *data)
 {
 	Evas_Object *content = NULL;
 	Evas_Object *base = NULL;
@@ -56,7 +56,7 @@ void
 create_page13()
 {
 	int ret = 0;
-	ui_view *view = NULL;
+	ui_standard_view *view = NULL;
 	ui_view_lifecycle_callback_s lifecycle_callback = {0, };
 
 	//Create a view.

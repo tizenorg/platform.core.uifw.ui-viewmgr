@@ -32,33 +32,33 @@ next_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 static void
 title_show_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	ui_view *view = (ui_view *) data;
+	ui_standard_view *view = (ui_standard_view *) data;
 	ui_standard_view_title_visible_set(view, true, false);
 }
 
 static void
 title_hide_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	ui_view *view = (ui_view *) data;
+	ui_standard_view *view = (ui_standard_view *) data;
 	ui_standard_view_title_visible_set(view, false, false);
 }
 
 static void
 title_show_anim_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	ui_view *view = (ui_view *) data;
+	ui_standard_view *view = (ui_standard_view *) data;
 	ui_standard_view_title_visible_set(view, true, true);
 }
 
 static void
 title_hide_anim_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	ui_view *view = (ui_view *) data;
+	ui_standard_view *view = (ui_standard_view *) data;
 	ui_standard_view_title_visible_set(view, false, true);
 }
 
 static bool
-view16_load_cb(ui_view *view, void *data)
+view16_load_cb(ui_standard_view *view, void *data)
 {
 	Evas_Object *content = NULL;
 	Evas_Object *base = NULL;
@@ -84,7 +84,7 @@ void
 create_page16()
 {
 	int ret = 0;
-	ui_view *view = NULL;
+	ui_standard_view *view = NULL;
 	ui_view_lifecycle_callback_s lifecycle_callback = {0, };
 
 	//Create a view.

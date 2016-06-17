@@ -30,7 +30,7 @@ next_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 }
 
 static bool
-view9_portrait_cb(ui_view *view, void *data)
+view9_portrait_cb(ui_standard_view *view, void *data)
 {
 	Evas_Object *content = NULL;
 	Evas_Object *base = NULL;
@@ -59,7 +59,7 @@ view9_portrait_cb(ui_view *view, void *data)
 }
 
 static bool
-view9_landscape_cb(ui_view *view, void *data)
+view9_landscape_cb(ui_standard_view *view, void *data)
 {
 	Evas_Object *content = NULL;
 	Evas_Object *base = NULL;
@@ -86,7 +86,7 @@ view9_landscape_cb(ui_view *view, void *data)
 }
 
 static bool
-view9_load_cb(ui_view *view, void *data)
+view9_load_cb(ui_standard_view *view, void *data)
 {
 	//FIXME: Change below code to more convenient and clear way.
 	if (ui_view_degree_get(view) == 90 || ui_view_degree_get(view) == 270)
@@ -103,7 +103,7 @@ void
 create_page9()
 {
 	int ret = 0;
-	ui_view *view = NULL;
+	ui_standard_view *view = NULL;
 	ui_view_lifecycle_callback_s lifecycle_callback = {0, };
 	ui_view_event_callback_s event_callback = {0, };
 

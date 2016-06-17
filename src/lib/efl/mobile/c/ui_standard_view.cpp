@@ -1,11 +1,13 @@
 #include "../../../../include/efl/mobile/c/_ui_private.h"
 #include "../../../../include/efl/mobile/c/ui_view.h"
 #include "../../../../include/efl/mobile/c/ui_standard_view.h"
-#include "../../../../include/efl/mobile/c/_ui_private_view.h"
+#include "../../../../include/efl/mobile/c/_ui_common_view_capi.h"
 
 using namespace efl_viewmanager;
 
-class ui_standard_view_capi: public ui_standard_view, public ui_view_event_attr
+static const char *_this_type = "ui_standard_view";
+
+class ui_standard_view_capi: public ui_standard_view, public ui_common_view_capi
 {
 public:
 	void on_load()
@@ -117,7 +119,7 @@ public:
 	}
 
 	ui_standard_view_capi(const char *name)
-			: ui_standard_view(name), ui_view_event_attr()
+			: ui_standard_view(name), ui_common_view_capi(_this_type)
 	{
 	}
 
@@ -131,190 +133,260 @@ struct ui_standard_view_s
 	ui_standard_view_capi *p;
 };
 
-ui_view* ui_standard_view_create(const char *name)
+ui_standard_view* ui_standard_view_create(const char *name)
 {
 	return new ui_standard_view_capi(name);
 }
 
-bool ui_standard_view_content_set(ui_view *view, Evas_Object *content, const char *title, const char *subtitle, Evas_Object *title_left_btn,
+bool ui_standard_view_content_set(ui_standard_view *view, Evas_Object *content, const char *title, const char *subtitle, Evas_Object *title_left_btn,
         Evas_Object *title_right_btn)
 {
 	if (!view)
 	{
-		LOGE("Invalid ui_view");
+		LOGE("Invalid ui_standard_view = NULL");
 		return false;
 	}
 
 	ui_standard_view_capi *capi_view = dynamic_cast<ui_standard_view_capi *>(view);
+	if (!capi_view)
+	{
+		LOGE("Invalid ui_standard_view = %p. Probably, you passed ui_view, not ui_standard_view.", view);
+		return false;
+	}
 
 	return capi_view->set_content(content, title, subtitle, title_left_btn, title_right_btn);
 }
 
-bool ui_standard_view_title_set(ui_view *view, const char *text)
+bool ui_standard_view_title_set(ui_standard_view *view, const char *text)
 {
 	if (!view)
 	{
-		LOGE("Invalid ui_view");
+		LOGE("Invalid ui_standard_view = NULL");
 		return false;
 	}
 
 	ui_standard_view_capi *capi_view = dynamic_cast<ui_standard_view_capi *>(view);
+	if (!capi_view)
+	{
+		LOGE("Invalid ui_standard_view = %p. Probably, you passed ui_view, not ui_standard_view.", view);
+		return false;
+	}
 
 	return capi_view->set_title(text);
 }
 
-bool ui_standard_view_sub_title_set(ui_view *view, const char *text)
+bool ui_standard_view_sub_title_set(ui_standard_view *view, const char *text)
 {
 	if (!view)
 	{
-		LOGE("Invalid ui_view");
+		LOGE("Invalid ui_standard_view = NULL");
 		return false;
 	}
 
 	ui_standard_view_capi *capi_view = dynamic_cast<ui_standard_view_capi *>(view);
+	if (!capi_view)
+	{
+		LOGE("Invalid ui_standard_view = %p. Probably, you passed ui_view, not ui_standard_view.", view);
+		return false;
+	}
 
 	return capi_view->set_subtitle(text);
 }
 
-bool ui_standard_view_title_badge_set(ui_view *view, const char *badge_text)
+bool ui_standard_view_title_badge_set(ui_standard_view *view, const char *badge_text)
 {
 	if (!view)
 	{
-		LOGE("Invalid ui_view");
+		LOGE("Invalid ui_standard_view = NULL");
 		return false;
 	}
 
 	ui_standard_view_capi *capi_view = dynamic_cast<ui_standard_view_capi *>(view);
+	if (!capi_view)
+	{
+		LOGE("Invalid ui_standard_view = %p. Probably, you passed ui_view, not ui_standard_view.", view);
+		return false;
+	}
 
 	return capi_view->set_title_badge(badge_text);
 }
 
-bool ui_standard_view_title_right_btn_set(ui_view *view, Evas_Object *title_right_btn)
+bool ui_standard_view_title_right_btn_set(ui_standard_view *view, Evas_Object *title_right_btn)
 {
 	if (!view)
 	{
-		LOGE("Invalid ui_view");
+		LOGE("Invalid ui_standard_view = NULL");
 		return false;
 	}
 
 	ui_standard_view_capi *capi_view = dynamic_cast<ui_standard_view_capi *>(view);
+	if (!capi_view)
+	{
+		LOGE("Invalid ui_standard_view = %p. Probably, you passed ui_view, not ui_standard_view.", view);
+		return false;
+	}
 
 	return capi_view->set_title_right_btn(title_right_btn);
 }
 
-Elm_Button *ui_standard_view_title_right_btn_get(ui_view *view)
+Elm_Button *ui_standard_view_title_right_btn_get(ui_standard_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid ui_view");
+		LOGE("Invalid ui_standard_view = NULL");
 		return NULL;
 	}
 
 	ui_standard_view_capi *capi_view = dynamic_cast<ui_standard_view_capi *>(view);
+	if (!capi_view)
+	{
+		LOGE("Invalid ui_standard_view = %p. Probably, you passed ui_view, not ui_standard_view.", view);
+		return false;
+	}
 
 	return capi_view->get_title_right_btn();
 }
 
-Elm_Button *ui_standard_view_title_right_btn_unset(ui_view *view)
+Elm_Button *ui_standard_view_title_right_btn_unset(ui_standard_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid ui_view");
+		LOGE("Invalid ui_standard_view = NULL");
 		return NULL;
 	}
 
 	ui_standard_view_capi *capi_view = dynamic_cast<ui_standard_view_capi *>(view);
+	if (!capi_view)
+	{
+		LOGE("Invalid ui_standard_view = %p. Probably, you passed ui_view, not ui_standard_view.", view);
+		return false;
+	}
 
 	return capi_view->unset_title_right_btn();
 }
 
-bool ui_standard_view_title_left_btn_set(ui_view *view, Evas_Object *title_left_btn)
+bool ui_standard_view_title_left_btn_set(ui_standard_view *view, Evas_Object *title_left_btn)
 {
 	if (!view)
 	{
-		LOGE("Invalid ui_view");
+		LOGE("Invalid ui_standard_view = NULL");
 		return false;
 	}
 
 	ui_standard_view_capi *capi_view = dynamic_cast<ui_standard_view_capi *>(view);
+	if (!capi_view)
+	{
+		LOGE("Invalid ui_standard_view = %p. Probably, you passed ui_view, not ui_standard_view.", view);
+		return false;
+	}
 
 	return capi_view->set_title_left_btn(title_left_btn);
 }
 
-Elm_Button *ui_standard_view_title_left_btn_get(ui_view *view)
+Elm_Button *ui_standard_view_title_left_btn_get(ui_standard_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid ui_view");
+		LOGE("Invalid ui_standard_view = NULL");
 		return NULL;
 	}
 
 	ui_standard_view_capi *capi_view = dynamic_cast<ui_standard_view_capi *>(view);
+	if (!capi_view)
+	{
+		LOGE("Invalid ui_standard_view = %p. Probably, you passed ui_view, not ui_standard_view.", view);
+		return false;
+	}
 
 	return capi_view->get_title_left_btn();
 }
 
-Elm_Button *ui_standard_view_title_left_btn_unset(ui_view *view)
+Elm_Button *ui_standard_view_title_left_btn_unset(ui_standard_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid ui_view");
+		LOGE("Invalid ui_standard_view = NULL");
 		return NULL;
 	}
 
 	ui_standard_view_capi *capi_view = dynamic_cast<ui_standard_view_capi *>(view);
+	if (!capi_view)
+	{
+		LOGE("Invalid ui_standard_view = %p. Probably, you passed ui_view, not ui_standard_view.", view);
+		return false;
+	}
 
 	return capi_view->unset_title_right_btn();
 }
 
-bool ui_standard_view_toolbar_set(ui_view *view, Elm_Toolbar *toolbar)
+bool ui_standard_view_toolbar_set(ui_standard_view *view, Elm_Toolbar *toolbar)
 {
 	if (!view)
 	{
-		LOGE("Invalid ui_view");
+		LOGE("Invalid ui_standard_view");
 		return false;
 	}
 
 	ui_standard_view_capi *capi_view = dynamic_cast<ui_standard_view_capi *>(view);
+	if (!capi_view)
+	{
+		LOGE("Invalid ui_standard_view = %p. Probably, you passed ui_view, not ui_standard_view.", view);
+		return false;
+	}
 
 	return capi_view->set_toolbar(toolbar);
 }
 
-Elm_Toolbar *ui_standard_view_toolbar_get(ui_view *view)
+Elm_Toolbar *ui_standard_view_toolbar_get(ui_standard_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid ui_view");
+		LOGE("Invalid ui_standard_view");
 		return NULL;
 	}
 
 	ui_standard_view_capi *capi_view = dynamic_cast<ui_standard_view_capi *>(view);
+	if (!capi_view)
+	{
+		LOGE("Invalid ui_standard_view = %p. Probably, you passed ui_view, not ui_standard_view.", view);
+		return false;
+	}
 
 	return capi_view->get_toolbar();
 }
 
-Elm_Toolbar *ui_standard_view_toolbar_unset(ui_view *view)
+Elm_Toolbar *ui_standard_view_toolbar_unset(ui_standard_view *view)
 {
 	if (!view)
 	{
-		LOGE("Invalid ui_view");
+		LOGE("Invalid ui_standard_view");
 		return NULL;
 	}
 
 	ui_standard_view_capi *capi_view = dynamic_cast<ui_standard_view_capi *>(view);
+	if (!capi_view)
+	{
+		LOGE("Invalid ui_standard_view = %p. Probably, you passed ui_view, not ui_standard_view.", view);
+		return false;
+	}
 
 	return capi_view->unset_toolbar();
 }
 
-bool ui_standard_view_title_visible_set(ui_view *view, bool visible, bool anim)
+bool ui_standard_view_title_visible_set(ui_standard_view *view, bool visible, bool anim)
 {
 	if (!view)
 	{
-		LOGE("Invalid ui_view");
+		LOGE("Invalid ui_standard_view");
 		return false;
 	}
 
 	ui_standard_view_capi *capi_view = dynamic_cast<ui_standard_view_capi *>(view);
+	if (!capi_view)
+	{
+		LOGE("Invalid ui_standard_view = %p. Probably, you passed ui_view, not ui_standard_view.", view);
+		return false;
+	}
 
 	return capi_view->set_title_visible(visible, anim);
 }

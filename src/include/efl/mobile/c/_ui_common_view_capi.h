@@ -20,21 +20,22 @@
 namespace efl_viewmanager
 {
 
-class ui_view_event_attr
+class ui_common_view_capi
 {
 public:
 	ui_view_lifecycle_callback_s lifecycle_callback;
 	ui_view_event_callback_s event_callback;
 	void *lifecycle_data;
 	void *event_data;
+	const char *type;
 
-	ui_view_event_attr() : lifecycle_data(NULL), event_data(NULL)
+	ui_common_view_capi(const char *type) : lifecycle_data(NULL), event_data(NULL), type(type)
 	{
 		this->lifecycle_callback = {0, };
 		this->event_callback = {0, };
 	}
 
-	~ui_view_event_attr()
+	~ui_common_view_capi()
 	{
 	}
 };

@@ -32,7 +32,7 @@ next_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 void
 create_page8()
 {
-	ui_view *view = NULL;
+	ui_standard_view *view = NULL;
 	Evas_Object *base = NULL;
 	Evas_Object *content = NULL;
 
