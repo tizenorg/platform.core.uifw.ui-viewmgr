@@ -3,6 +3,7 @@
 
 using namespace efl_viewmanager;
 
+
 ui_view *ui_viewmgr_view_push(ui_viewmgr *viewmgr, ui_view *view)
 {
 	if (!viewmgr || !view)
