@@ -40,10 +40,10 @@ UI VIEW MANAGER library providing View management functionality(devel)
 
 %build
 
-%if "%{?target_language}" == "c"
-    cmake . -DTARGET_LANGUAGE="c"
-%else
+%if "%{?target_language}" == "c++"
     cmake . -DTARGET_LANGUAGE="c++"
+%else
+    cmake . -DTARGET_LANGUAGE="c"
 %endif
 
 cmake . -DCMAKE_INSTALL_PREFIX=/usr
