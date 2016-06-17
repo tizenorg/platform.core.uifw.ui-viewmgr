@@ -6,6 +6,13 @@ extern "C" {
 #endif
 
 /**
+ * @defgroup CAPI_UI_VIEWMGR_MENU ui_menu
+ * @ingroup CAPI_UI_VIEWMGR
+ * @brief This module provides functionalities about ui_menu.
+ * @{
+ */
+
+/**
  *  @brief Replace or set a content of an ui_menu.
  *
  *  @param menu An ui_menu object
@@ -109,5 +116,9 @@ ui_view *ui_menu_view_get(ui_menu *menu);
 #ifdef __cplusplus
 }
 #endif
+
+/**
+ * @}
+ */
 
 #endif /* _UI_MENU_CAPI_H_ */

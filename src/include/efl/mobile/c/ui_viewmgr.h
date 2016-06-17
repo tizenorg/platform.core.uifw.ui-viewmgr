@@ -6,6 +6,13 @@ extern "C" {
 #endif
 
 /**
+ * @defgroup CAPI_UI_VIEWMGR_VIEWMGR ui_viewmgr
+ * @ingroup CAPI_UI_VIEWMGR
+ * @brief This module provides functionalities about ui_viewmgr.
+ * @{
+ */
+
+/**
  *  @brief Push a new view into given @p viewmgr. This function is used for when application switches a current view to a new one.
  *
  *  @note Normally, the current view will be hidden by a new view. In default, when user calls this API, view will be switched to @p view instantly,
@@ -208,5 +215,9 @@ ui_viewmgr *ui_viewmgr_viewmgr_get();
 #ifdef __cplusplus
 }
 #endif
+
+/**
+ * @}
+ */
 
 #endif /* _UI_VIEWMGR_CAPI_H_ */

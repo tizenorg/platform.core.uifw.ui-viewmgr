@@ -6,6 +6,13 @@ extern "C" {
 #endif
 
 /**
+ * @defgroup CAPI_UI_VIEWMGR_POPUP ui_popup
+ * @ingroup CAPI_UI_VIEWMGR
+ * @brief This module provides functionalities about ui_popup.
+ * @{
+ */
+
+/**
  *  @brief A constructor for an ui_popup.
  *
  *  @param view An instance of ui_view.
@@ -136,5 +143,9 @@ ui_view *ui_popup_view_get(ui_popup *popup);
 #ifdef __cplusplus
 }
 #endif
+
+/**
+ * @}
+ */
 
 #endif /* _UI_POPUP_CAPI_H_ */
