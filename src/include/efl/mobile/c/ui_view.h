@@ -74,7 +74,7 @@ typedef struct
  *
  *  @see ui_view_destroy()
  */
-ui_view *ui_view_create(const char *name);
+EAPI ui_view *ui_view_create(const char *name);
 
 /**
  *  @brief Replace or set a content of ui_view.
@@ -86,7 +86,7 @@ ui_view *ui_view_create(const char *name);
  *
  *  @see ui_view_content_get()
  */
-bool ui_view_content_set(ui_view *view, Evas_Object *content);
+EAPI bool ui_view_content_set(ui_view *view, Evas_Object *content);
 
 /**
  *  @brief Set callback functions for handling view's lifecycle events.
@@ -97,7 +97,7 @@ bool ui_view_content_set(ui_view *view, Evas_Object *content);
  *
  *  @return @c true if it succeeds, @c false otherwise.
  */
-bool ui_view_lifecycle_callbacks_set(ui_view *view, ui_view_lifecycle_callback_s *lifecycle_callback, void *data);
+EAPI bool ui_view_lifecycle_callbacks_set(ui_view *view, ui_view_lifecycle_callback_s *lifecycle_callback, void *data);
 
 /**
  *  @brief Set callback functions for handling view events.
@@ -108,7 +108,7 @@ bool ui_view_lifecycle_callbacks_set(ui_view *view, ui_view_lifecycle_callback_s
  *
  *  @return @c true if it succeeds, @c false otherwise.
  */
-bool ui_view_event_callbacks_set(ui_view *view, ui_view_event_callback_s *event_callback, void *data);
+EAPI bool ui_view_event_callbacks_set(ui_view *view, ui_view_event_callback_s *event_callback, void *data);
 
 /**
  *  @brief Get a base object of ui_view.
@@ -119,7 +119,7 @@ bool ui_view_event_callbacks_set(ui_view *view, ui_view_event_callback_s *event_
  *
  *  @return The base object of ui_view.
  */
-Evas_Object* ui_view_base_get(ui_view *view);
+EAPI Evas_Object* ui_view_base_get(ui_view *view);
 
 /**
  *  @brief Unset a ui_view content.
@@ -130,7 +130,7 @@ Evas_Object* ui_view_base_get(ui_view *view);
  *
  *  @see ui_view_content_set()
  */
-Evas_Object *ui_view_content_unset(ui_view *view);
+EAPI Evas_Object *ui_view_content_unset(ui_view *view);
 
 /**
  *  @brief Set the indicator mode of a ui_view.
@@ -140,7 +140,7 @@ Evas_Object *ui_view_content_unset(ui_view *view);
  *
  *  @see ui_view_indicator_get()
  */
-void ui_view_indicator_set(ui_view *view, ui_view_indicator indicator);
+EAPI void ui_view_indicator_set(ui_view *view, ui_view_indicator indicator);
 
 /**
  *  @brief Return the indicator mode of this view.
@@ -151,7 +151,7 @@ void ui_view_indicator_set(ui_view *view, ui_view_indicator indicator);
  *
  *  @see ui_view_indicator_set()
  */
-ui_view_indicator ui_view_indicator_get(ui_view *view);
+EAPI ui_view_indicator ui_view_indicator_get(ui_view *view);
 
 /**
  *  @brief Set content removable.
@@ -163,7 +163,7 @@ ui_view_indicator ui_view_indicator_get(ui_view *view);
  *
  *  @see ui_view_removable_content_get()
  */
-void ui_view_removable_content_set(ui_view *view, bool remove);
+EAPI void ui_view_removable_content_set(ui_view *view, bool remove);
 
 /**
  *  @brief Return a state of removable content.
@@ -174,7 +174,7 @@ void ui_view_removable_content_set(ui_view *view, bool remove);
  *
  *  @see ui_view_removable_content_get()
  */
-bool ui_view_removable_content_get(ui_view *view);
+EAPI bool ui_view_removable_content_get(ui_view *view);
 
 /**
  *  @brief Get the current view's degree.
@@ -183,7 +183,7 @@ bool ui_view_removable_content_get(ui_view *view);
  *
  *  @return Current rotation degree, -1 if it fails to get degree information.
  */
-int ui_view_degree_get(ui_view *view);
+EAPI int ui_view_degree_get(ui_view *view);
 
 /**
  *  @brief Set transition style of a view.
@@ -199,7 +199,7 @@ int ui_view_degree_get(ui_view *view);
  *
  *  @see ui_view_transition_style_get()
  */
-bool ui_view_transition_style_set(ui_view *view, const char *style);
+EAPI bool ui_view_transition_style_set(ui_view *view, const char *style);
 
 /**
  *  @brief Return a style name of this view.
@@ -210,7 +210,7 @@ bool ui_view_transition_style_set(ui_view *view, const char *style);
  *
  *  @see ui_view_transition_style_set()
  */
-const char *ui_view_transition_style_get(ui_view *view);
+EAPI const char *ui_view_transition_style_get(ui_view *view);
 
 /**
  *  @brief Get a ui_menu instance.
@@ -219,7 +219,7 @@ const char *ui_view_transition_style_get(ui_view *view);
  *
  *  @return The ui_memnu that connected with given @p view.
  */
-const ui_menu *ui_view_menu_get(ui_view *view);
+EAPI const ui_menu *ui_view_menu_get(ui_view *view);
 
 /**
  *  @brief Set name of ui_view.
@@ -233,7 +233,7 @@ const ui_menu *ui_view_menu_get(ui_view *view);
  *
  *  @see ui_view_name_get()
  */
-bool ui_view_name_set(ui_view *view, const char *name);
+EAPI bool ui_view_name_set(ui_view *view, const char *name);
 
 /**
  *  @brief Return a name of this view.
@@ -244,7 +244,7 @@ bool ui_view_name_set(ui_view *view, const char *name);
  *
  *  @see ui_view_name_set()
  */
-const char *ui_view_name_get(ui_view *view);
+EAPI const char *ui_view_name_get(ui_view *view);
 
 /**
  *  @brief Return a state of this view.
@@ -253,7 +253,7 @@ const char *ui_view_name_get(ui_view *view);
  *
  *  @return current state of @p view.
  */
-ui_view_state ui_view_state_get(ui_view *view);
+EAPI ui_view_state ui_view_state_get(ui_view *view);
 
 /**
  *  @brief Return a content of this view.
@@ -264,7 +264,7 @@ ui_view_state ui_view_state_get(ui_view *view);
  *
  *  @see ui_view_content_set()
  */
-Evas_Object *ui_view_content_get(ui_view *view);
+EAPI Evas_Object *ui_view_content_get(ui_view *view);
 
 /**
  *  @brief A destructor for an ui_view.
@@ -276,7 +276,7 @@ Evas_Object *ui_view_content_get(ui_view *view);
  *  @see ui_view_create()
  *  @see ui_standard_view_create()
  */
-bool ui_view_destroy(ui_view *view);
+EAPI bool ui_view_destroy(ui_view *view);
 
 #ifdef __cplusplus
 }
