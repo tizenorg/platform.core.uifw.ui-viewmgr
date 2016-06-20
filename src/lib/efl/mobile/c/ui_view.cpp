@@ -142,12 +142,12 @@ static bool validate_view(ui_view *view)
 	return true;
 }
 
-ui_view* ui_view_create(const char *name)
+EAPI ui_view* ui_view_create(const char *name)
 {
 	return new ui_view_capi(name);
 }
 
-bool ui_view_lifecycle_callbacks_set(ui_view *view, ui_view_lifecycle_callback_s *lifecycle_callback, void *data)
+EAPI bool ui_view_lifecycle_callbacks_set(ui_view *view, ui_view_lifecycle_callback_s *lifecycle_callback, void *data)
 {
 	if (!validate_view(view)) return false;
 
@@ -167,7 +167,7 @@ bool ui_view_lifecycle_callbacks_set(ui_view *view, ui_view_lifecycle_callback_s
 	return true;
 }
 
-bool ui_view_event_callbacks_set(ui_view *view, ui_view_event_callback_s *event_callback, void *data)
+EAPI bool ui_view_event_callbacks_set(ui_view *view, ui_view_event_callback_s *event_callback, void *data)
 {
 	if (!validate_view(view)) return false;
 
@@ -187,104 +187,104 @@ bool ui_view_event_callbacks_set(ui_view *view, ui_view_event_callback_s *event_
 	return true;
 }
 
-Evas_Object* ui_view_base_get(ui_view *view)
+EAPI Evas_Object* ui_view_base_get(ui_view *view)
 {
 	if (!validate_view(view)) return NULL;
 	return view->get_base();
 }
 
-Evas_Object *ui_view_content_unset(ui_view *view)
+EAPI Evas_Object *ui_view_content_unset(ui_view *view)
 {
 	if (!validate_view(view)) return NULL;
 	return view->unset_content();
 }
 
-void ui_view_indicator_set(ui_view *view, ui_view_indicator indicator)
+EAPI void ui_view_indicator_set(ui_view *view, ui_view_indicator indicator)
 {
 	if (!validate_view(view)) return;
 	view->set_indicator(indicator);
 }
 
-ui_view_indicator ui_view_indicator_get(ui_view *view)
+EAPI ui_view_indicator ui_view_indicator_get(ui_view *view)
 {
 	if (!validate_view(view)) return UI_VIEW_INDICATOR_UNKNOWN;
 	return view->get_indicator();
 }
 
-void ui_view_removable_content_set(ui_view *view, bool remove)
+EAPI void ui_view_removable_content_set(ui_view *view, bool remove)
 {
 	if (!validate_view(view)) return;
 	view->set_removable_content(remove);
 }
 
-bool ui_view_removable_content_get(ui_view *view)
+EAPI bool ui_view_removable_content_get(ui_view *view)
 {
 	if (!validate_view(view)) return false;
 	return view->get_removable_content();
 }
 
-int ui_view_degree_get(ui_view *view)
+EAPI int ui_view_degree_get(ui_view *view)
 {
 	if (!validate_view(view)) return -1;
 	return view->get_degree();
 }
 
-bool ui_view_transition_style_set(ui_view *view, const char *style)
+EAPI bool ui_view_transition_style_set(ui_view *view, const char *style)
 {
 	if (!validate_view(view)) return false;
 	return view->set_transition_style(style);
 }
 
-const char *ui_view_transition_style_get(ui_view *view)
+EAPI const char *ui_view_transition_style_get(ui_view *view)
 {
 	if (!validate_view(view)) return NULL;
 	return view->get_transition_style();
 }
 
-const ui_menu *ui_view_menu_get(ui_view *view)
+EAPI const ui_menu *ui_view_menu_get(ui_view *view)
 {
 	if (!validate_view(view)) return NULL;
 	return view->get_menu();
 }
 
-bool ui_view_name_set(ui_view *view, const char *name)
+EAPI bool ui_view_name_set(ui_view *view, const char *name)
 {
 	if (!validate_view(view)) return false;
 	return view->set_name(name);
 }
 
-const char *ui_view_name_get(ui_view *view)
+EAPI const char *ui_view_name_get(ui_view *view)
 {
 	if (!validate_view(view)) return NULL;
 	return view->get_name();
 }
 
-ui_view_state ui_view_state_get(ui_view *view)
+EAPI ui_view_state ui_view_state_get(ui_view *view)
 {
 	if (!validate_view(view)) return UI_VIEW_STATE_UNKNOWN;
 	return view->get_state();
 }
 
-Evas_Object *ui_view_content_get(ui_view *view)
+EAPI Evas_Object *ui_view_content_get(ui_view *view)
 {
 	if (!validate_view(view)) return NULL;
 	return view->get_content();
 }
 
-bool ui_view_destroy(ui_view *view)
+EAPI bool ui_view_destroy(ui_view *view)
 {
 	if (!validate_view(view)) return false;
 	delete (view);
 	return true;
 }
 
-bool ui_view_content_set(ui_view *view, Evas_Object *content)
+EAPI bool ui_view_content_set(ui_view *view, Evas_Object *content)
 {
 	if (!validate_view(view)) return false;
 	return view->set_content(content);
 }
 
-const char *ui_view_type_get(ui_view *view)
+EAPI const char *ui_view_type_get(ui_view *view)
 {
 	if (!validate_view(view)) return false;
 	return dynamic_cast<ui_common_view_capi *>(view)->type;

@@ -30,7 +30,7 @@ extern "C" {
  *  @see ui_viewmgr_view_push_insert_after()
  *  @see ui_viewmgr_view_pop()
  */
-ui_view *ui_viewmgr_view_push(ui_viewmgr *viewmgr, ui_view *view);
+EAPI ui_view *ui_viewmgr_view_push(ui_viewmgr *viewmgr, ui_view *view);
 
 /**
  *  @brief Insert a view in this given @p viewmgr view list. Specifically, insert a given @p view right before of the given view, @before.
@@ -43,7 +43,7 @@ ui_view *ui_viewmgr_view_push(ui_viewmgr *viewmgr, ui_view *view);
  *
  *  @see ui_viewmgr_view_push_insert_after()
  */
-bool ui_viewmgr_view_push_insert_before(ui_viewmgr *viewmgr, ui_view *view, ui_view *before);
+EAPI bool ui_viewmgr_view_push_insert_before(ui_viewmgr *viewmgr, ui_view *view, ui_view *before);
 
 /**
  *  @brief Insert a view in this given @p viewmgr view list. Specifically, insert a given @p view right after of the given view, @after.
@@ -56,7 +56,7 @@ bool ui_viewmgr_view_push_insert_before(ui_viewmgr *viewmgr, ui_view *view, ui_v
  *
  *  @see ui_viewmgr_view_push_insert_before()
  */
-bool ui_viewmgr_view_push_insert_after(ui_viewmgr *viewmgr, ui_view *view, ui_view *after);
+EAPI bool ui_viewmgr_view_push_insert_after(ui_viewmgr *viewmgr, ui_view *view, ui_view *after);
 
 /**
  *  @brief Pop the top(last) view from this given @p viewmgr view list.
@@ -73,7 +73,7 @@ bool ui_viewmgr_view_push_insert_after(ui_viewmgr *viewmgr, ui_view *view, ui_vi
  *  @see ui_viewmgr_deactivate()
  *  @see ui_viewmgr_view_push()
  */
-bool ui_viewmgr_view_pop(ui_viewmgr *viewmgr);
+EAPI bool ui_viewmgr_view_pop(ui_viewmgr *viewmgr);
 
 /**
  *  @brief Activate this view manager.
@@ -87,7 +87,7 @@ bool ui_viewmgr_view_pop(ui_viewmgr *viewmgr);
  *
  *  @see ui_viewmgr_deactivate()
  */
-bool ui_viewmgr_activate(ui_viewmgr *viewmgr);
+EAPI bool ui_viewmgr_activate(ui_viewmgr *viewmgr);
 
 /**
  *  @brief Deactivate this view manager.
@@ -101,7 +101,7 @@ bool ui_viewmgr_activate(ui_viewmgr *viewmgr);
  *
  *  @see ui_viewmgr_activate()
  */
-bool ui_viewmgr_deactivate(ui_viewmgr *viewmgr);
+EAPI bool ui_viewmgr_deactivate(ui_viewmgr *viewmgr);
 
 /**
  *  @brief Get a window object of viewmgr.
@@ -110,7 +110,7 @@ bool ui_viewmgr_deactivate(ui_viewmgr *viewmgr);
  *
  *  @return The window object of viewmgr
  */
-Elm_Win *ui_viewmgr_window_get(ui_viewmgr *viewmgr);
+EAPI Elm_Win *ui_viewmgr_window_get(ui_viewmgr *viewmgr);
 
 /**
  *  @brief Return a last(top) view.
@@ -119,7 +119,7 @@ Elm_Win *ui_viewmgr_window_get(ui_viewmgr *viewmgr);
  *
  *  @return The view which is last view of the given @p viewmgr view list
  */
-ui_view *ui_viewmgr_last_view_get(ui_viewmgr *viewmgr);
+EAPI ui_view *ui_viewmgr_last_view_get(ui_viewmgr *viewmgr);
 
 /**
  *  @brief Return a view which is matched with the index @p idx.
@@ -136,7 +136,7 @@ ui_view *ui_viewmgr_last_view_get(ui_viewmgr *viewmgr);
  *  @see ui_viewmgr_view_index_get()
  *  @see ui_viewmgr_view_count_get()
  */
-ui_view *ui_viewmgr_view_get(ui_viewmgr *viewmgr, int idx);
+EAPI ui_view *ui_viewmgr_view_get(ui_viewmgr *viewmgr, int idx);
 
 /**
  *  @brief Get a base object of a ui_viewmgr.
@@ -147,7 +147,7 @@ ui_view *ui_viewmgr_view_get(ui_viewmgr *viewmgr, int idx);
  *
  *  @return The base object of ui_viewmgr.
  */
-Evas_Object *ui_viewmgr_base_get(ui_viewmgr *viewmgr);
+EAPI Evas_Object *ui_viewmgr_base_get(ui_viewmgr *viewmgr);
 
 /**
  *  @brief Return a view index(page) number of the given view.
@@ -160,7 +160,7 @@ Evas_Object *ui_viewmgr_base_get(ui_viewmgr *viewmgr);
  *
  *  @warning The index number of views are variable since the view list is variable
  */
-int ui_viewmgr_view_index_get(ui_viewmgr *viewmgr, const ui_view *view);
+EAPI int ui_viewmgr_view_index_get(ui_viewmgr *viewmgr, const ui_view *view);
 
 //FIXME:
 //ui_view *ui_viewmgr_view_get_by_id(ui_viewmgr *viewmgr, const char *id);
@@ -172,7 +172,7 @@ int ui_viewmgr_view_index_get(ui_viewmgr *viewmgr, const ui_view *view);
  *
  *  @return the count of views
  */
-int ui_viewmgr_view_count_get(ui_viewmgr *viewmgr);
+EAPI int ui_viewmgr_view_count_get(ui_viewmgr *viewmgr);
 
 /**
  *  @brief Return whether soft back key is required or not.
@@ -181,7 +181,7 @@ int ui_viewmgr_view_count_get(ui_viewmgr *viewmgr);
  *
  *  @return @c true if soft key is required, @c false otherwise
  */
-bool ui_viewmgr_soft_key_need_get(ui_viewmgr *viewmgr);
+EAPI bool ui_viewmgr_soft_key_need_get(ui_viewmgr *viewmgr);
 
 /**
  *  @brief Return the ui_viewmgr instance.
@@ -190,7 +190,7 @@ bool ui_viewmgr_soft_key_need_get(ui_viewmgr *viewmgr);
  *
  *  @return The ui_viewmgr instance.
  */
-ui_viewmgr *ui_viewmgr_viewmgr_get();
+EAPI ui_viewmgr *ui_viewmgr_viewmgr_get();
 
 /**
  *  @brief A Convenient Macro to activate the ui_viewmgr.

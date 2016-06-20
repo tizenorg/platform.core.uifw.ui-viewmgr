@@ -26,7 +26,7 @@ extern "C" {
  *
  *  @see ui_application_term()
  */
-bool ui_application_init(const char *pkg, const char *locale_dir);
+EAPI bool ui_application_init(const char *pkg, const char *locale_dir);
 
 /**
  *  @brief Run ui_application. This triggers application main loops.
@@ -40,7 +40,7 @@ bool ui_application_init(const char *pkg, const char *locale_dir);
  *
  *  @return 0 on success, otherwise a negative error value
  */
-int ui_application_run(int argc, char **argv, ui_app_lifecycle_callback_s *lifecycle_callback, void *user_data);
+EAPI int ui_application_run(int argc, char **argv, ui_app_lifecycle_callback_s *lifecycle_callback, void *user_data);
 
 /**
  *  @brief This is ui_application destructor.
@@ -49,7 +49,7 @@ int ui_application_run(int argc, char **argv, ui_app_lifecycle_callback_s *lifec
  *
  *  @see ui_application_init()
  */
-bool ui_application_term(void);
+EAPI bool ui_application_term(void);
 
 #ifdef __cplusplus
 }

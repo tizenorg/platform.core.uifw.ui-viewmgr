@@ -151,12 +151,12 @@ static ui_standard_view_capi *validate_view(ui_standard_view *view)
 	return capi_view;
 }
 
-ui_standard_view* ui_standard_view_create(const char *name)
+EAPI ui_standard_view* ui_standard_view_create(const char *name)
 {
 	return new ui_standard_view_capi(name);
 }
 
-bool ui_standard_view_content_set(ui_standard_view *view, Evas_Object *content, const char *title, const char *subtitle, Evas_Object *title_left_btn,
+EAPI bool ui_standard_view_content_set(ui_standard_view *view, Evas_Object *content, const char *title, const char *subtitle, Evas_Object *title_left_btn,
         Evas_Object *title_right_btn)
 {
 	ui_standard_view_capi *capi_view;
@@ -164,91 +164,91 @@ bool ui_standard_view_content_set(ui_standard_view *view, Evas_Object *content, 
 	return capi_view->set_content(content, title, subtitle, title_left_btn, title_right_btn);
 }
 
-bool ui_standard_view_title_set(ui_standard_view *view, const char *text)
+EAPI bool ui_standard_view_title_set(ui_standard_view *view, const char *text)
 {
 	ui_standard_view_capi *capi_view;
 	if (!(capi_view = validate_view(view))) return false;
 	return capi_view->set_title(text);
 }
 
-bool ui_standard_view_sub_title_set(ui_standard_view *view, const char *text)
+EAPI bool ui_standard_view_sub_title_set(ui_standard_view *view, const char *text)
 {
 	ui_standard_view_capi *capi_view;
 	if (!(capi_view = validate_view(view))) return false;
 	return capi_view->set_subtitle(text);
 }
 
-bool ui_standard_view_title_badge_set(ui_standard_view *view, const char *badge_text)
+EAPI bool ui_standard_view_title_badge_set(ui_standard_view *view, const char *badge_text)
 {
 	ui_standard_view_capi *capi_view;
 	if (!(capi_view = validate_view(view))) return false;
 	return capi_view->set_title_badge(badge_text);
 }
 
-bool ui_standard_view_title_right_btn_set(ui_standard_view *view, Evas_Object *title_right_btn)
+EAPI bool ui_standard_view_title_right_btn_set(ui_standard_view *view, Evas_Object *title_right_btn)
 {
 	ui_standard_view_capi *capi_view;
 	if (!(capi_view = validate_view(view))) return false;
 	return capi_view->set_title_right_btn(title_right_btn);
 }
 
-Elm_Button *ui_standard_view_title_right_btn_get(ui_standard_view *view)
+EAPI Elm_Button *ui_standard_view_title_right_btn_get(ui_standard_view *view)
 {
 	ui_standard_view_capi *capi_view;
 	if (!(capi_view = validate_view(view))) return NULL;
 	return capi_view->get_title_right_btn();
 }
 
-Elm_Button *ui_standard_view_title_right_btn_unset(ui_standard_view *view)
+EAPI Elm_Button *ui_standard_view_title_right_btn_unset(ui_standard_view *view)
 {
 	ui_standard_view_capi *capi_view;
 	if (!(capi_view = validate_view(view))) return NULL;
 	return capi_view->unset_title_right_btn();
 }
 
-bool ui_standard_view_title_left_btn_set(ui_standard_view *view, Evas_Object *title_left_btn)
+EAPI bool ui_standard_view_title_left_btn_set(ui_standard_view *view, Evas_Object *title_left_btn)
 {
 	ui_standard_view_capi *capi_view;
 	if (!(capi_view = validate_view(view))) return false;
 	return capi_view->set_title_left_btn(title_left_btn);
 }
 
-Elm_Button *ui_standard_view_title_left_btn_get(ui_standard_view *view)
+EAPI Elm_Button *ui_standard_view_title_left_btn_get(ui_standard_view *view)
 {
 	ui_standard_view_capi *capi_view;
 	if (!(capi_view = validate_view(view))) return NULL;
 	return capi_view->get_title_left_btn();
 }
 
-Elm_Button *ui_standard_view_title_left_btn_unset(ui_standard_view *view)
+EAPI Elm_Button *ui_standard_view_title_left_btn_unset(ui_standard_view *view)
 {
 	ui_standard_view_capi *capi_view;
 	if (!(capi_view = validate_view(view))) return NULL;
 	return capi_view->unset_title_right_btn();
 }
 
-bool ui_standard_view_toolbar_set(ui_standard_view *view, Elm_Toolbar *toolbar)
+EAPI bool ui_standard_view_toolbar_set(ui_standard_view *view, Elm_Toolbar *toolbar)
 {
 	ui_standard_view_capi *capi_view;
 	if (!(capi_view = validate_view(view))) return false;
 	return capi_view->set_toolbar(toolbar);
 }
 
-Elm_Toolbar *ui_standard_view_toolbar_get(ui_standard_view *view)
+EAPI Elm_Toolbar *ui_standard_view_toolbar_get(ui_standard_view *view)
 {
 	ui_standard_view_capi *capi_view;
 	if (!(capi_view = validate_view(view))) return NULL;
 	return capi_view->get_toolbar();
 }
 
-Elm_Toolbar *ui_standard_view_toolbar_unset(ui_standard_view *view)
+EAPI Elm_Toolbar *ui_standard_view_toolbar_unset(ui_standard_view *view)
 {
 	ui_standard_view_capi *capi_view;
 	if (!(capi_view = validate_view(view))) return NULL;
 	return capi_view->unset_toolbar();
 }
 
-bool ui_standard_view_title_visible_set(ui_standard_view *view, bool visible, bool anim)
+EAPI bool ui_standard_view_title_visible_set(ui_standard_view *view, bool visible, bool anim)
 {
 	ui_standard_view_capi *capi_view;
 	if (!(capi_view = validate_view(view))) return false;

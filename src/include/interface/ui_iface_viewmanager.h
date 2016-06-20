@@ -44,6 +44,17 @@
 	A(const A&) = delete; \
 	const A& operator=(const A&) = delete
 
+#ifdef __GNUC__
+	#if __GNUC__ >= 4
+		#ifndef EAPI
+			#define EAPI __attribute__ ((visibility("default")))
+		#endif
+	#endif
+#endif
+
+
+
+
 #include <app.h>
 #include "ui_iface_types.h"
 #include "ui_iface_rotatable.h"

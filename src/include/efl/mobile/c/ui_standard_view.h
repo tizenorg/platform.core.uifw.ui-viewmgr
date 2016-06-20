@@ -21,7 +21,7 @@ extern "C" {
  *
  *  @see ui_view_destroy()
  */
-ui_standard_view *ui_standard_view_create(const char *name);
+EAPI ui_standard_view *ui_standard_view_create(const char *name);
 
 /**
  *  @brief Replace or set a content of the view.
@@ -37,7 +37,7 @@ ui_standard_view *ui_standard_view_create(const char *name);
  *
  *  @see ui_view_content_get()
  */
-bool ui_standard_view_content_set(ui_standard_view *view, Evas_Object *content, const char *title, const char *subtitle, Evas_Object *title_left_btn, Evas_Object *title_right_btn);
+EAPI bool ui_standard_view_content_set(ui_standard_view *view, Evas_Object *content, const char *title, const char *subtitle, Evas_Object *title_left_btn, Evas_Object *title_right_btn);
 
 /**
  *  @brief Set a title text.
@@ -49,7 +49,7 @@ bool ui_standard_view_content_set(ui_standard_view *view, Evas_Object *content, 
  *
  *  @ui_standard_view_title_get()
  */
-bool ui_standard_view_title_set(ui_standard_view *view, const char *text);
+EAPI bool ui_standard_view_title_set(ui_standard_view *view, const char *text);
 
 /**
  *  @brief Set a subtitle text.
@@ -61,7 +61,7 @@ bool ui_standard_view_title_set(ui_standard_view *view, const char *text);
  *
  *  @see ui_standard_view_sub_title_get()
  */
-bool ui_standard_view_sub_title_set(ui_standard_view *view, const char *text);
+EAPI bool ui_standard_view_sub_title_set(ui_standard_view *view, const char *text);
 
 /**
  *  @brief Set a title badge text.
@@ -73,7 +73,7 @@ bool ui_standard_view_sub_title_set(ui_standard_view *view, const char *text);
  *
  *  @see ui_standard_view_title_badge_get()
  */
-bool ui_standard_view_title_badge_set(ui_standard_view *view, const char *badge_text);
+EAPI bool ui_standard_view_title_badge_set(ui_standard_view *view, const char *badge_text);
 
 /**
  *  @brief Set a title_right_btn.
@@ -85,7 +85,7 @@ bool ui_standard_view_title_badge_set(ui_standard_view *view, const char *badge_
  *
  *  @see ui_standard_view_title_right_btn_get()
  */
-bool ui_standard_view_title_right_btn_set(ui_standard_view *view, Evas_Object *title_right_btn);
+EAPI bool ui_standard_view_title_right_btn_set(ui_standard_view *view, Evas_Object *title_right_btn);
 
 /**
  *  @brief Return a title right button of the view.
@@ -96,7 +96,7 @@ bool ui_standard_view_title_right_btn_set(ui_standard_view *view, Evas_Object *t
  *
  *  @see ui_standard_view_title_right_btn_set()
  */
-Elm_Button *ui_standard_view_title_right_btn_get(ui_standard_view *view);
+EAPI Elm_Button *ui_standard_view_title_right_btn_get(ui_standard_view *view);
 
 /**
  *  @brief Unset a title right button of title area.
@@ -104,7 +104,7 @@ Elm_Button *ui_standard_view_title_right_btn_get(ui_standard_view *view);
  *  @param view An ui_standard_view instance.
  *  @return A previous content. If it wasn't, return @c NULL
  */
-Elm_Button *ui_standard_view_title_right_btn_unset(ui_standard_view *view);
+EAPI Elm_Button *ui_standard_view_title_right_btn_unset(ui_standard_view *view);
 
 /**
  *  @brief Set a title_left_btn.
@@ -116,7 +116,7 @@ Elm_Button *ui_standard_view_title_right_btn_unset(ui_standard_view *view);
  *
  *  @see ui_standard_view_title_left_btn_get()
  */
-bool ui_standard_view_title_left_btn_set(ui_standard_view *view, Evas_Object *title_left_btn);
+EAPI bool ui_standard_view_title_left_btn_set(ui_standard_view *view, Evas_Object *title_left_btn);
 
 /**
  *  @brief Return a title left button of the view.
@@ -127,7 +127,7 @@ bool ui_standard_view_title_left_btn_set(ui_standard_view *view, Evas_Object *ti
  *
  *  @see ui_standard_view_title_left_btn_set()
  */
-Elm_Button *ui_standard_view_title_left_btn_get(ui_standard_view *view);
+EAPI Elm_Button *ui_standard_view_title_left_btn_get(ui_standard_view *view);
 
 /**
  *  @brief Unset a title right button of title area.
@@ -136,7 +136,7 @@ Elm_Button *ui_standard_view_title_left_btn_get(ui_standard_view *view);
  *
  *  @return A previous content. If it wasn't, return @c NULL.
  */
-Elm_Button *ui_standard_view_title_left_btn_unset(ui_standard_view *view);
+EAPI Elm_Button *ui_standard_view_title_left_btn_unset(ui_standard_view *view);
 
 /**
  *  @brief Set a toolbar below title.
@@ -148,7 +148,7 @@ Elm_Button *ui_standard_view_title_left_btn_unset(ui_standard_view *view);
  *
  *  @see ui_standard_view_toolbar_get()
  */
-bool ui_standard_view_toolbar_set(ui_standard_view *view, Elm_Toolbar *toolbar);
+EAPI bool ui_standard_view_toolbar_set(ui_standard_view *view, Elm_Toolbar *toolbar);
 
 /**
  *  @brief Return a toolbar of the view.
@@ -158,7 +158,7 @@ bool ui_standard_view_toolbar_set(ui_standard_view *view, Elm_Toolbar *toolbar);
  *
  *  @see ui_standard_view_toolbar_set()
  */
-Elm_Toolbar *ui_standard_view_toolbar_get(ui_standard_view *view);
+EAPI Elm_Toolbar *ui_standard_view_toolbar_get(ui_standard_view *view);
 
 /**
  *  @brief Unset a toolbar.
@@ -167,7 +167,7 @@ Elm_Toolbar *ui_standard_view_toolbar_get(ui_standard_view *view);
  *
  *  @return A previous content. If it wasn't, return @c NULL.
  */
-Elm_Toolbar *ui_standard_view_toolbar_unset(ui_standard_view *view);
+EAPI Elm_Toolbar *ui_standard_view_toolbar_unset(ui_standard_view *view);
 
 /**
  *  @brief Control the title visible state.
@@ -178,7 +178,7 @@ Elm_Toolbar *ui_standard_view_toolbar_unset(ui_standard_view *view);
  *
  *  @return @c true if it succeeds, @c false otherwise.
  */
-bool ui_standard_view_title_visible_set(ui_standard_view *view, bool visible, bool anim);
+EAPI bool ui_standard_view_title_visible_set(ui_standard_view *view, bool visible, bool anim);
 
 #ifdef __cplusplus
 }

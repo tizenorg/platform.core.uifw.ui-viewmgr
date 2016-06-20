@@ -18,67 +18,66 @@ static bool validate_popup(ui_popup *popup)
 	return true;
 }
 
-
-ui_popup *ui_popup_create(ui_view *view)
+EAPI ui_popup *ui_popup_create(ui_view *view)
 {
 	return new ui_popup(view);
 }
 
-void ui_popup_destroy(ui_popup *popup)
+EAPI void ui_popup_destroy(ui_popup *popup)
 {
 	if (!validate_popup(popup)) return;
 	delete(popup);
 }
 
-bool ui_popup_content_set(ui_popup *popup, Elm_Popup *content)
+EAPI bool ui_popup_content_set(ui_popup *popup, Elm_Popup *content)
 {
 	if (!validate_popup(popup)) return false;
 	return popup->set_content(content);
 }
 
-Elm_Popup *ui_popup_content_get(ui_popup *popup)
+EAPI Elm_Popup *ui_popup_content_get(ui_popup *popup)
 {
 	if (!validate_popup(popup)) return NULL;
 	return popup->get_content();
 }
 
-Elm_Popup *ui_popup_content_unset(ui_popup *popup)
+EAPI Elm_Popup *ui_popup_content_unset(ui_popup *popup)
 {
 	if (!validate_popup(popup)) return NULL;
 	return popup->unset_content();
 }
 
-bool ui_popup_activate(ui_popup *popup)
+EAPI bool ui_popup_activate(ui_popup *popup)
 {
 	if (!validate_popup(popup)) return false;
 	return popup->activate();
 }
 
-bool ui_popup_deactivate(ui_popup *popup)
+EAPI bool ui_popup_deactivate(ui_popup *popup)
 {
 	if (!validate_popup(popup)) return false;
 	return popup->deactivate();
 }
 
-bool ui_popup_activate_get(ui_popup *popup)
+EAPI bool ui_popup_activate_get(ui_popup *popup)
 {
 	if (!validate_popup(popup)) return false;
 	return popup->is_activated();
 }
 
-Evas_Object *ui_popup_base_get(ui_popup *popup)
+EAPI Evas_Object *ui_popup_base_get(ui_popup *popup)
 {
 	if (!validate_popup(popup)) return NULL;
 	return popup->get_base();
 }
 
-int ui_popup_degree_get(ui_popup *popup)
+EAPI int ui_popup_degree_get(ui_popup *popup)
 {
 	if (!validate_popup(popup)) return -1;
 	return popup->get_degree();
 }
 
-ui_view *ui_popup_view_get(ui_popup *popup)
+EAPI ui_view *ui_popup_view_get(ui_popup *popup)
 {
 	if (!validate_popup(popup)) return NULL;
 	return dynamic_cast<ui_view *>(popup->get_view());

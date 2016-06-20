@@ -22,7 +22,7 @@ extern "C" {
  *
  *  @see ui_menu_content_get()
  */
-bool ui_menu_content_set(ui_menu *menu, Elm_Ctxpopup *ctxpopup);
+EAPI bool ui_menu_content_set(ui_menu *menu, Elm_Ctxpopup *ctxpopup);
 
 /**
  *  @brief Return an ui_menu content.
@@ -33,7 +33,7 @@ bool ui_menu_content_set(ui_menu *menu, Elm_Ctxpopup *ctxpopup);
  *
  *  @see ui_menu_content_set()
  */
-Elm_Ctxpopup *ui_menu_content_get(ui_menu *menu);
+EAPI Elm_Ctxpopup *ui_menu_content_get(ui_menu *menu);
 
 /**
  *  @brief Unset an ui_menu content.
@@ -44,7 +44,7 @@ Elm_Ctxpopup *ui_menu_content_get(ui_menu *menu);
  *
  *  @see ui_menu_content_set()
  */
-Elm_Ctxpopup *ui_menu_content_unset(ui_menu *menu);
+EAPI Elm_Ctxpopup *ui_menu_content_unset(ui_menu *menu);
 
 /**
  *  @brief Activate an ui_menu.
@@ -57,7 +57,7 @@ Elm_Ctxpopup *ui_menu_content_unset(ui_menu *menu);
  *
  *  @see ui_menu_deactivate()
  */
-bool ui_menu_activate(ui_menu *menu);
+EAPI bool ui_menu_activate(ui_menu *menu);
 
 /**
  *  @brief Deactivate an ui_menu.
@@ -70,7 +70,7 @@ bool ui_menu_activate(ui_menu *menu);
  *
  *  @see ui_menu_activate()
  */
-bool ui_menu_deactivate(ui_menu *menu);
+EAPI bool ui_menu_deactivate(ui_menu *menu);
 
 /**
  *  @brief Return the active status of ui_menu.
@@ -82,7 +82,7 @@ bool ui_menu_deactivate(ui_menu *menu);
  *  @see ui_menu_activate()
  *  @see ui_menu_deactivate()
  */
-bool ui_menu_activated_get(ui_menu *menu);
+EAPI bool ui_menu_activated_get(ui_menu *menu);
 
 /**
  *  @brief Get a base object of an ui_menu.
@@ -93,7 +93,7 @@ bool ui_menu_activated_get(ui_menu *menu);
  *
  *  @return base object of ui_menu.
  */
-Evas_Object *ui_menu_base_get(ui_menu *menu);
+EAPI Evas_Object *ui_menu_base_get(ui_menu *menu);
 
 /**
  *  @brief Get a current ui_menu's degree.
@@ -102,7 +102,7 @@ Evas_Object *ui_menu_base_get(ui_menu *menu);
  *
  *  @return Current rotation degree, -1 if it fails to get degree information.
  */
-int ui_menu_degree_get(ui_menu *menu);
+EAPI int ui_menu_degree_get(ui_menu *menu);
 
 /**
  *  @brief Return a view which is matched with this ui_menu.
@@ -111,7 +111,7 @@ int ui_menu_degree_get(ui_menu *menu);
  *
  *  @return The view which is matched with ui_menu
  */
-ui_view *ui_menu_view_get(ui_menu *menu);
+EAPI ui_view *ui_menu_view_get(ui_menu *menu);
 
 #ifdef __cplusplus
 }

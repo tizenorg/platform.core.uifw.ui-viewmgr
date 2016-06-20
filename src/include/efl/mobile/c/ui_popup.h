@@ -26,7 +26,7 @@ extern "C" {
  *
  *  @see ui_popup_destroy()
  */
-ui_popup *ui_popup_create(ui_view *view);
+EAPI ui_popup *ui_popup_create(ui_view *view);
 
 /**
  *  @brief A destructor for an ui_popup.
@@ -37,7 +37,7 @@ ui_popup *ui_popup_create(ui_view *view);
  *
  *  @see ui_popup_create()
  */
-void ui_popup_destroy(ui_popup *popup);
+EAPI void ui_popup_destroy(ui_popup *popup);
 
 /**
  *  @brief Replace or set a content of an ui_popup.
@@ -49,7 +49,7 @@ void ui_popup_destroy(ui_popup *popup);
  *
  *  @see ui_popup_content_get()
  */
-bool ui_popup_content_set(ui_popup *popup, Elm_Popup *content);
+EAPI bool ui_popup_content_set(ui_popup *popup, Elm_Popup *content);
 
 /**
  *  @brief Return a content object of ui_popup.
@@ -60,7 +60,7 @@ bool ui_popup_content_set(ui_popup *popup, Elm_Popup *content);
  *
  *  @see ui_popup_content_set()
  */
-Elm_Popup *ui_popup_content_get(ui_popup *popup);
+EAPI Elm_Popup *ui_popup_content_get(ui_popup *popup);
 
 /**
  *  @brief Unset an ui_popup content.
@@ -71,7 +71,7 @@ Elm_Popup *ui_popup_content_get(ui_popup *popup);
  *
  *  @see ui_popup_content_set()
  */
-Elm_Popup *ui_popup_content_unset(ui_popup *popup);
+EAPI Elm_Popup *ui_popup_content_unset(ui_popup *popup);
 
 /**
  *  @brief Activate an ui_popup.
@@ -84,7 +84,7 @@ Elm_Popup *ui_popup_content_unset(ui_popup *popup);
  *
  *  @see ui_popup_deactivate()
  */
-bool ui_popup_activate(ui_popup *popup);
+EAPI bool ui_popup_activate(ui_popup *popup);
 
 /**
  *  @brief Deactivate an ui_popup.
@@ -97,7 +97,7 @@ bool ui_popup_activate(ui_popup *popup);
  *
  *  @see ui_popup_activate()
  */
-bool ui_popup_deactivate(ui_popup *popup);
+EAPI bool ui_popup_deactivate(ui_popup *popup);
 
 /**
  *  @brief Return the active status of ui_popup.
@@ -109,7 +109,7 @@ bool ui_popup_deactivate(ui_popup *popup);
  *  @see ui_popup_activate()
  *  @see ui_popup_deactivate()
  */
-bool ui_popup_activated_get(ui_popup *popup);
+EAPI bool ui_popup_activated_get(ui_popup *popup);
 
 /**
  *  @brief Get a base object of an ui_popup.
@@ -120,7 +120,7 @@ bool ui_popup_activated_get(ui_popup *popup);
  *
  *  @return base object of ui_popup.
  */
-Evas_Object *ui_popup_base_get(ui_popup *popup);
+EAPI Evas_Object *ui_popup_base_get(ui_popup *popup);
 
 /**
  *  @brief Get current ui_popup's degree.
@@ -129,7 +129,7 @@ Evas_Object *ui_popup_base_get(ui_popup *popup);
  *
  *  @return Current rotation degree, -1 if it fails to get degree information.
  */
-int ui_popup_degree_get(ui_popup *popup);
+EAPI int ui_popup_degree_get(ui_popup *popup);
 
 /**
  *  @brief Return a view which is matched with the ui_popup.
@@ -138,7 +138,7 @@ int ui_popup_degree_get(ui_popup *popup);
  *
  *  @return The view which is matched with ui_popup.
  */
-ui_view *ui_popup_view_get(ui_popup *popup);
+EAPI ui_view *ui_popup_view_get(ui_popup *popup);
 
 #ifdef __cplusplus
 }
