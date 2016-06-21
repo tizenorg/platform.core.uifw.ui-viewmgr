@@ -41,12 +41,11 @@ UI VIEW MANAGER library providing View management functionality(devel)
 %build
 
 %if "%{?target_language}" == "c++"
-    cmake . -DTARGET_LANGUAGE="c++"
+    %cmake . -DTARGET_LANGUAGE="c++"
 %else
-    cmake . -DTARGET_LANGUAGE="c"
+    %cmake . -DTARGET_LANGUAGE="c"
 %endif
 
-cmake . -DCMAKE_INSTALL_PREFIX=/usr
 make %{?jobs:-j%jobs}
 
 %install
@@ -67,9 +66,9 @@ cp %{_builddir}/%{buildsubdir}/LICENSE %{buildroot}/usr/share/license/%{name}
 %defattr(-,root,root,-)
 %{_datadir}/packages/ui.viewmgr.demo.xml
 %manifest ui.viewmgr.demo.manifest
-/opt/usr/apps/ui.viewmgr.demo/bin/*
-/opt/usr/apps/ui.viewmgr.demo/data/images/*
-/opt/usr/apps/ui.viewmgr.demo/shared/res/*
+/usr/apps/ui.viewmgr.demo/bin/*
+/usr/apps/ui.viewmgr.demo/data/images/*
+/usr/apps/ui.viewmgr.demo/shared/res/*
 
 %files devel
 %defattr(-,root,root,-)
