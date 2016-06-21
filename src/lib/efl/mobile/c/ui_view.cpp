@@ -247,12 +247,6 @@ EAPI const ui_menu *ui_view_menu_get(ui_view *view)
 	return view->get_menu();
 }
 
-EAPI bool ui_view_name_set(ui_view *view, const char *name)
-{
-	if (!validate_view(view)) return false;
-	return view->set_name(name);
-}
-
 EAPI const char *ui_view_name_get(ui_view *view)
 {
 	if (!validate_view(view)) return NULL;

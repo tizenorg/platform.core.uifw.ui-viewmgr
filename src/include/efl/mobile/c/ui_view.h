@@ -72,6 +72,8 @@ typedef struct
  *
  *  @return The ui_view instance.
  *
+ *  @warning if you don't set a view name, you could not look up the view with its name. @see ui_viewmgr_view_get_by_name().
+ *
  *  @see ui_view_destroy()
  */
 EAPI ui_view *ui_view_create(const char *name);
@@ -220,20 +222,6 @@ EAPI const char *ui_view_transition_style_get(ui_view *view);
  *  @return The ui_memnu that connected with given @p view.
  */
 EAPI const ui_menu *ui_view_menu_get(ui_view *view);
-
-/**
- *  @brief Set name of ui_view.
- *
- *  @note A ui_view can have a unique name. Default value of the name is NULL.
- *
- *  @param view An ui_view instance.
- *  @param name A new name of given @p view.
- *
- *  @return @c true if the given @p name is available, otherwise @c false.
- *
- *  @see ui_view_name_get()
- */
-EAPI bool ui_view_name_set(ui_view *view, const char *name);
 
 /**
  *  @brief Return a name of this view.

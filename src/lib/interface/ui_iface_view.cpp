@@ -60,7 +60,6 @@ public:
 	~ui_iface_view_impl();
 
 	bool set_transition_style(const char *style);
-	bool set_name(const char *name);
 	void set_removable_content(bool removable);
 	void set_indicator(ui_view_indicator indicator);
 	const char *get_transition_style();
@@ -152,12 +151,6 @@ T ui_iface_view_impl::unset_content()
 bool ui_iface_view_impl::set_transition_style(const char *style)
 {
 	this->transition_style.assign(style);
-	return true;
-}
-
-bool ui_iface_view_impl::set_name(const char *name)
-{
-	this->name.assign(name);
 	return true;
 }
 
@@ -286,11 +279,6 @@ T ui_iface_view::unset_content()
 bool ui_iface_view::set_transition_style(const char *style)
 {
 	return this->impl->set_transition_style(style);
-}
-
-bool ui_iface_view::set_name(const char *name)
-{
-	return this->impl->set_name(name);
 }
 
 void ui_iface_view::set_removable_content(bool removable)

@@ -521,6 +521,11 @@ ui_base_view *ui_base_viewmgr::get_view(unsigned int idx)
 	return dynamic_cast<ui_base_view *>(ui_iface_viewmgr::get_view(idx));
 }
 
+ui_base_view *ui_base_viewmgr::get_view(const char *name)
+{
+	return dynamic_cast<ui_base_view *>(ui_iface_viewmgr::get_view(name));
+}
+
 ui_base_view *ui_base_viewmgr::get_last_view()
 {
 	return dynamic_cast<ui_base_view *>(ui_iface_viewmgr::get_last_view());

@@ -44,6 +44,8 @@ public:
 	 *  @brief This is a constructor for initializing this view resources.
 	 *
 	 *  @param name view name.
+	 *
+	 *  @warning if you don't set a view name, you could not look up the view with its name. @see ui_viewmgr_view_get_by_name()
 	 */
 	ui_iface_view(const char *name = NULL);
 
@@ -65,19 +67,6 @@ public:
 	 *           If your framework doesn't support any styles then just allow a @c NULL argument and return true. Otherwise return false.
 	 */
 	bool set_transition_style(const char *style);
-
-	/**
-	 *  @brief Set name of the view.
-	 *
-	 *  @note A view can have a unique name. Default value of the name is NULL.
-	 *
-	 *  @param name A new name of view.
-	 *
-	 *  @return true if the given @c name is available, otherwise false.
-	 *
-	 *  @warning When you override this member function, you should check the name duplicate with other view or not.
-	 */
-	bool set_name(const char *name);
 
 	/**
 	 *  @brief Set content removable.

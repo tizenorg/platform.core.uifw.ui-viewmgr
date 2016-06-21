@@ -154,6 +154,20 @@ public:
 	ui_base_view *get_view(unsigned int idx);
 
 	/**
+	 *  @brief Return a view which is matched with the @p name.
+	 *
+	 *  @note Every view have their names as their own identifiers.
+	 *
+	 *  @param name The name of the view which you are looking for.
+	 *
+	 *  @return The view which name is matched with @p name.
+	 *          If there were no views name matched, @c NULL will be returned.
+	 *
+	 *  @see ui_iface_view::set_name()
+	 */
+	ui_base_view *get_view(const char *name);
+
+	/**
 	 *  @brief Get a base object of this viewmgr.
 	 *
 	 *  @note Normally, a base object can be used for adding additional objects.

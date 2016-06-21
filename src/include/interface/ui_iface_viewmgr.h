@@ -227,7 +227,7 @@ protected:
 	 *  @return The view which name is matched with @p name.
 	 *          If there were no views name matched, @c NULL will be returned.
 	 *
-	 *  @see ui_iface_view::set_name()
+	 *  @see ui_iface_view::get_name().
 	 */
 	ui_iface_view *get_view(const char *name);
 
