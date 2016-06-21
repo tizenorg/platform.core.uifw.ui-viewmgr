@@ -136,7 +136,21 @@ EAPI ui_view *ui_viewmgr_last_view_get(ui_viewmgr *viewmgr);
  *  @see ui_viewmgr_view_index_get()
  *  @see ui_viewmgr_view_count_get()
  */
-EAPI ui_view *ui_viewmgr_view_get(ui_viewmgr *viewmgr, int idx);
+EAPI ui_view *ui_viewmgr_view_get_by_idx(ui_viewmgr *viewmgr, int idx);
+
+/**
+ *  @brief Return a view which is matched with the @p name.
+ *
+ *  @note Every view have their names as their own identifiers.
+ *
+ *  @param name The name of the view which you are looking for.
+ *
+ *  @return The view which name is matched with @p name.
+ *          If there were no views name matched, @c NULL will be returned.
+ *
+ *  @see ui_iface_view::set_name()
+ */
+EAPI ui_view *ui_viewmgr_view_get_by_name(ui_viewmgr *viewmgr, const char *name);
 
 /**
  *  @brief Get a base object of a ui_viewmgr.
@@ -161,9 +175,6 @@ EAPI Evas_Object *ui_viewmgr_base_get(ui_viewmgr *viewmgr);
  *  @warning The index number of views are variable since the view list is variable
  */
 EAPI int ui_viewmgr_view_index_get(ui_viewmgr *viewmgr, const ui_view *view);
-
-//FIXME:
-//ui_view *ui_viewmgr_view_get_by_id(ui_viewmgr *viewmgr, const char *id);
 
 /**
  *  @brief Return the number of views which this @p given viewmgr has.

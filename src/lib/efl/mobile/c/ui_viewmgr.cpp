@@ -18,7 +18,6 @@ static bool validate_viewmgr(ui_viewmgr *viewmgr)
 	return true;
 }
 
-
 EAPI ui_view *ui_viewmgr_view_push(ui_viewmgr *viewmgr, ui_view *view)
 {
 	if (!viewmgr || !view)
@@ -82,10 +81,16 @@ EAPI ui_view *ui_viewmgr_last_view_get(ui_viewmgr *viewmgr)
 	return dynamic_cast<ui_view *>(viewmgr->get_last_view());
 }
 
-EAPI ui_view *ui_viewmgr_view_get(ui_viewmgr *viewmgr, int idx)
+EAPI ui_view *ui_viewmgr_view_get_by_idx(ui_viewmgr *viewmgr, int idx)
 {
 	if (!validate_viewmgr(viewmgr)) return NULL;
 	return dynamic_cast<ui_view *>(viewmgr->get_view(idx));
+}
+
+EAPI ui_view *ui_viewmgr_view_get_by_name(ui_viewmgr *viewmgr, const char *name)
+{
+	if (!validate_viewmgr(viewmgr)) return NULL;
+	return dynamic_cast<ui_view *>(viewmgr->get_view(name));
 }
 
 EAPI Evas_Object *ui_viewmgr_base_get(ui_viewmgr *viewmgr)
@@ -104,7 +109,6 @@ EAPI int ui_viewmgr_view_index_get(ui_viewmgr *viewmgr, const ui_view *view)
 
 	return viewmgr->get_view_index(view);
 }
-
 
 EAPI int ui_viewmgr_view_count_get(ui_viewmgr *viewmgr)
 {

@@ -127,6 +127,26 @@ bool ui_iface_viewmgr_impl::need_soft_key()
 
 bool ui_iface_viewmgr_impl::connect_view(ui_iface_view *view)
 {
+	//TODO: Perform this only in debug mode?
+	//Check whether the same name of this view is already existed in this viewmgr?
+	int name_len = strlen(view->get_name());
+	const char *name = view->get_name();
+
+	for (VIEW_ITR it = this->view_list.begin(); it != this->view_list.end(); it++)
+	{
+		ui_iface_view *view = *it;
+		const char *view_name = view->get_name();
+		if (!view_name) continue;
+		int view_name_len = strlen(view_name);
+
+		//Got you!
+		if ((view_name_len == name_len) && !strcmp(name, view_name))
+		{
+			LOGE("the same name of ui_iface_view(%p) is already in this ui_iface_viewmgr(%p)", view, this);
+			return false;
+		}
+	}
+
 	return view->set_viewmgr(this->get_instance());
 }
 
@@ -409,7 +429,23 @@ bool ui_iface_viewmgr_impl::deactivate()
 
 ui_iface_view *ui_iface_viewmgr_impl::get_view(const char *name)
 {
-	//FIXME: ...
+	if (!name) return NULL;
+	int name_len = strlen(name);
+
+	for (VIEW_ITR it = this->view_list.begin(); it != this->view_list.end(); it++)
+	{
+		ui_iface_view *view = *it;
+		const char *view_name = view->get_name();
+		if (!view_name) continue;
+		int view_name_len = strlen(view_name);
+
+		//Got you!
+		if ((view_name_len == name_len) && !strcmp(name, view_name))
+		{
+			return view;
+		}
+	}
+
 	return NULL;
 }
 

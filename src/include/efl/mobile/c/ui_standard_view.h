@@ -16,8 +16,9 @@ extern "C" {
  *  @brief A constructor for an ui_standard_view.
  *
  *  @param name view name
- *
  *  @param view An ui_standard_view instance.
+ *
+ *  @warning if you don't set a view name, you could not look up the view with its name. @see ui_viewmgr_view_get_by_name().
  *
  *  @see ui_view_destroy()
  */
