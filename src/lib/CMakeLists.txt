@@ -1,4 +1,22 @@
-IF("${TARGET_LANGUAGE}" STREQUAL "c")
+IF("${TARGET_LANGUAGE}" STREQUAL "c++")
+SET(SRCS
+     interface/ui_iface_overlay.cpp
+     interface/ui_iface_view.cpp
+     interface/ui_iface_viewmgr.cpp
+     interface/ui_iface_app.cpp
+     efl/ui_base_view.cpp
+     efl/ui_base_viewmgr.cpp
+     efl/ui_base_key_listener.cpp
+     efl/ui_base_overlay.cpp
+     efl/mobile/ui_app.cpp
+     efl/mobile/ui_menu.cpp
+     efl/mobile/ui_popup.cpp
+     efl/mobile/ui_view.cpp
+     efl/mobile/ui_standard_view.cpp
+     efl/mobile/ui_key_listener.cpp
+     efl/mobile/ui_viewmgr.cpp
+    )
+ELSE()
 SET(SRCS
      interface/ui_iface_overlay.cpp
      interface/ui_iface_view.cpp
@@ -21,24 +39,6 @@ SET(SRCS
      efl/mobile/c/ui_view.cpp
      efl/mobile/c/ui_standard_view.cpp
      efl/mobile/c/ui_viewmgr.cpp
-    )
-ELSE()
-SET(SRCS
-     interface/ui_iface_overlay.cpp
-     interface/ui_iface_view.cpp
-     interface/ui_iface_viewmgr.cpp
-     interface/ui_iface_app.cpp
-     efl/ui_base_view.cpp
-     efl/ui_base_viewmgr.cpp
-     efl/ui_base_key_listener.cpp
-     efl/ui_base_overlay.cpp
-     efl/mobile/ui_app.cpp
-     efl/mobile/ui_menu.cpp
-     efl/mobile/ui_popup.cpp
-     efl/mobile/ui_view.cpp
-     efl/mobile/ui_standard_view.cpp
-     efl/mobile/ui_key_listener.cpp
-     efl/mobile/ui_viewmgr.cpp
     )
 ENDIF()
 

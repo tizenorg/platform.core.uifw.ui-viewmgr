@@ -15,8 +15,8 @@
  *
  */
 
-#ifdef TARGET_LANG_C
-	#include "efl/mobile/c/ui_mobile_viewmanager.h"
-#else
+#ifdef TARGET_LANG_CPLUS
 	#include "efl/mobile/ui_mobile_viewmanager.h"
+#else
+	#include "efl/mobile/c/ui_mobile_viewmanager.h"
 #endif
