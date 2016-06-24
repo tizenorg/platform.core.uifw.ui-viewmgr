@@ -44,7 +44,7 @@ view7_load_cb(ui_standard_view *view, void *data)
 	}
 
 	//Create and set a main content.
-	content = create_content(base, "ViewMgr Demo<br>Navigationbar",prev_btn_clicked_cb, next_btn_clicked_cb);
+	content = create_content(base, "ViewMgr Demo<br>Navigationbar", prev_btn_clicked_cb, next_btn_clicked_cb);
 	if (!content) return false;
 
 	if (!ui_standard_view_content_set(view, content, "Page7", NULL, NULL, NULL))
