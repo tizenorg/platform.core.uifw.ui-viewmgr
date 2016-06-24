@@ -31,9 +31,9 @@ protected:
 	{
 		ui_standard_view::on_rotate(degree);
 
-		//Portrait
 		if (this->get_degree() == 0 || this->get_degree() == 180)
 		{
+			//Portrait
 			Evas_Object *content = create_content(this->get_base(), "ViewMgr++ Demo<br>Rotation",
 					//Prev Button Callback
 					[](void *data, Evas_Object *obj, void *event_info) -> void
@@ -48,10 +48,8 @@ protected:
 
 			this->set_content(content, "Page 10");
 			this->set_indicator(UI_VIEW_INDICATOR_DEFAULT);
-		}
-		//Landscape
-		else
-		{
+		} else {
+			//Landscape
 			Evas_Object *content = create_landscape_content(this->get_base(), "ViewMgr++ Demo<br>Rotation",
 					//Prev Button Callback
 					[](void *data, Evas_Object *obj, void *event_info) -> void
