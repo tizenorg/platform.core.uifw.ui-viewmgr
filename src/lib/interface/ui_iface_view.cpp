@@ -120,7 +120,6 @@ void ui_iface_view_impl::on_resume()
 
 void ui_iface_view_impl::on_destroy()
 {
-
 }
 
 ui_iface_view_impl::ui_iface_view_impl(ui_iface_view *view, const char *name)

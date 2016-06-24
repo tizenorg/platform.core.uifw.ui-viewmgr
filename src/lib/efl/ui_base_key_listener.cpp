@@ -51,7 +51,6 @@ static void key_grab_rect_key_up_cb(ui_base_key_listener_impl *key_listener, Eva
 ui_base_key_listener_impl::ui_base_key_listener_impl(ui_base_key_listener *key_listener, ui_base_viewmgr *viewmgr)
 		: key_listener(key_listener), viewmgr(viewmgr), key_grabber(NULL)
 {
-
 }
 
 void ui_base_key_listener_impl::event_proc(Evas_Event_Key_Down *ev)

@@ -92,9 +92,7 @@ view9_load_cb(ui_standard_view *view, void *data)
 	if (ui_view_degree_get(view) == 90 || ui_view_degree_get(view) == 270)
 	{
 		return view9_landscape_cb(view, data);
-	}
-	else
-	{
+	} else {
 		return view9_portrait_cb(view, data);
 	}
 }
