@@ -45,16 +45,14 @@ view10_rotate_cb(ui_standard_view *view, int degree, void *data)
 
 	//Check orientation manually to create a content.
 
-	//Portrait
 	if (degree == 0 || degree == 180)
 	{
+		//Portrait
 		content = create_content(base, "ViewMgr Demo<br>Rotation", prev_btn_clicked_cb, next_btn_clicked_cb);
 		if (!content) return false;
 		ui_view_indicator_set(view, UI_VIEW_INDICATOR_DEFAULT);
-	}
-	//Landscape
-	else
-	{
+	} else {
+		//Landscape
 		content = create_landscape_content(base, "ViewMgr Demo<br>Rotation", prev_btn_clicked_cb, next_btn_clicked_cb);
 		if (!content) return false;
 		ui_view_indicator_set(view, UI_VIEW_INDICATOR_OPTIMAL);

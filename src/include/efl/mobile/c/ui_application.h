@@ -1,5 +1,5 @@
-#ifndef _UI_APPLICATION_CAPI_H_
-#define _UI_APPLICATION_CAPI_H_
+#ifndef _CAPI_UI_APPLICATION_H_
+#define _CAPI_UI_APPLICATION_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -59,4 +59,4 @@ EAPI bool ui_application_term(void);
  * @}
  */
 
-#endif /* _UI_APPLICATION_CAPI_H_ */
+#endif /* _CAPI_UI_APPLICATION_H_ */

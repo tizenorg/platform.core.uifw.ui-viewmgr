@@ -147,9 +147,7 @@ Elm_Layout *ui_base_viewmgr_impl::set_transition_layout(string transition_style)
 		effect_map.insert(pair<string, Elm_Layout *>("default", this->layout));
 		this->create_base_layout(this->scroller, transition_style.c_str());
 		effect_map.insert(pair<string, Elm_Layout *>(transition_style, this->layout));
-	}
-	else
-	{
+	} else {
 		elm_object_content_set(this->scroller, effect_layout);
 
 		this->layout = effect_layout;
@@ -172,9 +170,7 @@ void ui_base_viewmgr_impl::activate_top_view()
 	if (view->get_base() == this->get_base())
 	{
 		content = view->get_content();
-	}
-	else
-	{
+	} else {
 		content = view->get_base();
 	}
 
@@ -352,9 +348,7 @@ bool ui_base_viewmgr_impl::deactivate()
 	if (true)
 	{
 		evas_object_lower(this->win);
-	}
-	else
-	{
+	} else {
 		delete(this->viewmgr);
 	}
 

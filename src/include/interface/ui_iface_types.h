@@ -47,4 +47,4 @@ enum ui_view_state
 };
 typedef enum ui_view_state ui_view_state;
 
-#endif
+#endif /* _UI_IFACE_TYPES_H_ */

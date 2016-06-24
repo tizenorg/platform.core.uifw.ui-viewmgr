@@ -142,9 +142,7 @@ bool ui_standard_view_impl::create_layout()
 		if (!prev_btn)
 		{
 			LOGE("Failed to create a button = ui_standard_view(%p)", this);
-		}
-		else
-		{
+		} else {
 			evas_object_smart_callback_add(prev_btn, "clicked", [](void *data, Evas_Object *obj, void *event_info) -> void
 			{
 				ui_viewmgr *viewmgr = static_cast<ui_viewmgr *>(data);
@@ -181,9 +179,7 @@ bool ui_standard_view_impl::set_content(Evas_Object *content, const char *title)
 	if (content)
 	{
 		elm_object_signal_emit(layout, "elm.state,elm.swallow.content,show", "viewmgr");
-	}
-	else
-	{
+	} else {
 		elm_object_signal_emit(layout, "elm.state,elm.swallow.content,hide", "viewmgr");
 	}
 
@@ -291,9 +287,7 @@ bool ui_standard_view_impl::set_toolbar(Elm_Toolbar *toolbar)
 	{
 		elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_SCROLL);
 		elm_toolbar_align_set(toolbar, 0);
-	}
-	else
-	{
+	} else {
 		elm_toolbar_shrink_mode_set(toolbar, ELM_TOOLBAR_SHRINK_EXPAND);
 	}
 	elm_toolbar_transverse_expanded_set(toolbar, EINA_TRUE);
@@ -407,9 +401,7 @@ bool ui_standard_view_impl::set_title_visible(bool visible, bool anim)
 	{
 		if (anim) elm_object_signal_emit(layout, "elm,state,title,show,anim", "viewmgr");
 		else elm_object_signal_emit(layout, "elm,state,title,show", "viewmgr");
-	}
-	else
-	{
+	} else {
 		if (anim) elm_object_signal_emit(layout, "elm,state,title,hide,anim", "viewmgr");
 		else elm_object_signal_emit(layout, "elm,state,title,hide", "viewmgr");
 	}
