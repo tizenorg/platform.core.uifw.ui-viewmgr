@@ -30,6 +30,7 @@ enum ui_view_indicator
 	UI_VIEW_INDICATOR_SHOW,        ///< Indicator show
 	UI_VIEW_INDICATOR_LAST
 };
+typedef enum ui_view_indicator ui_view_indicator;
 
 /**
  * Possible values for view state.
@@ -44,5 +45,6 @@ enum ui_view_state
 	UI_VIEW_STATE_PAUSE,           ///< Pause state
 	UI_VIEW_STATE_LAST
 };
+typedef enum ui_view_state ui_view_state;
 
 #endif
