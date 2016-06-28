@@ -14,15 +14,22 @@
  *  limitations under the License.
  *
  */
-#ifndef _UI_PRIVATE_H_
-#define _UI_PRIVATE_H_
+#ifndef _UI_BASE_VIEWMANAGER_H_
+#define _UI_BASE_VIEWMANAGER_H_
 
-#include "../../../../include/efl/mobile/UiMobileViewManager.h"
+//FIXME: ??
+#ifndef Elm_Conformant
+#define Elm_Conformant Evas_Object
+#endif
 
-typedef UiViewmgr ui_viewmgr;
-typedef UiView ui_view;
-typedef UiStandardView ui_standard_view;
-typedef UiMenu ui_menu;
-typedef UiPopup ui_popup;
+#include "../interface/UiIfaceViewManager.h"
+#include "UiBaseOverlay.h"
+#include "UiBaseKeyListener.h"
+#include "UiBaseViewmgr.h"
+#include "UiBaseView.h"
 
-#endif /* _UI_PRIVATE_H_ */
+#define UI_BASE_VIEWMGR dynamic_cast<UiBaseViewmgr *>(UiIfaceViewmgr::get_instance())
+
+using namespace efl_viewmanager;
+
+#endif /* UI_BASE_VIEWMANAGER_H */

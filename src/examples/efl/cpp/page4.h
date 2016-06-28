@@ -15,16 +15,16 @@
  *
  */
 
-/** This example create a simple view which is inheritance ui_standard_view.
+/** This example create a simple view which is inheritance UiStandardView.
  *  And set long text to title, set badge text in view title area.
  *  Then push in viewmgr.
  */
-class page4: public ui_standard_view
+class page4: public UiStandardView
 {
 protected:
 	void on_load()
 	{
-		ui_standard_view::on_load();
+		UiStandardView::on_load();
 
 		//Create a main content.
 		Evas_Object *content = create_content(this->get_base(), "ViewMgr++ Demo<br>Title Badge",
@@ -45,6 +45,6 @@ protected:
 	}
 
 public:
-	page4() : ui_standard_view("page4") {}
+	page4() : UiStandardView("page4") {}
 	~page4() {}
 };

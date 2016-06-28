@@ -1,41 +1,41 @@
 IF("${TARGET_LANGUAGE}" STREQUAL "c++")
 SET(SRCS
-     interface/ui_iface_overlay.cpp
-     interface/ui_iface_view.cpp
-     interface/ui_iface_viewmgr.cpp
-     interface/ui_iface_app.cpp
-     efl/ui_base_view.cpp
-     efl/ui_base_viewmgr.cpp
-     efl/ui_base_key_listener.cpp
-     efl/ui_base_overlay.cpp
-     efl/mobile/ui_app.cpp
-     efl/mobile/ui_menu.cpp
-     efl/mobile/ui_popup.cpp
-     efl/mobile/ui_view.cpp
-     efl/mobile/ui_standard_view.cpp
-     efl/mobile/ui_key_listener.cpp
-     efl/mobile/ui_viewmgr.cpp
+     interface/UiIfaceOverlay.cpp
+     interface/UiIfaceView.cpp
+     interface/UiIfaceViewmgr.cpp
+     interface/UiIfaceApp.cpp
+     efl/UiBaseView.cpp
+     efl/UiBaseViewmgr.cpp
+     efl/UiBaseKeyListener.cpp
+     efl/UiBaseOverlay.cpp
+     efl/mobile/UiApp.cpp
+     efl/mobile/UiMenu.cpp
+     efl/mobile/UiPopup.cpp
+     efl/mobile/UiView.cpp
+     efl/mobile/UiStandardView.cpp
+     efl/mobile/UiKeyListener.cpp
+     efl/mobile/UiViewmgr.cpp
     )
 ELSE()
 SET(SRCS
-     interface/ui_iface_overlay.cpp
-     interface/ui_iface_view.cpp
-     interface/ui_iface_viewmgr.cpp
-     interface/ui_iface_app.cpp
-     efl/ui_base_view.cpp
-     efl/ui_base_viewmgr.cpp
-     efl/ui_base_key_listener.cpp
-     efl/ui_base_overlay.cpp
-     efl/mobile/ui_app.cpp
-     efl/mobile/ui_menu.cpp
-     efl/mobile/ui_popup.cpp
-     efl/mobile/ui_view.cpp
-     efl/mobile/ui_standard_view.cpp
-     efl/mobile/ui_key_listener.cpp
-     efl/mobile/ui_viewmgr.cpp
+     interface/UiIfaceOverlay.cpp
+     interface/UiIfaceView.cpp
+     interface/UiIfaceViewmgr.cpp
+     interface/UiIfaceApp.cpp
+     efl/UiBaseView.cpp
+     efl/UiBaseViewmgr.cpp
+     efl/UiBaseKeyListener.cpp
+     efl/UiBaseOverlay.cpp
+     efl/mobile/UiApp.cpp
+     efl/mobile/UiMenu.cpp
+     efl/mobile/UiPopup.cpp
+     efl/mobile/UiView.cpp
+     efl/mobile/UiStandardView.cpp
+     efl/mobile/UiKeyListener.cpp
+     efl/mobile/UiViewmgr.cpp
      efl/mobile/c/ui_application.cpp
-     efl/mobile/c/ui_menu.cpp
-     efl/mobile/c/ui_popup.cpp
+	 efl/mobile/c/ui_menu.cpp
+	 efl/mobile/c/ui_popup.cpp
      efl/mobile/c/ui_view.cpp
      efl/mobile/c/ui_standard_view.cpp
      efl/mobile/c/ui_viewmgr.cpp

@@ -40,6 +40,7 @@ Evas_Object* create_scrolling_content(Evas_Object *parent);
 Elm_Toolbar* create_toolbar(Evas_Object *parent, const char *style);
 
 void create_page1();
+
 void create_page2();
 void create_page3();
 void create_page4();
@@ -55,3 +56,4 @@ void create_page13();
 void create_page14();
 void create_page15();
 void create_page16();
+
