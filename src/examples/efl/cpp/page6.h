@@ -15,14 +15,14 @@
  *
  */
 
-/** This page inherit ui_standard_view to show title with toolbar(toolbar_with_title) example.
+/** This page inherit UiStandardView to show title with toolbar(toolbar_with_title) example.
  */
-class page6: public ui_standard_view
+class page6: public UiStandardView
 {
 protected:
 	void on_load()
 	{
-		ui_standard_view::on_load();
+		UiStandardView::on_load();
 
 		//Create a main content.
 		Evas_Object *content = create_content(this->get_base(), "ViewMgr++ Demo<br>Toolbar",
@@ -44,6 +44,6 @@ protected:
 	}
 
 public:
-	page6() : ui_standard_view("page6") {}
+	page6() : UiStandardView("page6") {}
 	~page6() {}
 };

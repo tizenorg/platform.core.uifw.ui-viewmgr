@@ -15,16 +15,16 @@
  *
  */
 
-/** This example create a simple view which is inheritance of an ui_standard_view.
+/** This example create a simple view which is inheritance of an UiStandardView.
  *  Then push in viewmgr.
  */
-class page1: public ui_standard_view
+class page1: public UiStandardView
 {
 protected:
 	//on_load() will be called when this page1 is requested to be shown.
 	void on_load()
 	{
-		ui_standard_view::on_load();
+		UiStandardView::on_load();
 
 		//Create a main content.
 		Evas_Object *content = create_content(this->get_base(), "ViewMgr++ Demo<br>Basic View",
@@ -42,6 +42,6 @@ protected:
 	}
 
 public:
-	page1() : ui_standard_view("page1") {}
+	page1() : UiStandardView("page1") {}
 	~page1() {}
 };

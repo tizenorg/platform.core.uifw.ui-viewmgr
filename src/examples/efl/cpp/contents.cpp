@@ -23,7 +23,7 @@ create_toolbar(Evas_Object *parent, const char *style)
 
 	toolbar = elm_toolbar_add(parent);
 
-	//FIXME: :( UI_View can set this style instead.
+	//FIXME: :( UiView can set this style instead.
 	elm_object_style_set(toolbar, style);
 
 	//FIXME: If not call below API, toolbar items create with min size.
@@ -125,7 +125,7 @@ create_landscape_content(Evas_Object *parent, const char *text, Evas_Smart_Cb pr
 Evas_Object*
 create_title_handle_content(Evas_Object *parent, Evas_Smart_Cb prev_btn_clicked_cb, Evas_Smart_Cb next_btn_clicked_cb,
 				Evas_Smart_Cb title_show_btn_clicked_cb, Evas_Smart_Cb title_hide_btn_clicked_cb,
-				Evas_Smart_Cb title_show_anim_btn_clicked_cb, Evas_Smart_Cb title_hide_anim_btn_clicked_cb, ui_view *view)
+				Evas_Smart_Cb title_show_anim_btn_clicked_cb, Evas_Smart_Cb title_hide_anim_btn_clicked_cb, UiView *view)
 {
 	Elm_Grid *grid;
 	Elm_Box *box;
