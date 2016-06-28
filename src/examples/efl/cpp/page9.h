@@ -15,16 +15,16 @@
  *
  */
 
-/** This page inherit ui_standard_view.
+/** This page inherit UiStandardView.
  *  And implement on_portait(), on_landscape() method to create portrait, landscape content.
  *  This page will be created suitable content in on_portrait(), on_landscape() method.
  */
-class page9: public ui_standard_view
+class page9: public UiStandardView
 {
 protected:
 	void on_load()
 	{
-		ui_standard_view::on_load();
+		UiStandardView::on_load();
 
 		//FIXME: Change below code to more convenient and clear way.
 		if (this->get_degree() == 90 || this->get_degree() == 270)
@@ -35,7 +35,7 @@ protected:
 
 	void on_portrait()
 	{
-		ui_standard_view::on_portrait();
+		UiStandardView::on_portrait();
 
 		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Portrait/Landscape",
 			//Prev Button Callback
@@ -55,7 +55,7 @@ protected:
 
 	void on_landscape()
 	{
-		ui_standard_view::on_landscape();
+		UiStandardView::on_landscape();
 
 		Evas_Object *content = create_landscape_content(this->get_base(), "ViewMgr Demo<br>Portrait/Landscape",
 				//Prev Button Callback
@@ -74,6 +74,6 @@ protected:
 	}
 
 public:
-	page9() : ui_standard_view("page9") {}
+	page9() : UiStandardView("page9") {}
 	~page9() {}
 };

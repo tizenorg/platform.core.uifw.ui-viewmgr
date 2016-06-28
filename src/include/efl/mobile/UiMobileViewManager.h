@@ -14,15 +14,18 @@
  *  limitations under the License.
  *
  */
-#ifndef _UI_PRIVATE_H_
-#define _UI_PRIVATE_H_
+#ifndef _UI_MOBILE_VIEWMANAGER_H_
+#define _UI_MOBILE_VIEWMANAGER_H_
 
-#include "../../../../include/efl/mobile/UiMobileViewManager.h"
+#include "../UiBaseViewManager.h"
+#include "UiView.h"
+#include "UiStandardView.h"
+#include "UiKeyListener.h"
+#include "UiViewmgr.h"
+#include "UiMenu.h"
+#include "UiPopup.h"
+#include "UiApp.h"
 
-typedef UiViewmgr ui_viewmgr;
-typedef UiView ui_view;
-typedef UiStandardView ui_standard_view;
-typedef UiMenu ui_menu;
-typedef UiPopup ui_popup;
+#define UI_VIEWMGR (UiApp::get_instance()->get_viewmgr())
 
-#endif /* _UI_PRIVATE_H_ */
+#endif /* UI_MOBILE_VIEWMANAGER_H */

@@ -15,7 +15,7 @@
  *
  */
 #include <dlog.h>
-#include <ui_viewmanager.h>
+#include <UiViewManager.h>
 
 //uncomment if you want debug
 #ifndef TIZEN_ENGINEER_MODE
@@ -36,5 +36,5 @@ Evas_Object *create_content(Evas_Object *parent, const char *text, Evas_Smart_Cb
 Evas_Object *create_scrolling_content(Evas_Object *parent);
 Evas_Object* create_title_handle_content(Evas_Object *parent, Evas_Smart_Cb prev_btn_clicked_cb, Evas_Smart_Cb next_btn_clicked_cb,
 					Evas_Smart_Cb title_show_btn_clicked_cb, Evas_Smart_Cb title_hide_btn_clicked_cb,
-					Evas_Smart_Cb title_show_anim_btn_clicked_cb, Evas_Smart_Cb title_hide_anim_btn_clicked_cb, ui_view *view);
+					Evas_Smart_Cb title_show_anim_btn_clicked_cb, Evas_Smart_Cb title_hide_anim_btn_clicked_cb, UiView *view);
 Elm_Toolbar *create_toolbar(Evas_Object *parent, const char *style);

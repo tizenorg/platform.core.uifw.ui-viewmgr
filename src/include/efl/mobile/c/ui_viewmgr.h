@@ -148,7 +148,7 @@ EAPI ui_view *ui_viewmgr_view_get_by_idx(ui_viewmgr *viewmgr, int idx);
  *  @return The view which name is matched with @p name.
  *          If there were no views name matched, @c NULL will be returned.
  *
- *  @see ui_iface_view::set_name()
+ *  @see UiIfaceView::set_name()
  */
 EAPI ui_view *ui_viewmgr_view_get_by_name(ui_viewmgr *viewmgr, const char *name);
 

@@ -32,21 +32,21 @@
 #include "page2.h"
 #include "page1.h"
 
-class sample_app: public ui_app
+class SampleApp: public UiApp
 {
 public:
-	sample_app()
-			: ui_app(PACKAGE, LOCALE_DIR)
+	SampleApp()
+			: UiApp(PACKAGE, LOCALE_DIR)
 	{
 	}
-	~sample_app()
+	~SampleApp()
 	{
 	}
 
 protected:
 	bool on_create()
 	{
-		if (!ui_app::on_create())
+		if (!UiApp::on_create())
 		{
 			return false;
 		}
@@ -60,6 +60,6 @@ protected:
 
 int main(int argc, char *argv[])
 {
-	sample_app app;
+	SampleApp app;
 	return app.run(argc, argv);
 }

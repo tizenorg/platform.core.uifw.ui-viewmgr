@@ -14,15 +14,13 @@
  *  limitations under the License.
  *
  */
-#ifndef _UI_PRIVATE_H_
-#define _UI_PRIVATE_H_
+#include "../../include/efl/UiBaseViewManager.h"
 
-#include "../../../../include/efl/mobile/UiMobileViewManager.h"
+UiBaseOverlay::UiBaseOverlay(UiBaseView *view)
+		: UiIfaceOverlay(view)
+{
+}
 
-typedef UiViewmgr ui_viewmgr;
-typedef UiView ui_view;
-typedef UiStandardView ui_standard_view;
-typedef UiMenu ui_menu;
-typedef UiPopup ui_popup;
-
-#endif /* _UI_PRIVATE_H_ */
+UiBaseOverlay::~UiBaseOverlay()
+{
+}

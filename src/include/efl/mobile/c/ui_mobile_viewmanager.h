@@ -55,7 +55,7 @@ typedef struct ui_popup_s ui_popup;
 
 
 //FIXME: better way?
-#include "../../../interface/ui_iface_types.h"
+#include "../../../interface/UiIfaceTypes.h"
 
 #include "ui_application.h"
 #include "ui_menu.h"
