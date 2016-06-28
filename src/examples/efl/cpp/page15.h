@@ -15,16 +15,16 @@
  *
  */
 
-/** This page inherit ui_ui_standard_view
+/** This page inherit UiStandardView
  *  This create a content that has same size of screen.
  *  When this view has rotated viewmgr's internal scroller will be enabled automatically.
  */
-class page15: public ui_standard_view
+class page15: public UiStandardView
 {
 protected:
 	void on_load()
 	{
-		ui_standard_view::on_load();
+		UiStandardView::on_load();
 
 		//Create a main content.
 		Evas_Object *content = create_scrolling_content(this->get_base());
@@ -37,7 +37,7 @@ protected:
 		evas_object_smart_callback_add(right_btn, "clicked",
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-			UI_VIEWMGR->push_view(new page16());
+					UI_VIEWMGR->push_view(new page16());
 				},
 				this);
 

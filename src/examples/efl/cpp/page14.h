@@ -15,17 +15,17 @@
  *
  */
 
-/** This page inherit ui_ui_standard_view
+/** This page inherit UiStandardView
  *  And make a view transition style as none.
  *  There will be no effect when view appear or disappear.
  *  The default of transition style of view was slide in/out.
  */
-class page14: public ui_standard_view
+class page14: public UiStandardView
 {
 protected:
 	void on_load()
 	{
-		ui_standard_view::on_load();
+		UiStandardView::on_load();
 
 		//Create a main content.
 		Evas_Object *content = create_content(this->get_base(), "ViewMgr++ Demo<br>None Transition",
@@ -44,7 +44,7 @@ protected:
 	}
 
 public:
-	page14() : ui_standard_view("page14")
+	page14() : UiStandardView("page14")
 	{
 		this->set_transition_style("none");
 	}

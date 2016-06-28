@@ -3,7 +3,7 @@
 
 using namespace efl_viewmanager;
 
-class ui_app_capi : public ui_app
+class ui_app_capi : public UiApp
 {
 public:
 	ui_app_lifecycle_callback_s capi_lifecycle_callback;
@@ -11,7 +11,7 @@ public:
 
 	bool on_create()
 	{
-		if (!ui_app::on_create()) return false;
+		if (!UiApp::on_create()) return false;
 
 		if (!this->capi_lifecycle_callback.create) return false;
 		return this->capi_lifecycle_callback.create(this->data);
@@ -19,7 +19,7 @@ public:
 
 	void on_terminate()
 	{
-		ui_app::on_terminate();
+		UiApp::on_terminate();
 
 		if (!this->capi_lifecycle_callback.terminate) return;
 		this->capi_lifecycle_callback.terminate(this->data);
@@ -27,7 +27,7 @@ public:
 
 	void on_pause()
 	{
-		ui_app::on_pause();
+		UiApp::on_pause();
 
 		if (!this->capi_lifecycle_callback.pause) return;
 		this->capi_lifecycle_callback.pause(this->data);
@@ -35,7 +35,7 @@ public:
 
 	void on_resume()
 	{
-		ui_app::on_resume();
+		UiApp::on_resume();
 
 		if (!this->capi_lifecycle_callback.resume) return;
 		this->capi_lifecycle_callback.resume(this->data);
@@ -43,14 +43,14 @@ public:
 
 	void on_control(app_control_h app_control)
 	{
-		ui_app::on_control(app_control);
+		UiApp::on_control(app_control);
 
 		if (!this->capi_lifecycle_callback.app_control) return;
 		this->capi_lifecycle_callback.app_control(app_control, this->data);
 	}
 
 	ui_app_capi(const char *pkg, const char *locale_dir)
-			: ui_app(pkg, locale_dir), data(NULL)
+			: UiApp(pkg, locale_dir), data(NULL)
 	{
 	}
 
@@ -67,7 +67,7 @@ public:
 
 		this->data = user_data;
 
-		return ui_app::run(argc, argv);
+		return UiApp::run(argc, argv);
 	}
 };
 

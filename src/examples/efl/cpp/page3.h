@@ -15,15 +15,15 @@
  *
  */
 
-/** This example create a simple view which is inheritance ui_standard_view.
+/** This example create a simple view which is inheritance UiStandardView.
  *  And set text in view subtitle. then push in viewmgr.
  */
-class page3: public ui_standard_view
+class page3: public UiStandardView
 {
 protected:
 	void on_load()
 	{
-		ui_standard_view::on_load();
+		UiStandardView::on_load();
 
 		//Create a main content.
 		Evas_Object *content = create_content(this->get_base(), "ViewMgr++ Demo<br>Subtitle",
@@ -43,6 +43,6 @@ protected:
 	}
 
 public:
-	page3() : ui_standard_view("page3") {}
+	page3() : UiStandardView("page3") {}
 	~page3() {}
 };

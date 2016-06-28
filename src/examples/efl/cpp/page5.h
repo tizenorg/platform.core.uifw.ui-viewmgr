@@ -15,15 +15,15 @@
  *
  */
 
-/** This page inherit ui_view to show how to create full view.
+/** This page inherit UiView to show how to create full view.
  *  And set indicator state as hide.
  */
-class page5: public ui_view
+class page5: public UiView
 {
 protected:
 	void on_load()
 	{
-		ui_view::on_load();
+		UiView::on_load();
 
 		//Create a main content.
 		Evas_Object *content = create_content(this->get_base(), "ViewMgr++ Demo<br>Full View",
@@ -43,6 +43,6 @@ protected:
 	}
 
 public:
-	page5() : ui_view("page5") {}
+	page5() : UiView("page5") {}
 	~page5() {}
 };

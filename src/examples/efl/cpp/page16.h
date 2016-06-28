@@ -15,15 +15,15 @@
  *
  */
 
-/** This page inherit ui_ui_standard_view
+/** This page inherit UiStandardView
  *  This view create a lot of buttons to show how to handle title area visible state with animation or no effect.
  */
-class page16: public ui_standard_view
+class page16: public UiStandardView
 {
 protected:
 	void on_load()
 	{
-		ui_standard_view::on_load();
+		UiStandardView::on_load();
 
 		//Create a main content.
 		Evas_Object *content = create_title_handle_content(this->get_base(),
@@ -40,25 +40,25 @@ protected:
 				//Title Show Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					ui_standard_view *view = static_cast<ui_standard_view *>(data);
+					UiStandardView *view = static_cast<UiStandardView *>(data);
 					view->set_title_visible(true, false);
 				},
 				//Title Hide Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					ui_standard_view *view = static_cast<ui_standard_view *>(data);
+					UiStandardView *view = static_cast<UiStandardView *>(data);
 					view->set_title_visible(false, false);
 				},
 				//Title Show Anim Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					ui_standard_view *view = static_cast<ui_standard_view *>(data);
+					UiStandardView *view = static_cast<UiStandardView *>(data);
 					view->set_title_visible(true, true);
 				},
 				//Title Hide Anim Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					ui_standard_view *view = static_cast<ui_standard_view *>(data);
+					UiStandardView *view = static_cast<UiStandardView *>(data);
 					view->set_title_visible(false, true);
 				}, this);
 
@@ -66,6 +66,6 @@ protected:
 	}
 
 public:
-	page16() : ui_standard_view("page16") {}
+	page16() : UiStandardView("page16") {}
 	~page16() {}
 };
