@@ -16,12 +16,12 @@
  */
 #include "../../../include/efl/mobile/UiMobileViewManager.h"
 
-static bool update_popup(UiPopup *popup)
+static bool _updatePopup(UiPopup *popup)
 {
-	Elm_Win *win = popup->get_base();
+	Elm_Win *win = popup->getBase();
 	if (!win) return false;
 
-	Elm_Popup *_popup = popup->get_content();
+	Elm_Popup *_popup = popup->getContent();
 	if (!_popup) return false;
 
 	evas_object_show(_popup);
@@ -29,31 +29,31 @@ static bool update_popup(UiPopup *popup)
 	return true;
 }
 
-static void popup_dismissed_cb(void *data, Evas_Object *obj, void *event_info)
+static void _popupDismissedCb(void *data, Evas_Object *obj, void *event_info)
 {
 	evas_object_hide(obj);
 }
 
-static void popup_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+static void _popupDelCb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
 	UiPopup *popup = static_cast<UiPopup *>(data);
-	popup->unset_content();
+	popup->unsetContent();
 }
 
 UiPopup::UiPopup(UiView *view)
 		: UiBaseOverlay(view)
 {
-	view->connect_popup(this);
+	view->_connectPopup(this);
 }
 
 UiPopup::~UiPopup()
 {
-	dynamic_cast<UiView *>(this->get_view())->disconnect_popup(this);
-	Elm_Popup *popup = this->unset_content();
+	dynamic_cast<UiView *>(this->getView())->_disconnectPopup(this);
+	Elm_Popup *popup = this->unsetContent();
 	evas_object_del(popup);
 }
 
-Elm_Win *UiPopup::get_window()
+Elm_Win *UiPopup::getWindow()
 {
 	UiViewmgr *viewmgr = UI_VIEWMGR;
 	if (!viewmgr)
@@ -61,12 +61,12 @@ Elm_Win *UiPopup::get_window()
 		LOGE("Viewmgr is null?? menu(%p)", this);
 		return NULL;
 	}
-	return viewmgr->get_window();
+	return viewmgr->getWindow();
 }
 
 bool UiPopup::deactivate()
 {
-	Elm_Popup *popup = this->get_content();
+	Elm_Popup *popup = this->getContent();
 	if (!popup)
 	{
 		LOGE("Content is not set! = UiPopup(%p)", this);
@@ -74,21 +74,21 @@ bool UiPopup::deactivate()
 	}
 
 	elm_popup_dismiss(popup);
-	dynamic_cast<UiView*>(this->get_view())->on_resume();
+	dynamic_cast<UiView*>(this->getView())->onResume();
 
 	return true;
 }
 
 bool UiPopup::activate()
 {
-	bool ret = update_popup(this);
-	if (ret) dynamic_cast<UiView*>(this->get_view())->on_pause();
+	bool ret = _updatePopup(this);
+	if (ret) dynamic_cast<UiView*>(this->getView())->onPause();
 	return ret;
 }
 
-bool UiPopup::set_content(Elm_Popup *popup)
+bool UiPopup::setContent(Elm_Popup *popup)
 {
-	Elm_Popup *prev = this->unset_content();
+	Elm_Popup *prev = this->unsetContent();
 	evas_object_del(prev);
 
 	if (!popup) return true;
@@ -100,38 +100,38 @@ bool UiPopup::set_content(Elm_Popup *popup)
 	}
 
 	elm_popup_align_set(popup, ELM_NOTIFY_ALIGN_FILL, 1.0);
-	evas_object_event_callback_add(popup, EVAS_CALLBACK_DEL, popup_del_cb, this);
-	evas_object_smart_callback_add(popup, "dismissed", popup_dismissed_cb, this);
+	evas_object_event_callback_add(popup, EVAS_CALLBACK_DEL, _popupDelCb, this);
+	evas_object_smart_callback_add(popup, "dismissed", _popupDismissedCb, this);
 
-	UiBaseOverlay::set_content(popup);
+	UiBaseOverlay::setContent(popup);
 
 	return true;
 }
 
-bool UiPopup::is_activated()
+bool UiPopup::isActivated()
 {
-	Elm_Popup *popup = this->get_content();
+	Elm_Popup *popup = this->getContent();
 	if (!popup) return false;
 	return evas_object_visible_get(popup);
 }
 
-Elm_Popup *UiPopup::unset_content()
+Elm_Popup *UiPopup::unsetContent()
 {
-	Elm_Popup *popup = UiBaseOverlay::unset_content();
+	Elm_Popup *popup = UiBaseOverlay::unsetContent();
 	if (!popup) return NULL;
 
-	evas_object_event_callback_del(popup, EVAS_CALLBACK_DEL, popup_del_cb);
-	evas_object_smart_callback_del(popup, "dismissed", popup_dismissed_cb);
+	evas_object_event_callback_del(popup, EVAS_CALLBACK_DEL, _popupDelCb);
+	evas_object_smart_callback_del(popup, "dismissed", _popupDismissedCb);
 
 	return popup;
 }
 
-Evas_Object *UiPopup::get_base()
+Evas_Object *UiPopup::getBase()
 {
-	return this->get_window();
+	return this->getWindow();
 }
 
-int UiPopup::get_degree()
+int UiPopup::getDegree()
 {
-	return this->get_view()->get_degree();
+	return this->getView()->getDegree();
 }

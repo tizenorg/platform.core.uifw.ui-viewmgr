@@ -37,7 +37,7 @@
 	friend class A
 
 #define _UI_DECLARE_PRIVATE_IMPL(A) \
-	class A##Impl *impl; \
+	class A##Impl *_impl; \
 	friend class A##Impl
 
 #define _UI_DISABLE_COPY_AND_ASSIGN(A) \

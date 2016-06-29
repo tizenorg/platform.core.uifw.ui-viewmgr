@@ -20,27 +20,27 @@
 class page6: public UiStandardView
 {
 protected:
-	void on_load()
+	void onLoad()
 	{
-		UiStandardView::on_load();
+		UiStandardView::onLoad();
 
 		//Create a main content.
-		Evas_Object *content = create_content(this->get_base(), "ViewMgr++ Demo<br>Toolbar",
+		Evas_Object *content = createContent(this->getBase(), "ViewMgr++ Demo<br>Toolbar",
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					UI_VIEWMGR->pop_view();
+					UI_VIEWMGR->popView();
 				},
 				//Next Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					UI_VIEWMGR->push_view(new page7());
+					UI_VIEWMGR->pushView(new page7());
 				});
 
 		//Arguments: content, title
-		this->set_content(content, "Page6");
-		Elm_Toolbar *toolbar = create_toolbar(this->get_base(), "toolbar_with_title");
-		this->set_toolbar(toolbar);
+		this->setContent(content, "Page6");
+		Elm_Toolbar *toolbar = createToolbar(this->getBase(), "toolbar_with_title");
+		this->setToolbar(toolbar);
 	}
 
 public:

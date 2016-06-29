@@ -31,72 +31,72 @@ class UiViewImpl
 	friend class UiView;
 
 private:
-	UiView *view;
-	UiMenu *menu;
-	list<UiPopup *> popup_list;
+	UiView *_view;
+	UiMenu *_menu;
+	list<UiPopup *> _popupList;
 
-	void connect_popup(UiPopup *popup);
-	void disconnect_popup(UiPopup *popup);
-	bool deactivate_popup(bool top_one);
+	void _connectPopup(UiPopup *popup);
+	void _disconnectPopup(UiPopup *popup);
+	bool _deactivatePopup(bool topOne);
 
 protected:
-	UiMenu *on_menu_pre();
-	void on_menu_post();
-	void on_rotate(int degree);
-	void on_portrait();
-	void on_landscape();
-	bool on_back();
+	UiMenu *onMenuPre();
+	void onMenuPost();
+	void onRotate(int degree);
+	void onPortrait();
+	void onLandscape();
+	bool onBack();
 
 public:
 	UiViewImpl(UiView *view);
 	~UiViewImpl();
 
-	const UiMenu *get_menu()
+	const UiMenu *getMenu()
 	{
-		return this->menu;
+		return this->_menu;
 	}
 };
 
 }
 
-typedef list<UiPopup*>::reverse_iterator popup_ritr;
+typedef list<UiPopup*>::reverse_iterator popupRitr;
 
-void UiViewImpl::connect_popup(UiPopup *popup)
+void UiViewImpl::_connectPopup(UiPopup *popup)
 {
-	this->popup_list.push_back(popup);
+	this->_popupList.push_back(popup);
 }
 
-void UiViewImpl::disconnect_popup(UiPopup *popup)
+void UiViewImpl::_disconnectPopup(UiPopup *popup)
 {
-	this->popup_list.remove(popup);
+	this->_popupList.remove(popup);
 }
 
-bool UiViewImpl::deactivate_popup(bool top_one)
+bool UiViewImpl::_deactivatePopup(bool topOne)
 {
-	for (popup_ritr it = this->popup_list.rbegin(); it != this->popup_list.rend(); it++)
+	for (popupRitr it = this->_popupList.rbegin(); it != this->_popupList.rend(); it++)
 	{
 		UiPopup *popup = *it;
-		if (!popup->is_activated()) continue;
-		popup->on_back();
+		if (!popup->isActivated()) continue;
+		popup->onBack();
 		//deactivate only one top one? or all popups?
-		if (top_one) return true;
+		if (topOne) return true;
 	}
 	return false;
 }
 
-bool UiViewImpl::on_back()
+bool UiViewImpl::onBack()
 {
 	//If any popup is activated, deactivate the popup first.
-	if (this->deactivate_popup(true))
+	if (this->_deactivatePopup(true))
 	{
 		return false;
 	}
 
-	if (this->menu)
+	if (this->_menu)
 	{
-		if (this->menu->is_activated())
+		if (this->_menu->isActivated())
 		{
-			this->menu->on_back();
+			this->_menu->onBack();
 			return false;
 		}
 	}
@@ -104,131 +104,131 @@ bool UiViewImpl::on_back()
 }
 
 UiViewImpl::UiViewImpl(UiView *view)
-		: view(view), menu(NULL)
+		: _view(view), _menu(NULL)
 {
 }
 
 UiViewImpl::~UiViewImpl()
 {
-	if (menu) delete (this->menu);
+	if (_menu) delete (this->_menu);
 }
 
-UiMenu *UiViewImpl::on_menu_pre()
+UiMenu *UiViewImpl::onMenuPre()
 {
-	if (!this->menu)
+	if (!this->_menu)
 	{
-		this->menu = new UiMenu(this->view);
+		this->_menu = new UiMenu(this->_view);
 	}
 
-	if (this->menu->is_activated())
+	if (this->_menu->isActivated())
 	{
-		this->menu->deactivate();
+		this->_menu->deactivate();
 		return NULL;
 	}
 
-	return this->menu;
+	return this->_menu;
 }
 
-void UiViewImpl::on_menu_post()
+void UiViewImpl::onMenuPost()
 {
-	if (!this->menu) return;
-	this->menu->activate();
+	if (!this->_menu) return;
+	this->_menu->activate();
 }
 
-void UiViewImpl::on_rotate(int degree)
+void UiViewImpl::onRotate(int degree)
 {
-	if (!this->menu) return;
-	if (!this->menu->is_activated()) return;
-	this->menu->on_rotate(degree);
+	if (!this->_menu) return;
+	if (!this->_menu->isActivated()) return;
+	this->_menu->onRotate(degree);
 }
 
-void UiViewImpl::on_portrait()
+void UiViewImpl::onPortrait()
 {
-	if (!this->menu) return;
-	if (!this->menu->is_activated()) return;
-	this->menu->on_portrait();
+	if (!this->_menu) return;
+	if (!this->_menu->isActivated()) return;
+	this->_menu->onPortrait();
 }
 
-void UiViewImpl::on_landscape()
+void UiViewImpl::onLandscape()
 {
-	if (!this->menu) return;
-	if (!this->menu->is_activated()) return;
-	this->menu->on_landscape();
+	if (!this->_menu) return;
+	if (!this->_menu->isActivated()) return;
+	this->_menu->onLandscape();
 }
 
 /***********************************************************************************************/
 /* External class Implementation                                                               */
 /***********************************************************************************************/
 
-void UiView::connect_popup(UiPopup *popup)
+void UiView::_connectPopup(UiPopup *popup)
 {
-	this->impl->connect_popup(popup);
+	this->_impl->_connectPopup(popup);
 }
 
-void UiView::disconnect_popup(UiPopup *popup)
+void UiView::_disconnectPopup(UiPopup *popup)
 {
-	this->impl->disconnect_popup(popup);
+	this->_impl->_disconnectPopup(popup);
 }
 
-void UiView::on_deactivate()
+void UiView::onDeactivate()
 {
-	this->impl->deactivate_popup(false);
-	UiBaseView::on_deactivate();
+	this->_impl->_deactivatePopup(false);
+	UiBaseView::onDeactivate();
 }
 
-void UiView::on_back()
+void UiView::onBack()
 {
-	if (!this->impl->on_back()) return;
-	UiBaseView::on_back();
+	if (!this->_impl->onBack()) return;
+	UiBaseView::onBack();
 }
 
 UiView::UiView(const char *name)
 		: UiBaseView(name)
 {
-	this->impl = new UiViewImpl(this);
+	this->_impl = new UiViewImpl(this);
 }
 
 UiView::~UiView()
 {
-	delete(this->impl);
+	delete(this->_impl);
 }
 
-UiMenu *UiView::on_menu_pre()
+UiMenu *UiView::onMenuPre()
 {
-	return this->impl->on_menu_pre();
+	return this->_impl->onMenuPre();
 }
 
-void UiView::on_menu(UiMenu *menu)
+void UiView::onMenu(UiMenu *menu)
 {
 }
 
-void UiView::on_menu_post()
+void UiView::onMenuPost()
 {
-	this->impl->on_menu_post();
+	this->_impl->onMenuPost();
 }
 
-void UiView::on_rotate(int degree)
-{
-	//FIXME: see how to handle on_menu()
-	UiBaseView::on_rotate(degree);
-	this->impl->on_rotate(degree);
-}
-
-void UiView::on_portrait()
+void UiView::onRotate(int degree)
 {
 	//FIXME: see how to handle on_menu()
-	UiBaseView::on_portrait();
-	this->impl->on_portrait();
+	UiBaseView::onRotate(degree);
+	this->_impl->onRotate(degree);
 }
 
-void UiView::on_landscape()
+void UiView::onPortrait()
 {
 	//FIXME: see how to handle on_menu()
-	UiBaseView::on_landscape();
-	this->impl->on_landscape();
+	UiBaseView::onPortrait();
+	this->_impl->onPortrait();
 }
 
-const UiMenu *UiView::get_menu()
+void UiView::onLandscape()
 {
-	return this->impl->get_menu();
+	//FIXME: see how to handle on_menu()
+	UiBaseView::onLandscape();
+	this->_impl->onLandscape();
+}
+
+const UiMenu *UiView::getMenu()
+{
+	return this->_impl->getMenu();
 }

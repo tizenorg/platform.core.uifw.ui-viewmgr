@@ -39,7 +39,7 @@ protected:
 	 *  @see on_landscpae()
 	 *  @see on_rotate()
 	 */
-	virtual void on_portrait() {}
+	virtual void onPortrait() {}
 
 	/**
 	 *  @brief View landscape state.
@@ -49,7 +49,7 @@ protected:
 	 *  @see on_portrait()
 	 *  @see on_rotate()
 	 */
-	virtual void on_landscape() {}
+	virtual void onLandscape() {}
 
 	/**
 	 *  @brief View rotate changed.
@@ -61,7 +61,7 @@ protected:
 	 *  @see on_portrait()
 	 *  @see on_landscpae()
 	 */
-	virtual void on_rotate(int degree) {}
+	virtual void onRotate(int degree) {}
 
 public:
 	/**
@@ -69,7 +69,7 @@ public:
 	 *
 	 *  @return Current rotation degree, -1 if it fails to get degree information.
 	 */
-	virtual int get_degree() { return 0; }
+	virtual int getDegree() { return 0; }
 };
 
 }

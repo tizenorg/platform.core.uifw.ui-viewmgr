@@ -54,7 +54,7 @@ public:
 	 *
 	 *  @return @c true if it succeeds, @c false otherwise.
 	 */
-	bool set_content(Evas_Object *content, const char *title = NULL);
+	bool setContent(Evas_Object *content, const char *title = NULL);
 
 	/**
 	 *  @brief Replace or set a content of the view.
@@ -67,7 +67,7 @@ public:
 	 *
 	 *  @return @c true if it succeeds, @c false otherwise.
 	 */
-	bool set_content(Evas_Object *content, const char *title, const char *subtitle, Elm_Button *title_left_btn, Elm_Button *title_right_btn);
+	bool setContent(Evas_Object *content, const char *title, const char *subtitle, Elm_Button *titleLeftBtn, Elm_Button *titleRightBtn);
 
 	/**
 	 *  @brief Set a title badge text.
@@ -76,7 +76,7 @@ public:
 	 *
 	 *  @return @c true if it succeeds, @c false otherwise.
 	 */
-	bool set_title_badge(const char *text);
+	bool setTitleBadge(const char *text);
 
 	/**
 	 *  @brief Set a subtitle text.
@@ -85,7 +85,7 @@ public:
 	 *
 	 *  @return @c true if it succeeds, @c false otherwise.
 	 */
-	bool set_subtitle(const char *text);
+	bool setSubtitle(const char *text);
 
 	/**
 	 *  @brief Set a title_left_btn.
@@ -94,7 +94,7 @@ public:
 	 *
 	 *  @return @c true if it succeeds, @c false otherwise.
 	 */
-	bool set_title_left_btn(Elm_Button *title_left_btn);
+	bool setTitleLeftBtn(Elm_Button *titleLeftBtn);
 
 	/**
 	 *  @brief Set a title_right_btn.
@@ -103,7 +103,7 @@ public:
 	 *
 	 *  @return @c true if it succeeds, @c false otherwise.
 	 */
-	bool set_title_right_btn(Elm_Button *title_right_btn);
+	bool setTitleRightBtn(Elm_Button *titleRightBtn);
 
 	/**
 	 *  @brief Set a title text.
@@ -112,7 +112,7 @@ public:
 	 *
 	 *  @return @c true if it succeeds, @c false otherwise.
 	 */
-	bool set_title(const char *text);
+	bool setTitle(const char *text);
 
 	/**
 	 *  @brief Set a toolbar below title.
@@ -121,7 +121,7 @@ public:
 	 *
 	 *  @return @c true if it succeeds, @c false otherwise.
 	 */
-	bool set_toolbar(Elm_Toolbar *toolbar);
+	bool setToolbar(Elm_Toolbar *toolbar);
 
 	/**
 	 *  @brief Control the title visible state.
@@ -131,63 +131,63 @@ public:
 	 *
 	 *  @return @c true if it succeeds, @c false otherwise.
 	 */
-	bool set_title_visible(bool visible, bool anim);
+	bool setTitleVisible(bool visible, bool anim);
 
 	/**
 	 *  @brief Unset a content of the view.
 	 *
 	 *  @return A previous content. If it wasn't, return @c NULL.
 	 */
-	Evas_Object *unset_content();
+	Evas_Object *unSetContent();
 
 	/**
 	 *  @brief Unset a title left button of title area.
 	 *
 	 *  @return A previous content. If it wasn't, return @c NULL.
 	 */
-	Elm_Button *unset_title_left_btn();
+	Elm_Button *unSetTitleLeftBtn();
 
 	/**
 	 *  @brief Unset a title right button of title area.
 	 *
 	 *  @return A previous content. If it wasn't, return @c NULL.
 	 */
-	Elm_Button *unset_title_right_btn();
+	Elm_Button *unSetTitleRightBtn();
 
 	/**
 	 *  @brief Unset a toolbar.
 	 *
 	 *  @return A previous content. If it wasn't, return @c NULL.
 	 */
-	Elm_Toolbar *unset_toolbar();
+	Elm_Toolbar *unSetToolbar();
 
 	/**
 	 *  @brief Return a title left button of the view.
 	 *
 	 *  @return title left button of the view.
 	 */
-	Elm_Button *get_title_left_btn();
+	Elm_Button *getTitleLeftBtn();
 
 	/**
 	 *  @brief Return a title right button of the view.
 	 *
 	 *  @return title right button of the view.
 	 */
-	Elm_Button *get_title_right_btn();
+	Elm_Button *getTitleRightBtn();
 
 	/**
 	 *  @brief Return a toolbar of the view.
 	 *
 	 *  @return toolbar of the view.
 	 */
-	Elm_Toolbar *get_toolbar();
+	Elm_Toolbar *getToolbar();
 
 	/**
 	 *  @brief Get a base layout of viewmgr.
 	 *
 	 *  @return viewmgr's base layout object.
 	 */
-	virtual Evas_Object *get_base();
+	virtual Evas_Object *getBase();
 
 protected:
 	/**
@@ -196,14 +196,14 @@ protected:
 	 *  @note this state will be triggered by UiIfaceViewmgr.
 	 *
 	 */
-	virtual void on_load();
+	virtual void onLoad();
 
 	/** @brief view unload state.
 	 *
 	 *  @note this state will be triggered by UiIfaceViewmgr.
 	 *
 	 */
-	virtual void on_unload();
+	virtual void onUnload();
 
 	/** @brief toggle event block.
 	 *
@@ -212,7 +212,7 @@ protected:
 	 *
 	 *  @param block @c true, blocking enable, otherwise @c false.
 	 */
-	virtual void set_event_block(bool block);
+	virtual void setEventBlock(bool block);
 
 private:
 	_UI_DECLARE_PRIVATE_IMPL(UiStandardView);

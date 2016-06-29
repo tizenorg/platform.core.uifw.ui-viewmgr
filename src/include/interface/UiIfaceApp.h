@@ -52,14 +52,14 @@ public:
 	 *
 	 *  @return UiIfaceViewmgr instance.
 	 */
-	UiIfaceViewmgr *get_viewmgr();
+	UiIfaceViewmgr *getViewmgr();
 
 	/**
 	 *  @brief Return UiIfaceApp instance.
 	 *
 	 *  @return The instance of UiIfaceApp.
 	 */
-	static UiIfaceApp *get_instance();
+	static UiIfaceApp *getInstance();
 
 	/**
 	 *  @brief Application life-cycle start and add application event callback functions add.
@@ -81,66 +81,66 @@ protected:
 	 *  @return If this function returns true, the application main loop starts.
 	 *          If this function returns false, the application terminates.
 	 */
-	virtual bool on_create();
+	virtual bool onCreate();
 
 	/**
 	 *  @brief Calling before the main event loop finish.
 	 *
 	 *  @note Release all resources here.
 	 */
-	virtual void on_terminate();
+	virtual void onTerminate();
 
 	/**
 	 *  @brief Calling when application becomes invisible.
 	 */
-	virtual void on_pause();
+	virtual void onPause();
 
 	/**
 	 *  @brief Calling when application becomes visible.
 	 */
-	virtual void on_resume();
+	virtual void onResume();
 
 	/**
 	 *  @brief Calling when gets a launch request event.
 	 *
 	 *  @param app_control_h The instance of app_control_h.
 	 */
-	virtual void on_control(app_control_h app_control);
+	virtual void onControl(app_control_h app_control);
 
 	/**
 	 *  @brief Calling when device low battery.
 	 *
 	 *  @param app_event_info_h The instance of app_event_info_h.
 	 */
-	virtual void on_low_battery(app_event_info_h event_info);
+	virtual void onLowBattery(app_event_info_h event_info);
 
 	/**
 	 *  @brief Calling when device low memory.
 	 *
 	 *  @param app_event_info_h The instance of app_event_info_h.
 	 */
-	virtual void on_low_memory(app_event_info_h event_info);
+	virtual void onLowMemory(app_event_info_h event_info);
 
 	/**
 	 *  @brief Calling when device region changed.
 	 *
 	 *  @param app_event_info_h The instance of app_event_info_h.
 	 */
-	virtual void on_region_changed(app_event_info_h event_info);
+	virtual void onRegionChanged(app_event_info_h event_info);
 
 	/**
 	 *  @brief Calling when device orient changed.
 	 *
 	 *  @param app_event_info_h The instance of app_event_info_h.
 	 */
-	virtual void on_orient_changed(app_event_info_h event_info);
+	virtual void onOrientChanged(app_event_info_h event_info);
 
 	/**
 	 *  @brief Calling when language changed.
 	 *
 	 *  @param app_event_info_h The instance of app_event_info_h.
 	 */
-	virtual void on_lang_changed(app_event_info_h event_info);
+	virtual void onLangChanged(app_event_info_h event_info);
 
 private:
 	_UI_DECLARE_PRIVATE_IMPL(UiIfaceApp);
