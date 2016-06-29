@@ -21,25 +21,25 @@
 class page5: public UiView
 {
 protected:
-	void on_load()
+	void onLoad()
 	{
-		UiView::on_load();
+		UiView::onLoad();
 
 		//Create a main content.
-		Evas_Object *content = create_content(this->get_base(), "ViewMgr++ Demo<br>Full View",
+		Evas_Object *content = createContent(this->getBase(), "ViewMgr++ Demo<br>Full View",
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					UI_VIEWMGR->pop_view();
+					UI_VIEWMGR->popView();
 				},
 				//Next Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					UI_VIEWMGR->push_view(new page6());
+					UI_VIEWMGR->pushView(new page6());
 				});
 
-		this->set_content(content);
-		this->set_indicator(UI_VIEW_INDICATOR_HIDE);
+		this->setContent(content);
+		this->setIndicator(UI_VIEW_INDICATOR_HIDE);
 	}
 
 public:

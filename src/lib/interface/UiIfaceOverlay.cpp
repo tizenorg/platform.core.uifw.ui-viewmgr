@@ -29,15 +29,15 @@ class UiIfaceOverlayImpl
 	friend class UiIfaceOverlay;
 
 private:
-	UiIfaceOverlay *overlay;
-	UiIfaceView *view;
-	T content;
+	UiIfaceOverlay *_overlay;
+	UiIfaceView *_view;
+	T _content;
 
 public:
-	bool set_content(T content);
-	T unset_content();
-	UiIfaceView *get_view();
-	T get_content();
+	bool setContent(T content);
+	T unsetContent();
+	UiIfaceView *getView();
+	T getContent();
 
 	UiIfaceOverlayImpl(UiIfaceOverlay *overlay, UiIfaceView *view);
 	~UiIfaceOverlayImpl();
@@ -46,7 +46,7 @@ public:
 }
 
 UiIfaceOverlayImpl::UiIfaceOverlayImpl(UiIfaceOverlay *overlay, UiIfaceView *view)
-		: overlay(overlay), view(view), content(NULL)
+		: _overlay(overlay), _view(view), _content(NULL)
 {
 }
 
@@ -54,27 +54,27 @@ UiIfaceOverlayImpl::~UiIfaceOverlayImpl()
 {
 }
 
-bool UiIfaceOverlayImpl::set_content(T content)
+bool UiIfaceOverlayImpl::setContent(T content)
 {
-	this->content = content;
+	this->_content = content;
 	return true;
 }
 
-T UiIfaceOverlayImpl::unset_content()
+T UiIfaceOverlayImpl::unsetContent()
 {
-	T prev = this->content;
-	this->content = NULL;
+	T prev = this->_content;
+	this->_content = NULL;
 	return prev;
 }
 
-T UiIfaceOverlayImpl::get_content()
+T UiIfaceOverlayImpl::getContent()
 {
-	return this->content;
+	return this->_content;
 }
 
-UiIfaceView *UiIfaceOverlayImpl::get_view()
+UiIfaceView *UiIfaceOverlayImpl::getView()
 {
-	return this->view;
+	return this->_view;
 }
 
 
@@ -83,35 +83,35 @@ UiIfaceView *UiIfaceOverlayImpl::get_view()
 /***********************************************************************************************/
 UiIfaceOverlay::UiIfaceOverlay(UiIfaceView *view)
 {
-	this->impl = new UiIfaceOverlayImpl(this, view);
+	this->_impl = new UiIfaceOverlayImpl(this, view);
 }
 
 UiIfaceOverlay::~UiIfaceOverlay()
 {
-	delete(this->impl);
+	delete(this->_impl);
 }
 
-bool UiIfaceOverlay::set_content(T content)
+bool UiIfaceOverlay::setContent(T content)
 {
-	return this->impl->set_content(content);
+	return this->_impl->setContent(content);
 }
 
-T UiIfaceOverlay::unset_content()
+T UiIfaceOverlay::unsetContent()
 {
-	return this->impl->unset_content();
+	return this->_impl->unsetContent();
 }
 
-T UiIfaceOverlay::get_content()
+T UiIfaceOverlay::getContent()
 {
-	return this->impl->get_content();
+	return this->_impl->getContent();
 }
 
-UiIfaceView *UiIfaceOverlay::get_view()
+UiIfaceView *UiIfaceOverlay::getView()
 {
-	return this->impl->get_view();
+	return this->_impl->getView();
 }
 
-void UiIfaceOverlay::on_back()
+void UiIfaceOverlay::onBack()
 {
 	this->deactivate();
 }
@@ -126,7 +126,7 @@ bool UiIfaceOverlay::deactivate()
 	return true;
 }
 
-bool UiIfaceOverlay::is_activated()
+bool UiIfaceOverlay::isActivated()
 {
 	return true;
 }

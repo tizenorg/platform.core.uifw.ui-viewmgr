@@ -16,23 +16,23 @@
  */
 #include "../../../include/efl/mobile/UiMobileViewManager.h"
 
-static void ctxpopup_dismissed_cb(void *data, Evas_Object *obj, void *event_info)
+static void _ctxpopupDismissedCb(void *data, Evas_Object *obj, void *event_info)
 {
 	evas_object_hide(obj);
 }
 
-static void ctxpopup_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+static void _ctxpopupDelCb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
 	UiMenu *menu = static_cast<UiMenu *>(data);
-	menu->unset_content();
+	menu->unsetContent();
 }
 
-static bool update_menu(UiMenu *menu)
+static bool _updateMenu(UiMenu *menu)
 {
-	Elm_Win *win = menu->get_base();
+	Elm_Win *win = menu->getBase();
 	if (!win) return false;
 
-	Elm_Ctxpopup *ctxpopup = menu->get_content();
+	Elm_Ctxpopup *ctxpopup = menu->getContent();
 	if (!ctxpopup) return false;
 
 	/* We convince the top widget is a window */
@@ -57,29 +57,29 @@ static bool update_menu(UiMenu *menu)
 	return true;
 }
 
-static void win_resize_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+static void _winResizeCb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
 	UiMenu *menu = static_cast<UiMenu *>(data);
-	if (!menu->is_activated()) return;
-	update_menu(menu);
+	if (!menu->isActivated()) return;
+	_updateMenu(menu);
 }
 
 UiMenu::UiMenu(UiView *view)
 		: UiBaseOverlay(view)
 {
-	Elm_Win *win = this->get_window();
-	evas_object_event_callback_add(win, EVAS_CALLBACK_RESIZE, win_resize_cb, this);
+	Elm_Win *win = this->getWindow();
+	evas_object_event_callback_add(win, EVAS_CALLBACK_RESIZE, _winResizeCb, this);
 }
 
 UiMenu::~UiMenu()
 {
-	Elm_Win *win = this->get_window();
-	if (win) evas_object_event_callback_del(win, EVAS_CALLBACK_RESIZE, win_resize_cb);
-	Elm_Ctxpopup *ctxpopup = this->unset_content();
+	Elm_Win *win = this->getWindow();
+	if (win) evas_object_event_callback_del(win, EVAS_CALLBACK_RESIZE, _winResizeCb);
+	Elm_Ctxpopup *ctxpopup = this->unsetContent();
 	evas_object_del(ctxpopup);
 }
 
-Elm_Win *UiMenu::get_window()
+Elm_Win *UiMenu::getWindow()
 {
 	UiViewmgr *viewmgr = UI_VIEWMGR;
 	if (!viewmgr)
@@ -88,12 +88,12 @@ Elm_Win *UiMenu::get_window()
 		return NULL;
 	}
 
-	return viewmgr->get_window();
+	return viewmgr->getWindow();
 }
 
 bool UiMenu::deactivate()
 {
-	Elm_Ctxpopup *ctxpopup = this->get_content();
+	Elm_Ctxpopup *ctxpopup = this->getContent();
 	if (!ctxpopup)
 	{
 		LOGE("Content is not set! = UiMenu(%p)", this);
@@ -101,21 +101,21 @@ bool UiMenu::deactivate()
 	}
 
 	elm_ctxpopup_dismiss(ctxpopup);
-	dynamic_cast<UiView *>(this->get_view())->on_resume();
+	dynamic_cast<UiView *>(this->getView())->onResume();
 
 	return true;
 }
 
 bool UiMenu::activate()
 {
-	bool ret = update_menu(this);
-	if (ret) dynamic_cast<UiView *>(this->get_view())->on_pause();
+	bool ret = _updateMenu(this);
+	if (ret) dynamic_cast<UiView *>(this->getView())->onPause();
 	return ret;
 }
 
-bool UiMenu::set_content(Elm_Ctxpopup *ctxpopup)
+bool UiMenu::setContent(Elm_Ctxpopup *ctxpopup)
 {
-	Elm_Ctxpopup *prev = this->unset_content();
+	Elm_Ctxpopup *prev = this->unsetContent();
 	evas_object_del(prev);
 
 	if (!ctxpopup) return true;
@@ -128,38 +128,38 @@ bool UiMenu::set_content(Elm_Ctxpopup *ctxpopup)
 
 	elm_object_style_set(ctxpopup, "more/default");
 	elm_ctxpopup_auto_hide_disabled_set(ctxpopup, EINA_TRUE);
-	evas_object_smart_callback_add(ctxpopup, "dismissed", ctxpopup_dismissed_cb, NULL);
-	evas_object_event_callback_add(ctxpopup, EVAS_CALLBACK_DEL, ctxpopup_del_cb, this);
+	evas_object_smart_callback_add(ctxpopup, "dismissed", _ctxpopupDismissedCb, NULL);
+	evas_object_event_callback_add(ctxpopup, EVAS_CALLBACK_DEL, _ctxpopupDelCb, this);
 
-	UiBaseOverlay::set_content(ctxpopup);
+	UiBaseOverlay::setContent(ctxpopup);
 
 	return true;
 }
 
-bool UiMenu::is_activated()
+bool UiMenu::isActivated()
 {
-	Elm_Ctxpopup *ctxpopup = this->get_content();
+	Elm_Ctxpopup *ctxpopup = this->getContent();
 	if (!ctxpopup) return false;
 	return evas_object_visible_get(ctxpopup);
 }
 
-Elm_Ctxpopup *UiMenu::unset_content()
+Elm_Ctxpopup *UiMenu::unsetContent()
 {
-	Elm_Ctxpopup *ctxpopup = UiBaseOverlay::unset_content();
+	Elm_Ctxpopup *ctxpopup = UiBaseOverlay::unsetContent();
 	if (!ctxpopup) return NULL;
 
-	evas_object_smart_callback_del(ctxpopup, "dismissed", ctxpopup_dismissed_cb);
-	evas_object_event_callback_del(ctxpopup, EVAS_CALLBACK_DEL, ctxpopup_del_cb);
+	evas_object_smart_callback_del(ctxpopup, "dismissed", _ctxpopupDismissedCb);
+	evas_object_event_callback_del(ctxpopup, EVAS_CALLBACK_DEL, _ctxpopupDelCb);
 
 	return ctxpopup;
 }
 
-Evas_Object *UiMenu::get_base()
+Evas_Object *UiMenu::getBase()
 {
-	return this->get_window();
+	return this->getWindow();
 }
 
-int UiMenu::get_degree()
+int UiMenu::getDegree()
 {
-	return this->get_view()->get_degree();
+	return this->getView()->getDegree();
 }

@@ -68,21 +68,21 @@ protected:
 	 *
 	 *  @note This is checking H/W key is menu or not.
 	 */
-	virtual void extend_event_proc(UiBaseView *view, Evas_Event_Key_Down *ev) {}
+	virtual void extendEventProc(UiBaseView *view, Evas_Event_Key_Down *ev) {}
 
 	/**
 	 *  @brief Return the viewmgr instance.
 	 *
 	 *  @return UiBaseViewmgr instance.
 	 */
-	UiBaseViewmgr *get_viewmgr();
+	UiBaseViewmgr *getViewmgr();
 
 	/**
 	 *  @brief Return the key grabber(evas_object_rectangle).
 	 *
 	 *  @return key grabber object.
 	 */
-	Evas_Object *get_keygrab_obj();
+	Evas_Object *getKeygrabObj();
 
 private:
 	_UI_DECLARE_PRIVATE_IMPL(UiBaseKeyListener);

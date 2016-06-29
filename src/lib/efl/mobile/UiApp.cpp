@@ -33,12 +33,12 @@ UiApp::~UiApp()
 {
 }
 
-UiViewmgr *UiApp::get_viewmgr()
+UiViewmgr *UiApp::getViewmgr()
 {
-	return dynamic_cast<UiViewmgr*>(UiIfaceApp::get_viewmgr());
+	return dynamic_cast<UiViewmgr*>(UiIfaceApp::getViewmgr());
 }
 
-UiApp *UiApp::get_instance()
+UiApp *UiApp::getInstance()
 {
-	return dynamic_cast<UiApp*>(UiIfaceApp::get_instance());
+	return dynamic_cast<UiApp*>(UiIfaceApp::getInstance());
 }

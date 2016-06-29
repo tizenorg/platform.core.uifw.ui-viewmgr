@@ -65,14 +65,14 @@ public:
 	 *
 	 *  @return @c true if it succeeds, @c false otherwise.
 	 */
-	virtual bool set_content(Elm_Ctxpopup* ctxpopup);
+	virtual bool setContent(Elm_Ctxpopup* ctxpopup);
 
 	/**
 	 *  @brief This is for unsetting a content of the menu.
 	 *
 	 *  @return A previous content. If it wasn't, return value will be @c NULL.
 	 */
-	virtual Elm_Ctxpopup *unset_content();
+	virtual Elm_Ctxpopup *unsetContent();
 
 	/**
 	 *  @brief Return the active status of menu.
@@ -82,7 +82,7 @@ public:
 	 *  @see activate()
 	 *  @see deactivate()
 	 */
-	virtual bool is_activated();
+	virtual bool isActivated();
 
 	/**
 	 *  @brief Get a base object of a UiMenu.
@@ -90,14 +90,14 @@ public:
 	 *  @note Normally, A base object can be used for a parent of UiMenu content.
 	 *  @return base object of UiMenu.
 	 */
-	virtual Evas_Object *get_base();
+	virtual Evas_Object *getBase();
 
 	/**
 	 *  @brief Get a current menu's degree.
 	 *
 	 *  @return Current rotation degree, -1 if it fails to get degree information.
 	 */
-	virtual int get_degree();
+	virtual int getDegree();
 
 protected:
 	/**
@@ -115,7 +115,7 @@ protected:
 	 *
 	 *  @return viewmgr's window object.
 	 */
-	Elm_Win *get_window();
+	Elm_Win *getWindow();
 
 private:
 	_UI_DECLARE_PRIVATE_IMPL(UiMenu);

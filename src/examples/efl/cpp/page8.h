@@ -23,23 +23,23 @@ public:
 	page8() : UiStandardView("page8")
 	{
 		//Create a main content.
-		Evas_Object *content = create_content(this->get_base(), "ViewMgr++ Demo<br>Content Preloading",
+		Evas_Object *content = createContent(this->getBase(), "ViewMgr++ Demo<br>Content Preloading",
 			//Prev Button Callback
 			[](void *data, Evas_Object *obj, void *event_info) -> void
 			{
-				UI_VIEWMGR->pop_view();
+				UI_VIEWMGR->popView();
 			},
 			//Next Button Callback
 			[](void *data, Evas_Object *obj, void *event_info) -> void
 			{
-				UI_VIEWMGR->push_view(new page9());
+				UI_VIEWMGR->pushView(new page9());
 			});
 
-		this->set_content(content, "Page 8");
+		this->setContent(content, "Page 8");
 
 		//Don't delete view's content when this view popped.
 		//This is a show case for saving this content for reuse later.
-		this->set_removable_content(false);
+		this->setRemovableContent(false);
 	}
 	~page8() {}
 };
