@@ -66,7 +66,7 @@ public:
 	 *  @warning When you override this member function, you should implement the logic to check the given style name is available or not.
 	 *           If your framework doesn't support any styles then just allow a @c NULL argument and return true. Otherwise return false.
 	 */
-	bool set_transition_style(const char *style);
+	bool setTransitionStyle(const char *style);
 
 	/**
 	 *  @brief Set content removable.
@@ -75,35 +75,35 @@ public:
  	 *
 	 *  @warning You should not remove a view content manually on unload status if removable content is set.
 	 */
-	void set_removable_content(bool removable);
+	void setRemovableContent(bool removable);
 
 	/**
 	 *  @brief Set the indicator mode of the view.
 	 *
 	 *  @param indicator The mode to set, one of #UiViewIndicator.
 	 */
-	void set_indicator(UiViewIndicator indicator);
+	void setIndicator(UiViewIndicator indicator);
 
 	/**
 	 *  @brief Return a style name of this view.
 	 *
 	 *  @return style name of view.
 	 */
-	const char *get_transition_style();
+	const char *getTransitionStyle();
 
 	/**
 	 *  @brief Return a name of this view.
 	 *
 	 *  @return name of view.
 	 */
-	const char *get_name();
+	const char *getName();
 
 	/**
 	 *  @brief Return a content instance of this view.
 	 *
 	 *  @return content of view. If no contents set yet, @c NULL.
 	 */
-	T get_content();
+	T getContent();
 
 	/**
 	 *  @brief Replace or set a content of the view.
@@ -115,35 +115,35 @@ public:
 	 *
 	 *  @return @c true if it succeeds, @c false otherwise.
 	 */
-	virtual bool set_content(T content);
+	virtual bool setContent(T content);
 
 	/**
 	 *  @brief Unset the view content.
 	 *
 	 *  @return A previous content. If it wasn't, return @c NULL.
 	 */
-	virtual T unset_content();
+	virtual T unsetContent();
 
 	/**
 	 *  @brief Return a state of this view.
 	 *
 	 *  @return current state of view.
 	 */
-	UiViewState get_state();
+	UiViewState getState();
 
 	/**
 	 *  @brief Return a state of removable content.
 	 *
 	 *  @return true if the view's content is removable, otherwise false.
 	 */
-	bool get_removable_content();
+	bool getRemovableContent();
 
 	/**
 	 *  @brief Return the indicator mode of this view.
 	 *
 	 *  @return indicator state of view.
 	 */
-	UiViewIndicator get_indicator();
+	UiViewIndicator getIndicator();
 
 	/**
 	 *  @brief The H/W back key event occurs on view.
@@ -151,7 +151,7 @@ public:
 	 *  @note User can override this function to define application specific action when H/W back key
 	 *        event occurs. otherwise current view will be popped.
 	 */
-	virtual void on_back();
+	virtual void onBack();
 
 protected:
 	/**
@@ -162,54 +162,54 @@ protected:
 	 *
 	 *  @param block @c true, when blocking is enabled, otherwise @c false.
 	 *
-	 *  @see get_event_block()
+	 *  @see getEventBlock()
 	 */
-	virtual void set_event_block(bool block);
+	virtual void setEventBlock(bool block);
 
 	/**
 	 *  @brief Return the state of event block.
 	 *
 	 *  @return true if the event block enabled, otherwise false.
 	 *
-	 *  @see set_event_block()
+	 *  @see setEventBlock()
 	 */
-	bool get_event_block();
+	bool getEventBlock();
 
 	/**
 	 *  @brief View load state.
 	 *
 	 *  @note A view of this state is moving onto the screen. Get ready for this view. Generally, you could prepare this view's content here and set them to
-	 *        this view. In the most cases, this on_load() will be triggered with this step. load -> deactivated -> activated. Tihs on_load() will be triggered
+	 *        this view. In the most cases, this onLoad() will be triggered with this step. load -> deactivated -> activated. Tihs onLoad() will be triggered
 	 *        only when view has not any content yet.
 	 */
-	virtual void on_load();
+	virtual void onLoad();
 
 	/**
 	 *  @brief View unload state.
 	 *
 	 *  @note Remove resources (contents) with regards to this view for saving memory. Otherwise, you could keep those resources (contents) for later access.
-	 *        Removing resources might be better in point of performance view. It's up to your scenario. on_unload() will be triggered just right before
-	 *        the view is going to be deleted by popping or by somehow. Also, on_unload() will be triggered when this view is pushed behind other views.
+	 *        Removing resources might be better in point of performance view. It's up to your scenario. onUnload() will be triggered just right before
+	 *        the view is going to be deleted by popping or by somehow. Also, onUnload() will be triggered when this view is pushed behind other views.
 	 */
-	virtual void on_unload();
+	virtual void onUnload();
 
 	/**
 	 *  @brief View activate state.
  	 *
  	 *  @note Generally, a view will be activated when show-transition is finished. From whatever its state, when the view comes on the screen,
- 	 *        on_activate() will be triggered. In the most cases, on_activate() will be triggered with this step. load -> deactivate -> activate
+ 	 *        onActivate() will be triggered. In the most cases, onActivate() will be triggered with this step. load -> deactivate -> activate
 	 */
-	virtual void on_activate();
+	virtual void onActivate();
 
 	/**
 	 *  @brief View deactivate state.
 	 *
 	 *  @note Get ready for unload. Hide transition may be triggered at this point. If the system blocks application running in some cases such as phone call,
 	 *        system notification, application switching ..., Deactivate state will be triggered. Also, when a view is going to be popped or destroyed,
-	 *        on_deactivate() will be triggered. Lastly, when a new view is pushed, so if it becomes invisible state by other views, on_deactivate() will be
+	 *        onDeactivate() will be triggered. Lastly, when a new view is pushed, so if it becomes invisible state by other views, onDeactivate() will be
 	 *        triggered also.
 	 */
-	virtual void on_deactivate();
+	virtual void onDeactivate();
 
 	/**
 	 *  @brief View pause state.
@@ -218,14 +218,14 @@ protected:
 	 *        interactive with users. However, still it would be visible in some way (ie, half transparency). For this, this Pause will be triggered.
 	 *        If the view is already deactivated or under the unload state, the pause won't be called.
 	 */
-	virtual void on_pause();
+	virtual void onPause();
 
 	/**
 	 *  @brief View resume state.
 	 *
-	 *  @note When a view is returns to the activate state from pause state, this on_resume() will be triggered. For instance, a Popup is dismissed.
+	 *  @note When a view is returns to the activate state from pause state, this onResume() will be triggered. For instance, a Popup is dismissed.
 	 */
-	virtual void on_resume();
+	virtual void onResume();
 
 	/**
 	 *  @brief View destroy state.
@@ -234,7 +234,7 @@ protected:
 	 *        the view because this view instance will be totally freed at the end of destroy. Be aware that you must not request any view functions on this
 	 *        state.
 	 */
-	virtual void on_destroy();
+	virtual void onDestroy();
 
 	/**
 	 *  @brief Low Memory Event
@@ -243,7 +243,7 @@ protected:
 	 *        platform Low Memory Killer kills your application to get more free memory. This event function must also release any cached data in the main
 	 *        memory to secure more free memory.
 	 */
-	virtual void on_low_memory();
+	virtual void onLowMemory();
 
 	/**
 	 *  @brief Low Battery Event
@@ -251,21 +251,21 @@ protected:
 	 *  @note This event function is responsible for saving data in the main memory to a persistent memory or storage to avoid data loss in case the power goes
 	 *        off completely. This event function must also stop heavy CPU consumption or power consumption activities to save the remaining power.
 	 */
-	virtual void on_low_battery();
+	virtual void onLowBattery();
 
 	/**
 	 *  @brief Region Changed Event
 	 *
 	 *  @note This event function is responsible for refreshing the display into the new time zone.
 	 */
-	virtual void on_region_changed(const char *region);
+	virtual void onRegionChanged(const char *region);
 
 	/**
 	 *  @brief Language Changed Event
 	 *
 	 *  @note This event function is responsible for refreshing the display into the new language.
 	 */
-	virtual void on_language_changed(const char *language);
+	virtual void onLanguageChanged(const char *language);
 
 private:
 	/**
@@ -275,18 +275,18 @@ private:
 	 *
 	 *  @return @c true if it succeeds, @c false otherwise.
 	 *
-	 *  @see get_viewmgr()
+	 *  @see _getViewmgr()
 	 */
-	bool set_viewmgr(UiIfaceViewmgr *viewmgr);
+	bool _setViewmgr(UiIfaceViewmgr *viewmgr);
 
 	/**
 	 *  @brief Return the viewmgr instance.
 	 *
 	 *  @return UiIfaceViewmgr instance.
 	 *
-	 *  @see set_viewmgr()
+	 *  @see _setViewmgr()
 	 */
-	UiIfaceViewmgr *get_viewmgr();
+	UiIfaceViewmgr *_getViewmgr();
 
 	_UI_DECLARE_PRIVATE_IMPL(UiIfaceView);
 	_UI_DISABLE_COPY_AND_ASSIGN(UiIfaceView);

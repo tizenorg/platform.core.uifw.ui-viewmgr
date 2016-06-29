@@ -32,64 +32,64 @@ class UiBaseViewmgrImpl
 	friend class UiBaseViewmgr;
 
 private:
-	UiBaseViewmgr *viewmgr;
-	Elm_Win *win;             		           //This is acting like a base object of viewmgr.
-	Elm_Conformant *conform;                   //Conformant for viewmgr.
-	Elm_Scroller *scroller;                    //Scroller for viewmgr.
-	Elm_Layout *layout;                        //Viewmgr's base layout.
-	UiBaseKeyListener *key_listener;        //HW Key Handler such as "BACK" key...
-	UiViewIndicator indicator;               //Mode of indicator.
-	string transition_style;                   //Current transition effect style name
-	map<string, Elm_Layout *> effect_map;      //Map for effect layouts.
+	UiBaseViewmgr *_viewmgr;
+	Elm_Win *_win;                              //This is acting like a base object of viewmgr.
+	Elm_Conformant *_conform;                   //Conformant for viewmgr.
+	Elm_Scroller *_scroller;                    //Scroller for viewmgr.
+	Elm_Layout *_layout;                        //Viewmgr's base layout.
+	UiBaseKeyListener *_keyListener;            //HW Key Handler such as "BACK" key...
+	UiViewIndicator _indicator;                 //Mode of indicator.
+	string _transitionStyle;                    //Current transition effect style name
+	map<string, Elm_Layout *> _effectMap;       //Map for effect layouts.
 
-	Elm_Layout *set_transition_layout(string transition_style);
+	Elm_Layout *_setTransitionLayout(string transitionStyle);
 
-	bool create_conformant(Elm_Win *win);
-	bool create_scroller(Elm_Conformant *conform);
-	bool create_base_layout(Elm_Scroller *scroller, const char *style);
-	bool set_indicator(UiViewIndicator indicator);
-	void activate_top_view();
-	bool init();
-	bool term();
+	bool _createConformant(Elm_Win *win);
+	bool _createScroller(Elm_Conformant *conform);
+	bool _createBaseLayout(Elm_Scroller *scroller, const char *style);
+	bool _setIndicator(UiViewIndicator indicator);
+	void _activateTopView();
+	bool _init();
+	bool _term();
 
 public:
-	UiBaseViewmgrImpl(UiBaseViewmgr *viewmgr, const char *pkg, UiBaseKeyListener *key_listener);
+	UiBaseViewmgrImpl(UiBaseViewmgr *viewmgr, const char *pkg, UiBaseKeyListener *keyListener);
 	~UiBaseViewmgrImpl();
 
 	bool activate();
 	bool deactivate();
-	UiBaseView *push_view(UiBaseView *view);
-	bool pop_view();
-	bool insert_view_before(UiBaseView *view, UiBaseView *before);
-	bool insert_view_after(UiBaseView *view, UiBaseView *after);
+	UiBaseView *pushView(UiBaseView *view);
+	bool popView();
+	bool insertViewBefore(UiBaseView *view, UiBaseView *before);
+	bool insertViewAfter(UiBaseView *view, UiBaseView *after);
 
-	Evas_Object *get_base()
+	Evas_Object *getBase()
 	{
-		return this->layout;
+		return this->_layout;
 	}
-	Elm_Win *get_window()
+	Elm_Win *getWindow()
 	{
-		return this->win;
+		return this->_win;
 	}
-	Elm_Conformant *get_conformant()
+	Elm_Conformant *getConformant()
 	{
-		return this->conform;
+		return this->_conform;
 	}
 };
 
 }
 
-bool UiBaseViewmgrImpl::create_base_layout(Elm_Scroller *scroller, const char *style)
+bool UiBaseViewmgrImpl::_createBaseLayout(Elm_Scroller *scroller, const char *style)
 {
-	char edj_path[PATH_MAX];
-	char group_name[128];
+	char edjPath[PATH_MAX];
+	char groupName[128];
 
 	Elm_Layout *layout = elm_layout_add(scroller);
 	if (!layout) return false;
 
-	snprintf(group_name, sizeof(group_name), "transition/%s", style);
-	snprintf(edj_path, sizeof(edj_path), "%s/ui-viewmgr.edj", EDJ_PATH);
-	elm_layout_file_set(layout, edj_path, group_name);
+	snprintf(groupName, sizeof(groupName), "transition/%s", style);
+	snprintf(edjPath, sizeof(edjPath), "%s/ui-viewmgr.edj", EDJ_PATH);
+	elm_layout_file_set(layout, edjPath, groupName);
 	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(layout, EVAS_HINT_FILL, EVAS_HINT_FILL);
 	elm_object_content_set(scroller, layout);
@@ -99,95 +99,95 @@ bool UiBaseViewmgrImpl::create_base_layout(Elm_Scroller *scroller, const char *s
 			[](void *data, Evas_Object *obj, const char *emission, const char *source) -> void
 			{
 				UiBaseViewmgr *viewmgr = static_cast<UiBaseViewmgr *>(data);
-				UiBaseView *pview = viewmgr->get_view(viewmgr->get_view_count() - 2);
-				UiBaseView *view = viewmgr->get_last_view();
-				if (pview) viewmgr->push_view_finished(pview);
-				if (view) viewmgr->push_view_finished(view);
+				UiBaseView *pview = viewmgr->getView(viewmgr->getViewCount() - 2);
+				UiBaseView *view = viewmgr->getLastView();
+				if (pview) viewmgr->pushViewFinished(pview);
+				if (view) viewmgr->pushViewFinished(view);
 			},
-			this->viewmgr);
+			this->_viewmgr);
 
 	//Pop Finished Event
 	elm_layout_signal_callback_add(layout, "pop,finished", "viewmgr",
 			[](void *data, Evas_Object *obj, const char *emission, const char *source) -> void
 			{
 				UiBaseViewmgr *viewmgr = static_cast<UiBaseViewmgr *>(data);
-				UiBaseView *pview = viewmgr->get_view(viewmgr->get_view_count() - 2);
-				UiBaseView *view = viewmgr->get_last_view();
-				if (pview) viewmgr->pop_view_finished(pview);
-				if (view) viewmgr->pop_view_finished(view);
+				UiBaseView *pview = viewmgr->getView(viewmgr->getViewCount() - 2);
+				UiBaseView *view = viewmgr->getLastView();
+				if (pview) viewmgr->popViewFinished(pview);
+				if (view) viewmgr->popViewFinished(view);
 			},
-			this->viewmgr);
+			this->_viewmgr);
 
-	this->layout = layout;
+	this->_layout = layout;
 
 	return true;
 }
 
-Elm_Layout *UiBaseViewmgrImpl::set_transition_layout(string transition_style)
+Elm_Layout *UiBaseViewmgrImpl::_setTransitionLayout(string transitionStyle)
 {
-	Elm_Layout *effect_layout = NULL;
+	Elm_Layout *effectLayout = NULL;
 	Elm_Layout *pcontent;
 
-	pcontent = elm_object_part_content_unset(this->get_base(), "pcontent");
+	pcontent = elm_object_part_content_unset(this->getBase(), "pcontent");
 	if (pcontent) evas_object_hide(pcontent);
-	elm_object_part_content_unset(this->get_base(), "content");
+	elm_object_part_content_unset(this->getBase(), "content");
 
-	if (transition_style.compare(this->transition_style) == 0) return this->layout;
+	if (transitionStyle.compare(this->_transitionStyle) == 0) return this->_layout;
 
-	if (effect_map.size()) effect_layout = effect_map.find(transition_style)->second;
+	if (_effectMap.size()) effectLayout = _effectMap.find(transitionStyle)->second;
 
 	//Scroller content change to current effect layout and change to hide prev layout.
-	Elm_Layout *playout = elm_object_part_content_unset(this->scroller, NULL);
+	Elm_Layout *playout = elm_object_part_content_unset(this->_scroller, NULL);
 	evas_object_hide(playout);
 
-	if (!effect_layout)
+	if (!effectLayout)
 	{
 		//Create and add effect_layouts in map here.
 		//FIXME: If we have to support many effects, this logic should be changed.
-		effect_map.insert(pair<string, Elm_Layout *>("default", this->layout));
-		this->create_base_layout(this->scroller, transition_style.c_str());
-		effect_map.insert(pair<string, Elm_Layout *>(transition_style, this->layout));
+		_effectMap.insert(pair<string, Elm_Layout *>("default", this->_layout));
+		this->_createBaseLayout(this->_scroller, transitionStyle.c_str());
+		_effectMap.insert(pair<string, Elm_Layout *>(transitionStyle, this->_layout));
 	} else {
-		elm_object_content_set(this->scroller, effect_layout);
+		elm_object_content_set(this->_scroller, effectLayout);
 
-		this->layout = effect_layout;
+		this->_layout = effectLayout;
 	}
 
-	this->transition_style = transition_style;
+	this->_transitionStyle = transitionStyle;
 
-	return this->layout;
+	return this->_layout;
 }
 
-void UiBaseViewmgrImpl::activate_top_view()
+void UiBaseViewmgrImpl::_activateTopView()
 {
-	Evas_Object *pcontent = elm_object_part_content_unset(this->get_base(), "content");
+	Evas_Object *pcontent = elm_object_part_content_unset(this->getBase(), "content");
 	if (pcontent) evas_object_hide(pcontent);
 
-	UiBaseView *view = this->viewmgr->get_last_view();
+	UiBaseView *view = this->_viewmgr->getLastView();
 
 	//In case of UiBaseView, it doesn't have any base form. It uses viewmgr base instead.
 	Evas_Object *content;
-	if (view->get_base() == this->get_base())
+	if (view->getBase() == this->getBase())
 	{
-		content = view->get_content();
+		content = view->getContent();
 	} else {
-		content = view->get_base();
+		content = view->getBase();
 	}
 
-	elm_object_part_content_set(this->get_base(), "content", content);
+	elm_object_part_content_set(this->getBase(), "content", content);
 
-	this->set_indicator(view->get_indicator());
+	this->_setIndicator(view->getIndicator());
 }
 
 //FIXME: How to deal with indicator in other UI framework? Dali? Volt?
 //Is it possible make this interface common?
-bool UiBaseViewmgrImpl::set_indicator(UiViewIndicator indicator)
+bool UiBaseViewmgrImpl::_setIndicator(UiViewIndicator indicator)
 {
-	if (this->indicator == indicator) return false;
-	this->indicator = indicator;
+	if (this->_indicator == indicator) return false;
+	this->_indicator = indicator;
 
-	Elm_Win *window = this->get_window();
-	Elm_Conformant *conform = this->get_conformant();
+	Elm_Win *window = this->getWindow();
+	Elm_Conformant *conform = this->getConformant();
 
 	switch (indicator)
 	{
@@ -213,7 +213,7 @@ bool UiBaseViewmgrImpl::set_indicator(UiViewIndicator indicator)
 	return true;
 }
 
-bool UiBaseViewmgrImpl::create_conformant(Elm_Win *win)
+bool UiBaseViewmgrImpl::_createConformant(Elm_Win *win)
 {
 	Elm_Conformant *conform = elm_conformant_add(win);
 	if (!conform) return false;
@@ -223,12 +223,12 @@ bool UiBaseViewmgrImpl::create_conformant(Elm_Win *win)
 	elm_win_conformant_set(win, EINA_TRUE);
 	evas_object_show(conform);
 
-	this->conform = conform;
+	this->_conform = conform;
 
 	return true;
 }
 
-bool UiBaseViewmgrImpl::create_scroller(Elm_Conformant *conform)
+bool UiBaseViewmgrImpl::_createScroller(Elm_Conformant *conform)
 {
 	Elm_Scroller *scroller = elm_scroller_add(conform);
 	if (!scroller) return false;
@@ -239,13 +239,13 @@ bool UiBaseViewmgrImpl::create_scroller(Elm_Conformant *conform)
 
 	elm_object_content_set(conform, scroller);
 
-	this->scroller = scroller;
+	this->_scroller = scroller;
 
 	return true;
 }
 
-UiBaseViewmgrImpl::UiBaseViewmgrImpl(UiBaseViewmgr *viewmgr, const char *pkg, UiBaseKeyListener *key_listener)
-		: viewmgr(viewmgr), key_listener(key_listener), transition_style("default")
+UiBaseViewmgrImpl::UiBaseViewmgrImpl(UiBaseViewmgr *viewmgr, const char *pkg, UiBaseKeyListener *keyListener)
+		: _viewmgr(viewmgr), _keyListener(keyListener), _transitionStyle("default")
 {
 	if (!pkg)
 	{
@@ -254,9 +254,9 @@ UiBaseViewmgrImpl::UiBaseViewmgrImpl(UiBaseViewmgr *viewmgr, const char *pkg, Ui
 	}
 
 	//Window
-	this->win = elm_win_util_standard_add(pkg, pkg);
+	this->_win = elm_win_util_standard_add(pkg, pkg);
 
-	if (!this->win)
+	if (!this->_win)
 	{
 		LOGE("Failed to create a window (%s)", pkg);
 		return;
@@ -264,80 +264,80 @@ UiBaseViewmgrImpl::UiBaseViewmgrImpl(UiBaseViewmgr *viewmgr, const char *pkg, Ui
 
 	//FIXME: Make a method? to set available rotation degree.
 	//Set window rotation
-	if (elm_win_wm_rotation_supported_get(this->win))
+	if (elm_win_wm_rotation_supported_get(this->_win))
 	{
 		int rots[4] =
 		{ 0, 90, 180, 270 };
-		elm_win_wm_rotation_available_rotations_set(this->win, (const int *) (&rots), 4);
+		elm_win_wm_rotation_available_rotations_set(this->_win, (const int *) (&rots), 4);
 	}
-	evas_object_smart_callback_add(this->win, "wm,rotation,changed",
+	evas_object_smart_callback_add(this->_win, "wm,rotation,changed",
 			[](void *data, Evas_Object *obj, void *event_info) -> void
 			{
 				int rot = elm_win_rotation_get(obj);
 
 				UiBaseViewmgr *viewmgr = static_cast<UiBaseViewmgr *>(data);
-				UiBaseView *view = viewmgr->get_last_view();
-				view->on_rotate(rot);
+				UiBaseView *view = viewmgr->getLastView();
+				view->onRotate(rot);
 
 				//FIXME: Change this configurable?
-				if (rot == 0 || rot == 180) view->on_portrait();
-				else view->on_landscape();
+				if (rot == 0 || rot == 180) view->onPortrait();
+				else view->onLandscape();
 			}
-			, this->viewmgr);
+			, this->_viewmgr);
 	//Window is requested to delete.
-	evas_object_smart_callback_add(this->win, "delete,request",
+	evas_object_smart_callback_add(this->_win, "delete,request",
 			[](void *data, Evas_Object *obj, void *event_info) -> void
 			{
 				UiBaseViewmgr *viewmgr = static_cast<UiBaseViewmgr*>(data);
 				delete(viewmgr);
 			},
-			this->viewmgr);
+			this->_viewmgr);
 
 	//FIXME: Make conformant configurable?
-	if (!this->create_conformant(this->win))
+	if (!this->_createConformant(this->_win))
 	{
 		LOGE("Failed to create a conformant (%s)", pkg);
 		return;
 	}
 
-	if (!this->create_scroller(this->conform))
+	if (!this->_createScroller(this->_conform))
 	{
 		LOGE("Failed to create a scroller (%s)", pkg);
 		return;
 	}
 
-	if (!this->create_base_layout(this->scroller, "default"))
+	if (!this->_createBaseLayout(this->_scroller, "default"))
 	{
 		LOGE("Failed to create a base layout (%s)", pkg);
 		return;
 	}
 
 	//Set Indicator properties
-	elm_win_indicator_mode_set(this->win, ELM_WIN_INDICATOR_SHOW);
-	elm_win_indicator_opacity_set(this->win, ELM_WIN_INDICATOR_OPAQUE);
+	elm_win_indicator_mode_set(this->_win, ELM_WIN_INDICATOR_SHOW);
+	elm_win_indicator_opacity_set(this->_win, ELM_WIN_INDICATOR_OPAQUE);
 
-	elm_win_autodel_set(this->win, EINA_TRUE);
+	elm_win_autodel_set(this->_win, EINA_TRUE);
 }
 
 UiBaseViewmgrImpl::~UiBaseViewmgrImpl()
 {
-	delete(this->key_listener);
+	delete(this->_keyListener);
 }
 
-bool UiBaseViewmgrImpl::init()
+bool UiBaseViewmgrImpl::_init()
 {
-	return this->key_listener->init();
+	return this->_keyListener->init();
 }
 
-bool UiBaseViewmgrImpl::term()
+bool UiBaseViewmgrImpl::_term()
 {
-	return this->key_listener->term();
+	return this->_keyListener->term();
 }
 
 bool UiBaseViewmgrImpl::activate()
 {
-	this->activate_top_view();
-	evas_object_show(this->win);
+	this->_activateTopView();
+	evas_object_show(this->_win);
 
 	return true;
 }
@@ -347,93 +347,93 @@ bool UiBaseViewmgrImpl::deactivate()
 	//FIXME: based on the profile, we should app to go behind or terminate.
 	if (true)
 	{
-		evas_object_lower(this->win);
+		evas_object_lower(this->_win);
 	} else {
-		delete(this->viewmgr);
+		delete(this->_viewmgr);
 	}
 
 	return true;
 }
 
-bool UiBaseViewmgrImpl::pop_view()
+bool UiBaseViewmgrImpl::popView()
 {
-	UiBaseView *pview = this->viewmgr->get_view(this->viewmgr->get_view_count() - 2);
-	UiBaseView *view = this->viewmgr->get_last_view();
+	UiBaseView *pview = this->_viewmgr->getView(this->_viewmgr->getViewCount() - 2);
+	UiBaseView *view = this->_viewmgr->getLastView();
 
 	//In case, if view doesn't have any transition effects.
-	if (!strcmp(view->get_transition_style(), "none"))
+	if (!strcmp(view->getTransitionStyle(), "none"))
 	{
-		this->viewmgr->pop_view_finished(pview);
-		this->viewmgr->pop_view_finished(view);
-		this->activate_top_view();
+		this->_viewmgr->popViewFinished(pview);
+		this->_viewmgr->popViewFinished(view);
+		this->_activateTopView();
 		return true;
 	}
 
 	//Choose an effect layout.
-	Elm_Layout *effect = this->set_transition_layout(view->get_transition_style());
+	Elm_Layout *effect = this->_setTransitionLayout(view->getTransitionStyle());
 	if (!effect) {
-		LOGE("invalid effect transition style?! = %s", view->get_transition_style());
-		this->viewmgr->pop_view_finished(pview);
-		this->viewmgr->pop_view_finished(view);
-		this->activate_top_view();
+		LOGE("invalid effect transition style?! = %s", view->getTransitionStyle());
+		this->_viewmgr->popViewFinished(pview);
+		this->_viewmgr->popViewFinished(view);
+		this->_activateTopView();
 		return true;
 	}
 
 	//Trigger Effects.
-	Evas_Object *prv = this->get_base() == pview->get_base() ? pview->get_content() : pview->get_base();
+	Evas_Object *prv = this->getBase() == pview->getBase() ? pview->getContent() : pview->getBase();
 	elm_layout_content_set(effect, "content", prv);
 
-	Evas_Object *cur = this->get_base() == view->get_base() ? view->get_content() : view->get_base();
+	Evas_Object *cur = this->getBase() == view->getBase() ? view->getContent() : view->getBase();
 	elm_layout_content_set(effect, "pcontent", cur);
 
 	elm_layout_signal_emit(effect, "view,pop", "viewmgr");
 
-	this->set_indicator(pview->get_indicator());
+	this->_setIndicator(pview->getIndicator());
 
 	return true;
 }
 
-UiBaseView * UiBaseViewmgrImpl::push_view(UiBaseView *view)
+UiBaseView * UiBaseViewmgrImpl::pushView(UiBaseView *view)
 {
-	if (!this->viewmgr->is_activated()) return view;
+	if (!this->_viewmgr->isActivated()) return view;
 
 	//In case, if viewmgr has one view, we skip effect.
-	if (this->viewmgr->get_view_count() == 1) {
-		this->activate_top_view();
-		this->viewmgr->push_view_finished(view);
+	if (this->_viewmgr->getViewCount() == 1) {
+		this->_activateTopView();
+		this->_viewmgr->pushViewFinished(view);
 		return view;
 	}
 
-	UiBaseView *pview = this->viewmgr->get_view(this->viewmgr->get_view_count() - 2);
+	UiBaseView *pview = this->_viewmgr->getView(this->_viewmgr->getViewCount() - 2);
 
 	//In case, if view doesn't have transition effect
-	if (!strcmp(view->get_transition_style(), "none")) {
-		this->activate_top_view();
-		this->viewmgr->push_view_finished(pview);
-		this->viewmgr->push_view_finished(view);
+	if (!strcmp(view->getTransitionStyle(), "none")) {
+		this->_activateTopView();
+		this->_viewmgr->pushViewFinished(pview);
+		this->_viewmgr->pushViewFinished(view);
 		return view;
 	}
 
 	//Choose an effect layout.
-	Elm_Layout *effect = this->set_transition_layout(view->get_transition_style());
+	Elm_Layout *effect = this->_setTransitionLayout(view->getTransitionStyle());
 	if (!effect) {
-		LOGE("invalid effect transition style?! = %s", view->get_transition_style());
-		this->activate_top_view();
-		this->viewmgr->push_view_finished(pview);
-		this->viewmgr->push_view_finished(view);
+		LOGE("invalid effect transition style?! = %s", view->getTransitionStyle());
+		this->_activateTopView();
+		this->_viewmgr->pushViewFinished(pview);
+		this->_viewmgr->pushViewFinished(view);
 		return view;
 	}
 
 	//Trigger Effects.
-	Evas_Object *prv = this->get_base() == pview->get_base() ? pview->get_content() : pview->get_base();
+	Evas_Object *prv = this->getBase() == pview->getBase() ? pview->getContent() : pview->getBase();
 	elm_layout_content_set(effect, "pcontent", prv);
 
-	Evas_Object *cur = this->get_base() == view->get_base() ? view->get_content() : view->get_base();
+	Evas_Object *cur = this->getBase() == view->getBase() ? view->getContent() : view->getBase();
 	elm_layout_content_set(effect, "content", cur);
 
 	elm_layout_signal_emit(effect, "view,push", "viewmgr");
 
-	this->set_indicator(view->get_indicator());
+	this->_setIndicator(view->getIndicator());
 
 	return view;
 }
@@ -445,8 +445,8 @@ UiBaseView * UiBaseViewmgrImpl::push_view(UiBaseView *view)
 UiBaseViewmgr::UiBaseViewmgr(const char *pkg, UiBaseKeyListener *key_listener)
 		: UiIfaceViewmgr()
 {
-	this->impl = new UiBaseViewmgrImpl(this, pkg, key_listener);
-	this->impl->init();
+	this->_impl = new UiBaseViewmgrImpl(this, pkg, key_listener);
+	this->_impl->_init();
 }
 
 UiBaseViewmgr::UiBaseViewmgr(const char *pkg)
@@ -456,15 +456,15 @@ UiBaseViewmgr::UiBaseViewmgr(const char *pkg)
 
 UiBaseViewmgr::~UiBaseViewmgr()
 {
-	this->impl->term();
-	delete(this->impl);
+	this->_impl->_term();
+	delete(this->_impl);
 	ui_app_exit();
 }
 
 bool UiBaseViewmgr::activate()
 {
 	if (!UiIfaceViewmgr::activate()) return false;
-	this->impl->activate();
+	this->_impl->activate();
 
 	return true;
 }
@@ -472,73 +472,73 @@ bool UiBaseViewmgr::activate()
 bool UiBaseViewmgr::deactivate()
 {
 	if (!UiIfaceViewmgr::deactivate()) return false;
-	this->impl->deactivate();
+	this->_impl->deactivate();
 
 	return true;
 }
 
-bool UiBaseViewmgr::pop_view()
+bool UiBaseViewmgr::popView()
 {
-	if (this->get_view_count() == 1)
+	if (this->getViewCount() == 1)
 	{
 		this->deactivate();
 		return true;
 	}
 
-	if(!UiIfaceViewmgr::pop_view())
+	if(!UiIfaceViewmgr::popView())
 	{
 		return false;
 	}
 
-	return this->impl->pop_view();
+	return this->_impl->popView();
 }
 
-UiBaseView * UiBaseViewmgr::push_view(UiBaseView *view)
+UiBaseView * UiBaseViewmgr::pushView(UiBaseView *view)
 {
-	UiIfaceViewmgr::push_view(view);
+	UiIfaceViewmgr::pushView(view);
 
-	return this->impl->push_view(view);
-}
-
-bool UiBaseViewmgr::insert_view_before(UiBaseView *view, UiBaseView *before)
-{
-	return UiIfaceViewmgr::insert_view_before(view, before);
+	return this->_impl->pushView(view);
 }
 
-bool UiBaseViewmgr::insert_view_after(UiBaseView *view, UiBaseView *after)
+bool UiBaseViewmgr::insertViewBefore(UiBaseView *view, UiBaseView *before)
 {
-	return UiIfaceViewmgr::insert_view_after(view, after);
+	return UiIfaceViewmgr::insertViewBefore(view, before);
 }
 
-UiBaseView *UiBaseViewmgr::get_view(unsigned int idx)
+bool UiBaseViewmgr::insertViewAfter(UiBaseView *view, UiBaseView *after)
 {
-	return dynamic_cast<UiBaseView *>(UiIfaceViewmgr::get_view(idx));
+	return UiIfaceViewmgr::insertViewAfter(view, after);
 }
 
-UiBaseView *UiBaseViewmgr::get_view(const char *name)
+UiBaseView *UiBaseViewmgr::getView(unsigned int idx)
 {
-	return dynamic_cast<UiBaseView *>(UiIfaceViewmgr::get_view(name));
+	return dynamic_cast<UiBaseView *>(UiIfaceViewmgr::getView(idx));
 }
 
-UiBaseView *UiBaseViewmgr::get_last_view()
+UiBaseView *UiBaseViewmgr::getView(const char *name)
 {
-	return dynamic_cast<UiBaseView *>(UiIfaceViewmgr::get_last_view());
+	return dynamic_cast<UiBaseView *>(UiIfaceViewmgr::getView(name));
 }
 
-Evas_Object *UiBaseViewmgr::get_base()
+UiBaseView *UiBaseViewmgr::getLastView()
 {
-	return this->impl->get_base();
-}
-Elm_Win *UiBaseViewmgr::get_window()
-{
-	return this->impl->get_window();
-}
-Elm_Conformant *UiBaseViewmgr::get_conformant()
-{
-	return this->impl->get_conformant();
+	return dynamic_cast<UiBaseView *>(UiIfaceViewmgr::getLastView());
 }
 
-bool UiBaseViewmgr::set_indicator(UiViewIndicator indicator)
+Evas_Object *UiBaseViewmgr::getBase()
 {
-	return this->impl->set_indicator(indicator);
+	return this->_impl->getBase();
+}
+Elm_Win *UiBaseViewmgr::getWindow()
+{
+	return this->_impl->getWindow();
+}
+Elm_Conformant *UiBaseViewmgr::getConformant()
+{
+	return this->_impl->getConformant();
+}
+
+bool UiBaseViewmgr::setIndicator(UiViewIndicator indicator)
+{
+	return this->_impl->_setIndicator(indicator);
 }

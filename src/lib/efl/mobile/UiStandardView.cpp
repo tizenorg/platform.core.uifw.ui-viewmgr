@@ -28,47 +28,47 @@ class UiStandardViewImpl
 	friend class UiStandardView;
 
 private:
-	UiStandardView *view;
-	Elm_Layout *layout;                //Base layout for view
-	Elm_Toolbar *toolbar;              //Toolbar
-	Elm_Button *title_left_btn;        //Title left button
-	Elm_Button *title_right_btn;       //Title right button
+	UiStandardView *_view;
+	Elm_Layout *_layout;                //Base layout for view
+	Elm_Toolbar *_toolbar;              //Toolbar
+	Elm_Button *_titleLeftBtn;        //Title left button
+	Elm_Button *_titleRightBtn;       //Title right button
 
-	bool create_layout();
-	bool destroy_layout();
+	bool _createLayout();
+	bool _destroyLayout();
 
 public:
 	UiStandardViewImpl(UiStandardView *view);
 	~UiStandardViewImpl();
 
-	bool set_content(Evas_Object *content, const char *title = NULL);
-	bool set_content(Evas_Object *content, const char *title, const char *subtitle, Elm_Button *title_left_btn, Elm_Button *title_right_btn);
-	bool set_title_badge(const char *text);
-	bool set_subtitle(const char *text);
-	bool set_title_left_btn(Elm_Button *title_left_btn);
-	bool set_title_right_btn(Elm_Button *title_right_btn);
-	bool set_title(const char *text);
-	bool set_toolbar(Elm_Toolbar *toolbar);
-	bool set_title_visible(bool visible, bool anim);
-	void unset_content();
-	Elm_Button *unset_title_left_btn();
-	Elm_Button *unset_title_right_btn();
-	Elm_Toolbar *unset_toolbar();
-	Evas_Object *get_base();
+	bool setContent(Evas_Object *content, const char *title = NULL);
+	bool setContent(Evas_Object *content, const char *title, const char *subtitle, Elm_Button *titleLeftBtn, Elm_Button *titleRightBtn);
+	bool setTitleBadge(const char *text);
+	bool setSubtitle(const char *text);
+	bool setTitleLeftBtn(Elm_Button *titleLeftBtn);
+	bool setTitleRightBtn(Elm_Button *titleRightBtn);
+	bool setTitle(const char *text);
+	bool setToolbar(Elm_Toolbar *toolbar);
+	bool setTitleVisible(bool visible, bool anim);
+	void unsetContent();
+	Elm_Button *unsetTitleLeftBtn();
+	Elm_Button *unsetTitleRightBtn();
+	Elm_Toolbar *unsetToolbar();
+	Evas_Object *getBase();
 
-	Elm_Button *get_title_left_btn()
+	Elm_Button *getTitleLeftBtn()
 	{
-		return this->title_left_btn;
+		return this->_titleLeftBtn;
 	}
 
-	Elm_Button *get_title_right_btn()
+	Elm_Button *getTitleRightBtn()
 	{
-		return this->title_right_btn;
+		return this->_titleRightBtn;
 	}
 
-	Elm_Toolbar *get_toolbar()
+	Elm_Toolbar *getToolbar()
 	{
-		return this->toolbar;
+		return this->_toolbar;
 	}
 };
 
@@ -77,43 +77,43 @@ public:
 #define DEFAULT_GROUP "tizen_view/default"
 
 #define LAYOUT_VALIDATE() if (!layout) \
-							{ \
-								LOGE("Layout is invalid! UiStandardView(%p)", this); \
-								return false; \
-							}
+		{ \
+			LOGE("Layout is invalid! UiStandardView(%p)", this); \
+			return false; \
+		}
 
-static void title_left_btn_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+static void _titleLeftBtnDelCb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
 	UiStandardView *view = static_cast<UiStandardView *>(data);
-	view->unset_title_left_btn();
+	view->unsetTitleLeftBtn();
 }
 
-static void title_right_btn_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+static void _titleRightBtnDelCb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
 	UiStandardView *view = static_cast<UiStandardView *>(data);
-	view->unset_title_right_btn();
+	view->unsetTitleRightBtn();
 }
 
-static void toolbar_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+static void _toolbarDelCb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
 	UiStandardView *view = static_cast<UiStandardView *>(data);
-	view->unset_toolbar();
+	view->unsetToolbar();
 }
 
-bool UiStandardViewImpl::destroy_layout()
+bool UiStandardViewImpl::_destroyLayout()
 {
-	if (!this->layout) return false;
-	evas_object_del(this->layout);
-	this->layout = NULL;
+	if (!this->_layout) return false;
+	evas_object_del(this->_layout);
+	this->_layout = NULL;
 
 	return true;
 }
 
-bool UiStandardViewImpl::create_layout()
+bool UiStandardViewImpl::_createLayout()
 {
-	if (this->layout) return false;
+	if (this->_layout) return false;
 
-	Elm_Layout *layout = elm_layout_add(this->view->get_parent());
+	Elm_Layout *layout = elm_layout_add(this->_view->getParent());
 	LAYOUT_VALIDATE();
 
 	char buf[PATH_MAX];
@@ -128,51 +128,51 @@ bool UiStandardViewImpl::create_layout()
 	evas_object_size_hint_weight_set(layout, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(layout, EVAS_HINT_FILL, EVAS_HINT_FILL);
 
-	if (this->view->get_content())
+	if (this->_view->getContent())
 	{
-		elm_object_part_content_set(layout, "elm.swallow.content", this->view->get_content());
+		elm_object_part_content_set(layout, "elm.swallow.content", this->_view->getContent());
 	}
 
 	//Set software back key, if it's needed
 	UiViewmgr *viewmgr = UI_VIEWMGR;
-	if (viewmgr && viewmgr->need_soft_key())
+	if (viewmgr && viewmgr->needSoftKey())
 	{
-		Elm_Button *prev_btn = elm_button_add(layout);
+		Elm_Button *prevBtn = elm_button_add(layout);
 
-		if (!prev_btn)
+		if (!prevBtn)
 		{
 			LOGE("Failed to create a button = UiStandardView(%p)", this);
 		} else {
-			evas_object_smart_callback_add(prev_btn, "clicked", [](void *data, Evas_Object *obj, void *event_info) -> void
+			evas_object_smart_callback_add(prevBtn, "clicked", [](void *data, Evas_Object *obj, void *event_info) -> void
 			{
 				UiViewmgr *viewmgr = static_cast<UiViewmgr *>(data);
-				viewmgr->pop_view();
+				viewmgr->popView();
 			}, viewmgr);
 
-			elm_object_style_set(prev_btn, "tizen_view/prev_btn");
-			elm_object_part_content_set(layout, "elm.swallow.prev_btn", prev_btn);
+			elm_object_style_set(prevBtn, "tizen_view/prev_btn");
+			elm_object_part_content_set(layout, "elm.swallow.prev_btn", prevBtn);
 			elm_object_signal_emit(layout, "elm,state,prev_btn,show", "viewmgr");
 		}
 	}
 
-	this->layout = layout;
+	this->_layout = layout;
 
 	return true;
 }
 
 UiStandardViewImpl::UiStandardViewImpl(UiStandardView *view)
-		: view(view), layout(NULL), toolbar(NULL), title_left_btn(NULL), title_right_btn(NULL)
+		: _view(view), _layout(NULL), _toolbar(NULL), _titleLeftBtn(NULL), _titleRightBtn(NULL)
 {
 }
 
 UiStandardViewImpl::~UiStandardViewImpl()
 {
-	destroy_layout();
+	_destroyLayout();
 }
 
-bool UiStandardViewImpl::set_content(Evas_Object *content, const char *title)
+bool UiStandardViewImpl::setContent(Evas_Object *content, const char *title)
 {
-	Elm_Layout *layout = this->get_base();
+	Elm_Layout *layout = this->getBase();
 	LAYOUT_VALIDATE();
 
 	elm_object_part_content_set(layout, "elm.swallow.content", content);
@@ -183,14 +183,14 @@ bool UiStandardViewImpl::set_content(Evas_Object *content, const char *title)
 		elm_object_signal_emit(layout, "elm.state,elm.swallow.content,hide", "viewmgr");
 	}
 
-	this->set_title(title);
+	this->setTitle(title);
 
 	return true;
 }
 
-bool UiStandardViewImpl::set_subtitle(const char *text)
+bool UiStandardViewImpl::setSubtitle(const char *text)
 {
-	Elm_Layout *layout = this->get_base();
+	Elm_Layout *layout = this->getBase();
 	LAYOUT_VALIDATE();
 
 	elm_object_part_text_set(layout, "elm.text.subtitle", text);
@@ -200,53 +200,53 @@ bool UiStandardViewImpl::set_subtitle(const char *text)
 	return true;
 }
 
-bool UiStandardViewImpl::set_title_left_btn(Elm_Button *title_left_btn)
+bool UiStandardViewImpl::setTitleLeftBtn(Elm_Button *titleLeftBtn)
 {
-	Elm_Layout *layout = this->get_base();
+	Elm_Layout *layout = this->getBase();
 	LAYOUT_VALIDATE();
 
 	//FIXME: inside of the unset_title_left_btn, it will send a title_left_btn,hide signal.
 	//But right after it needs to send a show signal again if new title_left_btn is valid.
 	//We don't need to send a hide signal in this case.
-	Elm_Button *pbtn = this->unset_title_left_btn();
+	Elm_Button *pbtn = this->unsetTitleLeftBtn();
 	evas_object_del(pbtn);
 
-	this->title_left_btn = title_left_btn;
-	if (!title_left_btn) return true;
+	this->_titleLeftBtn = titleLeftBtn;
+	if (!titleLeftBtn) return true;
 
-	elm_object_style_set(title_left_btn, "tizen_view/title_left");
-	elm_object_part_content_set(layout, "title_left_btn", title_left_btn);
+	elm_object_style_set(titleLeftBtn, "tizen_view/title_left");
+	elm_object_part_content_set(layout, "title_left_btn", titleLeftBtn);
 	elm_object_signal_emit(layout, "elm,state,title_left_btn,show", "viewmgr");
-	evas_object_event_callback_add(title_left_btn, EVAS_CALLBACK_DEL, title_left_btn_del_cb, this->view);
+	evas_object_event_callback_add(titleLeftBtn, EVAS_CALLBACK_DEL, _titleLeftBtnDelCb, this->_view);
 
 	return true;
 }
 
-bool UiStandardViewImpl::set_title_right_btn(Elm_Button *title_right_btn)
+bool UiStandardViewImpl::setTitleRightBtn(Elm_Button *titleRightBtn)
 {
-	Elm_Layout *layout = this->get_base();
+	Elm_Layout *layout = this->getBase();
 	LAYOUT_VALIDATE();
 
 	//FIXME: inside of the unset_title_right_btn, it will send a title_right_btn,hide signal.
 	//But right after it needs to send a show signal again if new title_right_btn is valid.
 	//We don't need to send a hide signal in this case.
-	Elm_Button *pbtn = this->unset_title_right_btn();
+	Elm_Button *pbtn = this->unsetTitleRightBtn();
 	evas_object_del(pbtn);
 
-	this->title_right_btn = title_right_btn;
-	if (!title_right_btn) return true;
+	this->_titleRightBtn = titleRightBtn;
+	if (!titleRightBtn) return true;
 
-	elm_object_style_set(title_right_btn, "tizen_view/title_right");
-	elm_object_part_content_set(layout, "title_right_btn", title_right_btn);
+	elm_object_style_set(titleRightBtn, "tizen_view/title_right");
+	elm_object_part_content_set(layout, "title_right_btn", titleRightBtn);
 	elm_object_signal_emit(layout, "elm,state,title_right_btn,show", "viewmgr");
-	evas_object_event_callback_add(title_right_btn, EVAS_CALLBACK_DEL, title_right_btn_del_cb, this->view);
+	evas_object_event_callback_add(titleRightBtn, EVAS_CALLBACK_DEL, _titleRightBtnDelCb, this->_view);
 
 	return true;
 }
 
-bool UiStandardViewImpl::set_title_badge(const char *text)
+bool UiStandardViewImpl::setTitleBadge(const char *text)
 {
-	Elm_Layout *layout = this->get_base();
+	Elm_Layout *layout = this->getBase();
 	LAYOUT_VALIDATE();
 
 	elm_object_part_text_set(layout, "title_badge", text);
@@ -256,9 +256,9 @@ bool UiStandardViewImpl::set_title_badge(const char *text)
 	return true;
 }
 
-bool UiStandardViewImpl::set_title(const char *text)
+bool UiStandardViewImpl::setTitle(const char *text)
 {
-	Elm_Layout *layout = this->get_base();
+	Elm_Layout *layout = this->getBase();
 	LAYOUT_VALIDATE();
 
 	elm_object_part_text_set(layout, "elm.text.title", text);
@@ -268,18 +268,18 @@ bool UiStandardViewImpl::set_title(const char *text)
 	return true;
 }
 
-bool UiStandardViewImpl::set_toolbar(Elm_Toolbar *toolbar)
+bool UiStandardViewImpl::setToolbar(Elm_Toolbar *toolbar)
 {
-	Elm_Layout *layout = this->get_base();
+	Elm_Layout *layout = this->getBase();
 	LAYOUT_VALIDATE();
 
 	//FIXME: inside of the unset_toolbar, it will send a toolbar,hide signal.
 	//But right after it needs to send a show signal again if new toolbar is valid.
 	//We don't need to send a hide signal in this case.
-	Elm_Toolbar *ptoolbar = this->unset_toolbar();
+	Elm_Toolbar *ptoolbar = this->unsetToolbar();
 	evas_object_del(ptoolbar);
 
-	this->toolbar = toolbar;
+	this->_toolbar = toolbar;
 	if (!toolbar) return true;
 
 	//FIXME: eeeek. check style?? :(
@@ -298,14 +298,14 @@ bool UiStandardViewImpl::set_toolbar(Elm_Toolbar *toolbar)
 
 	elm_object_part_content_set(layout, "toolbar", toolbar);
 	elm_object_signal_emit(layout, "elm,state,toolbar,show", "viewmgr");
-	evas_object_event_callback_add(toolbar, EVAS_CALLBACK_DEL, toolbar_del_cb, this->view);
+	evas_object_event_callback_add(toolbar, EVAS_CALLBACK_DEL, _toolbarDelCb, this->_view);
 
 	return true;
 }
 
-void UiStandardViewImpl::unset_content()
+void UiStandardViewImpl::unsetContent()
 {
-	Elm_Layout *layout = this->get_base();
+	Elm_Layout *layout = this->getBase();
 	if (!layout)
 	{
 		LOGE("Layout is invalid! UiStandardView(%p)", this);
@@ -315,12 +315,12 @@ void UiStandardViewImpl::unset_content()
 	elm_object_signal_emit(layout, "elm.state,elm.swallow.content,hide", "viewmgr");
 }
 
-Elm_Button *UiStandardViewImpl::unset_title_left_btn()
+Elm_Button *UiStandardViewImpl::unsetTitleLeftBtn()
 {
-	Elm_Button *btn = this->title_left_btn;
+	Elm_Button *btn = this->_titleLeftBtn;
 	if (!btn) return NULL;
 
-	Elm_Layout *layout = this->get_base();
+	Elm_Layout *layout = this->getBase();
 	if (!layout)
 	{
 		LOGE("Layout is invalid! UiStandardView(%p)", this);
@@ -329,19 +329,19 @@ Elm_Button *UiStandardViewImpl::unset_title_left_btn()
 
 	elm_object_part_content_unset(layout, "title_left_btn");
 	elm_object_signal_emit(layout, "elm,state,title_left_btn,hide", "viewmgr");
-	evas_object_event_callback_del(btn, EVAS_CALLBACK_DEL, title_left_btn_del_cb);
+	evas_object_event_callback_del(btn, EVAS_CALLBACK_DEL, _titleLeftBtnDelCb);
 	evas_object_hide(btn);
-	this->title_left_btn = NULL;
+	this->_titleLeftBtn = NULL;
 
 	return btn;
 }
 
-Elm_Button *UiStandardViewImpl::unset_title_right_btn()
+Elm_Button *UiStandardViewImpl::unsetTitleRightBtn()
 {
-	Elm_Button *btn = this->title_right_btn;
+	Elm_Button *btn = this->_titleRightBtn;
 	if (!btn) return NULL;
 
-	Elm_Layout *layout = this->get_base();
+	Elm_Layout *layout = this->getBase();
 	if (!layout)
 	{
 		LOGE("Layout is invalid! UiStandardView(%p)", this);
@@ -350,19 +350,19 @@ Elm_Button *UiStandardViewImpl::unset_title_right_btn()
 
 	elm_object_part_content_unset(layout, "title_right_btn");
 	elm_object_signal_emit(layout, "elm,state,title_right_btn,hide", "viewmgr");
-	evas_object_event_callback_del(btn, EVAS_CALLBACK_DEL, title_right_btn_del_cb);
+	evas_object_event_callback_del(btn, EVAS_CALLBACK_DEL, _titleRightBtnDelCb);
 	evas_object_hide(btn);
-	this->title_right_btn = NULL;
+	this->_titleRightBtn = NULL;
 
 	return btn;
 }
 
-Elm_Toolbar *UiStandardViewImpl::unset_toolbar()
+Elm_Toolbar *UiStandardViewImpl::unsetToolbar()
 {
-	Elm_Toolbar *toolbar = this->toolbar;
+	Elm_Toolbar *toolbar = this->_toolbar;
 	if (!toolbar) return NULL;
 
-	Elm_Layout *layout = this->get_base();
+	Elm_Layout *layout = this->getBase();
 	if (!layout)
 	{
 		LOGE("Layout is invalid! UiStandardView(%p)", this);
@@ -371,26 +371,26 @@ Elm_Toolbar *UiStandardViewImpl::unset_toolbar()
 
 	elm_object_part_content_unset(layout, "toolbar");
 	elm_object_signal_emit(layout, "elm,state,toolbar,hide", "viewmgr");
-	evas_object_event_callback_del(toolbar, EVAS_CALLBACK_DEL, toolbar_del_cb);
+	evas_object_event_callback_del(toolbar, EVAS_CALLBACK_DEL, _toolbarDelCb);
 	evas_object_hide(toolbar);
-	this->toolbar = NULL;
+	this->_toolbar = NULL;
 
 	return toolbar;
 }
 
-Evas_Object *UiStandardViewImpl::get_base()
+Evas_Object *UiStandardViewImpl::getBase()
 {
-	if (!this->layout)
+	if (!this->_layout)
 	{
-		this->create_layout();
+		this->_createLayout();
 	}
-	return this->layout;
+	return this->_layout;
 }
 
-bool UiStandardViewImpl::set_title_visible(bool visible, bool anim)
+bool UiStandardViewImpl::setTitleVisible(bool visible, bool anim)
 {
 	//FIXME: save visible, anim value. they can be used in layout created time.
-	Elm_Layout *layout = this->get_base();
+	Elm_Layout *layout = this->getBase();
 	if (!layout)
 	{
 		LOGE("Layout is invalid! UiStandardView(%p)", this);
@@ -416,128 +416,128 @@ bool UiStandardViewImpl::set_title_visible(bool visible, bool anim)
 UiStandardView::UiStandardView(const char *name)
 		: UiView(name)
 {
-	this->impl = new UiStandardViewImpl(this);
+	this->_impl = new UiStandardViewImpl(this);
 }
 
 UiStandardView::~UiStandardView()
 {
-	delete(this->impl);
+	delete(this->_impl);
 }
 
-void UiStandardView::on_load()
+void UiStandardView::onLoad()
 {
-	UiView::on_load();
+	UiView::onLoad();
 
-	Elm_Layout *layout = this->get_base();
+	Elm_Layout *layout = this->getBase();
 	evas_object_show(layout);
 }
 
-void UiStandardView::on_unload()
+void UiStandardView::onUnload()
 {
-	UiView::on_unload();
+	UiView::onUnload();
 
-	Elm_Layout *layout = this->get_base();
+	Elm_Layout *layout = this->getBase();
 	evas_object_hide(layout);
 }
 
-bool UiStandardView::set_content(Evas_Object *content, const char *title)
+bool UiStandardView::setContent(Evas_Object *content, const char *title)
 {
-	UiView::set_content(content);
-	return this->impl->set_content(content, title);
+	UiView::setContent(content);
+	return this->_impl->setContent(content, title);
 }
 
-bool UiStandardView::set_subtitle(const char *text)
+bool UiStandardView::setSubtitle(const char *text)
 {
-	return this->impl->set_subtitle(text);
+	return this->_impl->setSubtitle(text);
 }
 
-bool UiStandardView::set_title_left_btn(Elm_Button *title_left_btn)
+bool UiStandardView::setTitleLeftBtn(Elm_Button *titleLeftBtn)
 {
-	return this->impl->set_title_left_btn(title_left_btn);
+	return this->_impl->setTitleLeftBtn(titleLeftBtn);
 }
 
-bool UiStandardView::set_title_right_btn(Elm_Button *title_right_btn)
+bool UiStandardView::setTitleRightBtn(Elm_Button *titleRightBtn)
 {
-	return this->impl->set_title_right_btn(title_right_btn);
+	return this->_impl->setTitleRightBtn(titleRightBtn);
 }
 
-bool UiStandardView::set_title_badge(const char *text)
+bool UiStandardView::setTitleBadge(const char *text)
 {
-	return this->impl->set_title_badge(text);
+	return this->_impl->setTitleBadge(text);
 }
 
-bool UiStandardView::set_title(const char *text)
+bool UiStandardView::setTitle(const char *text)
 {
-	return this->impl->set_title(text);
+	return this->_impl->setTitle(text);
 }
 
-bool UiStandardView::set_content(Evas_Object *content, const char *title, const char *subtitle, Elm_Button *title_left_btn, Elm_Button *title_right_btn)
+bool UiStandardView::setContent(Evas_Object *content, const char *title, const char *subtitle, Elm_Button *titleLeftBtn, Elm_Button *titleRightBtn)
 {
-	if (!this->set_content(content, title)) return false;
-	if (!this->set_subtitle(subtitle)) return false;
-	if (!this->set_title_left_btn(title_left_btn)) return false;
-	if (!this->set_title_right_btn(title_right_btn)) return false;
+	if (!this->setContent(content, title)) return false;
+	if (!this->setSubtitle(subtitle)) return false;
+	if (!this->setTitleLeftBtn(titleLeftBtn)) return false;
+	if (!this->setTitleRightBtn(titleRightBtn)) return false;
 
 	return true;
 }
 
-bool UiStandardView::set_toolbar(Elm_Toolbar *toolbar)
+bool UiStandardView::setToolbar(Elm_Toolbar *toolbar)
 {
-	return this->impl->set_toolbar(toolbar);
+	return this->_impl->setToolbar(toolbar);
 }
 
-void UiStandardView::set_event_block(bool block)
+void UiStandardView::setEventBlock(bool block)
 {
-	UiView::set_event_block(block);
-	evas_object_freeze_events_set(this->get_base(), block);
+	UiView::setEventBlock(block);
+	evas_object_freeze_events_set(this->getBase(), block);
 }
 
-Evas_Object *UiStandardView::unset_content()
+Evas_Object *UiStandardView::unsetContent()
 {
-	Evas_Object *pcontent = UiView::unset_content();
+	Evas_Object *pcontent = UiView::unsetContent();
 	if (!pcontent) return NULL;
 
-	this->impl->unset_content();
+	this->_impl->unsetContent();
 
 	return pcontent;
 }
 
-Elm_Button *UiStandardView::unset_title_left_btn()
+Elm_Button *UiStandardView::unsetTitleLeftBtn()
 {
-	return this->impl->unset_title_left_btn();
+	return this->_impl->unsetTitleLeftBtn();
 }
 
-Elm_Button *UiStandardView::unset_title_right_btn()
+Elm_Button *UiStandardView::unsetTitleRightBtn()
 {
-	return this->impl->unset_title_right_btn();
+	return this->_impl->unsetTitleRightBtn();
 }
 
-Elm_Toolbar *UiStandardView::unset_toolbar()
+Elm_Toolbar *UiStandardView::unsetToolbar()
 {
-	return this->impl->unset_toolbar();
+	return this->_impl->unsetToolbar();
 }
 
-Evas_Object *UiStandardView::get_base()
+Evas_Object *UiStandardView::getBase()
 {
-	return this->impl->get_base();
+	return this->_impl->getBase();
 }
 
-bool UiStandardView::set_title_visible(bool visible, bool anim)
+bool UiStandardView::setTitleVisible(bool visible, bool anim)
 {
-	return this->impl->set_title_visible(visible, anim);
+	return this->_impl->setTitleVisible(visible, anim);
 }
 
-Elm_Button *UiStandardView::get_title_left_btn()
+Elm_Button *UiStandardView::getTitleLeftBtn()
 {
-	return this->impl->get_title_left_btn();
+	return this->_impl->getTitleLeftBtn();
 }
 
-Elm_Button *UiStandardView::get_title_right_btn()
+Elm_Button *UiStandardView::getTitleRightBtn()
 {
-	return this->impl->get_title_right_btn();
+	return this->_impl->getTitleRightBtn();
 }
 
-Elm_Toolbar *UiStandardView::get_toolbar()
+Elm_Toolbar *UiStandardView::getToolbar()
 {
-	return this->impl->get_toolbar();
+	return this->_impl->getToolbar();
 }

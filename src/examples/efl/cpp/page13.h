@@ -23,30 +23,30 @@
 class page13: public UiStandardView
 {
 protected:
-	void on_load()
+	void onLoad()
 	{
-		UiStandardView::on_load();
+		UiStandardView::onLoad();
 
 		//Create a main content.
-		Evas_Object *content = create_content(this->get_base(), "ViewMgr++ Demo<br>Fade Transition",
+		Evas_Object *content = createContent(this->getBase(), "ViewMgr++ Demo<br>Fade Transition",
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					UI_VIEWMGR->pop_view();
+					UI_VIEWMGR->popView();
 				},
 				//Next Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					UI_VIEWMGR->push_view(new page14());
+					UI_VIEWMGR->pushView(new page14());
 				});
 
-		this->set_content(content, "Page13");
+		this->setContent(content, "Page13");
 	}
 
 public:
 	page13() : UiStandardView("page13")
 	{
-		this->set_transition_style("fade");
+		this->setTransitionStyle("fade");
 	}
 	~page13() {}
 };

@@ -22,55 +22,55 @@
 class page9: public UiStandardView
 {
 protected:
-	void on_load()
+	void onLoad()
 	{
-		UiStandardView::on_load();
+		UiStandardView::onLoad();
 
 		//FIXME: Change below code to more convenient and clear way.
-		if (this->get_degree() == 90 || this->get_degree() == 270)
-			this->on_landscape();
+		if (this->getDegree() == 90 || this->getDegree() == 270)
+			this->onLandscape();
 		else
-			this->on_portrait();
+			this->onPortrait();
 	}
 
-	void on_portrait()
+	void onPortrait()
 	{
-		UiStandardView::on_portrait();
+		UiStandardView::onPortrait();
 
-		Evas_Object *content = create_content(this->get_base(), "ViewMgr Demo<br>Portrait/Landscape",
+		Evas_Object *content = createContent(this->getBase(), "ViewMgr Demo<br>Portrait/Landscape",
 			//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					UI_VIEWMGR->pop_view();
+					UI_VIEWMGR->popView();
 				},
 				//Next Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					UI_VIEWMGR->push_view(new page10());
+					UI_VIEWMGR->pushView(new page10());
 		        });
 
-		this->set_content(content, "Page 9");
-		this->set_indicator(UI_VIEW_INDICATOR_DEFAULT);
+		this->setContent(content, "Page 9");
+		this->setIndicator(UI_VIEW_INDICATOR_DEFAULT);
 	}
 
-	void on_landscape()
+	void onLandscape()
 	{
-		UiStandardView::on_landscape();
+		UiStandardView::onLandscape();
 
-		Evas_Object *content = create_landscape_content(this->get_base(), "ViewMgr Demo<br>Portrait/Landscape",
+		Evas_Object *content = createLandscapeContent(this->getBase(), "ViewMgr Demo<br>Portrait/Landscape",
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					UI_VIEWMGR->pop_view();
+					UI_VIEWMGR->popView();
 				},
 				//Next Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					UI_VIEWMGR->push_view(new page10());
+					UI_VIEWMGR->pushView(new page10());
 				});
 
-		this->set_content(content, "Page 9");
-		this->set_indicator(UI_VIEW_INDICATOR_OPTIMAL);
+		this->setContent(content, "Page 9");
+		this->setIndicator(UI_VIEW_INDICATOR_OPTIMAL);
 	}
 
 public:

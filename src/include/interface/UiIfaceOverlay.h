@@ -45,14 +45,14 @@ public:
 	 *
 	 *  @return @c true if it succeeds, @c false otherwise.
 	 */
-	virtual bool set_content(T content);
+	virtual bool setContent(T content);
 
 	/**
 	 *  @brief This is for unsetting a content of the view.
 	 *
 	 *  @return A previous content. If it wasn't, return @c NULL.
 	 */
-	virtual T unset_content();
+	virtual T unsetContent();
 
 	/**
 	 *  @brief The H/W back key event occurs on view.
@@ -60,7 +60,7 @@ public:
 	 *  @note User can override this function to define application specific action when H/W back key
 	 *        event occurs. otherwise current view will be popped.
 	 */
-	virtual void on_back();
+	virtual void onBack();
 
 	/**
 	 *  @brief Overlay activate.
@@ -92,21 +92,21 @@ public:
 	 *  @see activate()
 	 *  @see deactivate()
 	 */
-	virtual bool is_activated();
+	virtual bool isActivated();
 
 	/**
 	 *  @brief Return a view which is matched with the overlay.
 	 *
 	 *  @return The view which is matched with overlay.
 	 */
-	UiIfaceView *get_view();
+	UiIfaceView *getView();
 
 	/**
 	 *  @brief Return a content instance of this overlay.
 	 *
 	 *  @return content of overlay.
 	 */
-	virtual T get_content();
+	virtual T getContent();
 
 protected:
 	/**

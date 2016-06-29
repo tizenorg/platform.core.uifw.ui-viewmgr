@@ -24,9 +24,9 @@ namespace efl_viewmanager
 class UiBaseKeyListenerImpl
 {
 protected:
-	UiBaseKeyListener *key_listener;
+	UiBaseKeyListener *keyListener;
 	UiBaseViewmgr *viewmgr;
-	Evas_Object *key_grabber;
+	Evas_Object *keyGrabber;
 
 public:
 	UiBaseKeyListenerImpl(UiBaseKeyListener *key_listener, UiBaseViewmgr *viewmgr);
@@ -34,45 +34,45 @@ public:
 
 	bool init();
 	bool term();
-	void event_proc(Evas_Event_Key_Down *ev);
-	UiBaseViewmgr *get_viewmgr() { return this->viewmgr; }
-	Evas_Object *get_keygrab_obj() { return this->key_grabber; }
+	void eventProc(Evas_Event_Key_Down *ev);
+	UiBaseViewmgr *getViewmgr() { return this->viewmgr; }
+	Evas_Object *getKeygrabObj() { return this->keyGrabber; }
 };
 }
 
 static const char *KEY_BACK = "XF86Back";
 static const char *KEY_BACK2 = "XF86Stop";
 
-static void key_grab_rect_key_up_cb(UiBaseKeyListenerImpl *key_listener, Evas_Event_Key_Down *ev)
+static void _keyGrabRectKeyUpCb(UiBaseKeyListenerImpl *keyListener, Evas_Event_Key_Down *ev)
 {
-	key_listener->event_proc(ev);
+	keyListener->eventProc(ev);
 }
 
-UiBaseKeyListenerImpl::UiBaseKeyListenerImpl(UiBaseKeyListener *key_listener, UiBaseViewmgr *viewmgr)
-		: key_listener(key_listener), viewmgr(viewmgr), key_grabber(NULL)
+UiBaseKeyListenerImpl::UiBaseKeyListenerImpl(UiBaseKeyListener *keyListener, UiBaseViewmgr *viewmgr)
+		: keyListener(keyListener), viewmgr(viewmgr), keyGrabber(NULL)
 {
 }
 
-void UiBaseKeyListenerImpl::event_proc(Evas_Event_Key_Down *ev)
+void UiBaseKeyListenerImpl::eventProc(Evas_Event_Key_Down *ev)
 {
 	//Only if view manager is activated
-	UiBaseViewmgr *viewmgr = this->key_listener->get_viewmgr();
-	if (!viewmgr->is_activated()) return;
+	UiBaseViewmgr *viewmgr = this->keyListener->getViewmgr();
+	if (!viewmgr->isActivated()) return;
 
 	//Get Top View
-	UiBaseView *view = viewmgr->get_last_view();
+	UiBaseView *view = viewmgr->getLastView();
 	if (!view) return;
 
-	this->key_listener->extend_event_proc(view, ev);
+	this->keyListener->extendEventProc(view, ev);
 
 	if (strcmp(ev->keyname, KEY_BACK) && strcmp(ev->keyname, KEY_BACK2)) return;
 
-	view->on_back();
+	view->onBack();
 }
 
 bool UiBaseKeyListenerImpl::term()
 {
-	evas_object_del(this->key_grabber);
+	evas_object_del(this->keyGrabber);
 	return true;
 }
 
@@ -84,42 +84,42 @@ bool UiBaseKeyListenerImpl::init()
 		return false;
 	}
 
-	Evas *e = evas_object_evas_get(this->viewmgr->get_window());
+	Evas *e = evas_object_evas_get(this->viewmgr->getWindow());
 	if (!e)
 	{
 		LOGE("Failed to get Evas from window");
 		return false;
 	}
 
-	Evas_Object *key_grab_rect = evas_object_rectangle_add(e);
-	if (!key_grab_rect)
+	Evas_Object *keyGrabRect = evas_object_rectangle_add(e);
+	if (!keyGrabRect)
 	{
 		LOGE("Failed to create a key grabber rectangle");
 		return false;
 	}
 
-	evas_object_event_callback_add(key_grab_rect, EVAS_CALLBACK_KEY_UP, [](void *data, Evas *e, Evas_Object *obj, void *event_info) -> void
+	evas_object_event_callback_add(keyGrabRect, EVAS_CALLBACK_KEY_UP, [](void *data, Evas *e, Evas_Object *obj, void *event_info) -> void
 	{
 		Evas_Event_Key_Down *ev = static_cast<Evas_Event_Key_Down *>(event_info);
-		UiBaseKeyListenerImpl *key_listener = static_cast<UiBaseKeyListenerImpl *>(data);
-		key_grab_rect_key_up_cb(key_listener, ev);
+		UiBaseKeyListenerImpl *keyListener = static_cast<UiBaseKeyListenerImpl *>(data);
+		_keyGrabRectKeyUpCb(keyListener, ev);
 	}, this);
 
-	if (!evas_object_key_grab(key_grab_rect, KEY_BACK, 0, 0, EINA_FALSE))
+	if (!evas_object_key_grab(keyGrabRect, KEY_BACK, 0, 0, EINA_FALSE))
 	{
 		LOGE("Failed to grab BACK KEY(%s)\n", KEY_BACK);
-		evas_object_del(key_grab_rect);
+		evas_object_del(keyGrabRect);
 		return false;
 	}
 
-	if (!evas_object_key_grab(key_grab_rect, KEY_BACK2, 0, 0, EINA_FALSE))
+	if (!evas_object_key_grab(keyGrabRect, KEY_BACK2, 0, 0, EINA_FALSE))
 	{
 		LOGE("Failed to grab BACK KEY(%s)\n", KEY_BACK2);
-		evas_object_del(key_grab_rect);
+		evas_object_del(keyGrabRect);
 		return false;
 	}
 
-	this->key_grabber = key_grab_rect;
+	this->keyGrabber = keyGrabRect;
 
 	return true;
 }
@@ -131,31 +131,31 @@ bool UiBaseKeyListenerImpl::init()
 
 UiBaseKeyListener::UiBaseKeyListener(UiBaseViewmgr *viewmgr)
 {
-	this->impl = new UiBaseKeyListenerImpl(this, viewmgr);
+	this->_impl = new UiBaseKeyListenerImpl(this, viewmgr);
 }
 
 UiBaseKeyListener::~UiBaseKeyListener()
 {
-	delete(this->impl);
+	delete(this->_impl);
 }
 
 bool UiBaseKeyListener::term()
 {
-	return this->impl->term();
+	return this->_impl->term();
 }
 
 bool UiBaseKeyListener::init()
 {
-	return this->impl->init();
+	return this->_impl->init();
 }
 
-Evas_Object *UiBaseKeyListener::get_keygrab_obj()
+Evas_Object *UiBaseKeyListener::getKeygrabObj()
 {
-	return this->impl->get_keygrab_obj();
+	return this->_impl->getKeygrabObj();
 }
 
 
-UiBaseViewmgr *UiBaseKeyListener::get_viewmgr()
+UiBaseViewmgr *UiBaseKeyListener::getViewmgr()
 {
-	return this->impl->get_viewmgr();
+	return this->_impl->getViewmgr();
 }
