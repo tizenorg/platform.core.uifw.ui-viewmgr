@@ -24,26 +24,26 @@ UiKeyListener::UiKeyListener(UiViewmgr *viewmgr)
 {
 }
 
-void UiKeyListener::extend_event_proc(UiBaseView *view, Evas_Event_Key_Down *ev)
+void UiKeyListener::extendEventProc(UiBaseView *view, Evas_Event_Key_Down *ev)
 {
 	if (strcmp(ev->keyname, KEY_MENU) && strcmp(ev->keyname, KEY_MENU2)) return;
 	UiView *v = dynamic_cast<UiView *>(view);
-	UiMenu *menu = v->on_menu_pre();
+	UiMenu *menu = v->onMenuPre();
 	if (!menu) return;
-	v->on_menu(menu);
-	v->on_menu_post();
+	v->onMenu(menu);
+	v->onMenuPost();
 }
 
 bool UiKeyListener::init()
 {
 	if (!UiBaseKeyListener::init()) return false;
-	if (!evas_object_key_grab(this->get_keygrab_obj(), KEY_MENU, 0, 0, EINA_FALSE))
+	if (!evas_object_key_grab(this->getKeygrabObj(), KEY_MENU, 0, 0, EINA_FALSE))
 	{
 		LOGE("Failed to grab MENU KEY(%s)\n", KEY_MENU);
 		return false;
 	}
 
-	if (!evas_object_key_grab(this->get_keygrab_obj(), KEY_MENU2, 0, 0, EINA_FALSE))
+	if (!evas_object_key_grab(this->getKeygrabObj(), KEY_MENU2, 0, 0, EINA_FALSE))
 	{
 		LOGE("Failed to grab MENU KEY(%s)\n", KEY_MENU2);
 		return false;

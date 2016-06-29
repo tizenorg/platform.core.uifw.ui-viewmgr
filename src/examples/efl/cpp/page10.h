@@ -21,49 +21,49 @@
 class page10: public UiStandardView
 {
 protected:
-	void on_load()
+	void onLoad()
 	{
-		UiStandardView::on_load();
-		this->on_rotate(this->get_degree());
+		UiStandardView::onLoad();
+		this->onRotate(this->getDegree());
 	}
 
-	void on_rotate(int degree)
+	void onRotate(int degree)
 	{
-		UiStandardView::on_rotate(degree);
+		UiStandardView::onRotate(degree);
 
-		if (this->get_degree() == 0 || this->get_degree() == 180)
+		if (this->getDegree() == 0 || this->getDegree() == 180)
 		{
 			//Portrait
-			Evas_Object *content = create_content(this->get_base(), "ViewMgr++ Demo<br>Rotation",
+			Evas_Object *content = createContent(this->getBase(), "ViewMgr++ Demo<br>Rotation",
 					//Prev Button Callback
 					[](void *data, Evas_Object *obj, void *event_info) -> void
 					{
-						UI_VIEWMGR->pop_view();
+						UI_VIEWMGR->popView();
 					},
 					//Next Button Callback
 					[](void *data, Evas_Object *obj, void *event_info) -> void
 					{
-						UI_VIEWMGR->push_view(new page11());
+						UI_VIEWMGR->pushView(new page11());
 					});
 
-			this->set_content(content, "Page 10");
-			this->set_indicator(UI_VIEW_INDICATOR_DEFAULT);
+			this->setContent(content, "Page 10");
+			this->setIndicator(UI_VIEW_INDICATOR_DEFAULT);
 		} else {
 			//Landscape
-			Evas_Object *content = create_landscape_content(this->get_base(), "ViewMgr++ Demo<br>Rotation",
+			Evas_Object *content = createLandscapeContent(this->getBase(), "ViewMgr++ Demo<br>Rotation",
 					//Prev Button Callback
 					[](void *data, Evas_Object *obj, void *event_info) -> void
 					{
-						UI_VIEWMGR->pop_view();
+						UI_VIEWMGR->popView();
 					},
 					//Next Button Callback
 					[](void *data, Evas_Object *obj, void *event_info) -> void
 					{
-						UI_VIEWMGR->push_view(new page11());
+						UI_VIEWMGR->pushView(new page11());
 					});
 
-			this->set_content(content, "Page 10");
-			this->set_indicator(UI_VIEW_INDICATOR_OPTIMAL);
+			this->setContent(content, "Page 10");
+			this->setIndicator(UI_VIEW_INDICATOR_OPTIMAL);
 		}
 	}
 public:

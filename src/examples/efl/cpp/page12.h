@@ -20,9 +20,9 @@
  *  The created popup has view and it will be managed by viewmgr.
  */
 
-static void popup_dismissed_cb(void *data, Evas_Object *obj, void *event_info)
+static void _popupDismissedCb(void *data, Evas_Object *obj, void *event_info)
 {
-	evas_object_smart_callback_del(obj, "dismissed", popup_dismissed_cb);
+	evas_object_smart_callback_del(obj, "dismissed", _popupDismissedCb);
 	UiPopup *popup = static_cast<UiPopup *>(data);
 	delete (popup);
 }
@@ -30,52 +30,53 @@ static void popup_dismissed_cb(void *data, Evas_Object *obj, void *event_info)
 class page12: public UiStandardView
 {
 protected:
-	void on_load()
+	void onLoad()
 	{
-		UiStandardView::on_load();
+		UiStandardView::onLoad();
 
 		//Create a main content.
-		Evas_Object *content = create_content(this->get_base(), "ViewMgr++ Demo<br>Popup",
+		Evas_Object *content = createContent(this->getBase(), "ViewMgr++ Demo<br>Popup",
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					UI_VIEWMGR->pop_view();
+					UI_VIEWMGR->popView();
 				},
 				//Next Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					UI_VIEWMGR->push_view(new page13());
+					UI_VIEWMGR->pushView(new page13());
 				});
 
-		this->set_content(content, "Page12");
+		this->setContent(content, "Page12");
 
 		//Title Right button
-		Elm_Button *right_btn = elm_button_add(this->get_base());
-		elm_object_text_set(right_btn, "popup");
-		evas_object_smart_callback_add(right_btn, "clicked",
+		Elm_Button *rightBtn = elm_button_add(this->getBase());
+		elm_object_text_set(rightBtn, "popup");
+		evas_object_smart_callback_add(rightBtn, "clicked",
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
 					page12 *view = static_cast<page12 *>(data);
-					view->create_popup();
+					view->createPopup();
 				},
 				this);
 
-		this->set_title_right_btn(right_btn);
+		this->setTitleRightBtn(rightBtn);
 	}
 
 public:
+
 	page12() : UiStandardView("page12") {}
 	~page12() {}
 
-	void create_popup()
+	void createPopup()
 	{
 		UiPopup *popup = new UiPopup(this);
 		if (!popup) return;
 
-		Elm_Popup *obj = elm_popup_add(popup->get_base());
+		Elm_Popup *obj = elm_popup_add(popup->getBase());
 		elm_object_text_set(obj, "This popup has only text which is set via desc set function, (This popup gets hidden when user clicks outside) here timeout of 3 sec is set.");
 		elm_popup_timeout_set(obj, 3.0);
-		evas_object_smart_callback_add(obj, "dismissed", popup_dismissed_cb, popup);
+		evas_object_smart_callback_add(obj, "dismissed", _popupDismissedCb, popup);
 		evas_object_smart_callback_add(obj, "block,clicked",
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
@@ -89,7 +90,7 @@ public:
 				},
 				NULL);
 
-		popup->set_content(obj);
+		popup->setContent(obj);
 		popup->activate();
 	}
 };

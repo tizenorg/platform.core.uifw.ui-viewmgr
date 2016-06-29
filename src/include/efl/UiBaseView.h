@@ -48,14 +48,14 @@ public:
 	 *
 	 *  @return A previous content. If it wasn't, return @c NULL.
 	 */
-	virtual bool set_content(Evas_Object *content);
+	virtual bool setContent(Evas_Object *content);
 
 	/**
 	 *  @brief This is for unsetting a content of the view.
 	 *
 	 *  @return A previous content. If it wasn't, return @c NULL.
 	 */
-	virtual Evas_Object *unset_content();
+	virtual Evas_Object *unsetContent();
 
 	/**
 	 *  @brief Get a base object of ui_view.
@@ -64,21 +64,21 @@ public:
 	 *
 	 *  @return The base object of ui_view.
 	 */
-	virtual Evas_Object *get_base();
+	virtual Evas_Object *getBase();
 
 	/**
 	 *  @brief Set the indicator mode.
 	 *
 	 *  @param indicator The mode to set, one of #UiViewIndicator.
 	 */
-	virtual void set_indicator(UiViewIndicator indicator);
+	virtual void setIndicator(UiViewIndicator indicator);
 
 	/**
 	 *  @brief Get current view's degree.
 	 *
 	 *  @return Current rotation degree, -1 if it fails to get degree information.
 	 */
-	virtual int get_degree();
+	virtual int getDegree();
 
 protected:
 	/**
@@ -88,7 +88,7 @@ protected:
 	 *
 	 *  @return The base layout object of viewmgr.
 	 */
-	Evas_Object *get_parent();
+	Evas_Object *getParent();
 
 	/**
 	 *  @brief Toggle event block.
@@ -97,7 +97,7 @@ protected:
 	 *
 	 *  @param block @c true, when blocking is enabled, otherwise @c false.
 	 */
-	virtual void set_event_block(bool block);
+	virtual void setEventBlock(bool block);
 
 	/**
 	 *  @brief View rotate changed.
@@ -109,7 +109,7 @@ protected:
 	 *  @see on_portrait()
 	 *  @see on_landscpae()
 	 */
-	virtual void on_rotate(int degree);
+	virtual void onRotate(int degree);
 
 	/**
 	 *  @brief View portrait state.
@@ -119,7 +119,7 @@ protected:
 	 *  @see on_landscpae()
 	 *  @see on_rotate()
 	 */
-	virtual void on_portrait();
+	virtual void onPortrait();
 
 	/**
 	 *  @brief View landscape state.
@@ -129,7 +129,7 @@ protected:
 	 *  @see on_portrait()
 	 *  @see on_rotate()
 	 */
-	virtual void on_landscape();
+	virtual void onLandscape();
 
 private:
 	_UI_DECLARE_PRIVATE_IMPL(UiBaseView);

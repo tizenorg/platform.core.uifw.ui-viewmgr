@@ -9,41 +9,41 @@ public:
 	ui_app_lifecycle_callback_s capi_lifecycle_callback;
 	void *data;
 
-	bool on_create()
+	bool onCreate()
 	{
-		if (!UiApp::on_create()) return false;
+		if (!UiApp::onCreate()) return false;
 
 		if (!this->capi_lifecycle_callback.create) return false;
 		return this->capi_lifecycle_callback.create(this->data);
 	}
 
-	void on_terminate()
+	void onTerminate()
 	{
-		UiApp::on_terminate();
+		UiApp::onTerminate();
 
 		if (!this->capi_lifecycle_callback.terminate) return;
 		this->capi_lifecycle_callback.terminate(this->data);
 	}
 
-	void on_pause()
+	void onPause()
 	{
-		UiApp::on_pause();
+		UiApp::onPause();
 
 		if (!this->capi_lifecycle_callback.pause) return;
 		this->capi_lifecycle_callback.pause(this->data);
 	}
 
-	void on_resume()
+	void onResume()
 	{
-		UiApp::on_resume();
+		UiApp::onResume();
 
 		if (!this->capi_lifecycle_callback.resume) return;
 		this->capi_lifecycle_callback.resume(this->data);
 	}
 
-	void on_control(app_control_h app_control)
+	void onControl(app_control_h app_control)
 	{
-		UiApp::on_control(app_control);
+		UiApp::onControl(app_control);
 
 		if (!this->capi_lifecycle_callback.app_control) return;
 		this->capi_lifecycle_callback.app_control(app_control, this->data);

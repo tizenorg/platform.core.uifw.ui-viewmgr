@@ -17,7 +17,7 @@
 #include "main.h"
 
 Elm_Toolbar*
-create_toolbar(Evas_Object *parent, const char *style)
+createToolbar(Evas_Object *parent, const char *style)
 {
 	Elm_Toolbar *toolbar;
 
@@ -39,7 +39,7 @@ create_toolbar(Evas_Object *parent, const char *style)
 }
 
 Evas_Object*
-create_scrolling_content(Evas_Object *parent)
+createScrollingContent(Evas_Object *parent)
 {
 	char buf[PATH_MAX];
 	Elm_Image *image;
@@ -55,7 +55,7 @@ create_scrolling_content(Evas_Object *parent)
 }
 
 Evas_Object*
-create_landscape_content(Evas_Object *parent, const char *text, Evas_Smart_Cb prev_btn_clicked_cb, Evas_Smart_Cb next_btn_clicked_cb)
+createLandscapeContent(Evas_Object *parent, const char *text, Evas_Smart_Cb _prevBtnClickedCb, Evas_Smart_Cb _nextBtnClickedCb)
 {
 	char buf[PATH_MAX];
 	Elm_Grid *grid;
@@ -104,7 +104,7 @@ create_landscape_content(Evas_Object *parent, const char *text, Evas_Smart_Cb pr
 	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(btn, EVAS_HINT_FILL, 1.0);
 	elm_object_text_set(btn, "Prev");
-	evas_object_smart_callback_add(btn, "clicked", prev_btn_clicked_cb, NULL);
+	evas_object_smart_callback_add(btn, "clicked", _prevBtnClickedCb, NULL);
 	evas_object_show(btn);
 	elm_box_pack_end(box, btn);
 
@@ -113,7 +113,7 @@ create_landscape_content(Evas_Object *parent, const char *text, Evas_Smart_Cb pr
 	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(btn, EVAS_HINT_FILL, 1.0);
 	elm_object_text_set(btn, "Next");
-	evas_object_smart_callback_add(btn, "clicked", next_btn_clicked_cb, NULL);
+	evas_object_smart_callback_add(btn, "clicked", _nextBtnClickedCb, NULL);
 	evas_object_show(btn);
 	elm_box_pack_end(box, btn);
 
@@ -123,9 +123,9 @@ create_landscape_content(Evas_Object *parent, const char *text, Evas_Smart_Cb pr
 }
 
 Evas_Object*
-create_title_handle_content(Evas_Object *parent, Evas_Smart_Cb prev_btn_clicked_cb, Evas_Smart_Cb next_btn_clicked_cb,
-				Evas_Smart_Cb title_show_btn_clicked_cb, Evas_Smart_Cb title_hide_btn_clicked_cb,
-				Evas_Smart_Cb title_show_anim_btn_clicked_cb, Evas_Smart_Cb title_hide_anim_btn_clicked_cb, UiView *view)
+createTitleHandleContent(Evas_Object *parent, Evas_Smart_Cb _prevBtnClickedCb, Evas_Smart_Cb _nextBtnClickedCb,
+				Evas_Smart_Cb _titleShowBtnClickedCb, Evas_Smart_Cb _titleHideBtnClickedCb,
+				Evas_Smart_Cb _titleShowAnimBtnClickedCb, Evas_Smart_Cb _titleHideAnimBtnClickedCb, UiView *view)
 {
 	Elm_Grid *grid;
 	Elm_Box *box;
@@ -159,7 +159,7 @@ create_title_handle_content(Evas_Object *parent, Evas_Smart_Cb prev_btn_clicked_
 	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(btn, EVAS_HINT_FILL, 1.0);
 	elm_object_text_set(btn, "Title Show");
-	evas_object_smart_callback_add(btn, "clicked", title_show_btn_clicked_cb, view);
+	evas_object_smart_callback_add(btn, "clicked", _titleShowBtnClickedCb, view);
 	evas_object_show(btn);
 	elm_box_pack_end(box, btn);
 
@@ -168,7 +168,7 @@ create_title_handle_content(Evas_Object *parent, Evas_Smart_Cb prev_btn_clicked_
 	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(btn, EVAS_HINT_FILL, 1.0);
 	elm_object_text_set(btn, "Title Hide");
-	evas_object_smart_callback_add(btn, "clicked", title_hide_btn_clicked_cb, view);
+	evas_object_smart_callback_add(btn, "clicked", _titleHideBtnClickedCb, view);
 	evas_object_show(btn);
 	elm_box_pack_end(box, btn);
 
@@ -177,7 +177,7 @@ create_title_handle_content(Evas_Object *parent, Evas_Smart_Cb prev_btn_clicked_
 	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(btn, EVAS_HINT_FILL, 1.0);
 	elm_object_text_set(btn, "Title Show Anim");
-	evas_object_smart_callback_add(btn, "clicked", title_show_anim_btn_clicked_cb, view);
+	evas_object_smart_callback_add(btn, "clicked", _titleShowAnimBtnClickedCb, view);
 	evas_object_show(btn);
 	elm_box_pack_end(box, btn);
 
@@ -186,7 +186,7 @@ create_title_handle_content(Evas_Object *parent, Evas_Smart_Cb prev_btn_clicked_
 	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(btn, EVAS_HINT_FILL, 1.0);
 	elm_object_text_set(btn, "Title Hide Anim");
-	evas_object_smart_callback_add(btn, "clicked", title_hide_anim_btn_clicked_cb, view);
+	evas_object_smart_callback_add(btn, "clicked", _titleHideAnimBtnClickedCb, view);
 	evas_object_show(btn);
 	elm_box_pack_end(box, btn);
 
@@ -204,7 +204,7 @@ create_title_handle_content(Evas_Object *parent, Evas_Smart_Cb prev_btn_clicked_
 	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(btn, EVAS_HINT_FILL, 1.0);
 	elm_object_text_set(btn, "Prev");
-	evas_object_smart_callback_add(btn, "clicked", prev_btn_clicked_cb, NULL);
+	evas_object_smart_callback_add(btn, "clicked", _prevBtnClickedCb, NULL);
 	evas_object_show(btn);
 	elm_box_pack_end(box, btn);
 
@@ -213,7 +213,7 @@ create_title_handle_content(Evas_Object *parent, Evas_Smart_Cb prev_btn_clicked_
 	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(btn, EVAS_HINT_FILL, 1.0);
 	elm_object_text_set(btn, "Next");
-	evas_object_smart_callback_add(btn, "clicked", next_btn_clicked_cb, NULL);
+	evas_object_smart_callback_add(btn, "clicked", _nextBtnClickedCb, NULL);
 	evas_object_show(btn);
 	elm_box_pack_end(box, btn);
 
@@ -221,7 +221,7 @@ create_title_handle_content(Evas_Object *parent, Evas_Smart_Cb prev_btn_clicked_
 }
 
 Evas_Object*
-create_content(Evas_Object *parent, const char *text, Evas_Smart_Cb prev_btn_clicked_cb, Evas_Smart_Cb next_btn_clicked_cb)
+createContent(Evas_Object *parent, const char *text, Evas_Smart_Cb _prevBtnClickedCb, Evas_Smart_Cb _nextBtnClickedCb)
 {
 	Elm_Grid *grid;
 	Elm_Box *box;
@@ -261,7 +261,7 @@ create_content(Evas_Object *parent, const char *text, Evas_Smart_Cb prev_btn_cli
 	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(btn, EVAS_HINT_FILL, 1.0);
 	elm_object_text_set(btn, "Prev");
-	evas_object_smart_callback_add(btn, "clicked", prev_btn_clicked_cb, NULL);
+	evas_object_smart_callback_add(btn, "clicked", _prevBtnClickedCb, NULL);
 	evas_object_show(btn);
 	elm_box_pack_end(box, btn);
 
@@ -270,7 +270,7 @@ create_content(Evas_Object *parent, const char *text, Evas_Smart_Cb prev_btn_cli
 	evas_object_size_hint_weight_set(btn, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(btn, EVAS_HINT_FILL, 1.0);
 	elm_object_text_set(btn, "Next");
-	evas_object_smart_callback_add(btn, "clicked", next_btn_clicked_cb, NULL);
+	evas_object_smart_callback_add(btn, "clicked", _nextBtnClickedCb, NULL);
 	evas_object_show(btn);
 	elm_box_pack_end(box, btn);
 

@@ -19,7 +19,7 @@
 /** This page implement on_menu() method to create ctxpopup when menu HW key clicked.
  *  This page will be created menu(ctxpopup)items in on_menu() method.
  */
-static void ctxpopup_item_select_cb(void *data, Evas_Object *obj, void *event_info)
+static void _ctxpopupItemSelectCb(void *data, Evas_Object *obj, void *event_info)
 {
 	Elm_Object_Item *it = static_cast<Elm_Object_Item *>(event_info);
 	LOGE("Item (%s) is selected", elm_object_item_text_get(it));
@@ -29,42 +29,42 @@ static void ctxpopup_item_select_cb(void *data, Evas_Object *obj, void *event_in
 class page11: public UiStandardView
 {
 protected:
-	void on_load()
+	void onLoad()
 	{
-		UiStandardView::on_load();
+		UiStandardView::onLoad();
 
 		//Create a main content.
-		Evas_Object *content = create_content(this->get_base(), "ViewMgr++ Demo<br>Menu Popup",
+		Evas_Object *content = createContent(this->getBase(), "ViewMgr++ Demo<br>Menu Popup",
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					UI_VIEWMGR->pop_view();
+					UI_VIEWMGR->popView();
 				},
 				//Next Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					UI_VIEWMGR->push_view(new page12());
+					UI_VIEWMGR->pushView(new page12());
 				});
 
-		this->set_content(content, "Page11");
+		this->setContent(content, "Page11");
 	}
 
-	void on_menu(UiMenu *menu)
+	void onMenu(UiMenu *menu)
 	{
-		UiStandardView::on_menu(menu);
+		UiStandardView::onMenu(menu);
 
-		Elm_Ctxpopup *ctxpopup = elm_ctxpopup_add(menu->get_base());
-		elm_ctxpopup_item_append(ctxpopup, "Phone calls", NULL, ctxpopup_item_select_cb, this);
-		elm_ctxpopup_item_append(ctxpopup, "Favorites", NULL, ctxpopup_item_select_cb, this);
-		elm_ctxpopup_item_append(ctxpopup, "Search", NULL, ctxpopup_item_select_cb, this);
-		elm_ctxpopup_item_append(ctxpopup, "Dialer", NULL, ctxpopup_item_select_cb, this);
-		elm_ctxpopup_item_append(ctxpopup, "Add contact", NULL, ctxpopup_item_select_cb, this);
-		elm_ctxpopup_item_append(ctxpopup, "Phone calls", NULL, ctxpopup_item_select_cb, this);
-		elm_ctxpopup_item_append(ctxpopup, "Favorites", NULL, ctxpopup_item_select_cb, this);
-		elm_ctxpopup_item_append(ctxpopup, "Search", NULL, ctxpopup_item_select_cb, this);
-		elm_ctxpopup_item_append(ctxpopup, "Dialer", NULL, ctxpopup_item_select_cb, this);
+		Elm_Ctxpopup *ctxpopup = elm_ctxpopup_add(menu->getBase());
+		elm_ctxpopup_item_append(ctxpopup, "Phone calls", NULL, _ctxpopupItemSelectCb, this);
+		elm_ctxpopup_item_append(ctxpopup, "Favorites", NULL, _ctxpopupItemSelectCb, this);
+		elm_ctxpopup_item_append(ctxpopup, "Search", NULL, _ctxpopupItemSelectCb, this);
+		elm_ctxpopup_item_append(ctxpopup, "Dialer", NULL, _ctxpopupItemSelectCb, this);
+		elm_ctxpopup_item_append(ctxpopup, "Add contact", NULL, _ctxpopupItemSelectCb, this);
+		elm_ctxpopup_item_append(ctxpopup, "Phone calls", NULL, _ctxpopupItemSelectCb, this);
+		elm_ctxpopup_item_append(ctxpopup, "Favorites", NULL, _ctxpopupItemSelectCb, this);
+		elm_ctxpopup_item_append(ctxpopup, "Search", NULL, _ctxpopupItemSelectCb, this);
+		elm_ctxpopup_item_append(ctxpopup, "Dialer", NULL, _ctxpopupItemSelectCb, this);
 
-		menu->set_content(ctxpopup);
+		menu->setContent(ctxpopup);
 	}
 
 public:

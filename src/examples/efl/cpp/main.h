@@ -31,10 +31,10 @@
 #define PACKAGE "ui-viewmgr"
 #endif
 
-Evas_Object *create_landscape_content(Evas_Object *parent, const char *text, Evas_Smart_Cb prev_btn_clicked_cb, Evas_Smart_Cb next_btn_clicked_cb);
-Evas_Object *create_content(Evas_Object *parent, const char *text, Evas_Smart_Cb prev_btn_clicked_cb, Evas_Smart_Cb next_btn_clicked_cb);
-Evas_Object *create_scrolling_content(Evas_Object *parent);
-Evas_Object* create_title_handle_content(Evas_Object *parent, Evas_Smart_Cb prev_btn_clicked_cb, Evas_Smart_Cb next_btn_clicked_cb,
-					Evas_Smart_Cb title_show_btn_clicked_cb, Evas_Smart_Cb title_hide_btn_clicked_cb,
-					Evas_Smart_Cb title_show_anim_btn_clicked_cb, Evas_Smart_Cb title_hide_anim_btn_clicked_cb, UiView *view);
-Elm_Toolbar *create_toolbar(Evas_Object *parent, const char *style);
+Evas_Object *createLandscapeContent(Evas_Object *parent, const char *text, Evas_Smart_Cb _prevBtnClickedCb, Evas_Smart_Cb _nextBtnClickedCb);
+Evas_Object *createContent(Evas_Object *parent, const char *text, Evas_Smart_Cb _prevBtnClickedCb, Evas_Smart_Cb _nexBtnClickedCb);
+Evas_Object *createScrollingContent(Evas_Object *parent);
+Evas_Object* createTitleHandleContent(Evas_Object *parent, Evas_Smart_Cb _prevBtnClickedCb, Evas_Smart_Cb _nextBtnClickedCb,
+					Evas_Smart_Cb _titleShowBtnClickedCb, Evas_Smart_Cb _titleHideBtnClickedCb,
+					Evas_Smart_Cb _titleShowAnimBtnClickedCb, Evas_Smart_Cb _titleHideAnimBtnClickedCb, UiView *view);
+Elm_Toolbar *createToolbar(Evas_Object *parent, const char *style);
