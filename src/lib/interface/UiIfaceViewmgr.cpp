@@ -17,6 +17,7 @@
 
 #include <app.h>
 #include <list>
+
 #include "../../include/interface/UiIfaceViewManager.h"
 
 using namespace std;
@@ -33,53 +34,53 @@ class UiIfaceViewmgrImpl
 	friend class UiIfaceViewmgr;
 
 private:
-	static UiIfaceViewmgr *inst;
-	static bool soft_key;                      //If system doesn't support HW back key, then this value is @c true.
-	static bool event_block;                   //Event block on view transition. This value should be configurable by system.
-	list<UiIfaceView *> view_list;           //View list.
-	bool activated;                            //Activated status of this viewmgr.
-	bool destroying;                           //True, if viewmgr is on destroying.
+	static UiIfaceViewmgr *_inst;
+	static bool _softKey;                      //If system doesn't support HW back key, then this value is @c true.
+	static bool _eventBlock;                   //Event block on view transition. This value should be configurable by system.
+	list<UiIfaceView *> _viewList;           //View list.
+	bool _activated;                            //Activated status of this viewmgr.
+	bool _destroying;                           //True, if viewmgr is on destroying.
 
 public:
-	bool connect_view(UiIfaceView *view);
-	bool disconnect_view(UiIfaceView *view);
-	void set_event_block(UiIfaceView *view, bool block);
+	bool connectView(UiIfaceView *view);
+	bool disconnectView(UiIfaceView *view);
+	void setEventBlock(UiIfaceView *view, bool block);
 
-	bool push_view_finished(UiIfaceView *view);
-	bool pop_view_finished(UiIfaceView *view);
-	UiIfaceView *push_view(UiIfaceView *view);
-	bool pop_view();
-	bool insert_view_before(UiIfaceView *view, UiIfaceView *before);
-	bool insert_view_after(UiIfaceView *view, UiIfaceView *after);
-	bool remove_view(UiIfaceView *view);
-	UiIfaceView* get_view(unsigned int idx);
-	UiIfaceView *get_view(const char *name);
-	UiIfaceView *get_last_view();
-	int get_view_index(const UiIfaceView *view);
+	bool pushViewFinished(UiIfaceView *view);
+	bool popViewFinished(UiIfaceView *view);
+	UiIfaceView *pushView(UiIfaceView *view);
+	bool popView();
+	bool insertViewBefore(UiIfaceView *view, UiIfaceView *before);
+	bool insertViewAfter(UiIfaceView *view, UiIfaceView *after);
+	bool removeView(UiIfaceView *view);
+	UiIfaceView *getView(unsigned int idx);
+	UiIfaceView *getView(const char *name);
+	UiIfaceView *getLastView();
+	int getViewIndex(const UiIfaceView *view);
 
 	UiIfaceViewmgrImpl(UiIfaceViewmgr *viewmgr);
 	~UiIfaceViewmgrImpl();
 
 	bool activate();
 	bool deactivate();
-	bool is_activated();
-	unsigned int get_view_count();
-	static bool need_soft_key();
-	static UiIfaceViewmgr* get_instance();
+	bool isActivated();
+	unsigned int getViewCount();
+	static bool needSoftKey();
+	static UiIfaceViewmgr* getInstance();
 };
 
 }
 
-UiIfaceViewmgr* UiIfaceViewmgrImpl::inst = NULL;
+UiIfaceViewmgr* UiIfaceViewmgrImpl::_inst = NULL;
 //FIXME: Read system profile to decide whether support software key or not.
-bool UiIfaceViewmgrImpl::soft_key = true;
+bool UiIfaceViewmgrImpl::_softKey = true;
 //FIXME: Read system profile to decide whether support event block or not.
-bool UiIfaceViewmgrImpl::event_block = true;
+bool UiIfaceViewmgrImpl::_eventBlock = true;
 
 #define VIEW_ITR list<UiIfaceView *>::iterator
 #define VIEW_RITR list<UiIfaceView *>::reverse_iterator
 
-bool UiIfaceViewmgrImpl::insert_view_after(UiIfaceView *view, UiIfaceView *after)
+bool UiIfaceViewmgrImpl::insertViewAfter(UiIfaceView *view, UiIfaceView *after)
 {
 	VIEW_ITR it;
 
@@ -89,24 +90,24 @@ bool UiIfaceViewmgrImpl::insert_view_after(UiIfaceView *view, UiIfaceView *after
 		return false;
 	}
 
-	if (!this->connect_view(view))
+	if (!this->connectView(view))
 	{
 		LOGE("connect view failed");
 		return false;
 	}
 
-	if (this->view_list.size() > 0)
+	if (this->_viewList.size() > 0)
 	{
-		for (it = this->view_list.begin(); it != this->view_list.end(); it++)
+		for (it = this->_viewList.begin(); it != this->_viewList.end(); it++)
 		{
 			if (after == *it)
 			{
 				//If the after is a last item of list.
 				//view has to push now.
-				if (it == this->view_list.end())
-					this->push_view(view);
+				if (it == this->_viewList.end())
+					this->pushView(view);
 				else
-					this->view_list.insert(++it, view);
+					this->_viewList.insert(++it, view);
 
 				return true;
 			}
@@ -115,125 +116,125 @@ bool UiIfaceViewmgrImpl::insert_view_after(UiIfaceView *view, UiIfaceView *after
 
 	//If there is no matching after view with current list.
 	//also in case of after is NULL.
-	this->push_view(view);
+	this->pushView(view);
 
 	return true;
 }
 
-bool UiIfaceViewmgrImpl::need_soft_key()
+bool UiIfaceViewmgrImpl::needSoftKey()
 {
-	return UiIfaceViewmgrImpl::soft_key;
+	return UiIfaceViewmgrImpl::_softKey;
 }
 
-bool UiIfaceViewmgrImpl::connect_view(UiIfaceView *view)
+bool UiIfaceViewmgrImpl::connectView(UiIfaceView *view)
 {
 	//TODO: Perform this only in debug mode?
 	//Check whether the same name of this view is already existed in this viewmgr?
-	int name_len = strlen(view->get_name());
-	const char *name = view->get_name();
+	int nameLen = strlen(view->getName());
+	const char *name = view->getName();
 
-	for (VIEW_ITR it = this->view_list.begin(); it != this->view_list.end(); it++)
+	for (VIEW_ITR it = this->_viewList.begin(); it != this->_viewList.end(); it++)
 	{
 		UiIfaceView *view = *it;
-		const char *view_name = view->get_name();
-		if (!view_name) continue;
-		int view_name_len = strlen(view_name);
+		const char *viewName = view->getName();
+		if (!viewName) continue;
+		int viewNameLen = strlen(viewName);
 
 		//Got you!
-		if ((view_name_len == name_len) && !strcmp(name, view_name))
+		if ((viewNameLen == nameLen) && !strcmp(name, viewName))
 		{
 			LOGE("the same name of UiIfaceView(%p) is already in this UiIfaceViewmgr(%p)", view, this);
 			return false;
 		}
 	}
 
-	return view->set_viewmgr(this->get_instance());
+	return view->_setViewmgr(this->getInstance());
 }
 
-bool UiIfaceViewmgrImpl::disconnect_view(UiIfaceView *view)
+bool UiIfaceViewmgrImpl::disconnectView(UiIfaceView *view)
 {
-	if (!view->get_viewmgr()) return false;
-	view->set_viewmgr(NULL);
+	if (!view->_getViewmgr()) return false;
+	view->_setViewmgr(NULL);
 	return true;
 }
 
-void UiIfaceViewmgrImpl::set_event_block(UiIfaceView *view, bool block)
+void UiIfaceViewmgrImpl::setEventBlock(UiIfaceView *view, bool block)
 {
-	if (!UiIfaceViewmgrImpl::event_block) return;
-	view->set_event_block(block);
+	if (!UiIfaceViewmgrImpl::_eventBlock) return;
+	view->setEventBlock(block);
 }
 
-bool UiIfaceViewmgrImpl::push_view_finished(UiIfaceView *view)
+bool UiIfaceViewmgrImpl::pushViewFinished(UiIfaceView *view)
 {
-	UiIfaceView *last = this->view_list.back();
+	UiIfaceView *last = this->_viewList.back();
 
 	//The previous view has been pushed. This should be unload.
 	if (last != view)
 	{
-		view->on_unload();
+		view->onUnload();
 		return true;
 	}
 
 	//A new view has been pushed. This should be activate.
-	view->on_activate();
-	this->set_event_block(view, false);
+	view->onActivate();
+	this->setEventBlock(view, false);
 
 	return true;
 }
 
-bool UiIfaceViewmgrImpl::pop_view_finished(UiIfaceView *view)
+bool UiIfaceViewmgrImpl::popViewFinished(UiIfaceView *view)
 {
-	UiIfaceView *last = this->view_list.back();
+	UiIfaceView *last = this->_viewList.back();
 
 	//This view has been popped. It should be destroyed.
 	if (last == view)
 	{
-		view->on_unload();
-		view->on_destroy();
+		view->onUnload();
+		view->onDestroy();
 		delete (view);
 		return true;
 	}
 
 	//The previous view has been popped. It should become activate.
-	view->on_activate();
-	this->set_event_block(view, false);
+	view->onActivate();
+	this->setEventBlock(view, false);
 
 	return true;
 }
 
 UiIfaceViewmgrImpl::UiIfaceViewmgrImpl(UiIfaceViewmgr* viewmgr)
-		: activated(false), destroying(false)
+		: _activated(false), _destroying(false)
 {
-	UiIfaceViewmgrImpl::inst = viewmgr;
+	UiIfaceViewmgrImpl::_inst = viewmgr;
 }
 
 UiIfaceViewmgrImpl::~UiIfaceViewmgrImpl()
 {
 	//Terminate views
-	this->destroying = EINA_TRUE;
-	for (VIEW_RITR ritr = this->view_list.rbegin(); ritr != this->view_list.rend(); ritr++)
+	this->_destroying = EINA_TRUE;
+	for (VIEW_RITR ritr = this->_viewList.rbegin(); ritr != this->_viewList.rend(); ritr++)
 	{
 		UiIfaceView *view = *ritr;
-		if ((view->get_state() != UI_VIEW_STATE_DEACTIVATE) &&
-			(view->get_state() != UI_VIEW_STATE_UNLOAD))
+		if ((view->getState() != UI_VIEW_STATE_DEACTIVATE) &&
+			(view->getState() != UI_VIEW_STATE_UNLOAD))
 		{
-			view->on_deactivate();
+			view->onDeactivate();
 		}
-		if (view->get_state() != UI_VIEW_STATE_UNLOAD)
+		if (view->getState() != UI_VIEW_STATE_UNLOAD)
 		{
-			view->on_unload();
+			view->onUnload();
 		}
-		view->on_destroy();
+		view->onDestroy();
 		delete (view);
 	}
-	this->destroying = EINA_FALSE;
+	this->_destroying = EINA_FALSE;
 
 	ui_app_exit();
 
-	UiIfaceViewmgrImpl::inst = NULL;
+	UiIfaceViewmgrImpl::_inst = NULL;
 }
 
-UiIfaceView *UiIfaceViewmgrImpl::push_view(UiIfaceView *view)
+UiIfaceView *UiIfaceViewmgrImpl::pushView(UiIfaceView *view)
 {
 	if (!view)
 	{
@@ -241,7 +242,7 @@ UiIfaceView *UiIfaceViewmgrImpl::push_view(UiIfaceView *view)
 		return NULL;
 	}
 
-	if (!this->connect_view(view))
+	if (!this->connectView(view))
 	{
 		LOGE("connect view failed");
 		return NULL;
@@ -250,75 +251,75 @@ UiIfaceView *UiIfaceViewmgrImpl::push_view(UiIfaceView *view)
 	UiIfaceView *pview;
 
 	//Previous view
-	if (this->view_list.size() > 0)
+	if (this->_viewList.size() > 0)
 	{
-		pview = this->view_list.back();
-		pview->on_deactivate();
-		this->set_event_block(pview, true);
+		pview = this->_viewList.back();
+		pview->onDeactivate();
+		this->setEventBlock(pview, true);
 	}
 
-	this->view_list.push_back(view);
+	this->_viewList.push_back(view);
 
 	//If view manager is not activated yet, don't load view.
-	if (!this->is_activated()) return view;
+	if (!this->isActivated()) return view;
 
-	view->on_load();
-	view->on_deactivate();
+	view->onLoad();
+	view->onDeactivate();
 
-	if (this->view_list.size() != 1)
+	if (this->_viewList.size() != 1)
 	{
-		this->set_event_block(view, true);
+		this->setEventBlock(view, true);
 	}
 
 	return view;
 }
 
-bool UiIfaceViewmgrImpl::pop_view()
+bool UiIfaceViewmgrImpl::popView()
 {
 	//last page to be popped.
-	UiIfaceView*view = this->view_list.back();
+	UiIfaceView*view = this->_viewList.back();
 
-	if (view->get_event_block())
+	if (view->getEventBlock())
 	{
 		return false;
 	}
 
 	//FIXME: No more view?
-	if (this->get_view_count() == 0)
+	if (this->getViewCount() == 0)
 	{
 		LOGE("No Views. Can't pop anymore!");
 		return false;
 	}
 
 	//This is the last page.
-	if (this->get_view_count() == 1)
+	if (this->getViewCount() == 1)
 	{
 		//destroy viewmgr?
-		UiIfaceView*view = this->view_list.back();
-		view->on_deactivate();
-		view->on_unload();
-		view->on_destroy();
+		UiIfaceView*view = this->_viewList.back();
+		view->onDeactivate();
+		view->onUnload();
+		view->onDestroy();
 		delete(view);
 
 		return true;
 	}
 
-	view->on_deactivate();
-	this->set_event_block(view, true);
+	view->onDeactivate();
+	this->setEventBlock(view, true);
 
 	//Below object has to be used in child class...
 	//Make this getter method? or define instance?
 	//previous page is to be an active page.
-	auto nx = prev(this->view_list.end(), 2);
+	auto nx = prev(this->_viewList.end(), 2);
 	UiIfaceView*pview = *nx;
-	pview->on_load();
-	pview->on_deactivate();
-	this->set_event_block(pview, true);
+	pview->onLoad();
+	pview->onDeactivate();
+	this->setEventBlock(pview, true);
 
 	return true;
 }
 
-bool UiIfaceViewmgrImpl::insert_view_before(UiIfaceView *view, UiIfaceView *before)
+bool UiIfaceViewmgrImpl::insertViewBefore(UiIfaceView *view, UiIfaceView *before)
 {
 	VIEW_ITR it;
 
@@ -328,19 +329,19 @@ bool UiIfaceViewmgrImpl::insert_view_before(UiIfaceView *view, UiIfaceView *befo
 		return false;
 	}
 
-	if (!this->connect_view(view))
+	if (!this->connectView(view))
 	{
 		LOGE("connect view failed");
 		return false;
 	}
 
-	if (this->view_list.size() > 0)
+	if (this->_viewList.size() > 0)
 	{
-		for (it = this->view_list.begin(); it != this->view_list.end(); it++)
+		for (it = this->_viewList.begin(); it != this->_viewList.end(); it++)
 		{
 			if (before == *it)
 			{
-				this->view_list.insert(it, view);
+				this->_viewList.insert(it, view);
 
 				return true;
 			}
@@ -349,39 +350,39 @@ bool UiIfaceViewmgrImpl::insert_view_before(UiIfaceView *view, UiIfaceView *befo
 
 	//If there is no matching before view with current list.
 	//also in case of before is NULL.
-	this->push_view(view);
+	this->pushView(view);
 
 	return true;
 }
 
-bool UiIfaceViewmgrImpl::remove_view(UiIfaceView *view)
+bool UiIfaceViewmgrImpl::removeView(UiIfaceView *view)
 {
-	if (this->destroying) return false;
+	if (this->_destroying) return false;
 
-	this->view_list.remove(view);
-	this->disconnect_view(view);
+	this->_viewList.remove(view);
+	this->disconnectView(view);
 
 	//TODO: If this view is the top on the stack ?
 	return true;
 }
 
-UiIfaceView *UiIfaceViewmgrImpl::get_view(unsigned int idx)
+UiIfaceView *UiIfaceViewmgrImpl::getView(unsigned int idx)
 {
-	if (idx < 0 || idx >= this->view_list.size())
+	if (idx < 0 || idx >= this->_viewList.size())
 	{
-		LOGE("Invalid idx(%d)! =? (idx range: %d ~ %d)", idx, 0, this->view_list.size() - 1);
+		LOGE("Invalid idx(%d)! =? (idx range: %d ~ %d)", idx, 0, this->_viewList.size() - 1);
 		return NULL;
 	}
-	VIEW_ITR it = this->view_list.begin();
+	VIEW_ITR it = this->_viewList.begin();
 	advance(it, idx);
 	return *it;
 }
 
-int UiIfaceViewmgrImpl::get_view_index(const UiIfaceView *view)
+int UiIfaceViewmgrImpl::getViewIndex(const UiIfaceView *view)
 {
 	int idx = 0;
 
-	for (VIEW_ITR it = this->view_list.begin(); it != this->view_list.end(); it++)
+	for (VIEW_ITR it = this->_viewList.begin(); it != this->_viewList.end(); it++)
 	{
 		if (view == *it) return idx;
 		++idx;
@@ -390,57 +391,62 @@ int UiIfaceViewmgrImpl::get_view_index(const UiIfaceView *view)
 	return -1;
 }
 
-UiIfaceView *UiIfaceViewmgrImpl::get_last_view()
+UiIfaceView *UiIfaceViewmgrImpl::getLastView()
 {
-	int cnt = this->get_view_count();
-	return this->get_view(cnt - 1);
+	int cnt = this->getViewCount();
+
+	return this->getView(cnt - 1);
 }
 
 bool UiIfaceViewmgrImpl::activate()
 {
-	if (this->activated) return false;
-	if (this->get_view_count() == 0) return false;
-	this->activated = true;
-	UiIfaceView *view = this->get_last_view();
-	view->on_load();
-	view->on_deactivate();
-	view->on_activate();
+	if (this->_activated) return false;
+	if (this->getViewCount() == 0) return false;
+	this->_activated = true;
+
+	UiIfaceView *view = this->getLastView();
+
+	view->onLoad();
+	view->onDeactivate();
+	view->onActivate();
+
 	return true;
 }
 
 bool UiIfaceViewmgrImpl::deactivate()
 {
-	if (!this->activated) return false;
-	this->activated = false;
-	UiIfaceView *view = this->get_last_view();
+	if (!this->_activated) return false;
+	this->_activated = false;
 
-	if ((view->get_state() != UI_VIEW_STATE_DEACTIVATE) &&
-		(view->get_state() != UI_VIEW_STATE_UNLOAD))
+	UiIfaceView *view = this->getLastView();
+
+	if ((view->getState() != UI_VIEW_STATE_DEACTIVATE) &&
+		(view->getState() != UI_VIEW_STATE_UNLOAD))
 	{
-		view->on_deactivate();
+		view->onDeactivate();
 	}
-	if (view->get_state() != UI_VIEW_STATE_UNLOAD)
+	if (view->getState() != UI_VIEW_STATE_UNLOAD)
 	{
-		view->on_unload();
+		view->onUnload();
 	}
 
 	return true;
 }
 
-UiIfaceView *UiIfaceViewmgrImpl::get_view(const char *name)
+UiIfaceView *UiIfaceViewmgrImpl::getView(const char *name)
 {
 	if (!name) return NULL;
-	int name_len = strlen(name);
+	int nameLen = strlen(name);
 
-	for (VIEW_ITR it = this->view_list.begin(); it != this->view_list.end(); it++)
+	for (VIEW_ITR it = this->_viewList.begin(); it != this->_viewList.end(); it++)
 	{
 		UiIfaceView *view = *it;
-		const char *view_name = view->get_name();
-		if (!view_name) continue;
-		int view_name_len = strlen(view_name);
+		const char *viewName = view->getName();
+		if (!viewName) continue;
+		int viewNameLen = strlen(viewName);
 
 		//Got you!
-		if ((view_name_len == name_len) && !strcmp(name, view_name))
+		if ((viewNameLen == nameLen) && !strcmp(name, viewName))
 		{
 			return view;
 		}
@@ -449,115 +455,115 @@ UiIfaceView *UiIfaceViewmgrImpl::get_view(const char *name)
 	return NULL;
 }
 
-bool UiIfaceViewmgrImpl::is_activated()
+bool UiIfaceViewmgrImpl::isActivated()
 {
-	return this->activated;
+	return this->_activated;
 }
 
-unsigned int UiIfaceViewmgrImpl::get_view_count()
+unsigned int UiIfaceViewmgrImpl::getViewCount()
 {
-	return this->view_list.size();
+	return this->_viewList.size();
 }
 
-UiIfaceViewmgr* UiIfaceViewmgrImpl::get_instance()
+UiIfaceViewmgr* UiIfaceViewmgrImpl::getInstance()
 {
-	return UiIfaceViewmgrImpl::inst;
+	return UiIfaceViewmgrImpl::_inst;
 }
 
 /***********************************************************************************************/
 /* External class Implementation                                                               */
 /***********************************************************************************************/
-bool UiIfaceViewmgr::insert_view_after(UiIfaceView *view, UiIfaceView *after)
+bool UiIfaceViewmgr::insertViewAfter(UiIfaceView *view, UiIfaceView *after)
 {
-	return this->impl->insert_view_after(view, after);
+	return this->_impl->insertViewAfter(view, after);
 }
 
-bool UiIfaceViewmgr::need_soft_key()
+bool UiIfaceViewmgr::needSoftKey()
 {
-	return UiIfaceViewmgrImpl::need_soft_key();
+	return UiIfaceViewmgrImpl::needSoftKey();
 }
 
-bool UiIfaceViewmgr::push_view_finished(UiIfaceView *view)
+bool UiIfaceViewmgr::pushViewFinished(UiIfaceView *view)
 {
-	return this->impl->push_view_finished(view);
+	return this->_impl->pushViewFinished(view);
 }
 
-bool UiIfaceViewmgr::pop_view_finished(UiIfaceView *view)
+bool UiIfaceViewmgr::popViewFinished(UiIfaceView *view)
 {
-	return this->impl->pop_view_finished(view);
+	return this->_impl->popViewFinished(view);
 }
 
 UiIfaceViewmgr::UiIfaceViewmgr()
 {
-	this->impl = new UiIfaceViewmgrImpl(this);
+	this->_impl = new UiIfaceViewmgrImpl(this);
 }
 
 UiIfaceViewmgr::~UiIfaceViewmgr()
 {
-	delete(this->impl);
+	delete(this->_impl);
 }
 
-UiIfaceView *UiIfaceViewmgr::push_view(UiIfaceView *view)
+UiIfaceView *UiIfaceViewmgr::pushView(UiIfaceView *view)
 {
-	return this->impl->push_view(view);
+	return this->_impl->pushView(view);
 }
 
-bool UiIfaceViewmgr::pop_view()
+bool UiIfaceViewmgr::popView()
 {
-	return this->impl->pop_view();
+	return this->_impl->popView();
 }
 
-bool UiIfaceViewmgr::insert_view_before(UiIfaceView *view, UiIfaceView *before)
+bool UiIfaceViewmgr::insertViewBefore(UiIfaceView *view, UiIfaceView *before)
 {
-	return this->impl->insert_view_before(view, before);
+	return this->_impl->insertViewBefore(view, before);
 }
 
-bool UiIfaceViewmgr::remove_view(UiIfaceView *view)
+bool UiIfaceViewmgr::removeView(UiIfaceView *view)
 {
-	return this->impl->remove_view(view);
+	return this->_impl->removeView(view);
 }
 
-UiIfaceView *UiIfaceViewmgr::get_view(unsigned int idx)
+UiIfaceView *UiIfaceViewmgr::getView(unsigned int idx)
 {
-	return this->impl->get_view(idx);
+	return this->_impl->getView(idx);
 }
 
-int UiIfaceViewmgr::get_view_index(const UiIfaceView *view)
+int UiIfaceViewmgr::getViewIndex(const UiIfaceView *view)
 {
-	return this->get_view_index(view);
+	return this->getViewIndex(view);
 }
 
-UiIfaceView *UiIfaceViewmgr::get_last_view()
+UiIfaceView *UiIfaceViewmgr::getLastView()
 {
-	return this->impl->get_last_view();
+	return this->_impl->getLastView();
 }
 
 bool UiIfaceViewmgr::activate()
 {
-	return this->impl->activate();
+	return this->_impl->activate();
 }
 
 bool UiIfaceViewmgr::deactivate()
 {
-	return this->impl->deactivate();
+	return this->_impl->deactivate();
 }
 
-UiIfaceView *UiIfaceViewmgr::get_view(const char *name)
+UiIfaceView *UiIfaceViewmgr::getView(const char *name)
 {
-	return this->impl->get_view(name);
+	return this->_impl->getView(name);
 }
 
-bool UiIfaceViewmgr::is_activated()
+bool UiIfaceViewmgr::isActivated()
 {
-	return this->impl->is_activated();
+	return this->_impl->isActivated();
 }
 
-unsigned int UiIfaceViewmgr::get_view_count()
+unsigned int UiIfaceViewmgr::getViewCount()
 {
-	return this->impl->get_view_count();
+	return this->_impl->getViewCount();
 }
 
-UiIfaceViewmgr* UiIfaceViewmgr::get_instance()
+UiIfaceViewmgr* UiIfaceViewmgr::getInstance()
 {
-	return UiIfaceViewmgrImpl::get_instance();
+	return UiIfaceViewmgrImpl::getInstance();
 }

@@ -21,33 +21,33 @@
 class page2: public UiStandardView
 {
 protected:
-	void on_load()
+	void onLoad()
 	{
-		UiStandardView::on_load();
+		UiStandardView::onLoad();
 
 		//Create a main content.
-		Evas_Object *content = create_content(this->get_base(), "ViewMgr++ Demo<br>Title Buttons",
+		Evas_Object *content = createContent(this->getBase(), "ViewMgr++ Demo<br>Title Buttons",
 		//Prev Button Callback
 		        [](void *data, Evas_Object *obj, void *event_info) -> void
 		        {
-			        UI_VIEWMGR->pop_view();
+			        UI_VIEWMGR->popView();
 		        },
 		        //Next Button Callback
 		        [](void *data, Evas_Object *obj, void *event_info) -> void
 		        {
-		      	  UI_VIEWMGR->push_view(new page3());
+		      	  UI_VIEWMGR->pushView(new page3());
 		        });
 
 		//Title left button
-		Elm_Button *left_title_btn = elm_button_add(this->get_base());
-		elm_object_text_set(left_title_btn, "Cancel");
+		Elm_Button *leftTitleBtn = elm_button_add(this->getBase());
+		elm_object_text_set(leftTitleBtn, "Cancel");
 
 		//Title right button
-		Elm_Button *right_title_btn = elm_button_add(this->get_base());
-		elm_object_text_set(right_title_btn, "Done");
+		Elm_Button *rightTitleBtn = elm_button_add(this->getBase());
+		elm_object_text_set(rightTitleBtn, "Done");
 
 		//Arguments: content, title, subtitle, title left button, title right button
-		this->set_content(content, "Page2", NULL, left_title_btn, right_title_btn);
+		this->setContent(content, "Page2", NULL, leftTitleBtn, rightTitleBtn);
 	}
 
 public:

@@ -29,10 +29,10 @@ class UiBaseViewImpl;
 /* External class Implementation                                                               */
 /***********************************************************************************************/
 
-static void content_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+static void _contentDelCb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
 	UiBaseView *view = static_cast<UiBaseView *>(data);
-	view->unset_content();
+	view->unsetContent();
 }
 
 UiBaseView::UiBaseView(const char *name)
@@ -44,43 +44,43 @@ UiBaseView::~UiBaseView()
 {
 }
 
-bool UiBaseView::set_content(Evas_Object *content)
+bool UiBaseView::setContent(Evas_Object *content)
 {
-	Evas_Object *pcontent = this->unset_content();
+	Evas_Object *pcontent = this->unsetContent();
 	if (pcontent)
 	{
 		evas_object_del(pcontent);
 	}
 	if (content)
 	{
-		evas_object_event_callback_add(content, EVAS_CALLBACK_DEL, content_del_cb, this);
-		UiIfaceView::set_content(content);
+		evas_object_event_callback_add(content, EVAS_CALLBACK_DEL, _contentDelCb, this);
+		UiIfaceView::setContent(content);
 	}
 	return true;
 }
 
-Evas_Object *UiBaseView::unset_content()
+Evas_Object *UiBaseView::unsetContent()
 {
-	Evas_Object *obj = UiIfaceView::unset_content();
+	Evas_Object *obj = UiIfaceView::unsetContent();
 	if (obj)
 	{
-		evas_object_event_callback_del(obj, EVAS_CALLBACK_DEL, content_del_cb);
+		evas_object_event_callback_del(obj, EVAS_CALLBACK_DEL, _contentDelCb);
 		evas_object_hide(obj);
 	}
 	return obj;
 }
 
-Evas_Object *UiBaseView::get_base()
+Evas_Object *UiBaseView::getBase()
 {
 	UiBaseViewmgr *viewmgr = UI_BASE_VIEWMGR;
 	if (!viewmgr)
 	{
 		return NULL;
 	}
-	return viewmgr->get_base();
+	return viewmgr->getBase();
 }
 
-Evas_Object *UiBaseView ::get_parent()
+Evas_Object *UiBaseView ::getParent()
 {
 	UiBaseViewmgr *viewmgr = UI_BASE_VIEWMGR;
 	if (!viewmgr)
@@ -88,14 +88,14 @@ Evas_Object *UiBaseView ::get_parent()
 		LOGE("Failed to get a viewmgr");
 		return NULL;
 	}
-	return viewmgr->get_base();
+	return viewmgr->getBase();
 }
 
-void UiBaseView::set_indicator(UiViewIndicator indicator)
+void UiBaseView::setIndicator(UiViewIndicator indicator)
 {
-	if (this->get_indicator() == indicator) return;
+	if (this->getIndicator() == indicator) return;
 
-	UiIfaceView::set_indicator(indicator);
+	UiIfaceView::setIndicator(indicator);
 
 	UiBaseViewmgr *viewmgr = UI_BASE_VIEWMGR;
 	if (!viewmgr)
@@ -104,32 +104,32 @@ void UiBaseView::set_indicator(UiViewIndicator indicator)
 		return;
 	}
 
-	if (!viewmgr->is_activated()) return;
+	if (!viewmgr->isActivated()) return;
 
-	if (viewmgr->get_last_view() != this) return;
+	if (viewmgr->getLastView() != this) return;
 
-	viewmgr->set_indicator(indicator);
+	viewmgr->setIndicator(indicator);
 }
 
-void UiBaseView::on_rotate(int degree)
+void UiBaseView::onRotate(int degree)
 {
 }
 
-void UiBaseView::on_portrait()
+void UiBaseView::onPortrait()
 {
 }
 
-void UiBaseView::on_landscape()
+void UiBaseView::onLandscape()
 {
 }
 
-void UiBaseView::set_event_block(bool block)
+void UiBaseView::setEventBlock(bool block)
 {
-	UiIfaceView::set_event_block(block);
-	evas_object_freeze_events_set(this->get_content(), block);
+	UiIfaceView::setEventBlock(block);
+	evas_object_freeze_events_set(this->getContent(), block);
 }
 
-int UiBaseView::get_degree()
+int UiBaseView::getDegree()
 {
 	UiBaseViewmgr *viewmgr = UI_BASE_VIEWMGR;
 	if (!viewmgr)
@@ -137,6 +137,6 @@ int UiBaseView::get_degree()
 		LOGE("Failed to get a viewmgr");
 		return -1;
 	}
-	return elm_win_rotation_get(viewmgr->get_window());
+	return elm_win_rotation_get(viewmgr->getWindow());
 }
 

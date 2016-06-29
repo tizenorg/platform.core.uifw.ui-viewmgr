@@ -67,14 +67,14 @@ public:
 	 *  @see activate()
 	 *  @see deactivate()
 	 */
-	bool is_activated();
+	bool isActivated();
 
 	/**
 	 *  @brief Return the number of views which this viewmgr has.
 	 *
 	 *  @return the count of views
 	 */
-	unsigned int get_view_count();
+	unsigned int getViewCount();
 
 	/**
 	 *  @brief Return a view index(page) number of the given view.
@@ -86,7 +86,7 @@ public:
 	 *
 	 *  @warning The index number of views are variable since the view list is variable.
 	 */
-	int get_view_index(const UiIfaceView *view);
+	int getViewIndex(const UiIfaceView *view);
 
 	/**
 	 *  @brief Return whether soft key is required or not.
@@ -98,14 +98,14 @@ public:
 	 *
 	 *  @return @c true if soft key is required, @c false otherwise.
 	 */
-	static bool need_soft_key();
+	static bool needSoftKey();
 
 	/**
 	 *  @brief Return viewmgr instance.
 	 *
 	 *  @return viewmgr instance.
 	 */
-	static UiIfaceViewmgr* get_instance();
+	static UiIfaceViewmgr* getInstance();
 
 protected:
 	/**
@@ -117,7 +117,7 @@ protected:
 	 *
 	 *  @warning This function must be called when push transition is finished.
 	 */
-	bool push_view_finished(UiIfaceView *view);
+	bool pushViewFinished(UiIfaceView *view);
 
 	/**
 	 *  @brief This function is designed for finishing process for pop transition.
@@ -130,7 +130,7 @@ protected:
 	 *
 	 *  @warning This function must be called when push transition is finished.
 	 */
-	bool pop_view_finished(UiIfaceView *view);
+	bool popViewFinished(UiIfaceView *view);
 
 	/**
 	 *  @brief Push a new view into this viewmgr. This function is used for when application switches a current view to a new one.
@@ -146,12 +146,12 @@ protected:
 	 *  @return @p view, @c NULL when it fails to push a @p view.
 	 *
 	 *  @see activated()
-	 *  @see insert_view_before()
-	 *  @see insert_view_after()
-	 *  @see pop_view()
-	 *  @see UiIfaceView::set_transition_style()
+	 *  @see insertViewBefore()
+	 *  @see insertViewAfter()
+	 *  @see popView()
+	 *  @see UiIfaceView::setTransitionStyle()
 	 */
-	virtual UiIfaceView *push_view(UiIfaceView *view);
+	virtual UiIfaceView *pushView(UiIfaceView *view);
 
 	/**
 	 *  @brief Pop the top(last) view from this viewmgr view list.
@@ -164,9 +164,9 @@ protected:
 	 *  @return @c true on success or @c false otherwise.
 	 *
 	 *  @see deactivate()
-	 *  @see push_view()
+	 *  @see pushView()
 	 */
-	virtual bool pop_view();
+	virtual bool popView();
 
 	/**
 	 *  @brief Insert a view in this viewmgr view list. Specifically, insert a given @p view right before of the given view, @before.
@@ -176,7 +176,7 @@ protected:
 	 *
 	 *  @return @c true on success or @c false otherwise.
 	 */
-	bool insert_view_before(UiIfaceView *view, UiIfaceView *before);
+	bool insertViewBefore(UiIfaceView *view, UiIfaceView *before);
 
 	/**
 	 *  @brief Insert a view in this viewmgr view list. Specifically, insert a given @p view right after of the given view, @after.
@@ -186,7 +186,7 @@ protected:
 	 *
 	 *  @return @c true on success or @c false otherwise.
 	 */
-	bool insert_view_after(UiIfaceView *view, UiIfaceView *after);
+	bool insertViewAfter(UiIfaceView *view, UiIfaceView *after);
 
 	/**
 	 *  @brief Remove the given view from this viewmgr view list.
@@ -195,11 +195,11 @@ protected:
 	 *
 	 *  @return @c true on success or @c false otherwise.
 	 *
-	 *  @see insert_view_before()
-	 *  @see insert_view_after()
-	 *  @see push_view()
+	 *  @see insertViewBefore()
+	 *  @see insertViewAfter()
+	 *  @see pushView()
 	 */
-	bool remove_view(UiIfaceView *view);
+	bool removeView(UiIfaceView *view);
 
 	/**
 	 *  @brief Return a view which is matched with the index @p idx.
@@ -212,10 +212,10 @@ protected:
 	 *  @note You could use the index as the page numbers of the views.
 	 *  @warning the index number of views are variable since the view list is variable.
 	 *
-	 *  @see get_view_index()
-	 *  @see get_view_count()
+	 *  @see getViewIndex()
+	 *  @see getViewCount()
 	 */
-	UiIfaceView* get_view(unsigned int idx);
+	UiIfaceView* getView(unsigned int idx);
 
 	/**
 	 *  @brief Return a view which is matched with the @p name.
@@ -227,16 +227,16 @@ protected:
 	 *  @return The view which name is matched with @p name.
 	 *          If there were no views name matched, @c NULL will be returned.
 	 *
-	 *  @see UiIfaceView::get_name().
+	 *  @see UiIfaceView::getName().
 	 */
-	UiIfaceView *get_view(const char *name);
+	UiIfaceView *getView(const char *name);
 
 	/**
 	 *  @brief Return a last(top) view.
 	 *
 	 *  @return The view which is last view of the viewmgr view list.
 	 */
-	UiIfaceView *get_last_view();
+	UiIfaceView *getLastView();
 
 	///Constructor.
 	UiIfaceViewmgr();

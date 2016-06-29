@@ -22,12 +22,12 @@ class page1: public UiStandardView
 {
 protected:
 	//on_load() will be called when this page1 is requested to be shown.
-	void on_load()
+	void onLoad()
 	{
-		UiStandardView::on_load();
+		UiStandardView::onLoad();
 
 		//Create a main content.
-		Evas_Object *content = create_content(this->get_base(), "ViewMgr++ Demo<br>Basic View",
+		Evas_Object *content = createContent(this->getBase(), "ViewMgr++ Demo<br>Basic View",
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
@@ -36,9 +36,9 @@ protected:
 				//Next Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					UI_VIEWMGR->push_view(new page2());
+					UI_VIEWMGR->pushView(new page2());
 				});
-		this->set_content(content, "Page1");
+		this->setContent(content, "Page1");
 	}
 
 public:

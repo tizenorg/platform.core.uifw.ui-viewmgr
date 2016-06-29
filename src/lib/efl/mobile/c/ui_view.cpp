@@ -9,112 +9,112 @@ static const char *_this_type = "ui_view";
 class ui_view_capi: public ui_view, public ui_common_view_capi
 {
 public:
-	void on_load()
+	void onLoad()
 	{
 		if (this->lifecycle_callback.load)
 		{
 			if (!this->lifecycle_callback.load(this, this->lifecycle_data)) return;
 		}
-		ui_view::on_load();
+		ui_view::onLoad();
 	}
 
-	void on_unload()
+	void onUnload()
 	{
 		if (this->lifecycle_callback.unload)
 		{
 			if (!this->lifecycle_callback.unload(this, this->lifecycle_data)) return;
 		}
-		ui_view::on_unload();
+		ui_view::onUnload();
 	}
 
-	void on_pause()
+	void onPause()
 	{
 		if (this->lifecycle_callback.pause)
 		{
 			if (!this->lifecycle_callback.pause(this, this->lifecycle_data)) return;
 		}
-		ui_view::on_pause();
+		ui_view::onPause();
 	}
 
-	void on_resume()
+	void onResume()
 	{
 		if (this->lifecycle_callback.resume)
 		{
 			if (!this->lifecycle_callback.resume(this, this->lifecycle_data)) return;
 		}
-		ui_view::on_resume();
+		ui_view::onResume();
 	}
 
-	void on_activate()
+	void onActivate()
 	{
 		if (this->lifecycle_callback.activate)
 		{
 			if (!this->lifecycle_callback.activate(this, this->lifecycle_data)) return;
 		}
-		ui_view::on_activate();
+		ui_view::onActivate();
 	}
 
-	void on_deactivate()
+	void onDeactivate()
 	{
 		if (this->lifecycle_callback.deactivate)
 		{
 			if (!this->lifecycle_callback.deactivate(this, this->lifecycle_data)) return;
 		}
-		ui_view::on_deactivate();
+		ui_view::onDeactivate();
 	}
 
-	void on_destroy()
+	void onDestroy()
 	{
 		if (this->lifecycle_callback.destroy)
 		{
 			if (!this->lifecycle_callback.destroy(this, this->lifecycle_data)) return;
 		}
-		ui_view::on_destroy();
+		ui_view::onDestroy();
 	}
 
-	void on_portrait()
+	void onPortrait()
 	{
 		if (this->event_callback.portrait)
 		{
 			if (!this->event_callback.portrait(this, this->event_data)) return;
 		}
-		ui_view::on_portrait();
+		ui_view::onPortrait();
 	}
 
-	void on_landscape()
+	void onLandscape()
 	{
 		if (this->event_callback.landscape)
 		{
 			if (!this->event_callback.landscape(this, this->event_data)) return;
 		}
-		ui_view::on_landscape();
+		ui_view::onLandscape();
 	}
 
-	void on_rotate(int degree)
+	void onRotate(int degree)
 	{
 		if (this->event_callback.rotate)
 		{
 			if (!this->event_callback.rotate(this, degree, this->event_data)) return;
 		}
-		ui_view::on_rotate(degree);
+		ui_view::onRotate(degree);
 	}
 
-	void on_back()
+	void onBack()
 	{
 		if (this->event_callback.back)
 		{
 			if (!this->event_callback.back(this, this->event_data)) return;
 		}
-		ui_view::on_back();
+		ui_view::onBack();
 	}
 
-	void on_menu(ui_menu *menu)
+	void onMenu(ui_menu *menu)
 	{
 		if (this->event_callback.menu)
 		{
 			if (!this->event_callback.menu(menu, this->event_data)) return;
 		}
-		ui_view::on_menu(menu);
+		ui_view::onMenu(menu);
 	}
 
 	ui_view_capi(const char *name)
@@ -190,79 +190,79 @@ EAPI bool ui_view_event_callbacks_set(ui_view *view, ui_view_event_callback_s *e
 EAPI Evas_Object* ui_view_base_get(ui_view *view)
 {
 	if (!validate_view(view)) return NULL;
-	return view->get_base();
+	return view->getBase();
 }
 
 EAPI Evas_Object *ui_view_content_unset(ui_view *view)
 {
 	if (!validate_view(view)) return NULL;
-	return view->unset_content();
+	return view->unsetContent();
 }
 
 EAPI void ui_view_indicator_set(ui_view *view, ui_view_indicator indicator)
 {
 	if (!validate_view(view)) return;
-	view->set_indicator(indicator);
+	view->setIndicator(indicator);
 }
 
 EAPI ui_view_indicator ui_view_indicator_get(ui_view *view)
 {
 	if (!validate_view(view)) return UI_VIEW_INDICATOR_UNKNOWN;
-	return view->get_indicator();
+	return view->getIndicator();
 }
 
 EAPI void ui_view_removable_content_set(ui_view *view, bool remove)
 {
 	if (!validate_view(view)) return;
-	view->set_removable_content(remove);
+	view->setRemovableContent(remove);
 }
 
 EAPI bool ui_view_removable_content_get(ui_view *view)
 {
 	if (!validate_view(view)) return false;
-	return view->get_removable_content();
+	return view->getRemovableContent();
 }
 
 EAPI int ui_view_degree_get(ui_view *view)
 {
 	if (!validate_view(view)) return -1;
-	return view->get_degree();
+	return view->getDegree();
 }
 
 EAPI bool ui_view_transition_style_set(ui_view *view, const char *style)
 {
 	if (!validate_view(view)) return false;
-	return view->set_transition_style(style);
+	return view->setTransitionStyle(style);
 }
 
 EAPI const char *ui_view_transition_style_get(ui_view *view)
 {
 	if (!validate_view(view)) return NULL;
-	return view->get_transition_style();
+	return view->getTransitionStyle();
 }
 
 EAPI const ui_menu *ui_view_menu_get(ui_view *view)
 {
 	if (!validate_view(view)) return NULL;
-	return view->get_menu();
+	return view->getMenu();
 }
 
 EAPI const char *ui_view_name_get(ui_view *view)
 {
 	if (!validate_view(view)) return NULL;
-	return view->get_name();
+	return view->getName();
 }
 
 EAPI ui_view_state ui_view_state_get(ui_view *view)
 {
 	if (!validate_view(view)) return UI_VIEW_STATE_UNKNOWN;
-	return view->get_state();
+	return view->getState();
 }
 
 EAPI Evas_Object *ui_view_content_get(ui_view *view)
 {
 	if (!validate_view(view)) return NULL;
-	return view->get_content();
+	return view->getContent();
 }
 
 EAPI bool ui_view_destroy(ui_view *view)
@@ -275,7 +275,7 @@ EAPI bool ui_view_destroy(ui_view *view)
 EAPI bool ui_view_content_set(ui_view *view, Evas_Object *content)
 {
 	if (!validate_view(view)) return false;
-	return view->set_content(content);
+	return view->setContent(content);
 }
 
 EAPI const char *ui_view_type_get(ui_view *view)

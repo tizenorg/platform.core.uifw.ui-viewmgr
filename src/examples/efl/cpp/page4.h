@@ -22,26 +22,26 @@
 class page4: public UiStandardView
 {
 protected:
-	void on_load()
+	void onLoad()
 	{
-		UiStandardView::on_load();
+		UiStandardView::onLoad();
 
 		//Create a main content.
-		Evas_Object *content = create_content(this->get_base(), "ViewMgr++ Demo<br>Title Badge",
+		Evas_Object *content = createContent(this->getBase(), "ViewMgr++ Demo<br>Title Badge",
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					UI_VIEWMGR->pop_view();
+					UI_VIEWMGR->popView();
 				},
 				//Next Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					UI_VIEWMGR->push_view(new page5());
+					UI_VIEWMGR->pushView(new page5());
 				});
 
 		//Arguments: content, title
-		this->set_content(content, "Page4. We put a long title here intentionally");
-		this->set_title_badge("999+");
+		this->setContent(content, "Page4. We put a long title here intentionally");
+		this->setTitleBadge("999+");
 	}
 
 public:

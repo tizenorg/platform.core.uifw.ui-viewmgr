@@ -39,79 +39,79 @@ public:
 	int run(int argc, char **argv);
 
 	bool init();
-	bool on_create();
-	void on_terminate();
-	void on_pause();
-	void on_resume();
-	void on_control(app_control_h app_control);
+	bool onCreate();
+	void onTerminate();
+	void onPause();
+	void onResume();
+	void onControl(app_control_h app_control);
 
-	void on_low_battery(app_event_info_h event_info);
-	void on_low_memory(app_event_info_h event_info);
-	void on_region_changed(app_event_info_h event_info);
-	void on_orient_changed(app_event_info_h event_info);
-	void on_lang_changed(app_event_info_h event_info);
+	void onLowBattery(app_event_info_h event_info);
+	void onLowMemory(app_event_info_h event_info);
+	void onRegionChanged(app_event_info_h event_info);
+	void onOrientChanged(app_event_info_h event_info);
+	void onLangChanged(app_event_info_h event_info);
 };
 
 }
 
-static bool app_create(void *data)
+static bool appCreate(void *data)
 {
 	UiIfaceAppImpl *app = static_cast<UiIfaceAppImpl *>(data);
-	return app->on_create();
+	return app->onCreate();
 }
 
-static void app_terminate(void *data)
+static void appTerminate(void *data)
 {
 	UiIfaceAppImpl *app = static_cast<UiIfaceAppImpl *>(data);
-	app->on_terminate();
+	app->onTerminate();
 }
 
-static void app_pause(void *data)
+static void appPause(void *data)
 {
 	UiIfaceAppImpl *app = static_cast<UiIfaceAppImpl *>(data);
-	app->on_pause();
+	app->onPause();
 }
 
-static void app_resume(void *data)
+static void appResume(void *data)
 {
 	UiIfaceAppImpl *app = static_cast<UiIfaceAppImpl *>(data);
-	app->on_resume();
+	app->onResume();
 }
 
-static void app_control(app_control_s *app_control, void *data)
+static void appControl(app_control_s *app_control, void *data)
 {
 	UiIfaceAppImpl *app = static_cast<UiIfaceAppImpl *>(data);
-	app->on_control(app_control);
+	app->onControl(app_control);
 }
 
-static void ui_app_lang_changed(app_event_info_h event_info, void *data)
+static void uiAppLangChanged(app_event_info_h event_info, void *data)
 {
 	UiIfaceAppImpl *app = static_cast<UiIfaceAppImpl *>(data);
-	app->on_lang_changed(event_info);
+	app->onLangChanged(event_info);
 }
 
-static void ui_app_orient_changed(app_event_info_h event_info, void *data)
+static void uiAppOrientChanged(app_event_info_h event_info, void *data)
 {
 	UiIfaceAppImpl *app = static_cast<UiIfaceAppImpl *>(data);
-	app->on_orient_changed(event_info);
+	app->onOrientChanged(event_info);
 }
 
-static void ui_app_region_changed(app_event_info_h event_info, void *data)
+static void uiAppRegionChanged(app_event_info_h event_info, void *data)
 {
 	UiIfaceAppImpl *app = static_cast<UiIfaceAppImpl *>(data);
-	app->on_region_changed(event_info);
+	app->onRegionChanged(event_info);
 }
 
-static void ui_app_low_battery(app_event_info_h event_info, void *data)
+static void uiAppLowBattery(app_event_info_h event_info, void *data)
 {
 	UiIfaceAppImpl *app = static_cast<UiIfaceAppImpl *>(data);
-	app->on_low_battery(event_info);
+	app->onLowBattery(event_info);
 }
 
-static void ui_app_low_memory(app_event_info_h event_info, void *data)
+static void uiAppLowMemory(app_event_info_h event_info, void *data)
 {
 	UiIfaceAppImpl *app = static_cast<UiIfaceAppImpl *>(data);
-	app->on_low_memory(event_info);
+	app->onLowMemory(event_info);
 }
 
 bool UiIfaceAppImpl::init()
@@ -135,17 +135,17 @@ int UiIfaceAppImpl::run(int argc, char **argv)
 	ui_app_lifecycle_callback_s event_callback = { 0, };
 	app_event_handler_h handlers[5] = { NULL, };
 
-	event_callback.create = app_create;
-	event_callback.terminate = app_terminate;
-	event_callback.pause = app_pause;
-	event_callback.resume = app_resume;
-	event_callback.app_control = app_control;
+	event_callback.create = appCreate;
+	event_callback.terminate = appTerminate;
+	event_callback.pause = appPause;
+	event_callback.resume = appResume;
+	event_callback.app_control = appControl;
 
-	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_BATTERY], APP_EVENT_LOW_BATTERY, ui_app_low_battery, this);
-	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_MEMORY], APP_EVENT_LOW_MEMORY, ui_app_low_memory, this);
-	ui_app_add_event_handler(&handlers[APP_EVENT_DEVICE_ORIENTATION_CHANGED], APP_EVENT_DEVICE_ORIENTATION_CHANGED, ui_app_orient_changed, this);
-	ui_app_add_event_handler(&handlers[APP_EVENT_LANGUAGE_CHANGED], APP_EVENT_LANGUAGE_CHANGED, ui_app_lang_changed, this);
-	ui_app_add_event_handler(&handlers[APP_EVENT_REGION_FORMAT_CHANGED], APP_EVENT_REGION_FORMAT_CHANGED, ui_app_region_changed, this);
+	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_BATTERY], APP_EVENT_LOW_BATTERY, uiAppLowBattery, this);
+	ui_app_add_event_handler(&handlers[APP_EVENT_LOW_MEMORY], APP_EVENT_LOW_MEMORY, uiAppLowMemory, this);
+	ui_app_add_event_handler(&handlers[APP_EVENT_DEVICE_ORIENTATION_CHANGED], APP_EVENT_DEVICE_ORIENTATION_CHANGED, uiAppOrientChanged, this);
+	ui_app_add_event_handler(&handlers[APP_EVENT_LANGUAGE_CHANGED], APP_EVENT_LANGUAGE_CHANGED, uiAppLangChanged, this);
+	ui_app_add_event_handler(&handlers[APP_EVENT_REGION_FORMAT_CHANGED], APP_EVENT_REGION_FORMAT_CHANGED, uiAppRegionChanged, this);
 
 	int ret = ui_app_main(argc, argv, &event_callback, this);
 
@@ -164,63 +164,63 @@ UiIfaceAppImpl::~UiIfaceAppImpl()
 	eina_stringshare_del(this->locale_dir);
 }
 
-void UiIfaceAppImpl::on_lang_changed(app_event_info_h event_info)
+void UiIfaceAppImpl::onLangChanged(app_event_info_h event_info)
 {
-	this->app->on_lang_changed(event_info);
+	this->app->onLangChanged(event_info);
 }
 
-void UiIfaceAppImpl::on_low_memory(app_event_info_h event_info)
+void UiIfaceAppImpl::onLowMemory(app_event_info_h event_info)
 {
-	this->app->on_low_memory(event_info);
+	this->app->onLowMemory(event_info);
 }
 
-void UiIfaceAppImpl::on_low_battery(app_event_info_h event_info)
+void UiIfaceAppImpl::onLowBattery(app_event_info_h event_info)
 {
-	this->app->on_low_battery(event_info);
+	this->app->onLowBattery(event_info);
 }
 
-void UiIfaceAppImpl::on_region_changed(app_event_info_h event_info)
+void UiIfaceAppImpl::onRegionChanged(app_event_info_h event_info)
 {
-	this->app->on_region_changed(event_info);
+	this->app->onRegionChanged(event_info);
 }
 
-void UiIfaceAppImpl::on_orient_changed(app_event_info_h event_info)
+void UiIfaceAppImpl::onOrientChanged(app_event_info_h event_info)
 {
-	this->app->on_orient_changed(event_info);
+	this->app->onOrientChanged(event_info);
 }
 
-bool UiIfaceAppImpl::on_create()
+bool UiIfaceAppImpl::onCreate()
 {
-	return this->app->on_create();
+	return this->app->onCreate();
 }
 
-void UiIfaceAppImpl::on_pause()
+void UiIfaceAppImpl::onPause()
 {
-	this->app->on_pause();
+	this->app->onPause();
 }
 
-void UiIfaceAppImpl::on_resume()
+void UiIfaceAppImpl::onResume()
 {
-	this->app->on_resume();
+	this->app->onResume();
 }
 
-void UiIfaceAppImpl::on_control(app_control_h app_control)
+void UiIfaceAppImpl::onControl(app_control_h app_control)
 {
-	this->app->on_control(app_control);
+	this->app->onControl(app_control);
 }
 
-void UiIfaceAppImpl::on_terminate()
+void UiIfaceAppImpl::onTerminate()
 {
-	this->app->on_terminate();
+	this->app->onTerminate();
 }
 
 /***********************************************************************************************/
 /* External class Implementation                                                               */
 /***********************************************************************************************/
 
-static UiIfaceApp *inst = NULL;
+static UiIfaceApp *_inst = NULL;
 
-void UiIfaceApp::on_lang_changed(app_event_info_h event_info)
+void UiIfaceApp::onLangChanged(app_event_info_h event_info)
 {
 	char *language = NULL;
 	int ret = app_event_get_language(event_info, &language);
@@ -231,25 +231,25 @@ void UiIfaceApp::on_lang_changed(app_event_info_h event_info)
 
 	if (language != NULL) {
 		elm_language_set(language);
-		UiIfaceView *view = this->impl->viewmgr->get_last_view();
-		view->on_language_changed(language);
+		UiIfaceView *view = this->_impl->viewmgr->getLastView();
+		view->onLanguageChanged(language);
 		free(language);
 	}
 }
 
-void UiIfaceApp::on_low_memory(app_event_info_h event_info)
+void UiIfaceApp::onLowMemory(app_event_info_h event_info)
 {
-	UiIfaceView *view = this->impl->viewmgr->get_last_view();
-	view->on_low_memory();
+	UiIfaceView *view = this->_impl->viewmgr->getLastView();
+	view->onLowMemory();
 }
 
-void UiIfaceApp::on_low_battery(app_event_info_h event_info)
+void UiIfaceApp::onLowBattery(app_event_info_h event_info)
 {
-	UiIfaceView *view = this->impl->viewmgr->get_last_view();
-	view->on_low_battery();
+	UiIfaceView *view = this->_impl->viewmgr->getLastView();
+	view->onLowBattery();
 }
 
-void UiIfaceApp::on_region_changed(app_event_info_h event_info)
+void UiIfaceApp::onRegionChanged(app_event_info_h event_info)
 {
 	char *region = NULL;
 	int ret = app_event_get_region_format(event_info, &region);
@@ -258,68 +258,68 @@ void UiIfaceApp::on_region_changed(app_event_info_h event_info)
 		return;
 	}
 
-	UiIfaceView *view = this->impl->viewmgr->get_last_view();
-	view->on_region_changed(region);
+	UiIfaceView *view = this->_impl->viewmgr->getLastView();
+	view->onRegionChanged(region);
 }
 
-void UiIfaceApp::on_orient_changed(app_event_info_h event_info)
+void UiIfaceApp::onOrientChanged(app_event_info_h event_info)
 {
 }
 
-bool UiIfaceApp::on_create()
+bool UiIfaceApp::onCreate()
 {
-	return this->impl->init();
+	return this->_impl->init();
 }
 
-void UiIfaceApp::on_pause()
+void UiIfaceApp::onPause()
 {
-	this->impl->viewmgr->deactivate();
+	this->_impl->viewmgr->deactivate();
 }
 
-void UiIfaceApp::on_resume()
+void UiIfaceApp::onResume()
 {
-//	this->impl->viewmgr->activate();
+//	this->_impl->viewmgr->activate();
 }
 
-void UiIfaceApp::on_control(app_control_h app_control)
+void UiIfaceApp::onControl(app_control_h app_control)
 {
 	/* Handle the launch request. */
-	this->impl->viewmgr->activate();
+	this->_impl->viewmgr->activate();
 }
 
-void UiIfaceApp::on_terminate()
+void UiIfaceApp::onTerminate()
 {
 	delete(this);
 }
 
 UiIfaceApp::UiIfaceApp(const char *pkg, const char *locale_dir, UiIfaceViewmgr *viewmgr)
 {
-	if (inst)
+	if (_inst)
 	{
 		LOGE("You created UiIfaceApp multiple times!!");
 	}
-	inst = this;
+	_inst = this;
 
-	this->impl = new UiIfaceAppImpl(this, pkg, locale_dir, viewmgr);
+	this->_impl = new UiIfaceAppImpl(this, pkg, locale_dir, viewmgr);
 }
 
 int UiIfaceApp::run(int argc, char **argv)
 {
-	return this->impl->run(argc, argv);
+	return this->_impl->run(argc, argv);
 }
 
 UiIfaceApp::~UiIfaceApp()
 {
-	delete (this->impl);
-	inst = NULL;
+	delete (this->_impl);
+	_inst = NULL;
 }
 
-UiIfaceViewmgr *UiIfaceApp::get_viewmgr()
+UiIfaceViewmgr *UiIfaceApp::getViewmgr()
 {
-	return this->impl->viewmgr;
+	return this->_impl->viewmgr;
 }
 
-UiIfaceApp *UiIfaceApp::get_instance()
+UiIfaceApp *UiIfaceApp::getInstance()
 {
-	return inst;
+	return _inst;
 }

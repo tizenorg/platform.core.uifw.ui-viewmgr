@@ -53,7 +53,7 @@ public:
 	 *
 	 *  @return The menu object that connected with this view.
 	 */
-	const UiMenu *get_menu();
+	const UiMenu *getMenu();
 
 protected:
 	/**
@@ -64,21 +64,21 @@ protected:
 	 *
 	 *  @return The menu instance of this view. NULL If the menu already activated.
 	 */
-	virtual UiMenu *on_menu_pre();
+	virtual UiMenu *onMenuPre();
 
 	/**
 	 *  @brief Activate menu.
 	 *
 	 *  @note It calls activate() for posting menu. If there is a menu instance.
 	 */
-	virtual void on_menu_post();
+	virtual void onMenuPost();
 
 	/**
 	 *  @brief The H/W menu key event occurs on view.
 	 *
 	 *  @param menu menu instance, This is made by key listener when menu key occured.
 	 */
-	virtual void on_menu(UiMenu *menu);
+	virtual void onMenu(UiMenu *menu);
 
 	/**
 	 *  @brief The H/W back key event occurs on view.
@@ -86,7 +86,7 @@ protected:
 	 *  @note User can override this function to define application specific action when H/W back key
 	 *        event occurs. otherwise current view will be popped.
 	 */
-	virtual void on_back();
+	virtual void onBack();
 
 	/**
 	 *  @brief View rotate changed.
@@ -98,7 +98,7 @@ protected:
 	 *  @see on_portrait()
 	 *  @see on_landscpae()
 	 */
-	virtual void on_rotate(int degree);
+	virtual void onRotate(int degree);
 
 	/**
 	 *  @brief View portrait state.
@@ -108,7 +108,7 @@ protected:
 	 *  @see on_landscpae()
 	 *  @see on_rotate()
 	 */
-	virtual void on_portrait();
+	virtual void onPortrait();
 
 	/**
 	 *  @brief View landscape state.
@@ -118,14 +118,14 @@ protected:
 	 *  @see on_portrait()
 	 *  @see on_rotate()
 	 */
-	virtual void on_landscape();
+	virtual void onLandscape();
 
 	/** @brief View deactivate state.
 	 *
 	 *  @note this state will be triggered by UiIfaceViewmgr.
 	 *
 	 */
-	virtual void on_deactivate();
+	virtual void onDeactivate();
 
 private:
 	/**
@@ -133,14 +133,14 @@ private:
 	 *
 	 *  @param popup UiPopup instance
 	 */
-	void connect_popup(UiPopup *popup);
+	void _connectPopup(UiPopup *popup);
 
 	/**
 	 *  @brief pop given popup instance in the internal popup stack.
 	 *
 	 *  @param popup UiPopup instance
 	 */
-	void disconnect_popup(UiPopup *popup);
+	void _disconnectPopup(UiPopup *popup);
 
 	_UI_DECLARE_PRIVATE_IMPL(UiView);
 	_UI_DISABLE_COPY_AND_ASSIGN(UiView);

@@ -75,11 +75,11 @@ public:
 	 *  @return @p view, @c NULL when it fails to push a @p view.
 	 *
 	 *  @see activated()
-	 *  @see insert_view_before()
-	 *  @see insert_view_after()
-	 *  @see pop_view()
+	 *  @see insertViewBefore()
+	 *  @see insertViewAfter()
+	 *  @see popView()
 	 */
-	virtual UiBaseView *push_view(UiBaseView *view);
+	virtual UiBaseView *pushView(UiBaseView *view);
 
 	/**
 	 *  @brief Pop the top(last) view from this viewmgr view list.
@@ -92,9 +92,9 @@ public:
 	 *  @return @c true on success or @c false otherwise.
 	 *
 	 *  @see deactivate()
-	 *  @see push_view()
+	 *  @see pushView()
 	 */
-	virtual bool pop_view();
+	virtual bool popView();
 
 	/**
 	 *  @brief Insert a view in this viewmgr view list. Specifically, insert a given @p view right before of the given view, @before.
@@ -104,7 +104,7 @@ public:
 	 *
 	 *  @return @c true on success or @c false otherwise.
 	 */
-	virtual bool insert_view_before(UiBaseView *view, UiBaseView *before);
+	virtual bool insertViewBefore(UiBaseView *view, UiBaseView *before);
 
 	/**
 	 *  @brief Insert a view in this viewmgr view list. Specifically, insert a given @p view right after of the given view, @after.
@@ -114,28 +114,28 @@ public:
 	 *
 	 *  @return @c true on success or @c false otherwise.
 	 */
-	virtual bool insert_view_after(UiBaseView *view, UiBaseView *after);
+	virtual bool insertViewAfter(UiBaseView *view, UiBaseView *after);
 
 	/**
 	 *  @brief Get a window object of viewmgr.
 	 *
 	 *  @return The window object of viewmgr.
 	 */
-	Elm_Win *get_window();
+	Elm_Win *getWindow();
 
 	/**
 	 *  @brief Get a conformant object of viewmgr.
 	 *
 	 *  @return The conformant object of viewmgr.
 	 */
-	Elm_Conformant *get_conformant();
+	Elm_Conformant *getConformant();
 
 	/**
 	 *  @brief Return a last(top) view.
 	 *
 	 *  @return The view which is last view of the viewmgr view list.
 	 */
-	UiBaseView *get_last_view();
+	UiBaseView *getLastView();
 
 	/**
 	 *  @brief Return a view which is matched with the index @p idx.
@@ -148,10 +148,10 @@ public:
 	 *  @note You could use the index as the page numbers of the views.
 	 *  @warning the index number of views are variable since the view list is variable.
 	 *
-	 *  @see get_view_index()
-	 *  @see get_view_count()
+	 *  @see getViewIndex()
+	 *  @see getViewCount()
 	 */
-	UiBaseView *get_view(unsigned int idx);
+	UiBaseView *getView(unsigned int idx);
 
 	/**
 	 *  @brief Return a view which is matched with the @p name.
@@ -163,9 +163,9 @@ public:
 	 *  @return The view which name is matched with @p name.
 	 *          If there were no views name matched, @c NULL will be returned.
 	 *
-	 *  @see UiIfaceView::set_name()
+	 *  @see UiIfaceView::setName()
 	 */
-	UiBaseView *get_view(const char *name);
+	UiBaseView *getView(const char *name);
 
 	/**
 	 *  @brief Get a base object of this viewmgr.
@@ -174,7 +174,7 @@ public:
 	 *
 	 *  @return The base object of this viewmgr.
 	 */
-	Evas_Object *get_base();
+	Evas_Object *getBase();
 
 protected:
 	/**
@@ -184,7 +184,7 @@ protected:
 	 *
 	 *  @return @c false if current indicator is same with new one, @c true otherwise.
 	 */
-	bool set_indicator(UiViewIndicator indicator);
+	bool setIndicator(UiViewIndicator indicator);
 
 	/**
 	 *  @brief This is a constructor for initializing viewmgr.
@@ -192,7 +192,7 @@ protected:
 	 *  @param pkg The name of package.
 	 *  @param key_listener The instance of UiBaseKeyListener.
 	 */
-	UiBaseViewmgr(const char *pkg, UiBaseKeyListener *key_listener);
+	UiBaseViewmgr(const char *pkg, UiBaseKeyListener *keyListener);
 
 	/**
 	 *  @brief This is a constructor for initializing viewmgr.
