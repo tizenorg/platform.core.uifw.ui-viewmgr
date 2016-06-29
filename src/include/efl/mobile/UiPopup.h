@@ -77,14 +77,14 @@ public:
 	 *
 	 *  @return @c true if it succeeds, @c false otherwise.
 	 */
-	virtual bool set_content(Elm_Popup* popup);
+	virtual bool setContent(Elm_Popup* popup);
 
 	/**
 	 *  @brief This is for unsetting a content of the popup.
 	 *
 	 *  @return A previous content. If it wasn't, return value will be @c NULL.
 	 */
-	virtual Elm_Popup *unset_content();
+	virtual Elm_Popup *unsetContent();
 
 	/**
 	 *  @brief Return the active status of popup.
@@ -94,7 +94,7 @@ public:
 	 *  @see activate()
 	 *  @see deactivate()
 	 */
-	virtual bool is_activated();
+	virtual bool isActivated();
 
 	/**
 	 *  @brief Get a base object of an UiPopup.
@@ -103,14 +103,14 @@ public:
 	 *
 	 *  @return base object of UiPopup.
 	 */
-	virtual Evas_Object *get_base();
+	virtual Evas_Object *getBase();
 
 	/**
 	 *  @brief Get current popup's degree.
 	 *
 	 *  @return Current rotation degree, -1 if it fails to get degree information.
 	 */
-	virtual int get_degree();
+	virtual int getDegree();
 
 protected:
 	/**
@@ -118,7 +118,7 @@ protected:
 	 *
 	 *  @return viewmgr's window object.
 	 */
-	virtual Elm_Win *get_window();
+	virtual Elm_Win *getWindow();
 
 private:
 	_UI_DECLARE_PRIVATE_IMPL(UiPopup);

@@ -22,25 +22,25 @@
 class page15: public UiStandardView
 {
 protected:
-	void on_load()
+	void onLoad()
 	{
-		UiStandardView::on_load();
+		UiStandardView::onLoad();
 
 		//Create a main content.
-		Evas_Object *content = create_scrolling_content(this->get_base());
+		Evas_Object *content = createScrollingContent(this->getBase());
 
-		this->set_content(content, "Page15 Scroller In Viewmgr");
+		this->setContent(content, "Page15 Scroller In Viewmgr");
 
 		//Title Right button
-		Elm_Button *right_btn = elm_button_add(this->get_base());
-		elm_object_text_set(right_btn, "Next");
-		evas_object_smart_callback_add(right_btn, "clicked",
+		Elm_Button *rightBtn = elm_button_add(this->getBase());
+		elm_object_text_set(rightBtn, "Next");
+		evas_object_smart_callback_add(rightBtn, "clicked",
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					UI_VIEWMGR->push_view(new page16());
+					UI_VIEWMGR->pushView(new page16());
 				},
 				this);
 
-		this->set_title_right_btn(right_btn);
+		this->setTitleRightBtn(rightBtn);
 	}
 };

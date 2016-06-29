@@ -21,16 +21,16 @@
 class page16: public UiStandardView
 {
 protected:
-	void on_load()
+	void onLoad()
 	{
-		UiStandardView::on_load();
+		UiStandardView::onLoad();
 
 		//Create a main content.
-		Evas_Object *content = create_title_handle_content(this->get_base(),
+		Evas_Object *content = createTitleHandleContent(this->getBase(),
 				//Prev Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
-					UI_VIEWMGR->pop_view();
+					UI_VIEWMGR->popView();
 				},
 				//Next Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
@@ -41,28 +41,28 @@ protected:
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
 					UiStandardView *view = static_cast<UiStandardView *>(data);
-					view->set_title_visible(true, false);
+					view->setTitleVisible(true, false);
 				},
 				//Title Hide Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
 					UiStandardView *view = static_cast<UiStandardView *>(data);
-					view->set_title_visible(false, false);
+					view->setTitleVisible(false, false);
 				},
 				//Title Show Anim Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
 					UiStandardView *view = static_cast<UiStandardView *>(data);
-					view->set_title_visible(true, true);
+					view->setTitleVisible(true, true);
 				},
 				//Title Hide Anim Button Callback
 				[](void *data, Evas_Object *obj, void *event_info) -> void
 				{
 					UiStandardView *view = static_cast<UiStandardView *>(data);
-					view->set_title_visible(false, true);
+					view->setTitleVisible(false, true);
 				}, this);
 
-		this->set_content(content, "Page16");
+		this->setContent(content, "Page16");
 	}
 
 public:

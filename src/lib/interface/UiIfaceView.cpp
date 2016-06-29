@@ -33,321 +33,321 @@ class UiIfaceViewImpl
 	friend class UiIfaceView;
 
 private:
-	UiIfaceView *view;
-	T content;                              ///< A content instance for a screen as a view.
-	string name;                            ///< View name.
-	string transition_style;                ///< View transition style name.
-	UiIfaceViewmgr *viewmgr;              ///< Viewmgr which this view belongs to.
-	UiViewState state;                    ///< View state.
-	UiViewIndicator indicator;            ///< View indicator mode.
-	bool event_block;                       ///< State of event block.
-	bool removable_content;                 ///< When this value is true, view removes it's content internally on unload state.
+	UiIfaceView *_view;
+	T _content;                              ///< A content instance for a screen as a view.
+	string _name;                            ///< View name.
+	string _transition_style;                ///< View transition style name.
+	UiIfaceViewmgr *_viewmgr;              ///< Viewmgr which this view belongs to.
+	UiViewState _state;                    ///< View state.
+	UiViewIndicator _indicator;            ///< View indicator mode.
+	bool _event_block;                       ///< State of event block.
+	bool _removable_content;                 ///< When this value is true, view removes it's content internally on unload state.
 
 public:
-	void set_event_block(bool block);
-	void on_load();
-	void on_unload();
-	void on_activate();
-	void on_deactivate();
-	void on_pause();
-	void on_resume();
-	void on_destroy();
-	bool get_event_block();
-	bool set_content(T content);
-	T unset_content();
+	void setEventBlock(bool block);
+	void onLoad();
+	void onUnload();
+	void onActivate();
+	void onDeactivate();
+	void onPause();
+	void onResume();
+	void onDestroy();
+	bool getEventBlock();
+	bool setContent(T content);
+	T unsetContent();
 
 	UiIfaceViewImpl(UiIfaceView *view, const char *name);
 	~UiIfaceViewImpl();
 
-	bool set_transition_style(const char *style);
-	void set_removable_content(bool removable);
-	void set_indicator(UiViewIndicator indicator);
-	const char *get_transition_style();
-	const char *get_name();
-	T get_content();
-	UiViewState get_state();
-	bool get_removable_content();
-	UiViewIndicator get_indicator();
-	void on_back();
+	bool setTransitionStyle(const char *style);
+	void setRemovableContent(bool removable);
+	void setIndicator(UiViewIndicator indicator);
+	const char *getTransitionStyle();
+	const char *getName();
+	T getContent();
+	UiViewState getState();
+	bool getRemovableContent();
+	UiViewIndicator getIndicator();
+	void onBack();
 };
 
 }
 
-bool UiIfaceViewImpl::get_event_block()
+bool UiIfaceViewImpl::getEventBlock()
 {
-	return this->event_block;
+	return this->_event_block;
 }
 
-void UiIfaceViewImpl::set_event_block(bool block)
+void UiIfaceViewImpl::setEventBlock(bool block)
 {
-	this->event_block = block;
+	this->_event_block = block;
 }
 
-void UiIfaceViewImpl::on_load()
+void UiIfaceViewImpl::onLoad()
 {
-	this->state = UI_VIEW_STATE_LOAD;
+	this->_state = UI_VIEW_STATE_LOAD;
 }
 
-void UiIfaceViewImpl::on_unload()
+void UiIfaceViewImpl::onUnload()
 {
-	this->state = UI_VIEW_STATE_UNLOAD;
-	if (this->get_removable_content())
+	this->_state = UI_VIEW_STATE_UNLOAD;
+	if (this->getRemovableContent())
 	{
-		this->set_content(NULL);
+		this->setContent(NULL);
 		return;
 	}
 }
 
-void UiIfaceViewImpl::on_activate()
+void UiIfaceViewImpl::onActivate()
 {
-	this->state = UI_VIEW_STATE_ACTIVATE;
+	this->_state = UI_VIEW_STATE_ACTIVATE;
 }
 
-void UiIfaceViewImpl::on_deactivate()
+void UiIfaceViewImpl::onDeactivate()
 {
-	this->state = UI_VIEW_STATE_DEACTIVATE;
+	this->_state = UI_VIEW_STATE_DEACTIVATE;
 }
 
-void UiIfaceViewImpl::on_pause()
+void UiIfaceViewImpl::onPause()
 {
-	this->state = UI_VIEW_STATE_PAUSE;
+	this->_state = UI_VIEW_STATE_PAUSE;
 }
 
-void UiIfaceViewImpl::on_resume()
+void UiIfaceViewImpl::onResume()
 {
-	this->state = UI_VIEW_STATE_ACTIVATE;
+	this->_state = UI_VIEW_STATE_ACTIVATE;
 }
 
-void UiIfaceViewImpl::on_destroy()
+void UiIfaceViewImpl::onDestroy()
 {
 }
 
 UiIfaceViewImpl::UiIfaceViewImpl(UiIfaceView *view, const char *name)
-		: view(view), content(NULL), name(string(name ? name : "")), transition_style(string("default")), viewmgr(NULL), state(UI_VIEW_STATE_LOAD),
-		  indicator(UI_VIEW_INDICATOR_DEFAULT), event_block(false), removable_content(true)
+		: _view(view), _content(NULL), _name(string(name ? name : "")), _transition_style(string("default")), _viewmgr(NULL), _state(UI_VIEW_STATE_LOAD),
+		  _indicator(UI_VIEW_INDICATOR_DEFAULT), _event_block(false), _removable_content(true)
 {
-	this->state = UI_VIEW_STATE_UNLOAD;
+	this->_state = UI_VIEW_STATE_UNLOAD;
 }
 
 UiIfaceViewImpl::~UiIfaceViewImpl()
 {
-	this->viewmgr->remove_view(this->view);
+	this->_viewmgr->removeView(this->_view);
 }
 
-bool UiIfaceViewImpl::set_content(T content)
+bool UiIfaceViewImpl::setContent(T content)
 {
-	this->content = content;
+	this->_content = content;
 	return true;
 }
 
-T UiIfaceViewImpl::unset_content()
+T UiIfaceViewImpl::unsetContent()
 {
-	T prev = this->content;
-	this->content = NULL;
+	T prev = this->_content;
+	this->_content = NULL;
 	return prev;
 }
 
-bool UiIfaceViewImpl::set_transition_style(const char *style)
+bool UiIfaceViewImpl::setTransitionStyle(const char *style)
 {
-	this->transition_style.assign(style);
+	this->_transition_style.assign(style);
 	return true;
 }
 
-void UiIfaceViewImpl::set_removable_content(bool removable)
+void UiIfaceViewImpl::setRemovableContent(bool removable)
 {
-	this->removable_content = removable;
+	this->_removable_content = removable;
 
 	//FIXME: If this api is called on unload state? should we remove content right now?
 }
 
-void UiIfaceViewImpl::set_indicator(UiViewIndicator indicator)
+void UiIfaceViewImpl::setIndicator(UiViewIndicator indicator)
 {
-	this->indicator = indicator;
+	this->_indicator = indicator;
 }
 
-const char *UiIfaceViewImpl::get_transition_style()
+const char *UiIfaceViewImpl::getTransitionStyle()
 {
-	return this->transition_style.c_str();
+	return this->_transition_style.c_str();
 }
 
-const char *UiIfaceViewImpl::get_name()
+const char *UiIfaceViewImpl::getName()
 {
-	return this->name.c_str();
+	return this->_name.c_str();
 }
 
-T UiIfaceViewImpl::get_content()
+T UiIfaceViewImpl::getContent()
 {
-	return this->content;
+	return this->_content;
 }
 
-UiViewState UiIfaceViewImpl::get_state()
+UiViewState UiIfaceViewImpl::getState()
 {
-	return this->state;
+	return this->_state;
 }
 
-bool UiIfaceViewImpl::get_removable_content()
+bool UiIfaceViewImpl::getRemovableContent()
 {
-	return this->removable_content;
+	return this->_removable_content;
 }
 
-UiViewIndicator UiIfaceViewImpl::get_indicator()
+UiViewIndicator UiIfaceViewImpl::getIndicator()
 {
-	return this->indicator;
+	return this->_indicator;
 }
 
-void UiIfaceViewImpl::on_back()
+void UiIfaceViewImpl::onBack()
 {
-	UiIfaceViewmgr *viewmgr = this->viewmgr;
+	UiIfaceViewmgr *viewmgr = this->_viewmgr;
 	if (!viewmgr)
 	{
 		LOGE("Failed to get a viewmgr, view =%p", this);
 		return;
 	}
-	viewmgr->pop_view();
+	viewmgr->popView();
 }
 
 /***********************************************************************************************/
 /* External class Implementation                                                               */
 /***********************************************************************************************/
 
-bool UiIfaceView::get_event_block()
+bool UiIfaceView::getEventBlock()
 {
-	return this->impl->get_event_block();
+	return this->_impl->getEventBlock();
 }
 
-void UiIfaceView::set_event_block(bool block)
+void UiIfaceView::setEventBlock(bool block)
 {
-	this->impl->set_event_block(block);
+	this->_impl->setEventBlock(block);
 }
 
-void UiIfaceView::on_load()
+void UiIfaceView::onLoad()
 {
-	this->impl->on_load();
+	this->_impl->onLoad();
 }
 
-void UiIfaceView::on_unload()
+void UiIfaceView::onUnload()
 {
-	this->impl->on_unload();
+	this->_impl->onUnload();
 }
 
-void UiIfaceView::on_activate()
+void UiIfaceView::onActivate()
 {
-	this->impl->on_activate();
+	this->_impl->onActivate();
 }
 
-void UiIfaceView::on_deactivate()
+void UiIfaceView::onDeactivate()
 {
-	this->impl->on_deactivate();
+	this->_impl->onDeactivate();
 }
 
-void UiIfaceView::on_pause()
+void UiIfaceView::onPause()
 {
-	this->impl->on_pause();
+	this->_impl->onPause();
 }
 
-void UiIfaceView::on_resume()
+void UiIfaceView::onResume()
 {
-	this->impl->on_resume();
+	this->_impl->onResume();
 }
 
-void UiIfaceView::on_destroy()
+void UiIfaceView::onDestroy()
 {
-	this->impl->on_destroy();
+	this->_impl->onDestroy();
 }
 
 UiIfaceView::UiIfaceView(const char *name)
 {
-	this->impl = new UiIfaceViewImpl(this, name);
+	this->_impl = new UiIfaceViewImpl(this, name);
 }
 
 UiIfaceView::~UiIfaceView()
 {
-	delete(this->impl);
+	delete(this->_impl);
 }
 
-bool UiIfaceView::set_content(T content)
+bool UiIfaceView::setContent(T content)
 {
-	return this->impl->set_content(content);
+	return this->_impl->setContent(content);
 }
 
-T UiIfaceView::unset_content()
+T UiIfaceView::unsetContent()
 {
-	return this->impl->unset_content();
+	return this->_impl->unsetContent();
 }
 
-bool UiIfaceView::set_transition_style(const char *style)
+bool UiIfaceView::setTransitionStyle(const char *style)
 {
-	return this->impl->set_transition_style(style);
+	return this->_impl->setTransitionStyle(style);
 }
 
-void UiIfaceView::set_removable_content(bool removable)
+void UiIfaceView::setRemovableContent(bool removable)
 {
-	this->impl->set_removable_content(removable);
+	this->_impl->setRemovableContent(removable);
 }
 
-void UiIfaceView::set_indicator(UiViewIndicator indicator)
+void UiIfaceView::setIndicator(UiViewIndicator indicator)
 {
-	this->impl->set_indicator(indicator);
+	this->_impl->setIndicator(indicator);
 }
 
-const char *UiIfaceView::get_transition_style()
+const char *UiIfaceView::getTransitionStyle()
 {
-	return this->impl->get_transition_style();
+	return this->_impl->getTransitionStyle();
 }
 
-const char *UiIfaceView::get_name()
+const char *UiIfaceView::getName()
 {
-	return this->impl->get_name();
+	return this->_impl->getName();
 }
 
-T UiIfaceView::get_content()
+T UiIfaceView::getContent()
 {
-	return this->impl->get_content();
+	return this->_impl->getContent();
 }
 
-UiViewState UiIfaceView::get_state()
+UiViewState UiIfaceView::getState()
 {
-	return this->impl->get_state();
+	return this->_impl->getState();
 }
 
-bool UiIfaceView::get_removable_content()
+bool UiIfaceView::getRemovableContent()
 {
-	return this->impl->get_removable_content();
+	return this->_impl->getRemovableContent();
 }
 
-UiViewIndicator UiIfaceView::get_indicator()
+UiViewIndicator UiIfaceView::getIndicator()
 {
-	return this->impl->get_indicator();
+	return this->_impl->getIndicator();
 }
 
-void UiIfaceView::on_back()
+void UiIfaceView::onBack()
 {
-	this->impl->on_back();
+	this->_impl->onBack();
 }
 
-bool UiIfaceView::set_viewmgr(UiIfaceViewmgr *viewmgr)
+bool UiIfaceView::_setViewmgr(UiIfaceViewmgr *viewmgr)
 {
-	this->impl->viewmgr = viewmgr;
+	this->_impl->_viewmgr = viewmgr;
 	return true;
 }
 
-UiIfaceViewmgr *UiIfaceView::get_viewmgr()
+UiIfaceViewmgr *UiIfaceView::_getViewmgr()
 {
-	return this->impl->viewmgr;
+	return this->_impl->_viewmgr;
 }
 
-void UiIfaceView::on_low_memory()
-{
-}
-
-void UiIfaceView::on_low_battery()
+void UiIfaceView::onLowMemory()
 {
 }
 
-void UiIfaceView::on_region_changed(const char *region)
+void UiIfaceView::onLowBattery()
 {
 }
 
-void UiIfaceView::on_language_changed(const char *language)
+void UiIfaceView::onRegionChanged(const char *region)
+{
+}
+
+void UiIfaceView::onLanguageChanged(const char *language)
 {
 }

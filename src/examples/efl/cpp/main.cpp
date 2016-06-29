@@ -44,15 +44,15 @@ public:
 	}
 
 protected:
-	bool on_create()
+	bool onCreate()
 	{
-		if (!UiApp::on_create())
+		if (!UiApp::onCreate())
 		{
 			return false;
 		}
 
 		//Push first view in viewmgr.
-		UI_VIEWMGR->push_view(new page1());
+		UI_VIEWMGR->pushView(new page1());
 
 		return true;
 	}

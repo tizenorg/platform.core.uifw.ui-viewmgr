@@ -52,14 +52,14 @@ public:
 	 *
 	 *  @return UiViewmgr instance.
 	 */
-	UiViewmgr *get_viewmgr();
+	UiViewmgr *getViewmgr();
 
 	/**
 	 *  @brief Return UiApp instance.
 	 *
 	 *  @return The instance of UiApp.
 	 */
-	static UiApp *get_instance();
+	static UiApp *getInstance();
 
 private:
 	_UI_DISABLE_COPY_AND_ASSIGN(UiApp);
