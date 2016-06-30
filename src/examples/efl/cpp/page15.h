@@ -43,4 +43,8 @@ protected:
 
 		this->setTitleRightBtn(rightBtn);
 	}
+
+public:
+	page15() : UiStandardView("page15") {}
+	~page15(){}
 };

@@ -68,6 +68,6 @@ protected:
 	}
 
 public:
-	page11() {}
+	page11() : UiStandardView("page11") {}
 	~page11() {}
 };
