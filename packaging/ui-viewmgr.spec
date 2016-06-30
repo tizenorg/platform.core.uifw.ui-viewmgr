@@ -3,7 +3,7 @@ Summary:    UI VIEW MANAGER library
 Version:    0.1.0
 Release:    1
 Group:      System/Libraries
-License:    Apache License, Version 2.0
+License:    Apache-2.0
 Source0:    %{name}-%{version}.tar.gz
 BuildRequires:  pkgconfig(elementary)
 BuildRequires:  pkgconfig(capi-appfw-application)
