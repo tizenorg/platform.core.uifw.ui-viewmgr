@@ -73,27 +73,25 @@ void UiBaseKeyListenerImpl::eventProc(Evas_Event_Key_Down *ev)
 bool UiBaseKeyListenerImpl::term()
 {
 	evas_object_del(this->keyGrabber);
+
 	return true;
 }
 
 bool UiBaseKeyListenerImpl::init()
 {
-	if (!this->viewmgr)
-	{
+	if (!this->viewmgr) {
 		LOGE("No view manager??");
 		return false;
 	}
 
 	Evas *e = evas_object_evas_get(this->viewmgr->getWindow());
-	if (!e)
-	{
+	if (!e) {
 		LOGE("Failed to get Evas from window");
 		return false;
 	}
 
 	Evas_Object *keyGrabRect = evas_object_rectangle_add(e);
-	if (!keyGrabRect)
-	{
+	if (!keyGrabRect) {
 		LOGE("Failed to create a key grabber rectangle");
 		return false;
 	}
@@ -105,15 +103,13 @@ bool UiBaseKeyListenerImpl::init()
 		_keyGrabRectKeyUpCb(keyListener, ev);
 	}, this);
 
-	if (!evas_object_key_grab(keyGrabRect, KEY_BACK, 0, 0, EINA_FALSE))
-	{
+	if (!evas_object_key_grab(keyGrabRect, KEY_BACK, 0, 0, EINA_FALSE)) {
 		LOGE("Failed to grab BACK KEY(%s)\n", KEY_BACK);
 		evas_object_del(keyGrabRect);
 		return false;
 	}
 
-	if (!evas_object_key_grab(keyGrabRect, KEY_BACK2, 0, 0, EINA_FALSE))
-	{
+	if (!evas_object_key_grab(keyGrabRect, KEY_BACK2, 0, 0, EINA_FALSE)) {
 		LOGE("Failed to grab BACK KEY(%s)\n", KEY_BACK2);
 		evas_object_del(keyGrabRect);
 		return false;

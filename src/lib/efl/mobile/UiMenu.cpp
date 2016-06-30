@@ -40,8 +40,7 @@ static bool _updateMenu(UiMenu *menu)
 	elm_win_screen_size_get(win, NULL, NULL, &w, &h);
 	int rot = elm_win_rotation_get(win);
 
-	switch (rot)
-	{
+	switch (rot) {
 	case 0:
 	case 180:
 		evas_object_move(ctxpopup, (w / 2), h);
@@ -61,6 +60,7 @@ static void _winResizeCb(void *data, Evas *e, Evas_Object *obj, void *event_info
 {
 	UiMenu *menu = static_cast<UiMenu *>(data);
 	if (!menu->isActivated()) return;
+
 	_updateMenu(menu);
 }
 
@@ -75,6 +75,7 @@ UiMenu::~UiMenu()
 {
 	Elm_Win *win = this->getWindow();
 	if (win) evas_object_event_callback_del(win, EVAS_CALLBACK_RESIZE, _winResizeCb);
+
 	Elm_Ctxpopup *ctxpopup = this->unsetContent();
 	evas_object_del(ctxpopup);
 }
@@ -82,8 +83,7 @@ UiMenu::~UiMenu()
 Elm_Win *UiMenu::getWindow()
 {
 	UiViewmgr *viewmgr = UI_VIEWMGR;
-	if (!viewmgr)
-	{
+	if (!viewmgr) {
 		LOGE("Viewmgr is null?? menu(%p)", this);
 		return NULL;
 	}
@@ -110,6 +110,7 @@ bool UiMenu::activate()
 {
 	bool ret = _updateMenu(this);
 	if (ret) dynamic_cast<UiView *>(this->getView())->onPause();
+
 	return ret;
 }
 
@@ -120,8 +121,7 @@ bool UiMenu::setContent(Elm_Ctxpopup *ctxpopup)
 
 	if (!ctxpopup) return true;
 
-	if (strcmp(evas_object_type_get(ctxpopup), "elm_ctxpopup"))
-	{
+	if (strcmp(evas_object_type_get(ctxpopup), "elm_ctxpopup")) {
 		LOGE("Menu widget is not a ctxpopup!");
 		return false;
 	}
@@ -140,6 +140,7 @@ bool UiMenu::isActivated()
 {
 	Elm_Ctxpopup *ctxpopup = this->getContent();
 	if (!ctxpopup) return false;
+
 	return evas_object_visible_get(ctxpopup);
 }
 
