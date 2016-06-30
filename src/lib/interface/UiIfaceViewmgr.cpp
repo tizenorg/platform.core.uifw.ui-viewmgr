@@ -84,24 +84,19 @@ bool UiIfaceViewmgrImpl::insertViewAfter(UiIfaceView *view, UiIfaceView *after)
 {
 	VIEW_ITR it;
 
-	if (!view)
-	{
+	if (!view) {
 		LOGE("invalid view argument. view(NULL)");
 		return false;
 	}
 
-	if (!this->connectView(view))
-	{
+	if (!this->connectView(view)) {
 		LOGE("connect view failed");
 		return false;
 	}
 
-	if (this->_viewList.size() > 0)
-	{
-		for (it = this->_viewList.begin(); it != this->_viewList.end(); it++)
-		{
-			if (after == *it)
-			{
+	if (this->_viewList.size() > 0) {
+		for (it = this->_viewList.begin(); it != this->_viewList.end(); it++) {
+			if (after == *it) {
 				//If the after is a last item of list.
 				//view has to push now.
 				if (it == this->_viewList.end())
@@ -133,16 +128,14 @@ bool UiIfaceViewmgrImpl::connectView(UiIfaceView *view)
 	int nameLen = strlen(view->getName());
 	const char *name = view->getName();
 
-	for (VIEW_ITR it = this->_viewList.begin(); it != this->_viewList.end(); it++)
-	{
+	for (VIEW_ITR it = this->_viewList.begin(); it != this->_viewList.end(); it++) {
 		UiIfaceView *view = *it;
 		const char *viewName = view->getName();
 		if (!viewName) continue;
 		int viewNameLen = strlen(viewName);
 
 		//Got you!
-		if ((viewNameLen == nameLen) && !strcmp(name, viewName))
-		{
+		if ((viewNameLen == nameLen) && !strcmp(name, viewName)) {
 			LOGE("the same name of UiIfaceView(%p) is already in this UiIfaceViewmgr(%p)", view, this);
 			return false;
 		}
@@ -169,8 +162,7 @@ bool UiIfaceViewmgrImpl::pushViewFinished(UiIfaceView *view)
 	UiIfaceView *last = this->_viewList.back();
 
 	//The previous view has been pushed. This should be unload.
-	if (last != view)
-	{
+	if (last != view) {
 		view->onUnload();
 		return true;
 	}
@@ -187,8 +179,7 @@ bool UiIfaceViewmgrImpl::popViewFinished(UiIfaceView *view)
 	UiIfaceView *last = this->_viewList.back();
 
 	//This view has been popped. It should be destroyed.
-	if (last == view)
-	{
+	if (last == view) {
 		view->onUnload();
 		view->onDestroy();
 		delete (view);
@@ -212,18 +203,16 @@ UiIfaceViewmgrImpl::~UiIfaceViewmgrImpl()
 {
 	//Terminate views
 	this->_destroying = EINA_TRUE;
-	for (VIEW_RITR ritr = this->_viewList.rbegin(); ritr != this->_viewList.rend(); ritr++)
-	{
+	for (VIEW_RITR ritr = this->_viewList.rbegin(); ritr != this->_viewList.rend(); ritr++) {
 		UiIfaceView *view = *ritr;
 		if ((view->getState() != UI_VIEW_STATE_DEACTIVATE) &&
-			(view->getState() != UI_VIEW_STATE_UNLOAD))
-		{
+			(view->getState() != UI_VIEW_STATE_UNLOAD)) {
 			view->onDeactivate();
 		}
-		if (view->getState() != UI_VIEW_STATE_UNLOAD)
-		{
+		if (view->getState() != UI_VIEW_STATE_UNLOAD) {
 			view->onUnload();
 		}
+
 		view->onDestroy();
 		delete (view);
 	}
@@ -236,14 +225,12 @@ UiIfaceViewmgrImpl::~UiIfaceViewmgrImpl()
 
 UiIfaceView *UiIfaceViewmgrImpl::pushView(UiIfaceView *view)
 {
-	if (!view)
-	{
+	if (!view) {
 		LOGE("invalid view argument. view(NULL)");
 		return NULL;
 	}
 
-	if (!this->connectView(view))
-	{
+	if (!this->connectView(view)) {
 		LOGE("connect view failed");
 		return NULL;
 	}
@@ -251,8 +238,7 @@ UiIfaceView *UiIfaceViewmgrImpl::pushView(UiIfaceView *view)
 	UiIfaceView *pview;
 
 	//Previous view
-	if (this->_viewList.size() > 0)
-	{
+	if (this->_viewList.size() > 0) {
 		pview = this->_viewList.back();
 		pview->onDeactivate();
 		this->setEventBlock(pview, true);
@@ -266,8 +252,7 @@ UiIfaceView *UiIfaceViewmgrImpl::pushView(UiIfaceView *view)
 	view->onLoad();
 	view->onDeactivate();
 
-	if (this->_viewList.size() != 1)
-	{
+	if (this->_viewList.size() != 1) {
 		this->setEventBlock(view, true);
 	}
 
@@ -279,21 +264,18 @@ bool UiIfaceViewmgrImpl::popView()
 	//last page to be popped.
 	UiIfaceView*view = this->_viewList.back();
 
-	if (view->getEventBlock())
-	{
+	if (view->getEventBlock()) {
 		return false;
 	}
 
 	//FIXME: No more view?
-	if (this->getViewCount() == 0)
-	{
+	if (this->getViewCount() == 0) {
 		LOGE("No Views. Can't pop anymore!");
 		return false;
 	}
 
 	//This is the last page.
-	if (this->getViewCount() == 1)
-	{
+	if (this->getViewCount() == 1) {
 		//destroy viewmgr?
 		UiIfaceView*view = this->_viewList.back();
 		view->onDeactivate();
@@ -323,24 +305,19 @@ bool UiIfaceViewmgrImpl::insertViewBefore(UiIfaceView *view, UiIfaceView *before
 {
 	VIEW_ITR it;
 
-	if (!view)
-	{
+	if (!view) {
 		LOGE("invalid view argument. view(NULL)");
 		return false;
 	}
 
-	if (!this->connectView(view))
-	{
+	if (!this->connectView(view)) {
 		LOGE("connect view failed");
 		return false;
 	}
 
-	if (this->_viewList.size() > 0)
-	{
-		for (it = this->_viewList.begin(); it != this->_viewList.end(); it++)
-		{
-			if (before == *it)
-			{
+	if (this->_viewList.size() > 0) {
+		for (it = this->_viewList.begin(); it != this->_viewList.end(); it++) {
+			if (before == *it) {
 				this->_viewList.insert(it, view);
 
 				return true;
@@ -368,11 +345,11 @@ bool UiIfaceViewmgrImpl::removeView(UiIfaceView *view)
 
 UiIfaceView *UiIfaceViewmgrImpl::getView(unsigned int idx)
 {
-	if (idx < 0 || idx >= this->_viewList.size())
-	{
+	if (idx < 0 || idx >= this->_viewList.size()) {
 		LOGE("Invalid idx(%d)! =? (idx range: %d ~ %d)", idx, 0, this->_viewList.size() - 1);
 		return NULL;
 	}
+
 	VIEW_ITR it = this->_viewList.begin();
 	advance(it, idx);
 	return *it;
@@ -382,8 +359,7 @@ int UiIfaceViewmgrImpl::getViewIndex(const UiIfaceView *view)
 {
 	int idx = 0;
 
-	for (VIEW_ITR it = this->_viewList.begin(); it != this->_viewList.end(); it++)
-	{
+	for (VIEW_ITR it = this->_viewList.begin(); it != this->_viewList.end(); it++) {
 		if (view == *it) return idx;
 		++idx;
 	}
@@ -421,12 +397,10 @@ bool UiIfaceViewmgrImpl::deactivate()
 	UiIfaceView *view = this->getLastView();
 
 	if ((view->getState() != UI_VIEW_STATE_DEACTIVATE) &&
-		(view->getState() != UI_VIEW_STATE_UNLOAD))
-	{
+		(view->getState() != UI_VIEW_STATE_UNLOAD)) {
 		view->onDeactivate();
 	}
-	if (view->getState() != UI_VIEW_STATE_UNLOAD)
-	{
+	if (view->getState() != UI_VIEW_STATE_UNLOAD) {
 		view->onUnload();
 	}
 
@@ -438,16 +412,14 @@ UiIfaceView *UiIfaceViewmgrImpl::getView(const char *name)
 	if (!name) return NULL;
 	int nameLen = strlen(name);
 
-	for (VIEW_ITR it = this->_viewList.begin(); it != this->_viewList.end(); it++)
-	{
+	for (VIEW_ITR it = this->_viewList.begin(); it != this->_viewList.end(); it++) {
 		UiIfaceView *view = *it;
 		const char *viewName = view->getName();
 		if (!viewName) continue;
 		int viewNameLen = strlen(viewName);
 
 		//Got you!
-		if ((viewNameLen == nameLen) && !strcmp(name, viewName))
-		{
+		if ((viewNameLen == nameLen) && !strcmp(name, viewName)) {
 			return view;
 		}
 	}

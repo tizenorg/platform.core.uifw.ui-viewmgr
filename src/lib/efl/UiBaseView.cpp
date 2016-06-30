@@ -47,47 +47,51 @@ UiBaseView::~UiBaseView()
 bool UiBaseView::setContent(Evas_Object *content)
 {
 	Evas_Object *pcontent = this->unsetContent();
-	if (pcontent)
-	{
+
+	if (pcontent) {
 		evas_object_del(pcontent);
 	}
-	if (content)
-	{
+
+	if (content) {
 		evas_object_event_callback_add(content, EVAS_CALLBACK_DEL, _contentDelCb, this);
 		UiIfaceView::setContent(content);
 	}
+
 	return true;
 }
 
 Evas_Object *UiBaseView::unsetContent()
 {
 	Evas_Object *obj = UiIfaceView::unsetContent();
-	if (obj)
-	{
+
+	if (obj) {
 		evas_object_event_callback_del(obj, EVAS_CALLBACK_DEL, _contentDelCb);
 		evas_object_hide(obj);
 	}
+
 	return obj;
 }
 
 Evas_Object *UiBaseView::getBase()
 {
 	UiBaseViewmgr *viewmgr = UI_BASE_VIEWMGR;
-	if (!viewmgr)
-	{
+
+	if (!viewmgr) {
 		return NULL;
 	}
+
 	return viewmgr->getBase();
 }
 
 Evas_Object *UiBaseView ::getParent()
 {
 	UiBaseViewmgr *viewmgr = UI_BASE_VIEWMGR;
-	if (!viewmgr)
-	{
+
+	if (!viewmgr) {
 		LOGE("Failed to get a viewmgr");
 		return NULL;
 	}
+
 	return viewmgr->getBase();
 }
 
@@ -98,8 +102,8 @@ void UiBaseView::setIndicator(UiViewIndicator indicator)
 	UiIfaceView::setIndicator(indicator);
 
 	UiBaseViewmgr *viewmgr = UI_BASE_VIEWMGR;
-	if (!viewmgr)
-	{
+
+	if (!viewmgr) {
 		LOGE("Failed to get a viewmgr");
 		return;
 	}
@@ -126,17 +130,19 @@ void UiBaseView::onLandscape()
 void UiBaseView::setEventBlock(bool block)
 {
 	UiIfaceView::setEventBlock(block);
+
 	evas_object_freeze_events_set(this->getContent(), block);
 }
 
 int UiBaseView::getDegree()
 {
 	UiBaseViewmgr *viewmgr = UI_BASE_VIEWMGR;
-	if (!viewmgr)
-	{
+
+	if (!viewmgr) {
 		LOGE("Failed to get a viewmgr");
 		return -1;
 	}
+
 	return elm_win_rotation_get(viewmgr->getWindow());
 }
 

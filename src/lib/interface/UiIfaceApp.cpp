@@ -149,8 +149,7 @@ int UiIfaceAppImpl::run(int argc, char **argv)
 
 	int ret = ui_app_main(argc, argv, &event_callback, this);
 
-	if (ret != APP_ERROR_NONE)
-	{
+	if (ret != APP_ERROR_NONE) {
 		LOGE("ui_app_main() is failed. err = %d", ret);
 	}
 
@@ -294,8 +293,7 @@ void UiIfaceApp::onTerminate()
 
 UiIfaceApp::UiIfaceApp(const char *pkg, const char *locale_dir, UiIfaceViewmgr *viewmgr)
 {
-	if (_inst)
-	{
+	if (_inst) {
 		LOGE("You created UiIfaceApp multiple times!!");
 	}
 	_inst = this;
