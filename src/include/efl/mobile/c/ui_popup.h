@@ -49,7 +49,7 @@ EAPI void ui_popup_destroy(ui_popup *popup);
  *
  *  @see ui_popup_content_get()
  */
-EAPI bool ui_popup_content_set(ui_popup *popup, Elm_Popup *content);
+EAPI bool ui_popup_set_content(ui_popup *popup, Elm_Popup *content);
 
 /**
  *  @brief Return a content object of ui_popup.
@@ -60,7 +60,7 @@ EAPI bool ui_popup_content_set(ui_popup *popup, Elm_Popup *content);
  *
  *  @see ui_popup_content_set()
  */
-EAPI Elm_Popup *ui_popup_content_get(ui_popup *popup);
+EAPI Elm_Popup *ui_popup_get_content(ui_popup *popup);
 
 /**
  *  @brief Unset an ui_popup content.
@@ -71,7 +71,7 @@ EAPI Elm_Popup *ui_popup_content_get(ui_popup *popup);
  *
  *  @see ui_popup_content_set()
  */
-EAPI Elm_Popup *ui_popup_content_unset(ui_popup *popup);
+EAPI Elm_Popup *ui_popup_unset_content(ui_popup *popup);
 
 /**
  *  @brief Activate an ui_popup.
@@ -109,7 +109,7 @@ EAPI bool ui_popup_deactivate(ui_popup *popup);
  *  @see ui_popup_activate()
  *  @see ui_popup_deactivate()
  */
-EAPI bool ui_popup_activated_get(ui_popup *popup);
+EAPI bool ui_popup_get_activated(ui_popup *popup);
 
 /**
  *  @brief Get a base object of an ui_popup.
@@ -120,7 +120,7 @@ EAPI bool ui_popup_activated_get(ui_popup *popup);
  *
  *  @return base object of ui_popup.
  */
-EAPI Evas_Object *ui_popup_base_get(ui_popup *popup);
+EAPI Evas_Object *ui_popup_get_base(ui_popup *popup);
 
 /**
  *  @brief Get current ui_popup's degree.
@@ -129,7 +129,7 @@ EAPI Evas_Object *ui_popup_base_get(ui_popup *popup);
  *
  *  @return Current rotation degree, -1 if it fails to get degree information.
  */
-EAPI int ui_popup_degree_get(ui_popup *popup);
+EAPI int ui_popup_get_degree(ui_popup *popup);
 
 /**
  *  @brief Return a view which is matched with the ui_popup.
@@ -138,7 +138,7 @@ EAPI int ui_popup_degree_get(ui_popup *popup);
  *
  *  @return The view which is matched with ui_popup.
  */
-EAPI ui_view *ui_popup_view_get(ui_popup *popup);
+EAPI ui_view *ui_popup_get_view(ui_popup *popup);
 
 #ifdef __cplusplus
 }

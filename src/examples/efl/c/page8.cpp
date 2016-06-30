@@ -20,7 +20,7 @@
 static void
 prev_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	UI_VIEWMGR_VIEW_POP();
+	UI_VIEWMGR_POP_VIEW();
 }
 
 static void
@@ -45,7 +45,7 @@ create_page8()
 	}
 
 	//Get a base object from view.
-	base = ui_view_base_get(view);
+	base = ui_view_get_base(view);
 	if (!base)
 	{
 		dlog_print(DLOG_ERROR, LOG_TAG, "failed to get a view base object");
@@ -61,7 +61,7 @@ create_page8()
 		return;
 	}
 
-	if (!ui_standard_view_content_set(view, content, "Page8", NULL, NULL, NULL))
+	if (!ui_standard_view_set_content(view, content, "Page8", NULL, NULL, NULL))
 	{
 		dlog_print(DLOG_ERROR, LOG_TAG, "failed to set view content");
 		ui_view_destroy(view);
@@ -70,8 +70,8 @@ create_page8()
 
 	//Don't delete view's content when this view popped.
 	//This is a show case for saving this content for reuse later.
-	ui_view_removable_content_set(view, false);
+	ui_view_set_removable_content(view, false);
 
 
-	UI_VIEWMGR_VIEW_PUSH(view);
+	UI_VIEWMGR_PUSH_VIEW(view);
 }

@@ -20,7 +20,7 @@
 static void
 prev_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	UI_VIEWMGR_VIEW_POP();
+	UI_VIEWMGR_POP_VIEW();
 }
 
 static void
@@ -69,7 +69,7 @@ view12_btn_clicked(void *data, Evas_Object *obj, void *event_info)
 	}
 
 	//Get a base object from popup.
-	base = ui_popup_base_get(popup);
+	base = ui_popup_get_base(popup);
 	if (!base)
 	{
 		dlog_print(DLOG_ERROR, LOG_TAG, "failed to get a view base object");
@@ -89,7 +89,7 @@ view12_btn_clicked(void *data, Evas_Object *obj, void *event_info)
 	evas_object_smart_callback_add(content, "timeout", popup_timeout_cb, NULL);
 
 	//Set elm popup as a ui_popup content.
-	ui_popup_content_set(popup, content);
+	ui_popup_set_content(popup, content);
 	ui_popup_activate(popup);
 }
 
@@ -101,7 +101,7 @@ view12_load_cb(ui_standard_view *view, void *data)
 	Elm_Button *right_btn = NULL;
 
 	//Get a base object from view.
-	base = ui_view_base_get(view);
+	base = ui_view_get_base(view);
 	if (!base)
 	{
 		dlog_print(DLOG_ERROR, LOG_TAG, "failed to get a view base object");
@@ -112,14 +112,14 @@ view12_load_cb(ui_standard_view *view, void *data)
 	content = create_content(base, "ViewMgr Demo<br>Popup", prev_btn_clicked_cb, next_btn_clicked_cb);
 	if (!content) return false;
 
-	ui_standard_view_content_set(view, content, "Page12", NULL, NULL, NULL);
+	ui_standard_view_set_content(view, content, "Page12", NULL, NULL, NULL);
 
 	//Title Right button
 	right_btn = elm_button_add(base);
 	elm_object_text_set(right_btn, "popup");
 	evas_object_smart_callback_add(right_btn, "clicked", view12_btn_clicked, view);
 
-	ui_standard_view_title_right_btn_set(view, right_btn);
+	ui_standard_view_set_title_right_btn(view, right_btn);
 
 	return true;
 }
@@ -141,12 +141,12 @@ create_page12()
 
 	//Set View Life-Cycle callbacks.
 	lifecycle_callback.load = view12_load_cb;
-	if (!(ret = ui_view_lifecycle_callbacks_set(view, &lifecycle_callback, NULL)))
+	if (!(ret = ui_view_set_lifecycle_callbacks(view, &lifecycle_callback, NULL)))
 	{
 		dlog_print(DLOG_ERROR, LOG_TAG, "ui_view_lifecycle_callback_set is failed. err = %d", ret);
 		ui_view_destroy(view);
 		return;
 	}
 
-	UI_VIEWMGR_VIEW_PUSH(view);
+	UI_VIEWMGR_PUSH_VIEW(view);
 }

@@ -147,7 +147,7 @@ EAPI ui_view* ui_view_create(const char *name)
 	return new ui_view_capi(name);
 }
 
-EAPI bool ui_view_lifecycle_callbacks_set(ui_view *view, ui_view_lifecycle_callback_s *lifecycle_callback, void *data)
+EAPI bool ui_view_set_lifecycle_callbacks(ui_view *view, ui_view_lifecycle_callback_s *lifecycle_callback, void *data)
 {
 	if (!validate_view(view)) return false;
 
@@ -167,7 +167,7 @@ EAPI bool ui_view_lifecycle_callbacks_set(ui_view *view, ui_view_lifecycle_callb
 	return true;
 }
 
-EAPI bool ui_view_event_callbacks_set(ui_view *view, ui_view_event_callback_s *event_callback, void *data)
+EAPI bool ui_view_set_event_callbacks(ui_view *view, ui_view_event_callback_s *event_callback, void *data)
 {
 	if (!validate_view(view)) return false;
 
@@ -187,79 +187,79 @@ EAPI bool ui_view_event_callbacks_set(ui_view *view, ui_view_event_callback_s *e
 	return true;
 }
 
-EAPI Evas_Object* ui_view_base_get(ui_view *view)
+EAPI Evas_Object* ui_view_get_base(ui_view *view)
 {
 	if (!validate_view(view)) return NULL;
 	return view->getBase();
 }
 
-EAPI Evas_Object *ui_view_content_unset(ui_view *view)
+EAPI Evas_Object *ui_view_unset_content(ui_view *view)
 {
 	if (!validate_view(view)) return NULL;
 	return view->unsetContent();
 }
 
-EAPI void ui_view_indicator_set(ui_view *view, ui_view_indicator indicator)
+EAPI void ui_view_set_indicator(ui_view *view, ui_view_indicator indicator)
 {
 	if (!validate_view(view)) return;
 	view->setIndicator(indicator);
 }
 
-EAPI ui_view_indicator ui_view_indicator_get(ui_view *view)
+EAPI ui_view_indicator ui_view_get_indicator(ui_view *view)
 {
 	if (!validate_view(view)) return UI_VIEW_INDICATOR_UNKNOWN;
 	return view->getIndicator();
 }
 
-EAPI void ui_view_removable_content_set(ui_view *view, bool remove)
+EAPI void ui_view_set_removable_content(ui_view *view, bool remove)
 {
 	if (!validate_view(view)) return;
 	view->setRemovableContent(remove);
 }
 
-EAPI bool ui_view_removable_content_get(ui_view *view)
+EAPI bool ui_view_get_removable_content(ui_view *view)
 {
 	if (!validate_view(view)) return false;
 	return view->getRemovableContent();
 }
 
-EAPI int ui_view_degree_get(ui_view *view)
+EAPI int ui_view_get_degree(ui_view *view)
 {
 	if (!validate_view(view)) return -1;
 	return view->getDegree();
 }
 
-EAPI bool ui_view_transition_style_set(ui_view *view, const char *style)
+EAPI bool ui_view_set_transition_style(ui_view *view, const char *style)
 {
 	if (!validate_view(view)) return false;
 	return view->setTransitionStyle(style);
 }
 
-EAPI const char *ui_view_transition_style_get(ui_view *view)
+EAPI const char *ui_view_get_transition_style(ui_view *view)
 {
 	if (!validate_view(view)) return NULL;
 	return view->getTransitionStyle();
 }
 
-EAPI const ui_menu *ui_view_menu_get(ui_view *view)
+EAPI const ui_menu *ui_view_get_menu(ui_view *view)
 {
 	if (!validate_view(view)) return NULL;
 	return view->getMenu();
 }
 
-EAPI const char *ui_view_name_get(ui_view *view)
+EAPI const char *ui_view_get_name(ui_view *view)
 {
 	if (!validate_view(view)) return NULL;
 	return view->getName();
 }
 
-EAPI ui_view_state ui_view_state_get(ui_view *view)
+EAPI ui_view_state ui_view_get_state(ui_view *view)
 {
 	if (!validate_view(view)) return UI_VIEW_STATE_UNKNOWN;
 	return view->getState();
 }
 
-EAPI Evas_Object *ui_view_content_get(ui_view *view)
+EAPI Evas_Object *ui_view_get_content(ui_view *view)
 {
 	if (!validate_view(view)) return NULL;
 	return view->getContent();
@@ -272,13 +272,13 @@ EAPI bool ui_view_destroy(ui_view *view)
 	return true;
 }
 
-EAPI bool ui_view_content_set(ui_view *view, Evas_Object *content)
+EAPI bool ui_view_set_content(ui_view *view, Evas_Object *content)
 {
 	if (!validate_view(view)) return false;
 	return view->setContent(content);
 }
 
-EAPI const char *ui_view_type_get(ui_view *view)
+EAPI const char *ui_view_get_type(ui_view *view)
 {
 	if (!validate_view(view)) return false;
 	return dynamic_cast<ui_common_view_capi *>(view)->type;

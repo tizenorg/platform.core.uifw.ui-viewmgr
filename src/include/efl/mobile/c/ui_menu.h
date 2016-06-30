@@ -22,7 +22,7 @@ extern "C" {
  *
  *  @see ui_menu_content_get()
  */
-EAPI bool ui_menu_content_set(ui_menu *menu, Elm_Ctxpopup *ctxpopup);
+EAPI bool ui_menu_set_content(ui_menu *menu, Elm_Ctxpopup *ctxpopup);
 
 /**
  *  @brief Return an ui_menu content.
@@ -33,7 +33,7 @@ EAPI bool ui_menu_content_set(ui_menu *menu, Elm_Ctxpopup *ctxpopup);
  *
  *  @see ui_menu_content_set()
  */
-EAPI Elm_Ctxpopup *ui_menu_content_get(ui_menu *menu);
+EAPI Elm_Ctxpopup *ui_menu_get_content(ui_menu *menu);
 
 /**
  *  @brief Unset an ui_menu content.
@@ -44,7 +44,7 @@ EAPI Elm_Ctxpopup *ui_menu_content_get(ui_menu *menu);
  *
  *  @see ui_menu_content_set()
  */
-EAPI Elm_Ctxpopup *ui_menu_content_unset(ui_menu *menu);
+EAPI Elm_Ctxpopup *ui_menu_unset_content(ui_menu *menu);
 
 /**
  *  @brief Activate an ui_menu.
@@ -82,7 +82,7 @@ EAPI bool ui_menu_deactivate(ui_menu *menu);
  *  @see ui_menu_activate()
  *  @see ui_menu_deactivate()
  */
-EAPI bool ui_menu_activated_get(ui_menu *menu);
+EAPI bool ui_menu_get_activated(ui_menu *menu);
 
 /**
  *  @brief Get a base object of an ui_menu.
@@ -93,7 +93,7 @@ EAPI bool ui_menu_activated_get(ui_menu *menu);
  *
  *  @return base object of ui_menu.
  */
-EAPI Evas_Object *ui_menu_base_get(ui_menu *menu);
+EAPI Evas_Object *ui_menu_get_base(ui_menu *menu);
 
 /**
  *  @brief Get a current ui_menu's degree.
@@ -102,7 +102,7 @@ EAPI Evas_Object *ui_menu_base_get(ui_menu *menu);
  *
  *  @return Current rotation degree, -1 if it fails to get degree information.
  */
-EAPI int ui_menu_degree_get(ui_menu *menu);
+EAPI int ui_menu_get_degree(ui_menu *menu);
 
 /**
  *  @brief Return a view which is matched with this ui_menu.
@@ -111,7 +111,7 @@ EAPI int ui_menu_degree_get(ui_menu *menu);
  *
  *  @return The view which is matched with ui_menu
  */
-EAPI ui_view *ui_menu_view_get(ui_menu *menu);
+EAPI ui_view *ui_menu_get_view(ui_menu *menu);
 
 #ifdef __cplusplus
 }

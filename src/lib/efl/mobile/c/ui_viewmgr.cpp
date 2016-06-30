@@ -18,7 +18,7 @@ static bool validate_viewmgr(ui_viewmgr *viewmgr)
 	return true;
 }
 
-EAPI ui_view *ui_viewmgr_view_push(ui_viewmgr *viewmgr, ui_view *view)
+EAPI ui_view *ui_viewmgr_push_view(ui_viewmgr *viewmgr, ui_view *view)
 {
 	if (!viewmgr || !view)
 	{
@@ -29,7 +29,7 @@ EAPI ui_view *ui_viewmgr_view_push(ui_viewmgr *viewmgr, ui_view *view)
 	return dynamic_cast<ui_view *>(viewmgr->pushView(view));
 }
 
-EAPI bool ui_viewmgr_view_insert_before(ui_viewmgr *viewmgr, ui_view *view, ui_view *before)
+EAPI bool ui_viewmgr_push_view_insert_before(ui_viewmgr *viewmgr, ui_view *view, ui_view *before)
 {
 	if (!viewmgr || !view)
 	{
@@ -40,7 +40,7 @@ EAPI bool ui_viewmgr_view_insert_before(ui_viewmgr *viewmgr, ui_view *view, ui_v
 	return viewmgr->insertViewBefore(view, before);
 }
 
-EAPI bool ui_viewmgr_view_insert_after(ui_viewmgr *viewmgr, ui_view *view, ui_view *after)
+EAPI bool ui_viewmgr_push_view_insert_after(ui_viewmgr *viewmgr, ui_view *view, ui_view *after)
 {
 	if (!viewmgr || !view)
 	{
@@ -51,7 +51,7 @@ EAPI bool ui_viewmgr_view_insert_after(ui_viewmgr *viewmgr, ui_view *view, ui_vi
 	return viewmgr->insertViewAfter(view, after);
 }
 
-EAPI bool ui_viewmgr_view_pop(ui_viewmgr *viewmgr)
+EAPI bool ui_viewmgr_pop_view(ui_viewmgr *viewmgr)
 {
 	if (!validate_viewmgr(viewmgr)) return false;
 	return viewmgr->popView();
@@ -69,37 +69,37 @@ EAPI bool ui_viewmgr_deactivate(ui_viewmgr *viewmgr)
 	return viewmgr->deactivate();
 }
 
-EAPI Elm_Win *ui_viewmgr_window_get(ui_viewmgr *viewmgr)
+EAPI Elm_Win *ui_viewmgr_get_window(ui_viewmgr *viewmgr)
 {
 	if (!validate_viewmgr(viewmgr)) return NULL;
 	return viewmgr->getWindow();
 }
 
-EAPI ui_view *ui_viewmgr_last_view_get(ui_viewmgr *viewmgr)
+EAPI ui_view *ui_viewmgr_get_last_view(ui_viewmgr *viewmgr)
 {
 	if (!validate_viewmgr(viewmgr)) return NULL;
 	return dynamic_cast<ui_view *>(viewmgr->getLastView());
 }
 
-EAPI ui_view *ui_viewmgr_view_get_by_idx(ui_viewmgr *viewmgr, int idx)
+EAPI ui_view *ui_viewmgr_get_view_by_idx(ui_viewmgr *viewmgr, int idx)
 {
 	if (!validate_viewmgr(viewmgr)) return NULL;
 	return dynamic_cast<ui_view *>(viewmgr->getView(idx));
 }
 
-EAPI ui_view *ui_viewmgr_view_get_by_name(ui_viewmgr *viewmgr, const char *name)
+EAPI ui_view *ui_viewmgr_get_view_by_name(ui_viewmgr *viewmgr, const char *name)
 {
 	if (!validate_viewmgr(viewmgr)) return NULL;
 	return dynamic_cast<ui_view *>(viewmgr->getView(name));
 }
 
-EAPI Evas_Object *ui_viewmgr_base_get(ui_viewmgr *viewmgr)
+EAPI Evas_Object *ui_viewmgr_get_base(ui_viewmgr *viewmgr)
 {
 	if (!validate_viewmgr(viewmgr)) return NULL;
 	return viewmgr->getBase();
 }
 
-EAPI int ui_viewmgr_view_index_get(ui_viewmgr *viewmgr, const ui_view *view)
+EAPI int ui_viewmgr_get_view_index(ui_viewmgr *viewmgr, const ui_view *view)
 {
 	if (!viewmgr || !view)
 	{
@@ -110,20 +110,20 @@ EAPI int ui_viewmgr_view_index_get(ui_viewmgr *viewmgr, const ui_view *view)
 	return viewmgr->getViewIndex(view);
 }
 
-EAPI int ui_viewmgr_view_count_get(ui_viewmgr *viewmgr)
+EAPI int ui_viewmgr_get_view_count(ui_viewmgr *viewmgr)
 {
 	if (!validate_viewmgr(viewmgr)) return -1;
 
 	return viewmgr->getViewCount();
 }
 
-EAPI bool ui_viewmgr_soft_key_need_get(ui_viewmgr *viewmgr)
+EAPI bool ui_viewmgr_get_soft_key_need(ui_viewmgr *viewmgr)
 {
 	if (!validate_viewmgr(viewmgr)) return false;
 	return viewmgr->needSoftKey();
 }
 
-EAPI ui_viewmgr *ui_viewmgr_viewmgr_get()
+EAPI ui_viewmgr *ui_viewmgr_get_viewmgr()
 {
 	return UI_VIEWMGR;
 }

@@ -20,7 +20,7 @@
 static void
 prev_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	UI_VIEWMGR_VIEW_POP();
+	UI_VIEWMGR_POP_VIEW();
 }
 
 static void
@@ -33,28 +33,28 @@ static void
 title_show_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	ui_standard_view *view = (ui_standard_view *) data;
-	ui_standard_view_title_visible_set(view, true, false);
+	ui_standard_view_set_title_visible(view, true, false);
 }
 
 static void
 title_hide_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	ui_standard_view *view = (ui_standard_view *) data;
-	ui_standard_view_title_visible_set(view, false, false);
+	ui_standard_view_set_title_visible(view, false, false);
 }
 
 static void
 title_show_anim_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	ui_standard_view *view = (ui_standard_view *) data;
-	ui_standard_view_title_visible_set(view, true, true);
+	ui_standard_view_set_title_visible(view, true, true);
 }
 
 static void
 title_hide_anim_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	ui_standard_view *view = (ui_standard_view *) data;
-	ui_standard_view_title_visible_set(view, false, true);
+	ui_standard_view_set_title_visible(view, false, true);
 }
 
 static bool
@@ -64,7 +64,7 @@ view16_load_cb(ui_standard_view *view, void *data)
 	Evas_Object *base = NULL;
 
 	//Get a base object from view.
-	base = ui_view_base_get(view);
+	base = ui_view_get_base(view);
 	if (!base)
 	{
 		dlog_print(DLOG_ERROR, LOG_TAG, "failed to get a view base object");
@@ -75,7 +75,7 @@ view16_load_cb(ui_standard_view *view, void *data)
 	content = create_title_handle_content(base, prev_btn_clicked_cb, next_btn_clicked_cb, title_show_btn_clicked_cb, title_hide_btn_clicked_cb, title_show_anim_btn_clicked_cb, title_hide_anim_btn_clicked_cb, view);
 	if (!content) return false;
 
-	ui_standard_view_content_set(view, content, "Page16", NULL, NULL, NULL);
+	ui_standard_view_set_content(view, content, "Page16", NULL, NULL, NULL);
 
 	return true;
 }
@@ -97,12 +97,12 @@ create_page16()
 
 	//Set View Life-Cycle callbacks.
 	lifecycle_callback.load = view16_load_cb;
-	if (!(ret = ui_view_lifecycle_callbacks_set(view, &lifecycle_callback, NULL)))
+	if (!(ret = ui_view_set_lifecycle_callbacks(view, &lifecycle_callback, NULL)))
 	{
 		dlog_print(DLOG_ERROR, LOG_TAG, "ui_view_lifecycle_callback_set is failed. err = %d", ret);
 		ui_view_destroy(view);
 		return;
 	}
 
-	UI_VIEWMGR_VIEW_PUSH(view);
+	UI_VIEWMGR_PUSH_VIEW(view);
 }

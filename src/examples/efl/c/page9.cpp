@@ -20,7 +20,7 @@
 static void
 prev_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
-	UI_VIEWMGR_VIEW_POP();
+	UI_VIEWMGR_POP_VIEW();
 }
 
 static void
@@ -36,7 +36,7 @@ view9_portrait_cb(ui_standard_view *view, void *data)
 	Evas_Object *base = NULL;
 
 	//Get a base object from view.
-	base = ui_view_base_get(view);
+	base = ui_view_get_base(view);
 	if (!base)
 	{
 		dlog_print(DLOG_ERROR, LOG_TAG, "failed to get a view base object");
@@ -47,13 +47,13 @@ view9_portrait_cb(ui_standard_view *view, void *data)
 	content = create_content(base, "ViewMgr Demo<br>Portrait/Landscape", prev_btn_clicked_cb, next_btn_clicked_cb);
 	if (!content) return false;
 
-	if (!ui_standard_view_content_set(view, content, "Page9", NULL, NULL, NULL))
+	if (!ui_standard_view_set_content(view, content, "Page9", NULL, NULL, NULL))
 	{
 		dlog_print(DLOG_ERROR, LOG_TAG, "failed to set view content");
 		return false;
 	}
 
-	ui_view_indicator_set(view, UI_VIEW_INDICATOR_DEFAULT);
+	ui_view_set_indicator(view, UI_VIEW_INDICATOR_DEFAULT);
 
 	return true;
 }
@@ -64,7 +64,7 @@ view9_landscape_cb(ui_standard_view *view, void *data)
 	Evas_Object *content = NULL;
 	Evas_Object *base = NULL;
 
-	base = ui_view_base_get(view);
+	base = ui_view_get_base(view);
 	if (!base)
 	{
 		dlog_print(DLOG_ERROR, LOG_TAG, "failed to get a view base object");
@@ -74,13 +74,13 @@ view9_landscape_cb(ui_standard_view *view, void *data)
 	content = create_landscape_content(base, "ViewMgr Demo<br>Portrait/Landscape", prev_btn_clicked_cb, next_btn_clicked_cb);
 	if (!content) return false;
 
-	if (!ui_standard_view_content_set(view, content, "Page9", NULL, NULL, NULL))
+	if (!ui_standard_view_set_content(view, content, "Page9", NULL, NULL, NULL))
 	{
 		dlog_print(DLOG_ERROR, LOG_TAG, "failed to set view content");
 		return false;
 	}
 
-	ui_view_indicator_set(view, UI_VIEW_INDICATOR_OPTIMAL);
+	ui_view_set_indicator(view, UI_VIEW_INDICATOR_OPTIMAL);
 
 	return true;
 }
@@ -89,7 +89,7 @@ static bool
 view9_load_cb(ui_standard_view *view, void *data)
 {
 	//FIXME: Change below code to more convenient and clear way.
-	if (ui_view_degree_get(view) == 90 || ui_view_degree_get(view) == 270)
+	if (ui_view_get_degree(view) == 90 || ui_view_get_degree(view) == 270)
 	{
 		return view9_landscape_cb(view, data);
 	} else {
@@ -115,7 +115,7 @@ create_page9()
 
 	//Set View Life-Cycle callbacks.
 	lifecycle_callback.load = view9_load_cb;
-	if (!(ret = ui_view_lifecycle_callbacks_set(view, &lifecycle_callback, NULL)))
+	if (!(ret = ui_view_set_lifecycle_callbacks(view, &lifecycle_callback, NULL)))
 	{
 		dlog_print(DLOG_ERROR, LOG_TAG, "ui_view_lifecycle_callback_set is failed. err = %d", ret);
 		ui_view_destroy(view);
@@ -125,10 +125,10 @@ create_page9()
 	//Set Portrait/Landscape Event callbacks.
 	event_callback.portrait = view9_portrait_cb;
 	event_callback.landscape = view9_landscape_cb;
-	if (!(ret = ui_view_event_callbacks_set(view, &event_callback, NULL)))
+	if (!(ret = ui_view_set_event_callbacks(view, &event_callback, NULL)))
 	{
 		dlog_print(DLOG_ERROR, LOG_TAG, "ui_view_event_callback_set is failed. err = %d", ret);
 	}
 
-	UI_VIEWMGR_VIEW_PUSH(view);
+	UI_VIEWMGR_PUSH_VIEW(view);
 }

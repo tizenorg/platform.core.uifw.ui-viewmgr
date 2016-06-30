@@ -37,7 +37,7 @@ view1_load_cb(ui_standard_view *view, void *data)
 	Evas_Object *base = NULL;
 
 	//Get a base object from view.
-	base = ui_view_base_get(view);
+	base = ui_view_get_base(view);
 	if (!base)
 	{
 		dlog_print(DLOG_ERROR, LOG_TAG, "failed to get a view base object");
@@ -48,7 +48,7 @@ view1_load_cb(ui_standard_view *view, void *data)
 	content = create_content(base, "ViewMgr Demo<br>Basic View", prev_btn_clicked_cb, next_btn_clicked_cb);
 	if (!content) return false;
 
-	if (!ui_standard_view_content_set(view, content, "Page1", NULL, NULL, NULL))
+	if (!ui_standard_view_set_content(view, content, "Page1", NULL, NULL, NULL))
 	{
 		dlog_print(DLOG_ERROR, LOG_TAG, "failed to set view content");
 		return false;
@@ -74,12 +74,12 @@ create_page1()
 
 	//Set View Life-Cycle callbacks.
 	lifecycle_callback.load = view1_load_cb;
-	if (!(ret = ui_view_lifecycle_callbacks_set(view, &lifecycle_callback, NULL)))
+	if (!(ret = ui_view_set_lifecycle_callbacks(view, &lifecycle_callback, NULL)))
 	{
 		dlog_print(DLOG_ERROR, LOG_TAG, "ui_view_lifecycle_callback_set() is failed. err = %d", ret);
 		ui_view_destroy(view);
 		return;
 	}
 
-	UI_VIEWMGR_VIEW_PUSH(view);
+	UI_VIEWMGR_PUSH_VIEW(view);
 }

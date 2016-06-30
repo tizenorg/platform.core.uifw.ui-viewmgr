@@ -156,7 +156,7 @@ EAPI ui_standard_view* ui_standard_view_create(const char *name)
 	return new ui_standard_view_capi(name);
 }
 
-EAPI bool ui_standard_view_content_set(ui_standard_view *view, Evas_Object *content, const char *title, const char *subtitle, Evas_Object *title_left_btn,
+EAPI bool ui_standard_view_set_content(ui_standard_view *view, Evas_Object *content, const char *title, const char *subtitle, Evas_Object *title_left_btn,
         Evas_Object *title_right_btn)
 {
 	ui_standard_view_capi *capi_view;
@@ -164,91 +164,91 @@ EAPI bool ui_standard_view_content_set(ui_standard_view *view, Evas_Object *cont
 	return capi_view->setContent(content, title, subtitle, title_left_btn, title_right_btn);
 }
 
-EAPI bool ui_standard_view_title_set(ui_standard_view *view, const char *text)
+EAPI bool ui_standard_view_set_title(ui_standard_view *view, const char *text)
 {
 	ui_standard_view_capi *capi_view;
 	if (!(capi_view = validate_view(view))) return false;
 	return capi_view->setTitle(text);
 }
 
-EAPI bool ui_standard_view_sub_title_set(ui_standard_view *view, const char *text)
+EAPI bool ui_standard_view_set_sub_title(ui_standard_view *view, const char *text)
 {
 	ui_standard_view_capi *capi_view;
 	if (!(capi_view = validate_view(view))) return false;
 	return capi_view->setSubtitle(text);
 }
 
-EAPI bool ui_standard_view_title_badge_set(ui_standard_view *view, const char *badge_text)
+EAPI bool ui_standard_view_set_title_badge(ui_standard_view *view, const char *badge_text)
 {
 	ui_standard_view_capi *capi_view;
 	if (!(capi_view = validate_view(view))) return false;
 	return capi_view->setTitleBadge(badge_text);
 }
 
-EAPI bool ui_standard_view_title_right_btn_set(ui_standard_view *view, Evas_Object *title_right_btn)
+EAPI bool ui_standard_view_set_title_right_btn(ui_standard_view *view, Evas_Object *title_right_btn)
 {
 	ui_standard_view_capi *capi_view;
 	if (!(capi_view = validate_view(view))) return false;
 	return capi_view->setTitleRightBtn(title_right_btn);
 }
 
-EAPI Elm_Button *ui_standard_view_title_right_btn_get(ui_standard_view *view)
+EAPI Elm_Button *ui_standard_view_get_title_right_btn(ui_standard_view *view)
 {
 	ui_standard_view_capi *capi_view;
 	if (!(capi_view = validate_view(view))) return NULL;
 	return capi_view->getTitleRightBtn();
 }
 
-EAPI Elm_Button *ui_standard_view_title_right_btn_unset(ui_standard_view *view)
+EAPI Elm_Button *ui_standard_view_unset_title_right_btn(ui_standard_view *view)
 {
 	ui_standard_view_capi *capi_view;
 	if (!(capi_view = validate_view(view))) return NULL;
 	return capi_view->unsetTitleRightBtn();
 }
 
-EAPI bool ui_standard_view_title_left_btn_set(ui_standard_view *view, Evas_Object *title_left_btn)
+EAPI bool ui_standard_view_set_title_left_btn(ui_standard_view *view, Evas_Object *title_left_btn)
 {
 	ui_standard_view_capi *capi_view;
 	if (!(capi_view = validate_view(view))) return false;
 	return capi_view->setTitleLeftBtn(title_left_btn);
 }
 
-EAPI Elm_Button *ui_standard_view_title_left_btn_get(ui_standard_view *view)
+EAPI Elm_Button *ui_standard_view_get_title_left_btn(ui_standard_view *view)
 {
 	ui_standard_view_capi *capi_view;
 	if (!(capi_view = validate_view(view))) return NULL;
 	return capi_view->getTitleLeftBtn();
 }
 
-EAPI Elm_Button *ui_standard_view_title_left_btn_unset(ui_standard_view *view)
+EAPI Elm_Button *ui_standard_view_unset_title_left_btn(ui_standard_view *view)
 {
 	ui_standard_view_capi *capi_view;
 	if (!(capi_view = validate_view(view))) return NULL;
 	return capi_view->unsetTitleRightBtn();
 }
 
-EAPI bool ui_standard_view_toolbar_set(ui_standard_view *view, Elm_Toolbar *toolbar)
+EAPI bool ui_standard_view_set_toolbar(ui_standard_view *view, Elm_Toolbar *toolbar)
 {
 	ui_standard_view_capi *capi_view;
 	if (!(capi_view = validate_view(view))) return false;
 	return capi_view->setToolbar(toolbar);
 }
 
-EAPI Elm_Toolbar *ui_standard_view_toolbar_get(ui_standard_view *view)
+EAPI Elm_Toolbar *ui_standard_view_get_toolbar(ui_standard_view *view)
 {
 	ui_standard_view_capi *capi_view;
 	if (!(capi_view = validate_view(view))) return NULL;
 	return capi_view->getToolbar();
 }
 
-EAPI Elm_Toolbar *ui_standard_view_toolbar_unset(ui_standard_view *view)
+EAPI Elm_Toolbar *ui_standard_view_unset_toolbar(ui_standard_view *view)
 {
 	ui_standard_view_capi *capi_view;
 	if (!(capi_view = validate_view(view))) return NULL;
 	return capi_view->unsetToolbar();
 }
 
-EAPI bool ui_standard_view_title_visible_set(ui_standard_view *view, bool visible, bool anim)
+EAPI bool ui_standard_view_set_title_visible(ui_standard_view *view, bool visible, bool anim)
 {
 	ui_standard_view_capi *capi_view;
 	if (!(capi_view = validate_view(view))) return false;
