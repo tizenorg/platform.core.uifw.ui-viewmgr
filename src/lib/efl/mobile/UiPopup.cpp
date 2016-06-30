@@ -56,19 +56,18 @@ UiPopup::~UiPopup()
 Elm_Win *UiPopup::getWindow()
 {
 	UiViewmgr *viewmgr = UI_VIEWMGR;
-	if (!viewmgr)
-	{
+	if (!viewmgr) {
 		LOGE("Viewmgr is null?? menu(%p)", this);
 		return NULL;
 	}
+
 	return viewmgr->getWindow();
 }
 
 bool UiPopup::deactivate()
 {
 	Elm_Popup *popup = this->getContent();
-	if (!popup)
-	{
+	if (!popup) {
 		LOGE("Content is not set! = UiPopup(%p)", this);
 		return false;
 	}
@@ -93,8 +92,7 @@ bool UiPopup::setContent(Elm_Popup *popup)
 
 	if (!popup) return true;
 
-	if (strcmp(evas_object_type_get(popup), "elm_popup"))
-	{
+	if (strcmp(evas_object_type_get(popup), "elm_popup")) {
 		LOGE("Menu widget is not a popup!");
 		return false;
 	}

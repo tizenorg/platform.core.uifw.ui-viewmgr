@@ -73,33 +73,31 @@ void UiViewImpl::_disconnectPopup(UiPopup *popup)
 
 bool UiViewImpl::_deactivatePopup(bool topOne)
 {
-	for (popupRitr it = this->_popupList.rbegin(); it != this->_popupList.rend(); it++)
-	{
+	for (popupRitr it = this->_popupList.rbegin(); it != this->_popupList.rend(); it++) {
 		UiPopup *popup = *it;
 		if (!popup->isActivated()) continue;
 		popup->onBack();
 		//deactivate only one top one? or all popups?
 		if (topOne) return true;
 	}
+
 	return false;
 }
 
 bool UiViewImpl::onBack()
 {
 	//If any popup is activated, deactivate the popup first.
-	if (this->_deactivatePopup(true))
-	{
+	if (this->_deactivatePopup(true)) {
 		return false;
 	}
 
-	if (this->_menu)
-	{
-		if (this->_menu->isActivated())
-		{
+	if (this->_menu) {
+		if (this->_menu->isActivated()) {
 			this->_menu->onBack();
 			return false;
 		}
 	}
+
 	return true;
 }
 
@@ -115,14 +113,13 @@ UiViewImpl::~UiViewImpl()
 
 UiMenu *UiViewImpl::onMenuPre()
 {
-	if (!this->_menu)
-	{
+	if (!this->_menu) {
 		this->_menu = new UiMenu(this->_view);
 	}
 
-	if (this->_menu->isActivated())
-	{
+	if (this->_menu->isActivated()) {
 		this->_menu->deactivate();
+
 		return NULL;
 	}
 
@@ -132,6 +129,7 @@ UiMenu *UiViewImpl::onMenuPre()
 void UiViewImpl::onMenuPost()
 {
 	if (!this->_menu) return;
+
 	this->_menu->activate();
 }
 
@@ -139,6 +137,7 @@ void UiViewImpl::onRotate(int degree)
 {
 	if (!this->_menu) return;
 	if (!this->_menu->isActivated()) return;
+
 	this->_menu->onRotate(degree);
 }
 
@@ -146,6 +145,7 @@ void UiViewImpl::onPortrait()
 {
 	if (!this->_menu) return;
 	if (!this->_menu->isActivated()) return;
+
 	this->_menu->onPortrait();
 }
 
@@ -153,6 +153,7 @@ void UiViewImpl::onLandscape()
 {
 	if (!this->_menu) return;
 	if (!this->_menu->isActivated()) return;
+
 	this->_menu->onLandscape();
 }
 
@@ -173,12 +174,14 @@ void UiView::_disconnectPopup(UiPopup *popup)
 void UiView::onDeactivate()
 {
 	this->_impl->_deactivatePopup(false);
+
 	UiBaseView::onDeactivate();
 }
 
 void UiView::onBack()
 {
 	if (!this->_impl->onBack()) return;
+
 	UiBaseView::onBack();
 }
 
@@ -211,6 +214,7 @@ void UiView::onRotate(int degree)
 {
 	//FIXME: see how to handle on_menu()
 	UiBaseView::onRotate(degree);
+
 	this->_impl->onRotate(degree);
 }
 
@@ -218,6 +222,7 @@ void UiView::onPortrait()
 {
 	//FIXME: see how to handle on_menu()
 	UiBaseView::onPortrait();
+
 	this->_impl->onPortrait();
 }
 
@@ -225,6 +230,7 @@ void UiView::onLandscape()
 {
 	//FIXME: see how to handle on_menu()
 	UiBaseView::onLandscape();
+
 	this->_impl->onLandscape();
 }
 

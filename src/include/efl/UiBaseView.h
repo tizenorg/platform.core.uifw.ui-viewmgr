@@ -36,7 +36,7 @@ public:
 	 *
 	 *  @param name view name.
 	 */
-	UiBaseView(const char *name = NULL);
+	BaseView(const char *name = NULL);
 
 	///Destructor.
 	virtual ~UiBaseView();

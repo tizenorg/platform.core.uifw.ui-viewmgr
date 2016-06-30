@@ -30,6 +30,7 @@ void UiKeyListener::extendEventProc(UiBaseView *view, Evas_Event_Key_Down *ev)
 	UiView *v = dynamic_cast<UiView *>(view);
 	UiMenu *menu = v->onMenuPre();
 	if (!menu) return;
+
 	v->onMenu(menu);
 	v->onMenuPost();
 }
@@ -48,5 +49,6 @@ bool UiKeyListener::init()
 		LOGE("Failed to grab MENU KEY(%s)\n", KEY_MENU2);
 		return false;
 	}
+
 	return true;
 }

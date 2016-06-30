@@ -91,8 +91,7 @@ void UiIfaceViewImpl::onLoad()
 void UiIfaceViewImpl::onUnload()
 {
 	this->_state = UI_VIEW_STATE_UNLOAD;
-	if (this->getRemovableContent())
-	{
+	if (this->getRemovableContent()) {
 		this->setContent(NULL);
 		return;
 	}
@@ -198,8 +197,7 @@ UiViewIndicator UiIfaceViewImpl::getIndicator()
 void UiIfaceViewImpl::onBack()
 {
 	UiIfaceViewmgr *viewmgr = this->_viewmgr;
-	if (!viewmgr)
-	{
+	if (!viewmgr) {
 		LOGE("Failed to get a viewmgr, view =%p", this);
 		return;
 	}

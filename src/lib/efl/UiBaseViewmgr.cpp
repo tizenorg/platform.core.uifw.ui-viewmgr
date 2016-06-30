@@ -63,16 +63,15 @@ public:
 	bool insertViewBefore(UiBaseView *view, UiBaseView *before);
 	bool insertViewAfter(UiBaseView *view, UiBaseView *after);
 
-	Evas_Object *getBase()
-	{
+	Evas_Object *getBase() {
 		return this->_layout;
 	}
-	Elm_Win *getWindow()
-	{
+
+	Elm_Win *getWindow() {
 		return this->_win;
 	}
-	Elm_Conformant *getConformant()
-	{
+
+	Elm_Conformant *getConformant() {
 		return this->_conform;
 	}
 };
@@ -140,8 +139,7 @@ Elm_Layout *UiBaseViewmgrImpl::_setTransitionLayout(string transitionStyle)
 	Elm_Layout *playout = elm_object_part_content_unset(this->_scroller, NULL);
 	evas_object_hide(playout);
 
-	if (!effectLayout)
-	{
+	if (!effectLayout) {
 		//Create and add effect_layouts in map here.
 		//FIXME: If we have to support many effects, this logic should be changed.
 		_effectMap.insert(pair<string, Elm_Layout *>("default", this->_layout));
@@ -167,8 +165,7 @@ void UiBaseViewmgrImpl::_activateTopView()
 
 	//In case of UiBaseView, it doesn't have any base form. It uses viewmgr base instead.
 	Evas_Object *content;
-	if (view->getBase() == this->getBase())
-	{
+	if (view->getBase() == this->getBase()) {
 		content = view->getContent();
 	} else {
 		content = view->getBase();
@@ -189,8 +186,7 @@ bool UiBaseViewmgrImpl::_setIndicator(UiViewIndicator indicator)
 	Elm_Win *window = this->getWindow();
 	Elm_Conformant *conform = this->getConformant();
 
-	switch (indicator)
-	{
+	switch (indicator) {
 	case UI_VIEW_INDICATOR_DEFAULT:
 		elm_win_indicator_opacity_set(window, ELM_WIN_INDICATOR_OPAQUE);
 		elm_win_indicator_mode_set(window, ELM_WIN_INDICATOR_SHOW);
@@ -247,8 +243,7 @@ bool UiBaseViewmgrImpl::_createScroller(Elm_Conformant *conform)
 UiBaseViewmgrImpl::UiBaseViewmgrImpl(UiBaseViewmgr *viewmgr, const char *pkg, UiBaseKeyListener *keyListener)
 		: _viewmgr(viewmgr), _keyListener(keyListener), _transitionStyle("default")
 {
-	if (!pkg)
-	{
+	if (!pkg) {
 		LOGE("Invalid package name");
 		return;
 	}
@@ -256,16 +251,14 @@ UiBaseViewmgrImpl::UiBaseViewmgrImpl(UiBaseViewmgr *viewmgr, const char *pkg, Ui
 	//Window
 	this->_win = elm_win_util_standard_add(pkg, pkg);
 
-	if (!this->_win)
-	{
+	if (!this->_win) {
 		LOGE("Failed to create a window (%s)", pkg);
 		return;
 	}
 
 	//FIXME: Make a method? to set available rotation degree.
 	//Set window rotation
-	if (elm_win_wm_rotation_supported_get(this->_win))
-	{
+	if (elm_win_wm_rotation_supported_get(this->_win)) {
 		int rots[4] =
 		{ 0, 90, 180, 270 };
 		elm_win_wm_rotation_available_rotations_set(this->_win, (const int *) (&rots), 4);
@@ -294,20 +287,17 @@ UiBaseViewmgrImpl::UiBaseViewmgrImpl(UiBaseViewmgr *viewmgr, const char *pkg, Ui
 			this->_viewmgr);
 
 	//FIXME: Make conformant configurable?
-	if (!this->_createConformant(this->_win))
-	{
+	if (!this->_createConformant(this->_win)) {
 		LOGE("Failed to create a conformant (%s)", pkg);
 		return;
 	}
 
-	if (!this->_createScroller(this->_conform))
-	{
+	if (!this->_createScroller(this->_conform)) {
 		LOGE("Failed to create a scroller (%s)", pkg);
 		return;
 	}
 
-	if (!this->_createBaseLayout(this->_scroller, "default"))
-	{
+	if (!this->_createBaseLayout(this->_scroller, "default")) {
 		LOGE("Failed to create a base layout (%s)", pkg);
 		return;
 	}
@@ -345,8 +335,7 @@ bool UiBaseViewmgrImpl::activate()
 bool UiBaseViewmgrImpl::deactivate()
 {
 	//FIXME: based on the profile, we should app to go behind or terminate.
-	if (true)
-	{
+	if (true) {
 		evas_object_lower(this->_win);
 	} else {
 		delete(this->_viewmgr);
@@ -361,8 +350,7 @@ bool UiBaseViewmgrImpl::popView()
 	UiBaseView *view = this->_viewmgr->getLastView();
 
 	//In case, if view doesn't have any transition effects.
-	if (!strcmp(view->getTransitionStyle(), "none"))
-	{
+	if (!strcmp(view->getTransitionStyle(), "none")) {
 		this->_viewmgr->popViewFinished(pview);
 		this->_viewmgr->popViewFinished(view);
 		this->_activateTopView();
@@ -479,14 +467,12 @@ bool UiBaseViewmgr::deactivate()
 
 bool UiBaseViewmgr::popView()
 {
-	if (this->getViewCount() == 1)
-	{
+	if (this->getViewCount() == 1) {
 		this->deactivate();
 		return true;
 	}
 
-	if(!UiIfaceViewmgr::popView())
-	{
+	if(!UiIfaceViewmgr::popView()) {
 		return false;
 	}
 
