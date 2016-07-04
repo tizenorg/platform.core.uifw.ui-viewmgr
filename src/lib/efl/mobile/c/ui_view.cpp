@@ -229,6 +229,12 @@ EAPI int ui_view_get_degree(ui_view *view)
 	return view->getDegree();
 }
 
+EAPI ui_view_orientation_mode ui_view_get_orientation_mode(ui_view *view)
+{
+	if (!validate_view(view)) return UI_VIEW_ORIENTATION_MODE_UNKOWN;
+	return view->getOrientationMode();
+}
+
 EAPI bool ui_view_set_transition_style(ui_view *view, const char *style)
 {
 	if (!validate_view(view)) return false;

@@ -55,6 +55,12 @@ public:
 	 */
 	const UiMenu *getMenu();
 
+	/**
+	 *  @brief Get current view's orientation mode.
+	 *
+	 *  @return Current orientation mode, one of #UiViewOrientationMode.
+	 */
+	virtual UiViewOrientationMode getOrientationMode();
 protected:
 	/**
 	 *  @brief This is making UiMenu instance.
@@ -126,7 +132,6 @@ protected:
 	 *
 	 */
 	virtual void onDeactivate();
-
 private:
 	/**
 	 *  @brief Push given popup instance in the internal popup stack.
