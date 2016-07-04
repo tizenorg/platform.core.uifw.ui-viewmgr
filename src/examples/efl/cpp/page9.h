@@ -26,11 +26,10 @@ protected:
 	{
 		UiStandardView::onLoad();
 
-		//FIXME: Change below code to more convenient and clear way.
-		if (this->getDegree() == 90 || this->getDegree() == 270)
-			this->onLandscape();
-		else
+		if (this->getOrientationMode() == UI_VIEW_ORIENTATION_MODE_PORTRAIT)
 			this->onPortrait();
+		else
+			this->onLandscape();
 	}
 
 	void onPortrait()

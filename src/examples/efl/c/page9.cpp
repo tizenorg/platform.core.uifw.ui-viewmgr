@@ -88,12 +88,11 @@ view9_landscape_cb(ui_standard_view *view, void *data)
 static bool
 view9_load_cb(ui_standard_view *view, void *data)
 {
-	//FIXME: Change below code to more convenient and clear way.
-	if (ui_view_get_degree(view) == 90 || ui_view_get_degree(view) == 270)
+	if (ui_view_get_orientation_mode(view) == UI_VIEW_ORIENTATION_MODE_PORTRAIT)
 	{
-		return view9_landscape_cb(view, data);
-	} else {
 		return view9_portrait_cb(view, data);
+	} else {
+		return view9_landscape_cb(view, data);
 	}
 }
 
