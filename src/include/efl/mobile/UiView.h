@@ -127,6 +127,7 @@ protected:
 	 */
 	virtual void onDeactivate();
 
+	virtual UiViewOrientationMode getOrientationMode();
 private:
 	/**
 	 *  @brief Push given popup instance in the internal popup stack.
