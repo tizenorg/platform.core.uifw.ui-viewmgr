@@ -203,15 +203,20 @@ bool UiStandardViewImpl::setTitleLeftBtn(Elm_Button *titleLeftBtn)
 {
 	Elm_Layout *layout = this->getBase();
 	LAYOUT_VALIDATE();
+	Elm_Button *pbtn;
 
-	//FIXME: inside of the unset_title_left_btn, it will send a title_left_btn,hide signal.
-	//But right after it needs to send a show signal again if new title_left_btn is valid.
-	//We don't need to send a hide signal in this case.
-	Elm_Button *pbtn = this->unsetTitleLeftBtn();
-	evas_object_del(pbtn);
+	if (!titleLeftBtn)
+	{
+		pbtn = this->unsetTitleLeftBtn();
+		if (pbtn) evas_object_del(pbtn);
+
+		return true;
+	}
+
+	pbtn = this->getTitleLeftBtn();
+	if (pbtn) evas_object_del(pbtn);
 
 	this->_titleLeftBtn = titleLeftBtn;
-	if (!titleLeftBtn) return true;
 
 	elm_object_style_set(titleLeftBtn, "tizen_view/title_left");
 	elm_object_part_content_set(layout, "title_left_btn", titleLeftBtn);
@@ -224,16 +229,20 @@ bool UiStandardViewImpl::setTitleLeftBtn(Elm_Button *titleLeftBtn)
 bool UiStandardViewImpl::setTitleRightBtn(Elm_Button *titleRightBtn)
 {
 	Elm_Layout *layout = this->getBase();
-	LAYOUT_VALIDATE();
+	Elm_Button *pbtn;
 
-	//FIXME: inside of the unset_title_right_btn, it will send a title_right_btn,hide signal.
-	//But right after it needs to send a show signal again if new title_right_btn is valid.
-	//We don't need to send a hide signal in this case.
-	Elm_Button *pbtn = this->unsetTitleRightBtn();
-	evas_object_del(pbtn);
+	if (!titleRightBtn)
+	{
+		pbtn = this->unsetTitleRightBtn();
+		if (pbtn) evas_object_del(pbtn);
+
+		return true;
+	}
+
+	pbtn = this->getTitleRightBtn();
+	if (pbtn) evas_object_del(pbtn);
 
 	this->_titleRightBtn = titleRightBtn;
-	if (!titleRightBtn) return true;
 
 	elm_object_style_set(titleRightBtn, "tizen_view/title_right");
 	elm_object_part_content_set(layout, "title_right_btn", titleRightBtn);
