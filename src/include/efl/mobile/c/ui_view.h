@@ -188,6 +188,15 @@ EAPI bool ui_view_get_removable_content(ui_view *view);
 EAPI int ui_view_get_degree(ui_view *view);
 
 /**
+ *  @brief Get current view's orientation mode.
+ *
+ *  @param view An ui_view instance
+ *
+ *  @return Current orientation mode, one of #ui_view_orientation_mode.
+ */
+EAPI ui_view_orientation_mode ui_view_get_orientation_mode(ui_view *view);
+
+/**
  *  @brief Set transition style of a view.
  *
  *  @note @p style is reserved for supporting various kinds of view transition effects.

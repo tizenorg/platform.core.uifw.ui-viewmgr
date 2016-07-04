@@ -31,7 +31,7 @@ protected:
 	{
 		UiStandardView::onRotate(degree);
 
-		if (this->getDegree() == 0 || this->getDegree() == 180)
+		if (this->getOrientationMode() == UI_VIEW_ORIENTATION_MODE_PORTRAIT)
 		{
 			//Portrait
 			Evas_Object *content = createContent(this->getBase(), "ViewMgr++ Demo<br>Rotation",

@@ -47,4 +47,16 @@ enum UiViewState
 };
 typedef enum UiViewState ui_view_state;
 
+/**
+ * Possible values for view orientation mode.
+ */
+enum UiViewOrientationMode
+{
+	UI_VIEW_ORIENTATION_MODE_UNKOWN = 0,  ///< Unknown state (Exceptional case)
+	UI_VIEW_ORIENTATION_MODE_PORTRAIT,    ///< Portrait state
+	UI_VIEW_ORIENTATION_MODE_LANDSCAPE,   ///< Landscape state
+	UI_VIEW_ORIENTATION_MODE_LAST,
+};
+typedef enum UiViewOrientationMode ui_view_orientation_mode;
+
 #endif /* _UI_IFACE_TYPES_H_ */
