@@ -44,8 +44,7 @@ view10_rotate_cb(ui_standard_view *view, int degree, void *data)
 	}
 
 	//Check orientation manually to create a content.
-
-	if (degree == 0 || degree == 180)
+	if (ui_view_get_orientation_mode(view) == UI_VIEW_ORIENTATION_MODE_PORTRAIT)
 	{
 		//Portrait
 		content = create_content(base, "ViewMgr Demo<br>Rotation", prev_btn_clicked_cb, next_btn_clicked_cb);
