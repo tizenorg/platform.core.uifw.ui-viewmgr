@@ -70,6 +70,14 @@ public:
 	 *  @return Current rotation degree, -1 if it fails to get degree information.
 	 */
 	virtual int getDegree() { return 0; }
+
+	/**
+	 *  @brief Get current view's orientation mode.
+	 *
+	 *  @return Current orientation mode, one of #UiViewOrientationMode.
+	 */
+	virtual UiViewOrientationMode getOrientationMode() { return UI_VIEW_ORIENTATION_MODE_UNKOWN; }
+
 };
 
 }
