@@ -21,7 +21,7 @@ static void
 prev_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	//FIXME: deactivate??? or ui_app deactivate??? or ui_viewmgr pop???
-	UI_VIEWMGR_DEACTIVATE();
+	UI_VIEWMGR_POP_VIEW();
 }
 
 static void
