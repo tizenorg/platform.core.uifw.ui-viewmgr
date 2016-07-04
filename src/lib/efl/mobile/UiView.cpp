@@ -58,6 +58,8 @@ public:
 	{
 		return this->_menu;
 	}
+
+	UiViewOrientationMode getOrientationMode();
 };
 
 }
@@ -160,6 +162,23 @@ void UiViewImpl::onLandscape()
 	this->_menu->onLandscape();
 }
 
+UiViewOrientationMode UiViewImpl::getOrientationMode()
+{
+	switch (this->_view->getDegree()) {
+		case 0:
+		case 180:
+			return UI_VIEW_ORIENTATION_MODE_PORTRAIT;
+			break;
+		case 90:
+		case 270:
+			return UI_VIEW_ORIENTATION_MODE_LANDSCAPE;
+			break;
+		}
+
+	return UI_VIEW_ORIENTATION_MODE_UNKOWN;
+}
+
+
 /***********************************************************************************************/
 /* External class Implementation                                                               */
 /***********************************************************************************************/
@@ -235,6 +254,11 @@ void UiView::onLandscape()
 	UiBaseView::onLandscape();
 
 	this->_impl->onLandscape();
+}
+
+UiViewOrientationMode UiView::getOrientationMode()
+{
+	return this->_impl->getOrientationMode();
 }
 
 const UiMenu *UiView::getMenu()
