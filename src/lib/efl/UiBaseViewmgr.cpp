@@ -14,11 +14,12 @@
  *  limitations under the License.
  *
  */
-
 #include <map>
 #include <string>
 #include "../../include/efl/UiBaseViewManager.h"
 
+using namespace ui_viewmanager;
+using namespace efl_viewmanager;
 using namespace std;
 
 /***********************************************************************************************/

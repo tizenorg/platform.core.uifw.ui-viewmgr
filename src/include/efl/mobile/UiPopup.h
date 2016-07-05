@@ -35,7 +35,7 @@ class UiView;
  *
  *  @warning UiPopup and its content, Elm_Popup will be deleted by its owned UiView on the proper time. So you can just leave its instance to it.
  */
-class UiPopup : public UiBaseOverlay
+class UiPopup : public efl_viewmanager::UiBaseOverlay
 {
 public:
 	/**

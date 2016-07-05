@@ -32,7 +32,7 @@ class UiBaseView;
  *         UiBaseView. UiBaseOverlay is nothing more than UiIfaceOverlay in behavior perspective. It just comes out with renaming class for adapting with
  *         other EFL base classes.
  */
-class UiBaseOverlay: public UiIfaceOverlay
+class UiBaseOverlay: public ui_viewmanager::UiIfaceOverlay
 {
 protected:
 	/**

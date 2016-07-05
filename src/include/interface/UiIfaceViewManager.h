@@ -18,6 +18,7 @@
 #define _UI_IFACE_VIEWMANAGER_H_
 
 #include <dlog.h>
+#include <app.h>
 
 #define UI_EFL 1
 
@@ -52,18 +53,11 @@
 	#endif
 #endif
 
-
-
-
-#include <app.h>
 #include "UiIfaceTypes.h"
 #include "UiIfaceRotatable.h"
 #include "UiIfaceOverlay.h"
 #include "UiIfaceView.h"
 #include "UiIfaceViewmgr.h"
 #include "UiIfaceApp.h"
-
-using namespace ui_viewmanager;
-
 
 #endif /* UI_IFACE_VIEWMANAGER_H */

@@ -31,6 +31,8 @@
 #define PACKAGE "ui-viewmgr"
 #endif
 
+using namespace efl_viewmanager;
+
 Evas_Object *createLandscapeContent(Evas_Object *parent, const char *text, Evas_Smart_Cb _prevBtnClickedCb, Evas_Smart_Cb _nextBtnClickedCb);
 Evas_Object *createContent(Evas_Object *parent, const char *text, Evas_Smart_Cb _prevBtnClickedCb, Evas_Smart_Cb _nexBtnClickedCb);
 Evas_Object *createScrollingContent(Evas_Object *parent);

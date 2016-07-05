@@ -16,6 +16,9 @@
  */
 #include "../../include/efl/UiBaseViewManager.h"
 
+using namespace ui_viewmanager;
+using namespace efl_viewmanager;
+
 UiBaseOverlay::UiBaseOverlay(UiBaseView *view)
 		: UiIfaceOverlay(view)
 {

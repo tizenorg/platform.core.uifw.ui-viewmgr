@@ -33,7 +33,7 @@ class UiView;
  *
  *  @warning UiMenu and its content, Elm_Ctxpopup will be deleted by its owned UiView on the proper time. So you can just leave its instance to it.
  */
-class UiMenu: public UiBaseOverlay
+class UiMenu: public efl_viewmanager::UiBaseOverlay
 {
 public:
 	/**

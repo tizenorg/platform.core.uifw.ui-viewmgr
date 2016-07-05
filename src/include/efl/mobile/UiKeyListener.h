@@ -29,7 +29,7 @@ class UiViewmgr;
  *  @brief This class extends to UiBaseKeyListener to support an additional HW Menu key for mobile profile. Basically, HW Menu key will be propagated to
  *         the top view and UiView::on_menu() will be triggered.
   */
-class UiKeyListener : public UiBaseKeyListener
+class UiKeyListener : public efl_viewmanager::UiBaseKeyListener
 {
 public:
 	/**

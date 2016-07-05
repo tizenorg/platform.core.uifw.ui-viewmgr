@@ -16,6 +16,9 @@
  */
 #include "../../../include/efl/mobile/UiMobileViewManager.h"
 
+using namespace ui_viewmanager;
+using namespace efl_viewmanager;
+
 static void _ctxpopupDismissedCb(void *data, Evas_Object *obj, void *event_info)
 {
 	evas_object_hide(obj);

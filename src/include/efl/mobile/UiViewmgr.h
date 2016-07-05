@@ -32,7 +32,7 @@ class UiApp;
  *         EFL view manager in mobile profile. UiViewmgr is nothing more than UiBaseViewmgr in behavior perspective. It just comes out with renaming class
  *         for adapting with other EFL mobile classes.
  */
-class UiViewmgr: public UiBaseViewmgr
+class UiViewmgr: public efl_viewmanager::UiBaseViewmgr
 {
 protected:
 	//Don't allow to create UiViewmgr instance

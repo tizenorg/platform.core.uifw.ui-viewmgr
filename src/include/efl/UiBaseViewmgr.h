@@ -35,7 +35,7 @@ class UiBaseView;
  *
  *  @warning viewmgr will remove its window, conformant and default layout when it's destroyed.
  */
-class UiBaseViewmgr: public UiIfaceViewmgr
+class UiBaseViewmgr: public ui_viewmanager::UiIfaceViewmgr
 {
 public:
 	/**

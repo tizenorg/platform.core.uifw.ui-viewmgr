@@ -19,6 +19,7 @@
 
 #include <string>
 
+using namespace ui_viewmanager;
 using namespace std;
 
 /***********************************************************************************************/

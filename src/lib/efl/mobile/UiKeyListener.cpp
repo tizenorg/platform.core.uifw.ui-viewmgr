@@ -16,6 +16,9 @@
  */
 #include "../../../include/efl/mobile/UiMobileViewManager.h"
 
+using namespace ui_viewmanager;
+using namespace efl_viewmanager;
+
 static const char *KEY_MENU = "XF86Menu";
 static const char *KEY_MENU2 = "XF86Send";
 

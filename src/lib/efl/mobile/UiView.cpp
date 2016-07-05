@@ -17,6 +17,9 @@
 #include <list>
 #include "../../../include/efl/mobile/UiMobileViewManager.h"
 
+using namespace ui_viewmanager;
+using namespace efl_viewmanager;
+
 /***********************************************************************************************/
 /* Internal class Implementation                                                               */
 /***********************************************************************************************/
