@@ -44,14 +44,14 @@ public:
 	 *
 	 *  @note Add menu key to target of key grabber.
 	 */
-	virtual bool init();
+	virtual bool init() override;
 
 	/**
 	 *  @brief Check the menu key event occurs or not.
 	 *
 	 *  @note This is checking H/W key is menu or not.
 	 */
-	virtual void extendEventProc(UiBaseView *view, Evas_Event_Key_Down *ev);
+	virtual void extendEventProc(UiBaseView *view, Evas_Event_Key_Down *ev) override;
 
 	//Don't generate by compiler.
 	UiKeyListener() = delete;

@@ -57,7 +57,7 @@ public:
 	 *
 	 *  @see deactivate()
 	 */
-	virtual bool activate();
+	virtual bool activate() override;
 
 	/**
 	 *  @brief popup deactivate.
@@ -68,7 +68,7 @@ public:
 	 *
 	 *  @see activate()
 	 */
-	virtual bool deactivate();
+	virtual bool deactivate() override;
 
 	/**
 	 *  @brief This is for replacing or setting a content of the popup.
@@ -77,14 +77,14 @@ public:
 	 *
 	 *  @return @c true if it succeeds, @c false otherwise.
 	 */
-	virtual bool setContent(Elm_Popup* popup);
+	virtual bool setContent(Elm_Popup* popup) override;
 
 	/**
 	 *  @brief This is for unsetting a content of the popup.
 	 *
 	 *  @return A previous content. If it wasn't, return value will be @c NULL.
 	 */
-	virtual Elm_Popup *unsetContent();
+	virtual Elm_Popup *unsetContent() override;
 
 	/**
 	 *  @brief Return the active status of popup.
@@ -94,7 +94,7 @@ public:
 	 *  @see activate()
 	 *  @see deactivate()
 	 */
-	virtual bool isActivated();
+	virtual bool isActivated() override;
 
 	/**
 	 *  @brief Get a base object of an UiPopup.
@@ -110,7 +110,7 @@ public:
 	 *
 	 *  @return Current rotation degree, -1 if it fails to get degree information.
 	 */
-	virtual int getDegree();
+	virtual int getDegree() override;
 
 protected:
 	/**

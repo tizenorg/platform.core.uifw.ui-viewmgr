@@ -45,7 +45,7 @@ public:
 	 *
 	 *  @see deactivate()
 	 */
-	virtual bool activate();
+	virtual bool activate() override;
 
 	/**
 	 *  @brief menu deactivate.
@@ -56,7 +56,7 @@ public:
 	 *
 	 *  @see activate()
 	 */
-	virtual bool deactivate();
+	virtual bool deactivate() override;
 
 	/**
 	 *  @brief This is for replacing or setting a content of the menu.
@@ -65,14 +65,14 @@ public:
 	 *
 	 *  @return @c true if it succeeds, @c false otherwise.
 	 */
-	virtual bool setContent(Elm_Ctxpopup* ctxpopup);
+	virtual bool setContent(Elm_Ctxpopup* ctxpopup) override;
 
 	/**
 	 *  @brief This is for unsetting a content of the menu.
 	 *
 	 *  @return A previous content. If it wasn't, return value will be @c NULL.
 	 */
-	virtual Elm_Ctxpopup *unsetContent();
+	virtual Elm_Ctxpopup *unsetContent() override;
 
 	/**
 	 *  @brief Return the active status of menu.
@@ -82,7 +82,7 @@ public:
 	 *  @see activate()
 	 *  @see deactivate()
 	 */
-	virtual bool isActivated();
+	virtual bool isActivated() override;
 
 	/**
 	 *  @brief Get a base object of a UiMenu.
@@ -97,7 +97,7 @@ public:
 	 *
 	 *  @return Current rotation degree, -1 if it fails to get degree information.
 	 */
-	virtual int getDegree();
+	virtual int getDegree() override;
 
 protected:
 	/**

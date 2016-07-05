@@ -48,14 +48,14 @@ public:
 	 *
 	 *  @return A previous content. If it wasn't, return @c NULL.
 	 */
-	virtual bool setContent(Evas_Object *content);
+	virtual bool setContent(Evas_Object *content) override;
 
 	/**
 	 *  @brief This is for unsetting a content of the view.
 	 *
 	 *  @return A previous content. If it wasn't, return @c NULL.
 	 */
-	virtual Evas_Object *unsetContent();
+	virtual Evas_Object *unsetContent() override;
 
 	/**
 	 *  @brief Get a base object of ui_view.
@@ -71,14 +71,14 @@ public:
 	 *
 	 *  @param indicator The mode to set, one of #UiViewIndicator.
 	 */
-	virtual void setIndicator(UiViewIndicator indicator);
+	virtual void setIndicator(UiViewIndicator indicator) override;
 
 	/**
 	 *  @brief Get current view's degree.
 	 *
 	 *  @return Current rotation degree, -1 if it fails to get degree information.
 	 */
-	virtual int getDegree();
+	virtual int getDegree() override;
 
 protected:
 	/**
@@ -97,7 +97,7 @@ protected:
 	 *
 	 *  @param block @c true, when blocking is enabled, otherwise @c false.
 	 */
-	virtual void setEventBlock(bool block);
+	virtual void setEventBlock(bool block) override;
 
 	/**
 	 *  @brief View rotate changed.
@@ -109,7 +109,7 @@ protected:
 	 *  @see onPortrait()
 	 *  @see onLandscpae()
 	 */
-	virtual void onRotate(int degree);
+	virtual void onRotate(int degree) override;
 
 	/**
 	 *  @brief View portrait state.
@@ -119,7 +119,7 @@ protected:
 	 *  @see onLandscpae()
 	 *  @see onRotate()
 	 */
-	virtual void onPortrait();
+	virtual void onPortrait() override;
 
 	/**
 	 *  @brief View landscape state.
@@ -129,7 +129,7 @@ protected:
 	 *  @see onPortrait()
 	 *  @see onRotate()
 	 */
-	virtual void onLandscape();
+	virtual void onLandscape() override;
 
 private:
 	_UI_DECLARE_PRIVATE_IMPL(UiBaseView);

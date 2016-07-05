@@ -48,7 +48,7 @@ public:
 	 *
 	 *  @see deactivate()
 	 */
-	virtual bool activate();
+	virtual bool activate() override;
 
 	/**
 	 *  @brief Deactivate this view manager.
@@ -60,7 +60,7 @@ public:
 	 *
 	 *  @see activate()
 	 */
-	virtual bool deactivate();
+	virtual bool deactivate() override;
 
 	/**
 	 *  @brief Push a new view into this viewmgr. This function is used for when application switches a current view to a new one.
@@ -94,7 +94,7 @@ public:
 	 *  @see deactivate()
 	 *  @see pushView()
 	 */
-	virtual bool popView();
+	virtual bool popView() override;
 
 	/**
 	 *  @brief Insert a view in this viewmgr view list. Specifically, insert a given @p view right before of the given view, @before.

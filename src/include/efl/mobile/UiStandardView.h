@@ -138,7 +138,7 @@ public:
 	 *
 	 *  @return A previous content. If it wasn't, return @c NULL.
 	 */
-	Evas_Object *unsetContent();
+	Evas_Object *unsetContent() override;
 
 	/**
 	 *  @brief Unset a title left button of title area.
@@ -187,7 +187,7 @@ public:
 	 *
 	 *  @return viewmgr's base layout object.
 	 */
-	virtual Evas_Object *getBase();
+	virtual Evas_Object *getBase() override;
 
 protected:
 	/**
@@ -196,14 +196,14 @@ protected:
 	 *  @note this state will be triggered by UiIfaceViewmgr.
 	 *
 	 */
-	virtual void onLoad();
+	virtual void onLoad() override;
 
 	/** @brief view unload state.
 	 *
 	 *  @note this state will be triggered by UiIfaceViewmgr.
 	 *
 	 */
-	virtual void onUnload();
+	virtual void onUnload() override;
 
 	/** @brief toggle event block.
 	 *
@@ -212,7 +212,7 @@ protected:
 	 *
 	 *  @param block @c true, blocking enable, otherwise @c false.
 	 */
-	virtual void setEventBlock(bool block);
+	virtual void setEventBlock(bool block) override;
 
 private:
 	_UI_DECLARE_PRIVATE_IMPL(UiStandardView);

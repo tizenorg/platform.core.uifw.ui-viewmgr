@@ -82,7 +82,7 @@ public:
 	 *
 	 *  @param indicator The mode to set, one of #UiViewIndicator.
 	 */
-	void setIndicator(UiViewIndicator indicator);
+	virtual void setIndicator(UiViewIndicator indicator);
 
 	/**
 	 *  @brief Return a style name of this view.

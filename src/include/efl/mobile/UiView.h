@@ -98,7 +98,7 @@ protected:
 	 *  @see onPortrait()
 	 *  @see onLandscpae()
 	 */
-	virtual void onRotate(int degree);
+	virtual void onRotate(int degree) override;
 
 	/**
 	 *  @brief View portrait state.
@@ -108,7 +108,7 @@ protected:
 	 *  @see onLandscpae()
 	 *  @see onRotate()
 	 */
-	virtual void onPortrait();
+	virtual void onPortrait() override;
 
 	/**
 	 *  @brief View landscape state.
@@ -118,14 +118,14 @@ protected:
 	 *  @see onPortrait()
 	 *  @see onRotate()
 	 */
-	virtual void onLandscape();
+	virtual void onLandscape() override;
 
 	/** @brief View deactivate state.
 	 *
 	 *  @note this state will be triggered by UiIfaceViewmgr.
 	 *
 	 */
-	virtual void onDeactivate();
+	virtual void onDeactivate() override;
 
 private:
 	/**
