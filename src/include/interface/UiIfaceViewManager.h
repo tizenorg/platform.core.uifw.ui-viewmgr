@@ -45,6 +45,9 @@
 	A(const A&) = delete; \
 	const A& operator=(const A&) = delete
 
+#define _UI_DISABLE_DEFAULT_CTOR(A) \
+	A() = delete
+
 #ifdef __GNUC__
 	#if __GNUC__ >= 4
 		#ifndef EAPI

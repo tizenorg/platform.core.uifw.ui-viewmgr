@@ -62,10 +62,8 @@ public:
 	static UiApp *getInstance();
 
 private:
+	_UI_DISABLE_DEFAULT_CTOR(UiApp);
 	_UI_DISABLE_COPY_AND_ASSIGN(UiApp);
-
-	//Don't generate by compiler.
-	UiApp() = delete;
 };
 
 }

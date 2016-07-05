@@ -119,11 +119,9 @@ protected:
 
 private:
 	_UI_DECLARE_PRIVATE_IMPL(UiMenu);
+	_UI_DISABLE_DEFAULT_CTOR(UiMenu);
 	_UI_DISABLE_COPY_AND_ASSIGN(UiMenu);
 	_UI_DECLARE_FRIENDS(UiView);
-
-	//Don't generate by compiler.
-	UiMenu() = delete;
 };
 
 }
