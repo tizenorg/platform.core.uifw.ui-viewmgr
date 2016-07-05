@@ -37,7 +37,7 @@ public:
 	 *
 	 *  @param The instance of UiViewmgr.
 	 */
-	UiKeyListener(UiViewmgr *viewmgr);
+	explicit UiKeyListener(UiViewmgr *viewmgr);
 
 	/**
 	 *  @brief Init H/W key listener to grab key event(menu key).

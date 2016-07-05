@@ -40,7 +40,7 @@ protected:
 	 *
 	 *  @param view The instance of UiBaseView.
 	 */
-	UiBaseOverlay(UiBaseView *view);
+	explicit UiBaseOverlay(UiBaseView *view);
 
 	///Destructor.
 	virtual ~UiBaseOverlay();

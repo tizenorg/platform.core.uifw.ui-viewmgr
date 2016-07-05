@@ -105,7 +105,7 @@ protected:
 	 *
 	 *  @param The instance of UiView.
 	 */
-	UiMenu(UiView *view);
+	explicit UiMenu(UiView *view);
 
 	///Destructor.
 	virtual ~UiMenu();

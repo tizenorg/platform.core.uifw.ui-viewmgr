@@ -40,7 +40,7 @@ protected:
 	 *
 	 *  @param viewmgr The instance of UiBaseViewmgr.
 	 */
-	UiBaseKeyListener(UiBaseViewmgr *viewmgr);
+	explicit UiBaseKeyListener(UiBaseViewmgr *viewmgr);
 
 	///Destructor.
 	virtual ~UiBaseKeyListener();

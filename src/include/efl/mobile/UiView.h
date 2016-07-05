@@ -43,7 +43,7 @@ public:
 	 *
 	 *  @warning if you don't set a view name, you could not look up the view with its name. @see ui_viewmgr_view_get_by_name()
 	 */
-	UiView(const char *name = NULL);
+	explicit UiView(const char *name = NULL);
 
 	///Destructor.
 	virtual ~UiView();

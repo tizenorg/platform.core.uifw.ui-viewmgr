@@ -41,7 +41,7 @@ private:
 	bool _destroyLayout();
 
 public:
-	UiStandardViewImpl(UiStandardView *view);
+	explicit UiStandardViewImpl(UiStandardView *view);
 	~UiStandardViewImpl();
 
 	bool setContent(Evas_Object *content, const char *title = NULL);

@@ -59,7 +59,7 @@ public:
 	UiIfaceView *getLastView();
 	int getViewIndex(const UiIfaceView *view);
 
-	UiIfaceViewmgrImpl(UiIfaceViewmgr *viewmgr);
+	explicit UiIfaceViewmgrImpl(UiIfaceViewmgr *viewmgr);
 	~UiIfaceViewmgrImpl();
 
 	bool activate();

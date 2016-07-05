@@ -51,7 +51,7 @@ protected:
 	bool onBack();
 
 public:
-	UiViewImpl(UiView *view);
+	explicit UiViewImpl(UiView *view);
 	~UiViewImpl();
 
 	const UiMenu *getMenu()

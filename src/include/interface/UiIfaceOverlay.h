@@ -114,7 +114,7 @@ protected:
 	 *
 	 *  @param view The instance of UiIfaceView.
 	 */
-	UiIfaceOverlay(UiIfaceView *view);
+	explicit UiIfaceOverlay(UiIfaceView *view);
 
 	///Destructor.
 	virtual ~UiIfaceOverlay();

@@ -30,6 +30,15 @@ namespace ui_viewmanager
  */
 class UiIfaceRotatable
 {
+
+public:
+	/**
+	 *  @brief Get current view's degree.
+	 *
+	 *  @return Current rotation degree, -1 if it fails to get degree information.
+	 */
+	virtual int getDegree() { return 0; }
+
 protected:
 	/**
 	 *  @brief View portrait state.
@@ -62,14 +71,6 @@ protected:
 	 *  @see on_landscpae()
 	 */
 	virtual void onRotate(int degree) {}
-
-public:
-	/**
-	 *  @brief Get current view's degree.
-	 *
-	 *  @return Current rotation degree, -1 if it fails to get degree information.
-	 */
-	virtual int getDegree() { return 0; }
 };
 
 }

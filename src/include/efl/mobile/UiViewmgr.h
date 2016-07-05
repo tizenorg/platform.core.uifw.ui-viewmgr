@@ -41,7 +41,7 @@ protected:
 	 *
 	 *  @param pkg The name of package.
 	 */
-	UiViewmgr(const char *pkg);
+	explicit UiViewmgr(const char *pkg);
 
 	///Destructor.
 	virtual ~UiViewmgr();

@@ -199,7 +199,7 @@ protected:
 	 *
 	 *  @param pkg The name of package.
 	 */
-	UiBaseViewmgr(const char *pkg);
+	explicit UiBaseViewmgr(const char *pkg);
 
 	///Destructor.
 	virtual ~UiBaseViewmgr();

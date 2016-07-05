@@ -43,7 +43,7 @@ public:
 	 *
 	 *  @param The instance of UiView.
 	 */
-	UiPopup(UiView *view);
+	explicit UiPopup(UiView *view);
 
 	///Destructor.
 	virtual ~UiPopup();
