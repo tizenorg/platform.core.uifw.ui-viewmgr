@@ -53,8 +53,8 @@ public:
 	 */
 	virtual void extendEventProc(UiBaseView *view, Evas_Event_Key_Down *ev) override;
 
-	//Don't generate by compiler.
-	UiKeyListener() = delete;
+private:
+	_UI_DISABLE_BASE_CTOR(UiKeyListener);
 };
 
 }

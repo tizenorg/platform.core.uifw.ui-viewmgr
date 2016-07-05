@@ -143,13 +143,11 @@ private:
 	void _disconnectPopup(UiPopup *popup);
 
 	_UI_DECLARE_PRIVATE_IMPL(UiView);
+	_UI_DISABLE_BASE_CTOR(UiView);
 	_UI_DISABLE_COPY_AND_ASSIGN(UiView);
 	_UI_DECLARE_FRIENDS(UiMenu);
 	_UI_DECLARE_FRIENDS(UiPopup);
 	_UI_DECLARE_FRIENDS(UiKeyListener);
-
-	//Don't generate by compiler.
-	UiView() = delete;
 };
 
 }

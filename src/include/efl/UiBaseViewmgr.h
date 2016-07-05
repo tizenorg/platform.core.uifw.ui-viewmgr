@@ -206,11 +206,9 @@ protected:
 
 private:
 	_UI_DECLARE_PRIVATE_IMPL(UiBaseViewmgr);
+	_UI_DISABLE_BASE_CTOR(UiBaseViewmgr);
 	_UI_DISABLE_COPY_AND_ASSIGN(UiBaseViewmgr);
 	_UI_DECLARE_FRIENDS(UiBaseView);
-
-	//Don't generate by compiler.
-	UiBaseViewmgr() = delete;
 };
 
 }
