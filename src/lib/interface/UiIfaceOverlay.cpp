@@ -17,6 +17,7 @@
 
 #include "../../include/interface/UiIfaceViewManager.h"
 
+using namespace ui_viewmanager;
 
 /***********************************************************************************************/
 /* Internal class Implementation                                                               */

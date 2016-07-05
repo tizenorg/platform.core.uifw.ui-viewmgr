@@ -16,6 +16,9 @@
  */
 #include "../../../include/efl/mobile/UiMobileViewManager.h"
 
+using namespace ui_viewmanager;
+using namespace efl_viewmanager;
+
 static bool _updatePopup(UiPopup *popup)
 {
 	Elm_Win *win = popup->getBase();

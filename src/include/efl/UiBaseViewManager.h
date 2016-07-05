@@ -28,8 +28,6 @@
 #include "UiBaseViewmgr.h"
 #include "UiBaseView.h"
 
-#define UI_BASE_VIEWMGR dynamic_cast<UiBaseViewmgr *>(UiIfaceViewmgr::getInstance())
-
-using namespace efl_viewmanager;
+#define UI_BASE_VIEWMGR dynamic_cast<efl_viewmanager::UiBaseViewmgr *>(ui_viewmanager::UiIfaceViewmgr::getInstance())
 
 #endif /* UI_BASE_VIEWMANAGER_H */

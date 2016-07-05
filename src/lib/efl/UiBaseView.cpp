@@ -16,6 +16,8 @@
  */
 #include "../../include/efl/UiBaseViewManager.h"
 
+using namespace ui_viewmanager;
+using namespace efl_viewmanager;
 
 /***********************************************************************************************/
 /* Internal class Implementation                                                               */

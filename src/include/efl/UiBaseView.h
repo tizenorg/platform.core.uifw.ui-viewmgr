@@ -28,7 +28,7 @@ namespace efl_viewmanager
  *  @brief This is a base class of EFL view. Typically, this view extends UiIfaceView and implements basic behaviors for EFL view in all profiles.
  *         A view must have one Evas_Object content instance which represents a view for a current screen.
  */
-class UiBaseView: public UiIfaceView
+class UiBaseView: public ui_viewmanager::UiIfaceView
 {
 public:
 	/**

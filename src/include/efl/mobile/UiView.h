@@ -33,7 +33,7 @@ class UiKeyListener;
  *         Basically, UiView implements basics for running together with overlays such as UiMenu and UiPopup. You can use this UiView as an empty ui form
  *         view.
  */
-class UiView: public UiBaseView
+class UiView: public efl_viewmanager::UiBaseView
 {
 public:
 	/**

@@ -20,6 +20,7 @@
 
 #include "../../include/interface/UiIfaceViewManager.h"
 
+using namespace ui_viewmanager;
 using namespace std;
 
 /***********************************************************************************************/

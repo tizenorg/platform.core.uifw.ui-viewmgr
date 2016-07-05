@@ -33,7 +33,7 @@ class UiViewmgr;
  *         interfaces such as low_baterry(), low_meomory(), lang_changed(), region_changed() and so on. UiIfaceApp create an unique UiViewmgr instance
  *         internally, and manage its life.
 */
-class UiApp : public UiIfaceApp
+class UiApp : public ui_viewmanager::UiIfaceApp
 {
 public:
 	/**

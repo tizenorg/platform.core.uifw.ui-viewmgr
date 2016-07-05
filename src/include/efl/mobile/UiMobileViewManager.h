@@ -26,6 +26,6 @@
 #include "UiPopup.h"
 #include "UiApp.h"
 
-#define UI_VIEWMGR (UiApp::getInstance()->getViewmgr())
+#define UI_VIEWMGR (efl_viewmanager::UiApp::getInstance()->getViewmgr())
 
 #endif /* UI_MOBILE_VIEWMANAGER_H */

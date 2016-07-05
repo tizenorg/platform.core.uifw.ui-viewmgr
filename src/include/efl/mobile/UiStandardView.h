@@ -33,7 +33,7 @@ namespace efl_viewmanager
  *          to the system profile, when this view is pushed into a UiViewmgr, it will internally create a software back key that triggers popping the view.
  *
  */
-class UiStandardView: public UiView
+class UiStandardView: public efl_viewmanager::UiView
 {
 public:
 	/**
