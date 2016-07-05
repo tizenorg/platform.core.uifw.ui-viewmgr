@@ -217,6 +217,9 @@ protected:
 private:
 	_UI_DECLARE_PRIVATE_IMPL(UiStandardView);
 	_UI_DISABLE_COPY_AND_ASSIGN(UiStandardView);
+
+	//Don't generate by compiler.
+	UiStandardView() = delete;
 };
 
 }

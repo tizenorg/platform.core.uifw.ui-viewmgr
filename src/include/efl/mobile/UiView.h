@@ -147,6 +147,9 @@ private:
 	_UI_DECLARE_FRIENDS(UiMenu);
 	_UI_DECLARE_FRIENDS(UiPopup);
 	_UI_DECLARE_FRIENDS(UiKeyListener);
+
+	//Don't generate by compiler.
+	UiView() = delete;
 };
 
 }

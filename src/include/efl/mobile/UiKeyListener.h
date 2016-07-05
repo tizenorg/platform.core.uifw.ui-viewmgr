@@ -52,6 +52,9 @@ public:
 	 *  @note This is checking H/W key is menu or not.
 	 */
 	virtual void extendEventProc(UiBaseView *view, Evas_Event_Key_Down *ev);
+
+	//Don't generate by compiler.
+	UiKeyListener() = delete;
 };
 
 }

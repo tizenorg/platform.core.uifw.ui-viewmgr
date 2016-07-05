@@ -123,6 +123,9 @@ protected:
 private:
 	_UI_DECLARE_PRIVATE_IMPL(UiPopup);
 	_UI_DISABLE_COPY_AND_ASSIGN(UiPopup);
+
+	//Don't generate by compiler.
+	UiPopup() = delete;
 };
 
 }

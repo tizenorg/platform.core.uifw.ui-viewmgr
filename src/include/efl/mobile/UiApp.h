@@ -63,6 +63,9 @@ public:
 
 private:
 	_UI_DISABLE_COPY_AND_ASSIGN(UiApp);
+
+	//Don't generate by compiler.
+	UiApp() = delete;
 };
 
 }

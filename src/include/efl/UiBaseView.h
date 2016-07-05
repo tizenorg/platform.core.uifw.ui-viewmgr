@@ -135,6 +135,9 @@ private:
 	_UI_DECLARE_PRIVATE_IMPL(UiBaseView);
 	_UI_DISABLE_COPY_AND_ASSIGN(UiBaseView);
 	_UI_DECLARE_FRIENDS(UiBaseViewmgr);
+
+	//Don't generate by compiler.
+	UiBaseView() = delete;
 };
 
 }

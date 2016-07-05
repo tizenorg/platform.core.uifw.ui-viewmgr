@@ -50,6 +50,9 @@ private:
 	_UI_DISABLE_COPY_AND_ASSIGN(UiViewmgr);
 	_UI_DECLARE_FRIENDS(UiView);
 	_UI_DECLARE_FRIENDS(UiApp);
+
+	//Don't generate by compiler.
+	UiViewmgr() = delete;
 };
 }
 
