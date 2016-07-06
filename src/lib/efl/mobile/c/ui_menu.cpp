@@ -1,8 +1,6 @@
 #include "../../../../include/efl/mobile/c/_ui_private.h"
 #include "../../../../include/efl/mobile/c/ui_menu.h"
 
-using namespace efl_viewmanager;
-
 struct ui_menu_s
 {
 	ui_menu *p;

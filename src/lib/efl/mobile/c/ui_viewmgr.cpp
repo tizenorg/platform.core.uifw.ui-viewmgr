@@ -1,8 +1,6 @@
 #include "../../../../include/efl/mobile/c/_ui_private.h"
 #include "../../../../include/efl/mobile/c/ui_viewmgr.h"
 
-using namespace efl_viewmanager;
-
 struct ui_viewmgr_s
 {
 	ui_viewmgr *p;
