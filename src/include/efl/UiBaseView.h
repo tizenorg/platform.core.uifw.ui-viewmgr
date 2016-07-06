@@ -74,6 +74,14 @@ public:
 	virtual void setIndicator(UiViewIndicator indicator) override;
 
 	/**
+	 *  @breif Set the array of view's available rotations.
+	 *
+	 *  @param rotations The array of rotation values.
+	 *  @param count The number of arrays of rotatons.
+	 */
+	virtual void setAvailableRotations(const int *rotations, unsigned int count) override;
+
+	/**
 	 *  @brief Get current view's degree.
 	 *
 	 *  @return Current rotation degree, -1 if it fails to get degree information.
