@@ -17,6 +17,12 @@
 #ifndef _UI_IFACE_VIEW_H_
 #define _UI_IFACE_VIEW_H_
 
+
+//FIXME: Forward declaration to make this as UiBaseViewImpl's friend class.
+namespace efl_viewmanager {
+	class UiBaseViewmgrImpl;
+}
+
 namespace ui_viewmanager {
 
 class UiIfaceViewmgr;
@@ -83,6 +89,17 @@ public:
 	 *  @param indicator The mode to set, one of #UiViewIndicator.
 	 */
 	virtual void setIndicator(UiViewIndicator indicator);
+
+	/**
+	 *  @breif Set the array of view's available rotations.
+	 *
+	 *  @note Set an array of rotation values.
+	 *        For instance, {0, 90, 180, 270}. These rotation values depends on the system support.
+	 *
+	 *  @param rotations The array of rotation values.
+	 *  @param count The number of arrays of rotatons.
+	 */
+	virtual bool setAvailableRotations(const int *rotations, unsigned int count);
 
 	/**
 	 *  @brief Return a style name of this view.
@@ -288,10 +305,21 @@ private:
 	 */
 	UiIfaceViewmgr *_getViewmgr();
 
+	/**
+	 *  @brief Get the array of view's available rotations.
+	 *
+	 *  @param count The number of arrays of rotations.
+	 *
+	 *  @return The array of rotation values.
+	 */
+	const int *_getAvailableRotations(unsigned int *count);
+
 	_UI_DECLARE_PRIVATE_IMPL(UiIfaceView);
 	_UI_DISABLE_COPY_AND_ASSIGN(UiIfaceView);
 	_UI_DECLARE_FRIENDS(UiIfaceViewmgr);
 	_UI_DECLARE_FRIENDS(UiIfaceApp);
+	friend class efl_viewmanager::UiBaseViewmgrImpl;
+
 };
 
 }
