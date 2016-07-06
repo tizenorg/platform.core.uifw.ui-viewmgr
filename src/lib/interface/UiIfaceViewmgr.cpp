@@ -129,15 +129,14 @@ bool UiIfaceViewmgrImpl::connectView(UiIfaceView *view)
 	int nameLen = strlen(view->getName());
 	const char *name = view->getName();
 
-	for (VIEW_ITR it = this->_viewList.begin(); it != this->_viewList.end(); it++) {
-		UiIfaceView *view = *it;
-		const char *viewName = view->getName();
+	for (UiIfaceView *v : this->_viewList) {
+		const char *viewName = v->getName();
 		if (!viewName) continue;
 		int viewNameLen = strlen(viewName);
 
 		//Got you!
 		if ((viewNameLen == nameLen) && !strcmp(name, viewName)) {
-			LOGE("the same name of UiIfaceView(%p) is already in this UiIfaceViewmgr(%p)", view, this);
+			LOGE("the same name of UiIfaceView(%p) is already in this UiIfaceViewmgr(%p)", v, this);
 			return false;
 		}
 	}
@@ -360,8 +359,8 @@ int UiIfaceViewmgrImpl::getViewIndex(const UiIfaceView *view)
 {
 	int idx = 0;
 
-	for (VIEW_ITR it = this->_viewList.begin(); it != this->_viewList.end(); it++) {
-		if (view == *it) return idx;
+	for (UiIfaceView *v : this->_viewList) {
+		if (view == v) return idx;
 		++idx;
 	}
 
@@ -413,15 +412,14 @@ UiIfaceView *UiIfaceViewmgrImpl::getView(const char *name)
 	if (!name) return NULL;
 	int nameLen = strlen(name);
 
-	for (VIEW_ITR it = this->_viewList.begin(); it != this->_viewList.end(); it++) {
-		UiIfaceView *view = *it;
-		const char *viewName = view->getName();
+	for (UiIfaceView *v : this->_viewList) {
+		const char *viewName = v->getName();
 		if (!viewName) continue;
 		int viewNameLen = strlen(viewName);
 
 		//Got you!
 		if ((viewNameLen == nameLen) && !strcmp(name, viewName)) {
-			return view;
+			return v;
 		}
 	}
 
