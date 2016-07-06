@@ -3,8 +3,6 @@
 #include "../../../../include/efl/mobile/c/ui_standard_view.h"
 #include "../../../../include/efl/mobile/c/_ui_common_view_capi.h"
 
-using namespace efl_viewmanager;
-
 static const char *_this_type = "ui_standard_view";
 
 class ui_standard_view_capi: public ui_standard_view, public ui_common_view_capi

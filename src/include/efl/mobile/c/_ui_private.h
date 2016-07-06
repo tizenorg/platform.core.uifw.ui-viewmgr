@@ -19,6 +19,9 @@
 
 #include "../../../../include/efl/mobile/UiMobileViewManager.h"
 
+using namespace ui_viewmanager;
+using namespace efl_viewmanager;
+
 typedef UiViewmgr ui_viewmgr;
 typedef UiView ui_view;
 typedef UiStandardView ui_standard_view;

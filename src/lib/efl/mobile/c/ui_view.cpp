@@ -2,8 +2,6 @@
 #include "../../../../include/efl/mobile/c/ui_view.h"
 #include "../../../../include/efl/mobile/c/_ui_common_view_capi.h"
 
-using namespace efl_viewmanager;
-
 static const char *_this_type = "ui_view";
 
 class ui_view_capi: public ui_view, public ui_common_view_capi

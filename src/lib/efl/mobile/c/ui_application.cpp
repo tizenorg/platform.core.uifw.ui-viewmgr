@@ -1,8 +1,6 @@
 #include "../../../../include/efl/mobile/c/_ui_private.h"
 #include "../../../../include/efl/mobile/c/ui_application.h"
 
-using namespace efl_viewmanager;
-
 class ui_app_capi : public UiApp
 {
 public:
