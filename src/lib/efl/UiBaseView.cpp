@@ -117,6 +117,20 @@ void UiBaseView::setIndicator(UiViewIndicator indicator)
 	viewmgr->setIndicator(indicator);
 }
 
+void UiBaseView::setAvailableRotations(int *rotations, int count)
+{
+	UiIfaceView::setAvailableRotations(rotations, count);
+
+	UiBaseViewmgr *viewmgr = UI_BASE_VIEWMGR;
+
+	if (!viewmgr) {
+		LOGE("Failed to get a viewmgr");
+		return;
+	}
+
+	elm_win_wm_rotation_available_rotations_set(viewmgr->getWindow(), rotations, count);
+}
+
 void UiBaseView::onRotate(int degree)
 {
 }

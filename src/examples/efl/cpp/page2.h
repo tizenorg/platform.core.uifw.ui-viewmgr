@@ -46,6 +46,10 @@ protected:
 		Elm_Button *rightTitleBtn = elm_button_add(this->getBase());
 		elm_object_text_set(rightTitleBtn, "Done");
 
+		//Set available rotation only "0, 90" of this view
+		int rots[2] = { 0, 90 };
+		this->setAvailableRotations((int *)(&rots), 2);
+
 		//Arguments: content, title, subtitle, title left button, title right button
 		this->setContent(content, "Page2", NULL, leftTitleBtn, rightTitleBtn);
 	}
