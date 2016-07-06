@@ -27,9 +27,9 @@ namespace efl_viewmanager
 class UiBaseKeyListenerImpl
 {
 protected:
-	UiBaseKeyListener *keyListener;
-	UiBaseViewmgr *viewmgr;
-	Evas_Object *keyGrabber;
+	UiBaseKeyListener *keyListener = NULL;
+	UiBaseViewmgr *viewmgr = NULL;
+	Evas_Object *keyGrabber = NULL;
 
 public:
 	UiBaseKeyListenerImpl(UiBaseKeyListener *key_listener, UiBaseViewmgr *viewmgr);
@@ -52,7 +52,7 @@ static void _keyGrabRectKeyUpCb(UiBaseKeyListenerImpl *keyListener, Evas_Event_K
 }
 
 UiBaseKeyListenerImpl::UiBaseKeyListenerImpl(UiBaseKeyListener *keyListener, UiBaseViewmgr *viewmgr)
-		: keyListener(keyListener), viewmgr(viewmgr), keyGrabber(NULL)
+		: keyListener(keyListener), viewmgr(viewmgr)
 {
 }
 

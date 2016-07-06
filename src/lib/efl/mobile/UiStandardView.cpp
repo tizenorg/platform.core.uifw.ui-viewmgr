@@ -31,11 +31,11 @@ class UiStandardViewImpl
 	friend class UiStandardView;
 
 private:
-	UiStandardView *_view;
-	Elm_Layout *_layout;                //Base layout for view
-	Elm_Toolbar *_toolbar;              //Toolbar
-	Elm_Button *_titleLeftBtn;        //Title left button
-	Elm_Button *_titleRightBtn;       //Title right button
+	UiStandardView *_view = NULL;
+	Elm_Layout *_layout = NULL;              //Base layout for view
+	Elm_Toolbar *_toolbar = NULL;            //Toolbar
+	Elm_Button *_titleLeftBtn = NULL;        //Title left button
+	Elm_Button *_titleRightBtn = NULL;       //Title right button
 
 	bool _createLayout();
 	bool _destroyLayout();
@@ -161,7 +161,7 @@ bool UiStandardViewImpl::_createLayout()
 }
 
 UiStandardViewImpl::UiStandardViewImpl(UiStandardView *view)
-		: _view(view), _layout(NULL), _toolbar(NULL), _titleLeftBtn(NULL), _titleRightBtn(NULL)
+		: _view(view)
 {
 }
 

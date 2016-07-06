@@ -33,15 +33,15 @@ class UiBaseViewmgrImpl
 	friend class UiBaseViewmgr;
 
 private:
-	UiBaseViewmgr *_viewmgr;
-	Elm_Win *_win;                              //This is acting like a base object of viewmgr.
-	Elm_Conformant *_conform;                   //Conformant for viewmgr.
-	Elm_Scroller *_scroller;                    //Scroller for viewmgr.
-	Elm_Layout *_layout;                        //Viewmgr's base layout.
-	UiBaseKeyListener *_keyListener;            //HW Key Handler such as "BACK" key...
-	UiViewIndicator _indicator;                 //Mode of indicator.
-	string _transitionStyle;                    //Current transition effect style name
-	map<string, Elm_Layout *> _effectMap;       //Map for effect layouts.
+	UiBaseViewmgr *_viewmgr = NULL;
+	Elm_Win *_win = NULL;                                      //This is acting like a base object of viewmgr.
+	Elm_Conformant *_conform = NULL;                           //Conformant for viewmgr.
+	Elm_Scroller *_scroller = NULL;                            //Scroller for viewmgr.
+	Elm_Layout *_layout = NULL;                                //Viewmgr's base layout.
+	UiBaseKeyListener *_keyListener = NULL;                    //HW Key Handler such as "BACK" key...
+	UiViewIndicator _indicator = UI_VIEW_INDICATOR_DEFAULT;    //Mode of indicator.
+	string _transitionStyle = "default";                       //Current transition effect style name
+	map<string, Elm_Layout *> _effectMap;                      //Map for effect layouts.
 
 	Elm_Layout *_setTransitionLayout(string transitionStyle);
 
@@ -242,7 +242,7 @@ bool UiBaseViewmgrImpl::_createScroller(Elm_Conformant *conform)
 }
 
 UiBaseViewmgrImpl::UiBaseViewmgrImpl(UiBaseViewmgr *viewmgr, const char *pkg, UiBaseKeyListener *keyListener)
-		: _viewmgr(viewmgr), _keyListener(keyListener), _transitionStyle("default")
+		: _viewmgr(viewmgr), _keyListener(keyListener)
 {
 	if (!pkg) {
 		LOGE("Invalid package name");

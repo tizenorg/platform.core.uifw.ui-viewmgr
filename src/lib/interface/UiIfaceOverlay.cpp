@@ -30,9 +30,9 @@ class UiIfaceOverlayImpl
 	friend class UiIfaceOverlay;
 
 private:
-	UiIfaceOverlay *_overlay;
-	UiIfaceView *_view;
-	T _content;
+	UiIfaceOverlay *_overlay = NULL;
+	UiIfaceView *_view = NULL;
+	T _content = NULL;
 
 public:
 	bool setContent(T content);
@@ -47,7 +47,7 @@ public:
 }
 
 UiIfaceOverlayImpl::UiIfaceOverlayImpl(UiIfaceOverlay *overlay, UiIfaceView *view)
-		: _overlay(overlay), _view(view), _content(NULL)
+		: _overlay(overlay), _view(view)
 {
 }
 

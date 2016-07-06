@@ -30,10 +30,10 @@ class UiIfaceAppImpl
 public:
 	friend class UiIfaceApp;
 
-	UiIfaceApp *app;
-	UiIfaceViewmgr *viewmgr;
-	Eina_Stringshare *pkg;
-	Eina_Stringshare *locale_dir;
+	UiIfaceApp *app = NULL;
+	UiIfaceViewmgr *viewmgr = NULL;
+	Eina_Stringshare *pkg = NULL;
+	Eina_Stringshare *locale_dir = NULL;
 
 	UiIfaceAppImpl(UiIfaceApp *app, const char *pkg, const char *locale_dir, UiIfaceViewmgr* viewmgr);
 	~UiIfaceAppImpl();

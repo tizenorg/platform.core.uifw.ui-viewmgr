@@ -34,8 +34,8 @@ class UiViewImpl
 	friend class UiView;
 
 private:
-	UiView *_view;
-	UiMenu *_menu;
+	UiView *_view = NULL;
+	UiMenu *_menu = NULL;
 	list<UiPopup *> _popupList;
 
 	void _connectPopup(UiPopup *popup);

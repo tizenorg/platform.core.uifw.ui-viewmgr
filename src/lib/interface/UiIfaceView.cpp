@@ -34,15 +34,15 @@ class UiIfaceViewImpl
 	friend class UiIfaceView;
 
 private:
-	UiIfaceView *_view;
-	T _content;                              ///< A content instance for a screen as a view.
-	string _name;                            ///< View name.
-	string _transition_style;                ///< View transition style name.
-	UiIfaceViewmgr *_viewmgr;              ///< Viewmgr which this view belongs to.
-	UiViewState _state;                    ///< View state.
-	UiViewIndicator _indicator;            ///< View indicator mode.
-	bool _event_block;                       ///< State of event block.
-	bool _removable_content;                 ///< When this value is true, view removes it's content internally on unload state.
+	UiIfaceView *_view = NULL;
+	T _content = NULL;                                      ///< A content instance for a screen as a view.
+	string _name;                                           ///< View name.
+	string _transition_style = "default";                   ///< View transition style name.
+	UiIfaceViewmgr *_viewmgr = NULL;                        ///< Viewmgr which this view belongs to.
+	UiViewState _state = UI_VIEW_STATE_UNLOAD;              ///< View state.
+	UiViewIndicator _indicator = UI_VIEW_INDICATOR_DEFAULT; ///< View indicator mode.
+	bool _event_block = false;                              ///< State of event block.
+	bool _removable_content = true;                         ///< When this value is true, view removes it's content internally on unload state.
 
 public:
 	void setEventBlock(bool block);
@@ -123,10 +123,8 @@ void UiIfaceViewImpl::onDestroy()
 }
 
 UiIfaceViewImpl::UiIfaceViewImpl(UiIfaceView *view, const char *name)
-		: _view(view), _content(NULL), _name(string(name ? name : "")), _transition_style(string("default")), _viewmgr(NULL), _state(UI_VIEW_STATE_LOAD),
-		  _indicator(UI_VIEW_INDICATOR_DEFAULT), _event_block(false), _removable_content(true)
+		: _view(view), _name(string(name ? name : ""))
 {
-	this->_state = UI_VIEW_STATE_UNLOAD;
 }
 
 UiIfaceViewImpl::~UiIfaceViewImpl()

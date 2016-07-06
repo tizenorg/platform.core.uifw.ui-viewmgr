@@ -38,9 +38,9 @@ private:
 	static UiIfaceViewmgr *_inst;
 	static bool _softKey;                      //If system doesn't support HW back key, then this value is @c true.
 	static bool _eventBlock;                   //Event block on view transition. This value should be configurable by system.
-	list<UiIfaceView *> _viewList;           //View list.
-	bool _activated;                            //Activated status of this viewmgr.
-	bool _destroying;                           //True, if viewmgr is on destroying.
+	list<UiIfaceView *> _viewList;             //View list.
+	bool _activated = false;                   //Activated status of this viewmgr.
+	bool _destroying = false;                  //True, if viewmgr is on destroying.
 
 public:
 	bool connectView(UiIfaceView *view);
@@ -194,7 +194,6 @@ bool UiIfaceViewmgrImpl::popViewFinished(UiIfaceView *view)
 }
 
 UiIfaceViewmgrImpl::UiIfaceViewmgrImpl(UiIfaceViewmgr* viewmgr)
-		: _activated(false), _destroying(false)
 {
 	UiIfaceViewmgrImpl::_inst = viewmgr;
 }
