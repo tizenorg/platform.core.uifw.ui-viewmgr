@@ -229,6 +229,20 @@ EAPI int ui_view_get_degree(ui_view *view)
 	return view->getDegree();
 }
 
+EAPI void ui_view_set_available_rotations(ui_view *view, int *rotations, int count)
+{
+	if (!validate_view(view)) return;
+
+	view->setAvailableRotations(rotations, count);
+}
+
+EAPI void ui_view_get_available_rotations(ui_view *view, int **rotations, int *count)
+{
+	if (!validate_view(view)) return;
+
+	view->getAvailableRotations(rotations, count);
+}
+
 EAPI bool ui_view_set_transition_style(ui_view *view, const char *style)
 {
 	if (!validate_view(view)) return false;

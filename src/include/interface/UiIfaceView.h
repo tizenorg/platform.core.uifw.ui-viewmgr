@@ -85,6 +85,22 @@ public:
 	virtual void setIndicator(UiViewIndicator indicator);
 
 	/**
+	 *  @breif Set the array of view's available rotations.
+	 *
+	 *  @param rotations The array of rotation values.
+	 *  @param count The number of arrays of rotatons.
+	 */
+	virtual void setAvailableRotations(int *rotations, unsigned int count);
+
+	/**
+	 *  @breif Get the array of available window rotations.
+	 *
+	 *  @param rotations The array of rotation values.
+	 *  @param count The number of arrays of rotatons.
+	 */
+	virtual void getAvailableRotations(int **rotations, unsigned int *count);
+
+	/**
 	 *  @brief Return a style name of this view.
 	 *
 	 *  @return style name of view.
