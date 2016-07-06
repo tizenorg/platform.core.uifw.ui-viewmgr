@@ -197,6 +197,17 @@ EAPI int ui_view_get_degree(ui_view *view);
 EAPI ui_view_orientation_mode ui_view_get_orientation_mode(ui_view *view);
 
 /**
+ *  @breif Set the array of view's available rotations.
+ *
+ *  @note Set an array of rotation values.
+ *        For instance, {0, 90, 180, 270}. These rotation values depends on the system support.
+ *
+ *  @param rotations The array of rotation values.
+ *  @param count The number of arrays of rotatons.
+ */
+EAPI bool ui_view_set_available_rotations(ui_view *view, const int *rotations, int count);
+
+/**
  *  @brief Set transition style of a view.
  *
  *  @note @p style is reserved for supporting various kinds of view transition effects.
