@@ -85,6 +85,30 @@ public:
 	virtual void setIndicator(UiViewIndicator indicator);
 
 	/**
+	 *  @breif Set the array of view's available rotations.
+	 *
+	 *  @note Set an array of rotation values.
+	 *        For instance, {0, 90, 180, 270}. These rotation values depends on the system support.
+	 *
+	 *  @param rotations The array of rotation values.
+	 *  @param count The number of arrays of rotations.
+	 *
+	 *  @see getAvailableRotations()
+	 */
+	virtual bool setAvailableRotations(const int *rotations, unsigned int count);
+
+	/**
+	 *  @brief Get the array of view's available rotations.
+	 *
+	 *  @param count The number of arrays of rotations.
+	 *
+	 *  @return The array of rotation values.
+	 *
+	 *  @see setAvailableRotations()
+	 */
+	const int *getAvailableRotations(unsigned int *count);
+
+	/**
 	 *  @brief Return a style name of this view.
 	 *
 	 *  @return style name of view.

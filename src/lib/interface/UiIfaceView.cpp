@@ -37,12 +37,14 @@ private:
 	UiIfaceView *_view = NULL;
 	T _content = NULL;                                      ///< A content instance for a screen as a view.
 	string _name;                                           ///< View name.
-	string _transition_style = "default";                   ///< View transition style name.
+	string _transitionStyle = "default";                    ///< View transition style name.
 	UiIfaceViewmgr *_viewmgr = NULL;                        ///< Viewmgr which this view belongs to.
 	UiViewState _state = UI_VIEW_STATE_UNLOAD;              ///< View state.
 	UiViewIndicator _indicator = UI_VIEW_INDICATOR_DEFAULT; ///< View indicator mode.
-	bool _event_block = false;                              ///< State of event block.
-	bool _removable_content = true;                         ///< When this value is true, view removes it's content internally on unload state.
+	bool _eventBlock = false;                               ///< State of event block.
+	bool _removableContent = true;                          ///< When this value is true, view removes it's content internally on unload state.
+	int *_rotations = 0;                                    ///< The pointer of rotation values.
+	unsigned int _rotationCount = 0;                        ///< The number of available rotations.
 
 public:
 	void setEventBlock(bool block);
@@ -63,6 +65,8 @@ public:
 	bool setTransitionStyle(const char *style);
 	void setRemovableContent(bool removable);
 	void setIndicator(UiViewIndicator indicator);
+	bool setAvailableRotations(const int *rotations, unsigned int count);
+	const int *getAvailableRotations(unsigned int *count);
 	const char *getTransitionStyle();
 	const char *getName();
 	T getContent();
@@ -74,14 +78,16 @@ public:
 
 }
 
+#define MAX_NUM_OF_AVAILABLE_ROTATIONS 4
+
 bool UiIfaceViewImpl::getEventBlock()
 {
-	return this->_event_block;
+	return this->_eventBlock;
 }
 
 void UiIfaceViewImpl::setEventBlock(bool block)
 {
-	this->_event_block = block;
+	this->_eventBlock = block;
 }
 
 void UiIfaceViewImpl::onLoad()
@@ -130,6 +136,8 @@ UiIfaceViewImpl::UiIfaceViewImpl(UiIfaceView *view, const char *name)
 UiIfaceViewImpl::~UiIfaceViewImpl()
 {
 	this->_viewmgr->removeView(this->_view);
+
+	if (this->_rotations) delete[](this->_rotations);
 }
 
 bool UiIfaceViewImpl::setContent(T content)
@@ -147,13 +155,13 @@ T UiIfaceViewImpl::unsetContent()
 
 bool UiIfaceViewImpl::setTransitionStyle(const char *style)
 {
-	this->_transition_style.assign(style);
+	this->_transitionStyle.assign(style);
 	return true;
 }
 
 void UiIfaceViewImpl::setRemovableContent(bool removable)
 {
-	this->_removable_content = removable;
+	this->_removableContent = removable;
 
 	//FIXME: If this api is called on unload state? should we remove content right now?
 }
@@ -163,9 +171,45 @@ void UiIfaceViewImpl::setIndicator(UiViewIndicator indicator)
 	this->_indicator = indicator;
 }
 
+bool UiIfaceViewImpl::setAvailableRotations(const int *rotations, unsigned int count)
+{
+	if (count <= 0) {
+		LOGE("Invalid count value %d count must bigger than 0", count);
+		return false;
+	}
+
+	this->_rotations = new int[count];
+	if (!this->_rotations) {
+		LOGE("Allocation failed");
+		return false;
+	}
+
+	for (unsigned int i = 0; i < count; i++) {
+		this->_rotations[i] = rotations[i];
+	}
+
+	this->_rotationCount = count;
+
+	return true;
+}
+
+const int *UiIfaceViewImpl::getAvailableRotations(unsigned int *count)
+{
+	static int rots[MAX_NUM_OF_AVAILABLE_ROTATIONS] = {0, 90, 180, 270};
+
+	if (this->_rotationCount > 0) {
+		*count = this->_rotationCount;
+		return this->_rotations;
+	}
+	else {
+		*count = MAX_NUM_OF_AVAILABLE_ROTATIONS;
+		return rots;
+	}
+}
+
 const char *UiIfaceViewImpl::getTransitionStyle()
 {
-	return this->_transition_style.c_str();
+	return this->_transitionStyle.c_str();
 }
 
 const char *UiIfaceViewImpl::getName()
@@ -185,7 +229,7 @@ UiViewState UiIfaceViewImpl::getState()
 
 bool UiIfaceViewImpl::getRemovableContent()
 {
-	return this->_removable_content;
+	return this->_removableContent;
 }
 
 UiViewIndicator UiIfaceViewImpl::getIndicator()
@@ -285,6 +329,16 @@ void UiIfaceView::setRemovableContent(bool removable)
 void UiIfaceView::setIndicator(UiViewIndicator indicator)
 {
 	this->_impl->setIndicator(indicator);
+}
+
+bool UiIfaceView::setAvailableRotations(const int *rotations, unsigned int count)
+{
+	return this->_impl->setAvailableRotations(rotations, count);
+}
+
+const int *UiIfaceView::getAvailableRotations(unsigned int *count)
+{
+	return this->_impl->getAvailableRotations(count);
 }
 
 const char *UiIfaceView::getTransitionStyle()
