@@ -233,6 +233,18 @@ EAPI ui_view_orientation_mode ui_view_get_orientation_mode(ui_view *view)
 	return view->getOrientationMode();
 }
 
+EAPI bool ui_view_set_available_rotations(ui_view *view, const int *rotations, unsigned int count)
+{
+	if (!validate_view(view)) return false;
+	return view->setAvailableRotations(rotations, count);
+}
+
+EAPI const int *ui_view_get_available_rotations(ui_view *view, unsigned int *count)
+{
+	if (!validate_view(view)) return false;
+	return view->getAvailableRotations(count);
+}
+
 EAPI bool ui_view_set_transition_style(ui_view *view, const char *style)
 {
 	if (!validate_view(view)) return false;
