@@ -36,6 +36,7 @@ private:
 	Elm_Toolbar *_toolbar = NULL;            //Toolbar
 	Elm_Button *_titleLeftBtn = NULL;        //Title left button
 	Elm_Button *_titleRightBtn = NULL;       //Title right button
+	bool _titleVisible = true;
 
 	bool _createLayout();
 	bool _destroyLayout();
@@ -275,7 +276,7 @@ bool UiStandardViewImpl::setTitle(const char *text)
 
 	elm_object_part_text_set(layout, "elm.text.title", text);
 
-	if (text) elm_object_signal_emit(layout, "elm,state,title,show", "viewmgr");
+	if (text && this->_titleVisible) elm_object_signal_emit(layout, "elm,state,title,show", "viewmgr");
 	else elm_object_signal_emit(layout, "elm,state,title,hide", "viewmgr");
 
 	return true;
@@ -398,6 +399,8 @@ Evas_Object *UiStandardViewImpl::getBase()
 
 bool UiStandardViewImpl::setTitleVisible(bool visible, bool anim)
 {
+	this->_titleVisible = visible;
+
 	//FIXME: save visible, anim value. they can be used in layout created time.
 	Elm_Layout *layout = this->getBase();
 	if (!layout) {
