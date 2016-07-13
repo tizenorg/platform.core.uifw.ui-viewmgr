@@ -290,7 +290,9 @@ void UiIfaceApp::onControl(app_control_h app_control)
 
 void UiIfaceApp::onTerminate()
 {
+#ifndef TARGET_LANG_CPLUS
 	delete(this);
+#endif
 }
 
 UiIfaceApp::UiIfaceApp(const char *pkg, const char *locale_dir, UiIfaceViewmgr *viewmgr)
