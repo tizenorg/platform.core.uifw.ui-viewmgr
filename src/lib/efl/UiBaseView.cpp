@@ -34,6 +34,7 @@ class UiBaseViewImpl;
 static void _contentDelCb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
 	UiBaseView *view = static_cast<UiBaseView *>(data);
+
 	view->unsetContent();
 }
 
@@ -127,6 +128,14 @@ void UiBaseView::onPortrait()
 
 void UiBaseView::onLandscape()
 {
+}
+
+void UiBaseView::onUnload()
+{
+	if (this->getRemovableContent()) {
+		this->unsetContent();
+		return;
+	}
 }
 
 void UiBaseView::setEventBlock(bool block)

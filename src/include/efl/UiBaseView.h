@@ -131,6 +131,15 @@ protected:
 	 */
 	virtual void onLandscape() override;
 
+	/**
+	 *  @brief View unload state.
+	 *
+	 *  @note Remove resources (contents) with regards to this view for saving memory. Otherwise, you could keep those resources (contents) for later access.
+	 *        Removing resources might be better in point of performance view. It's up to your scenario. onUnload() will be triggered just right before
+	 *        the view is going to be deleted by popping or by somehow. Also, onUnload() will be triggered when this view is pushed behind other views.
+	 */
+	virtual void onUnload() override;
+
 private:
 	_UI_DECLARE_PRIVATE_IMPL(UiBaseView);
 	_UI_DISABLE_DEFAULT_CTOR(UiBaseView);
