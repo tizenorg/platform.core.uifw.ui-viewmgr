@@ -129,6 +129,14 @@ void UiBaseView::onLandscape()
 {
 }
 
+void UiBaseView::onUnload()
+{
+	if (this->getRemovableContent())
+		evas_object_del(this->getContent());
+
+	UiIfaceView::onUnload();
+}
+
 void UiBaseView::setEventBlock(bool block)
 {
 	UiIfaceView::setEventBlock(block);

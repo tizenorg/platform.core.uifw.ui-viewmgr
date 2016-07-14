@@ -92,10 +92,6 @@ void UiIfaceViewImpl::onLoad()
 void UiIfaceViewImpl::onUnload()
 {
 	this->_state = UI_VIEW_STATE_UNLOAD;
-	if (this->getRemovableContent()) {
-		this->setContent(NULL);
-		return;
-	}
 }
 
 void UiIfaceViewImpl::onActivate()
