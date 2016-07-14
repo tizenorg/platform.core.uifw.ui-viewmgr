@@ -279,7 +279,7 @@ void UiIfaceApp::onPause()
 
 void UiIfaceApp::onResume()
 {
-//	this->_impl->viewmgr->activate();
+	this->_impl->viewmgr->activate();
 }
 
 void UiIfaceApp::onControl(app_control_h app_control)
