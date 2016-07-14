@@ -132,6 +132,7 @@ protected:
 	virtual void onLandscape() override;
 
 private:
+	Evas_Object *_savedContent = NULL;
 	_UI_DECLARE_PRIVATE_IMPL(UiBaseView);
 	_UI_DISABLE_DEFAULT_CTOR(UiBaseView);
 	_UI_DISABLE_COPY_AND_ASSIGN(UiBaseView);

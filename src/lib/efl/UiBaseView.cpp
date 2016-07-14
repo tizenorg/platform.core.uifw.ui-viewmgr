@@ -34,6 +34,7 @@ class UiBaseViewImpl;
 static void _contentDelCb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
 	UiBaseView *view = static_cast<UiBaseView *>(data);
+
 	view->unsetContent();
 }
 
@@ -44,6 +45,8 @@ UiBaseView::UiBaseView(const char *name)
 
 UiBaseView::~UiBaseView()
 {
+	if (this->_savedContent)
+		evas_object_event_callback_del(this->_savedContent, EVAS_CALLBACK_DEL, _contentDelCb);
 }
 
 bool UiBaseView::setContent(Evas_Object *content)
@@ -57,6 +60,8 @@ bool UiBaseView::setContent(Evas_Object *content)
 	if (content) {
 		evas_object_event_callback_add(content, EVAS_CALLBACK_DEL, _contentDelCb, this);
 		UiIfaceView::setContent(content);
+
+		this->_savedContent = content;
 	}
 
 	return true;
@@ -69,6 +74,8 @@ Evas_Object *UiBaseView::unsetContent()
 	if (obj) {
 		evas_object_event_callback_del(obj, EVAS_CALLBACK_DEL, _contentDelCb);
 		evas_object_hide(obj);
+
+		this->_savedContent = NULL;
 	}
 
 	return obj;
