@@ -62,7 +62,9 @@ protected:
 					view->setTitleVisible(false, true);
 				}, this);
 
-		this->setContent(content, "Page16");
+		//Set title text, content
+		this->setTitle("Page16");
+		this->setContent(content);
 	}
 
 public:

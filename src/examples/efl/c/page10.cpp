@@ -57,7 +57,12 @@ view10_rotate_cb(ui_standard_view *view, int degree, void *data)
 		ui_view_set_indicator(view, UI_VIEW_INDICATOR_OPTIMAL);
 	}
 
-	ui_standard_view_set_content(view, content, "Page10", NULL, NULL, NULL);
+	if (!ui_standard_view_set_content(view, content) ||
+	    !ui_standard_view_set_title(view, "Page10"))
+	{
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to set view property");
+		return false;
+	}
 
 	return true;
 }
