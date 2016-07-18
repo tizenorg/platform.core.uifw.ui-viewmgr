@@ -25,22 +25,6 @@ extern "C" {
 EAPI ui_standard_view *ui_standard_view_create(const char *name);
 
 /**
- *  @brief Replace or set a content of the view.
- *
- *  @param view An ui_standard_view instance.
- *  @param content A new content. It allows @c NULL for canceling the previous content.
- *  @param title The label in the title area. The name of the title label part is "elm.text.title".
- *  @param subtitle The label in the subtitle area. The name of the subtitle label part is "elm.text.subtitle".
- *  @param title_left_btn The button in the left part of title area.
- *  @param title_right_btn The button in the right part of title area.
- *
- *  @return @c true if it succeeds, @c false otherwise.
- *
- *  @see ui_view_content_get()
- */
-EAPI bool ui_standard_view_set_content(ui_standard_view *view, Evas_Object *content, const char *title, const char *subtitle, Evas_Object *title_left_btn, Evas_Object *title_right_btn);
-
-/**
  *  @brief Set a title text.
  *
  *  @param view An ui_standard_view instance.

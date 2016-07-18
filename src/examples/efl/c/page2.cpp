@@ -59,9 +59,12 @@ view2_load_cb(ui_standard_view *view, void *data)
 	const int rots[2] = { 0, 90 };
 	ui_view_set_available_rotations(view, rots, 2);
 
-	if (!ui_standard_view_set_content(view, content, "Page2", NULL, left_title_btn, right_title_btn))
+	if (!ui_view_set_content(view, content) ||
+	    !ui_standard_view_set_title(view, "Page2") ||
+	    !ui_standard_view_set_title_left_btn(view, left_title_btn) ||
+	    !ui_standard_view_set_title_right_btn(view, right_title_btn))
 	{
-		dlog_print(DLOG_ERROR, LOG_TAG, "failed to set view content");
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to set view property");
 		return false;
 	}
 

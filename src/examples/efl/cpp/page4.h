@@ -39,9 +39,10 @@ protected:
 					UI_VIEWMGR->pushView(new page5());
 				});
 
-		//Arguments: content, title
-		this->setContent(content, "Page4. We put a long title here intentionally");
+		//Set title text, badge text, content
+		this->setTitle("Page4. We put a long title here intentionally");
 		this->setTitleBadge("999+");
+		this->setContent(content);
 	}
 
 public:

@@ -47,8 +47,6 @@ protected:
 					UI_VIEWMGR->pushView(new page13());
 				});
 
-		this->setContent(content, "Page12");
-
 		//Title Right button
 		Elm_Button *rightBtn = elm_button_add(this->getBase());
 		elm_object_text_set(rightBtn, "popup");
@@ -60,6 +58,9 @@ protected:
 				},
 				this);
 
+		//Set title text, right button, content
+		this->setTitle("Page12");
+		this->setContent(content);
 		this->setTitleRightBtn(rightBtn);
 	}
 

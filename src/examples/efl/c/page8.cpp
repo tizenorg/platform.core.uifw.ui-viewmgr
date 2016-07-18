@@ -61,9 +61,10 @@ create_page8()
 		return;
 	}
 
-	if (!ui_standard_view_set_content(view, content, "Page8", NULL, NULL, NULL))
+	if (!ui_view_set_content(view, content) ||
+	    !ui_standard_view_set_title(view, "Page8"))
 	{
-		dlog_print(DLOG_ERROR, LOG_TAG, "failed to set view content");
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to set view property");
 		ui_view_destroy(view);
 		return;
 	}
