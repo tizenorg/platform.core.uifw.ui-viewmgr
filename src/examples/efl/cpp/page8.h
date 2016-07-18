@@ -35,7 +35,9 @@ public:
 				UI_VIEWMGR->pushView(new page9());
 			});
 
-		this->setContent(content, "Page 8");
+		//Set title text, content
+		this->setTitle("Page8");
+		this->setContent(content);
 
 		//Don't delete view's content when this view popped.
 		//This is a show case for saving this content for reuse later.

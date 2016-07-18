@@ -49,9 +49,10 @@ view5_load_cb(ui_view *view, void *data)
 
 	if (!ui_view_set_content(view, content))
 	{
-		dlog_print(DLOG_ERROR, LOG_TAG, "failed to set view content");
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to set view property");
 		return false;
 	}
+
 	ui_view_set_indicator(view, UI_VIEW_INDICATOR_HIDE);
 
 	return true;
