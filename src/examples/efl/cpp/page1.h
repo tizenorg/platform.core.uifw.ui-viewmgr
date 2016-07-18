@@ -38,7 +38,10 @@ protected:
 				{
 					UI_VIEWMGR->pushView(new page2());
 				});
-		this->setContent(content, "Page1");
+
+		//Set title text, content
+		this->setTitle("Page1");
+		this->setContent(content);
 	}
 
 public:

@@ -45,8 +45,7 @@ public:
 	explicit UiStandardViewImpl(UiStandardView *view);
 	~UiStandardViewImpl();
 
-	bool setContent(Evas_Object *content, const char *title = NULL);
-	bool setContent(Evas_Object *content, const char *title, const char *subtitle, Elm_Button *titleLeftBtn, Elm_Button *titleRightBtn);
+	bool setContent(Evas_Object *content);
 	bool setTitleBadge(const char *text);
 	bool setSubtitle(const char *text);
 	bool setTitleLeftBtn(Elm_Button *titleLeftBtn);
@@ -171,7 +170,7 @@ UiStandardViewImpl::~UiStandardViewImpl()
 	_destroyLayout();
 }
 
-bool UiStandardViewImpl::setContent(Evas_Object *content, const char *title)
+bool UiStandardViewImpl::setContent(Evas_Object *content)
 {
 	Elm_Layout *layout = this->getBase();
 	LAYOUT_VALIDATE();
@@ -184,8 +183,6 @@ bool UiStandardViewImpl::setContent(Evas_Object *content, const char *title)
 	} else {
 		elm_object_signal_emit(layout, "elm.state,elm.swallow.content,hide", "viewmgr");
 	}
-
-	this->setTitle(title);
 
 	return true;
 }
@@ -449,11 +446,11 @@ void UiStandardView::onUnload()
 	evas_object_hide(layout);
 }
 
-bool UiStandardView::setContent(Evas_Object *content, const char *title)
+bool UiStandardView::setContent(Evas_Object *content)
 {
 	UiView::setContent(content);
 
-	return this->_impl->setContent(content, title);
+	return this->_impl->setContent(content);
 }
 
 bool UiStandardView::setSubtitle(const char *text)
@@ -479,16 +476,6 @@ bool UiStandardView::setTitleBadge(const char *text)
 bool UiStandardView::setTitle(const char *text)
 {
 	return this->_impl->setTitle(text);
-}
-
-bool UiStandardView::setContent(Evas_Object *content, const char *title, const char *subtitle, Elm_Button *titleLeftBtn, Elm_Button *titleRightBtn)
-{
-	if (!this->setContent(content, title)) return false;
-	if (!this->setSubtitle(subtitle)) return false;
-	if (!this->setTitleLeftBtn(titleLeftBtn)) return false;
-	if (!this->setTitleRightBtn(titleRightBtn)) return false;
-
-	return true;
 }
 
 bool UiStandardView::setToolbar(Elm_Toolbar *toolbar)

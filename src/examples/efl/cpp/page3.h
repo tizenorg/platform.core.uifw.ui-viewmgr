@@ -38,8 +38,10 @@ protected:
 					UI_VIEWMGR->pushView(new page4());
 				});
 
-		//Arguments: content, title, subtitle, title left button, title right button
-		this->setContent(content, "Page3", "Subtitle", NULL, NULL);
+		//Set title text, subtitle text, content
+		this->setTitle("Page3");
+		this->setSubtitle("subtitle");
+		this->setContent(content);
 	}
 
 public:

@@ -54,20 +54,7 @@ public:
 	 *
 	 *  @return @c true if it succeeds, @c false otherwise.
 	 */
-	bool setContent(Evas_Object *content, const char *title = NULL);
-
-	/**
-	 *  @brief Replace or set a content of the view.
-	 *
-	 *  @param content A new content. It allows @c NULL for canceling the previous content.
-	 *  @param title  The label in the title area. The name of the title label part is "elm.text.title".
-	 *  @param subtitle  The label in the subtitle area. The name of the subtitle label part is "elm.text.subtitle".
-	 *  @param title_left_btn The button in the left part of title area.
-	 *  @param title_right_btn The button in the right part of title area.
-	 *
-	 *  @return @c true if it succeeds, @c false otherwise.
-	 */
-	bool setContent(Evas_Object *content, const char *title, const char *subtitle, Elm_Button *titleLeftBtn, Elm_Button *titleRightBtn);
+	bool setContent(Evas_Object *content);
 
 	/**
 	 *  @brief Set a title badge text.

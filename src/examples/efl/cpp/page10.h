@@ -46,7 +46,9 @@ protected:
 						UI_VIEWMGR->pushView(new page11());
 					});
 
-			this->setContent(content, "Page 10");
+			//Set title text, content, indicator property
+			this->setTitle("Page10");
+			this->setContent(content);
 			this->setIndicator(UI_VIEW_INDICATOR_DEFAULT);
 		} else {
 			//Landscape
@@ -62,7 +64,9 @@ protected:
 						UI_VIEWMGR->pushView(new page11());
 					});
 
-			this->setContent(content, "Page 10");
+			//Set title text, content, indicator property
+			this->setTitle("Page10");
+			this->setContent(content);
 			this->setIndicator(UI_VIEW_INDICATOR_OPTIMAL);
 		}
 	}
