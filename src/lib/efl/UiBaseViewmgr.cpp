@@ -49,6 +49,7 @@ private:
 	bool _createScroller(Elm_Conformant *conform);
 	bool _createBaseLayout(Elm_Scroller *scroller, const char *style);
 	bool _setIndicator(UiViewIndicator indicator);
+	void _setAvailableRotations(UiBaseView *view);
 	void _activateTopView();
 	bool _init();
 	bool _term();
@@ -174,6 +175,7 @@ void UiBaseViewmgrImpl::_activateTopView()
 
 	elm_object_part_content_set(this->getBase(), "content", content);
 
+	this->_setAvailableRotations(view);
 	this->_setIndicator(view->getIndicator());
 }
 
@@ -208,6 +210,16 @@ bool UiBaseViewmgrImpl::_setIndicator(UiViewIndicator indicator)
 		break;
 	}
 	return true;
+}
+
+void UiBaseViewmgrImpl::_setAvailableRotations(UiBaseView *view)
+{
+	const int *rotations = NULL;
+	unsigned int count = 0;
+
+	rotations = view->getAvailableRotations(&count);
+
+	elm_win_wm_rotation_available_rotations_set(this->getWindow(), rotations, count);
 }
 
 bool UiBaseViewmgrImpl::_createConformant(Elm_Win *win)
@@ -377,6 +389,7 @@ bool UiBaseViewmgrImpl::popView()
 
 	elm_layout_signal_emit(effect, "view,pop", "viewmgr");
 
+	this->_setAvailableRotations(pview);
 	this->_setIndicator(pview->getIndicator());
 
 	return true;
@@ -422,6 +435,7 @@ UiBaseView * UiBaseViewmgrImpl::pushView(UiBaseView *view)
 
 	elm_layout_signal_emit(effect, "view,push", "viewmgr");
 
+	this->_setAvailableRotations(view);
 	this->_setIndicator(view->getIndicator());
 
 	return view;

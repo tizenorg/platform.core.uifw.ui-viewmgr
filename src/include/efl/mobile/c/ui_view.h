@@ -156,6 +156,30 @@ EAPI void ui_view_set_indicator(ui_view *view, ui_view_indicator indicator);
 EAPI ui_view_indicator ui_view_get_indicator(ui_view *view);
 
 /**
+ *  @breif Set the array of view's available rotations.
+ *
+ *  @note Set an array of rotation values.
+ *        For instance, {0, 90, 180, 270}. These rotation values depends on the system support.
+ *
+ *  @param rotations The array of rotation values.
+ *  @param count The number of arrays of rotatons.
+ *
+ *  @see ui_view_get_available_rotations
+ */
+EAPI bool ui_view_set_available_rotations(ui_view *view, const int *rotations, unsigned int count);
+
+/**
+ *  @brief Get the array of view's available rotations.
+ *
+ *  @param count The number of arrays of rotations.
+ *
+ *  @return The array of rotation values.
+ *
+ *  @see ui_view_set_available_rotations
+ */
+EAPI const int *ui_view_get_available_rotations(ui_view *view, unsigned int *count);
+
+/**
  *  @brief Set content removable.
  *
  *  @param view An ui_view instance.
