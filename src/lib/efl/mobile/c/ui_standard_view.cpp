@@ -154,12 +154,11 @@ EAPI ui_standard_view* ui_standard_view_create(const char *name)
 	return new ui_standard_view_capi(name);
 }
 
-EAPI bool ui_standard_view_set_content(ui_standard_view *view, Evas_Object *content, const char *title, const char *subtitle, Evas_Object *title_left_btn,
-        Evas_Object *title_right_btn)
+EAPI bool ui_standard_view_set_content(ui_standard_view *view, Evas_Object *content)
 {
 	ui_standard_view_capi *capi_view;
 	if (!(capi_view = validate_view(view))) return false;
-	return capi_view->setContent(content, title, subtitle, title_left_btn, title_right_btn);
+	return capi_view->setContent(content);
 }
 
 EAPI bool ui_standard_view_set_title(ui_standard_view *view, const char *text)

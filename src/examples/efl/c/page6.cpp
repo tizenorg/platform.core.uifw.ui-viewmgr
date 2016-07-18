@@ -47,14 +47,16 @@ view6_load_cb(ui_standard_view *view, void *data)
 	content = create_content(base, "ViewMgr Demo<br>Toolbar", prev_btn_clicked_cb, next_btn_clicked_cb);
 	if (!content) return false;
 
-	if (!ui_standard_view_set_content(view, content, "Page6", NULL, NULL, NULL))
+	Elm_Toolbar *toolbar = create_toolbar(base, "toolbar_with_title");
+	if (!toolbar) return false;
+
+	if (!ui_standard_view_set_content(view, content) ||
+	    !ui_standard_view_set_title(view, "Page6") ||
+	    !ui_standard_view_set_toolbar(view, toolbar))
 	{
-		dlog_print(DLOG_ERROR, LOG_TAG, "failed to set view content");
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to set view property");
 		return false;
 	}
-
-	Elm_Toolbar *toolbar = create_toolbar(base, "toolbar_with_title");
-	if (toolbar) ui_standard_view_set_toolbar(view, toolbar);
 
 	return true;
 }

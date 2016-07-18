@@ -46,7 +46,9 @@ protected:
 					UI_VIEWMGR->pushView(new page12());
 				});
 
-		this->setContent(content, "Page11");
+		//Set title text, content
+		this->setTitle("Page11");
+		this->setContent(content);
 	}
 
 	void onMenu(UiMenu *menu)

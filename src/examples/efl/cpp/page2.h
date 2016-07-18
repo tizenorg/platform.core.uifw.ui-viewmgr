@@ -46,8 +46,11 @@ protected:
 		Elm_Button *rightTitleBtn = elm_button_add(this->getBase());
 		elm_object_text_set(rightTitleBtn, "Done");
 
-		//Arguments: content, title, subtitle, title left button, title right button
-		this->setContent(content, "Page2", NULL, leftTitleBtn, rightTitleBtn);
+		//Set title text, left/right buttons, content
+		this->setTitle("Page2");
+		this->setTitleLeftBtn(leftTitleBtn);
+		this->setTitleRightBtn(rightTitleBtn);
+		this->setContent(content);
 	}
 
 public:

@@ -41,14 +41,18 @@ view15_load_cb(ui_standard_view *view, void *data)
 	content = create_scrolling_content(base);
 	if (!content) return false;
 
-	ui_standard_view_set_content(view, content, "Page 15 Scroller In Viewmgr", NULL, NULL, NULL);
-
 	//Title Right button
 	Elm_Button *right_btn = elm_button_add(base);
 	elm_object_text_set(right_btn, "Next");
 	evas_object_smart_callback_add(right_btn, "clicked", view15_btn_clicked_cb, NULL);
 
-	ui_standard_view_set_title_right_btn(view, right_btn);
+	if (!ui_standard_view_set_content(view, content) ||
+	    !ui_standard_view_set_title(view, "Page15 Scroller in Viewmgr") ||
+	    !ui_standard_view_set_title_right_btn(view, right_btn))
+	{
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to set view property");
+		return false;
+	}
 
 	return true;
 }

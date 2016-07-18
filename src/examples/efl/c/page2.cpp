@@ -55,9 +55,12 @@ view2_load_cb(ui_standard_view *view, void *data)
 	Elm_Button *right_title_btn = elm_button_add(base);
 	elm_object_text_set(right_title_btn, "Done");
 
-	if (!ui_standard_view_set_content(view, content, "Page2", NULL, left_title_btn, right_title_btn))
+	if (!ui_standard_view_set_content(view, content) ||
+	    !ui_standard_view_set_title(view, "Page2") ||
+	    !ui_standard_view_set_title_left_btn(view, left_title_btn) ||
+	    !ui_standard_view_set_title_right_btn(view, right_title_btn))
 	{
-		dlog_print(DLOG_ERROR, LOG_TAG, "failed to set view content");
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to set view property");
 		return false;
 	}
 
