@@ -30,6 +30,7 @@
 #include "page4.h"
 #include "page3.h"
 #include "page2.h"
+
 #include "page1.h"
 
 class SampleApp: public UiApp

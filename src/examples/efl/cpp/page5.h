@@ -38,6 +38,7 @@ protected:
 					UI_VIEWMGR->pushView(new page6());
 				});
 
+		//Set content, indicator property
 		this->setContent(content);
 		this->setIndicator(UI_VIEW_INDICATOR_HIDE);
 	}

@@ -48,7 +48,9 @@ protected:
 					UI_VIEWMGR->pushView(new page10());
 		        });
 
-		this->setContent(content, "Page 9");
+		//Set title text, content, indicator property
+		this->setTitle("Page9");
+		this->setContent(content);
 		this->setIndicator(UI_VIEW_INDICATOR_DEFAULT);
 	}
 
@@ -68,7 +70,9 @@ protected:
 					UI_VIEWMGR->pushView(new page10());
 				});
 
-		this->setContent(content, "Page 9");
+		//Set title text, content, indicator property
+		this->setTitle("Page9");
+		this->setContent(content);
 		this->setIndicator(UI_VIEW_INDICATOR_OPTIMAL);
 	}
 

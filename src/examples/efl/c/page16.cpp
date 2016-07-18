@@ -75,7 +75,12 @@ view16_load_cb(ui_standard_view *view, void *data)
 	content = create_title_handle_content(base, prev_btn_clicked_cb, next_btn_clicked_cb, title_show_btn_clicked_cb, title_hide_btn_clicked_cb, title_show_anim_btn_clicked_cb, title_hide_anim_btn_clicked_cb, view);
 	if (!content) return false;
 
-	ui_standard_view_set_content(view, content, "Page16", NULL, NULL, NULL);
+	if (!ui_standard_view_set_content(view, content) ||
+	    !ui_standard_view_set_title(view, "Page16"))
+	{
+		dlog_print(DLOG_ERROR, LOG_TAG, "failed to set view property");
+		return false;
+	}
 
 	return true;
 }
