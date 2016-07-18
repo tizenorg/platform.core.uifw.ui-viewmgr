@@ -401,7 +401,6 @@ bool UiStandardViewImpl::setTitleVisible(bool visible, bool anim)
 {
 	this->_titleVisible = visible;
 
-	//FIXME: save visible, anim value. they can be used in layout created time.
 	Elm_Layout *layout = this->getBase();
 	if (!layout) {
 		LOGE("Layout is invalid! UiStandardView(%p)", this);
