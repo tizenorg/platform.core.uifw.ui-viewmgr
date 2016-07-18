@@ -50,8 +50,11 @@ protected:
 		const int rots[2] = { 0, 90 };
 		this->setAvailableRotations(rots, 2);
 
-		//Arguments: content, title, subtitle, title left button, title right button
-		this->setContent(content, "Page2", NULL, leftTitleBtn, rightTitleBtn);
+		//Set title text, left/right buttons, content
+		this->setTitle("Page2");
+		this->setTitleLeftBtn(leftTitleBtn);
+		this->setTitleRightBtn(rightTitleBtn);
+		this->setContent(content);
 	}
 
 public:

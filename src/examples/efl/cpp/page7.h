@@ -37,9 +37,11 @@ protected:
 					UI_VIEWMGR->pushView(new page8());
 				});
 
-		//Arguments: content, title
-		this->setContent(content, "Page7");
 		Elm_Toolbar *toolbar = createToolbar(this->getBase(), "navigationbar");
+
+		//Set title text, content, toolbar
+		this->setTitle("Page7");
+		this->setContent(content);
 		this->setToolbar(toolbar);
 	}
 public:

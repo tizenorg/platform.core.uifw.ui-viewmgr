@@ -40,7 +40,9 @@ protected:
 					UI_VIEWMGR->pushView(new page15());
 				});
 
-		this->setContent(content, "Page14");
+		//Set title text, right button, content
+		this->setTitle("Page14");
+		this->setContent(content);
 	}
 
 public:
