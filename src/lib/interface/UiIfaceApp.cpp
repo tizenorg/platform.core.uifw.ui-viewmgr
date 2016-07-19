@@ -290,7 +290,6 @@ void UiIfaceApp::onControl(app_control_h app_control)
 
 void UiIfaceApp::onTerminate()
 {
-	delete(this);
 }
 
 UiIfaceApp::UiIfaceApp(const char *pkg, const char *locale_dir, UiIfaceViewmgr *viewmgr)
